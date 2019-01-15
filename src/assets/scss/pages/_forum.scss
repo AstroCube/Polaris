@@ -1,0 +1,549 @@
+.forum {
+
+  &__tree {
+    background-color: $color-light-black;
+    padding: 2rem;
+  }
+
+  &__recent {
+    width: 100%;
+    height: 30rem;
+    overflow-y: scroll;
+    background-color: $color-light-black;
+  }
+
+  &__new {
+    left: -.5rem;
+    position: relative;
+    background-color: $color-primary;
+    text-decoration: none;
+    color: $color-white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 100%;
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+  }
+
+  &__tree-form {
+    position: relative;
+    left: -.4rem;
+    width: 65%;
+    display: inline-block;
+  }
+
+  &__recent-title {
+    padding: 1rem 2rem;
+    background-color: $color-tertiary-dark;
+    border-bottom: 3px solid $color-secondary;
+  }
+
+  &__recent-title-text {
+    @include titleFont;
+    font-size: 1.4rem;
+  }
+
+  &__recent-node {
+    display: flex;
+    padding: 1rem;
+    min-height: 3rem;
+    align-items: center;
+
+    &:not(:last-of-type) {
+      border-bottom: 2px solid darken($color-tertiary-dark, 10%);
+    }
+  }
+
+  &__recent-avatar {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    padding: 1rem;
+  }
+
+  &__recent-container {
+    width: 70%;
+  }
+
+  &__recent-topic {
+    color: $color-white;
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .3s;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__recent-username-placeholder {
+    width: 100%;
+    word-wrap: break-word
+  }
+
+  &__recent-username {
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding-right: .3rem;
+  }
+
+  &__recent-date {
+    font-size: 1.3rem;
+    color: $color-grey-dark-2;
+  }
+
+  &__title {
+    margin: 1rem 0;
+
+    & p {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__subforums {
+    margin: 2rem 0;
+  }
+
+  &__topics {
+    margin: 2rem 0;
+  }
+
+  &__topics-header {
+    padding: 1rem 2rem;
+    background-color: $color-tertiary-dark;
+    border-bottom: 3px solid $color-secondary;
+  }
+
+  &__topics-header-title {
+
+    @include titleFont;
+
+    display: inline-block;
+    width: 55%;
+  }
+
+  &__topics-header-indicator {
+
+    @include titleFont;
+
+    display: inline-block;
+    font-size: 1.2rem;
+    text-transform: none;
+    width: 10%;
+    text-align: center;
+  }
+
+  &__topics-header-last {
+
+    @include titleFont;
+
+    display: inline-block;
+    font-size: 1.2rem;
+    text-transform: none;
+    width: 25%;
+    text-align: center;
+  }
+
+  &__node {
+    display: flex;
+    min-height: 4rem;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid darken($color-tertiary-dark, 10%);
+  }
+
+  &__node-title {
+    display: flex;
+    align-items: center;
+    width: 55%;
+  }
+
+  &__node-title-link {
+
+    @include titleFont;
+
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-transform: none;
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__node-icons {
+    width: 20%;
+  }
+
+  &__node-icon {
+    font-size: 1rem;
+    padding-right: .5rem;
+  }
+
+  &__node-author {
+    display: inline-block;
+    text-decoration: none;
+    align-items: center;
+  }
+
+  &__node-user-avatar {
+    position: relative;
+    top: .1rem;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  &__node-topic {
+    width: 80%;
+  }
+
+
+  &__node-indicator {
+
+    @include titleFont;
+
+    display: flex;
+    color: $color-grey-dark;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+  }
+
+  &__node-last {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: calc(25% - 2rem);
+    justify-content: center;
+    border-left: 3px solid $color-primary;
+    padding: 0 1rem;
+  }
+
+  &__node-top {
+    width: 70%;
+    display: block;
+    color: $color-white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .3s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__node-bottom {
+    display: flex;
+  }
+
+  &__node-username {
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 0 .3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__node-date {
+    font-size: 1.3rem;
+    color: $color-grey-dark-2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__node-avatar {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-top: .35rem;
+  }
+
+}
+
+.forum-admin {
+
+  &__breadcumb {
+    background-color: $color-light-black;
+    margin: 1rem 0;
+  }
+
+  &__section {
+    margin: 3rem 10.4rem;
+    padding: 0 1.5rem;
+  }
+
+  &__category {
+
+    @include titleFont;
+
+    margin: 2rem 0;
+    padding: 1rem;
+  }
+
+  &__form {
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  &__form-select {
+    width: 63%;
+    display: inline-block;
+  }
+}
+
+.subforum {
+  width: calc(100% - 12rem);
+  display: flex;
+  min-height: 4rem;
+  padding: 1rem 6rem;
+  margin-bottom: 1rem;
+
+  clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+
+  &:nth-of-type(odd) {
+    background-color: $color-tertiary-dark;
+  }
+
+  &:nth-of-type(even) {
+    background-color: $color-tertiary;
+  }
+
+
+  &__title {
+    display: flex;
+    align-items: center;
+    width: 35%;
+  }
+
+  &__title-link {
+
+    @include titleFont;
+
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__title-image {
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+  }
+
+  &__indicator {
+
+    @include titleFont;
+
+    display: flex;
+    color: $color-grey-dark;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+  }
+
+  &__last {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 35%;
+    justify-content: center;
+    border-left: 3px solid $color-primary;
+    padding: 0 1rem;
+  }
+
+  &__top {
+    width: 70%;
+    display: block;
+    color: $color-white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .3s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+  }
+
+  &__username {
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 0 .3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__date {
+    font-size: 1.3rem;
+    color: $color-grey-dark-2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__avatar {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-top: .35rem;
+  }
+}
+
+
+.category {
+  width: 100;
+
+  &:not(:last-of-type) {
+    margin-bottom: 3rem;
+  }
+
+  &__header {
+    padding: 1rem 2rem;
+    background-color: $color-tertiary-dark;
+    border-bottom: 3px solid $color-secondary;
+  }
+
+  &__header-title {
+    @include titleFont;
+    display: inline-block;
+    width: 35%;
+  }
+
+  &__header-indicator {
+    @include titleFont;
+    display: inline-block;
+    font-size: 1.2rem;
+    text-transform: none;
+    width: 15%;
+    text-align: center;
+  }
+
+  &__node {
+    display: flex;
+    min-height: 4rem;
+    padding: 1rem 2rem;
+    border-bottom: 2px solid darken($color-tertiary-dark, 10%);
+  }
+
+  &__node-title {
+    display: flex;
+    align-items: center;
+    width: 35%;
+  }
+
+  &__node-title-link {
+
+    @include titleFont;
+
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__node-image {
+    width: 3rem;
+    height: 3rem;
+    padding: 1rem;
+  }
+
+  &__node-indicator {
+
+    @include titleFont;
+
+    display: flex;
+    color: $color-grey-dark;
+    align-items: center;
+    justify-content: center;
+    width: 15%;
+  }
+
+  &__node-last {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 35%;
+    justify-content: center;
+    border-left: 3px solid $color-primary;
+    padding: 0 1rem;
+  }
+
+  &__node-top {
+    width: 70%;
+    display: block;
+    color: $color-white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .3s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__node-bottom {
+    display: flex;
+  }
+
+  &__node-username {
+    text-decoration: none;
+    font-size: 1.3rem;
+    padding: 0 .3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__node-date {
+    font-size: 1.3rem;
+    color: $color-grey-dark-2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__node-avatar {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-top: .35rem;
+  }
+
+
+}
+
+

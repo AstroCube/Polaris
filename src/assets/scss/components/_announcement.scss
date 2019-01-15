@@ -1,0 +1,50 @@
+.announcement {
+  padding: 5rem 3rem;
+
+  &__head {
+    text-align: center;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid $color-white;
+  }
+
+  &__title {
+    font-size: 4rem;
+  }
+
+  &__author {
+    color: $color-white;
+  }
+
+  &__author-image {
+    display: inline-block;
+    position: relative;
+    top: .1rem;
+    padding: 0 .4rem;
+    width: 1.6rem;
+    height: auto;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+
+  &__author-placeholder {
+    text-decoration: none;
+    color: white;
+
+    span {
+      font-weight: 700;
+    }
+  }
+
+  &__post {
+    padding: 3rem 2rem;
+  }
+
+  &__content {
+    padding: 3rem 0;
+  }
+
+  &__button {
+    float: right;
+  }
+
+}

@@ -1,0 +1,84 @@
+.punishment {
+  position: relative;
+  background-color: $color-tertiary-dark;
+  border-top: 3px solid $color-secondary;
+  padding: 2rem 3rem;
+  width: 100%;
+
+  &__table-small {
+    width: 15%;
+  }
+
+  &__table-large {
+    width: 25%;
+  }
+
+  &__profile-reason {
+    width: 40%;
+    height: 2rem;
+
+    & span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__profile-others {
+    width: 15%;
+    height: 2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    & span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__row a {
+    text-decoration: none;
+    color: $color-white;
+  }
+
+  &__checkout {
+    background-color: $color-tertiary-dark;
+    padding: 3rem 2rem;
+  }
+
+  &__checkout-indicator {
+    margin: 1rem 0;
+    font-size: 1.4rem;
+
+    & span {
+      @include titleFont;
+      font-size: 1.4rem;
+      margin-right: .6rem;
+    }
+
+    & img {
+      position: relative;
+      top: .2rem;
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+  }
+
+  &__item {
+    margin: 2rem 0;
+    color: $color-white;
+
+    & span {
+      @include titleFont;
+    }
+  }
+
+  &__advice {
+    display: block;
+    color: $color-white;
+    font-size: 1.3rem;
+    margin: 2rem 0;
+  }
+}

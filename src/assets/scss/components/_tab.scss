@@ -1,0 +1,47 @@
+.tab {
+  width: 100%;
+  display: none;
+
+  &--active {
+    display: block;
+  }
+
+  &__link {
+
+    @include titleFont;
+
+    background-color: $color-tertiary;
+    color: $color-white;
+    font-size: 1.4rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+    text-align: left;
+    transition: all .3s;
+
+    &:hover {
+      background-color: $color-secondary;
+    }
+
+    &--active {
+      background-color: $color-primary;
+    }
+
+    &--vertical {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    &--horizontal {
+      display: inline-block;
+      width: auto;
+      margin-right: 1rem;
+    }
+  }
+
+
+}

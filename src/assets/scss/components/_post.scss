@@ -1,0 +1,97 @@
+.post {
+  background-color: $color-light-black;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  
+  &__header {
+    display: flex;
+    align-items: center; 
+  }
+  
+  &__placeholder {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0 2rem; 
+  }
+
+  &__top {
+    display: flex;
+  }
+
+  &__date {
+    color: $color-white;
+    font-size: 1.3rem;
+  }
+
+  &__username {
+
+    @include titleFont;
+
+    text-decoration: none;
+  }
+
+  &__badges {
+    margin: 0 1rem;
+  }
+
+  &__date {
+    display: block;
+    width: auto;
+  }
+
+  &__user-avatar {
+    width: 4rem;
+    height: 4rem;
+
+    &--online {
+      box-shadow: 0 0 2px 1px #90ee90;
+    }
+  }
+
+  &__content {
+    padding: 2rem 0;
+  }
+
+  &__content-container {
+    color: $color-white;
+  }
+
+  &__footer {
+    text-align: right;
+  }
+
+  &__quote {
+
+    @include clearfix;
+
+    font-size: 1.3rem;
+    color: $color-white;
+
+    & a {
+      text-decoration: none;
+    }
+  }
+
+  &__quote-text {
+    background-color: $color-tertiary;
+    min-height: 4rem;
+    max-height: 10rem;
+    display: block;
+    padding: 1rem;
+    color: $color-white;
+    user-select: none;
+  }
+
+  &__quote-name {
+    @include titleFont;
+    margin: 0 .3rem;
+  }
+
+  &__quote-placeholder {
+    float: right;
+    margin: 1rem;
+    font-size: 1.3rem;
+  }
+
+}

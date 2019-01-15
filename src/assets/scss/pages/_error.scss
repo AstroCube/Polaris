@@ -1,0 +1,22 @@
+.error {
+  position: relative;
+  width: 80rem;
+  margin: 4rem auto;
+  text-align: center;
+
+  &__description {
+    @include absCenter;
+    width: 100%;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+
+  & img {
+    width: 100%;
+    height: 30rem;
+    object-fit: none;
+    filter: brightness(40%);
+  }
+}

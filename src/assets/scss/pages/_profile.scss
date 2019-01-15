@@ -1,0 +1,296 @@
+.profile {
+
+  &__button {
+    padding: .5rem 1.5rem !important;
+    margin-right: 1rem;
+  }
+
+  &__name {
+    margin-left: 1rem;
+  }
+
+  &__dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  &__dropdown-label {
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__dropdown-content {
+    position: absolute;
+    top: 5rem;
+    right: 1rem;
+    height: 0;
+    background-color: $color-tertiary-dark;
+    overflow: hidden;
+    width: 24rem;
+    transition: all .5s;
+    padding-bottom: 0;
+    border-bottom: 3px transparent;
+    text-align: left;
+    z-index: 300;
+
+    &--active {
+      height: auto;
+      border-bottom: 3px solid $color-primary;
+      padding-bottom: 1rem;
+    }
+  }
+
+  &__dropdown-link {
+
+    @include titleFont;
+
+    display: block;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    transition: all .2s;
+    font-size: 1.4rem;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    margin: 2rem 1rem;
+    background-color: $color-light-black;
+
+    &--left {
+      display: flex;
+      flex-direction: column;
+      width: calc(50% - 2rem);
+      height: 100%;
+      padding: 0 1rem;
+    }
+
+    &--right {
+      width: 50%;
+      height: 36.6rem;
+      overflow-y: scroll;
+    }
+  }
+
+  &__content-section {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem .5rem;
+    width: calc(100% - 1rem);
+    min-height: 7rem;
+
+    &:not(:last-of-type) {
+      border-bottom: 1px dashed $color-tertiary-dark;
+    }
+  }
+
+  &__content-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    min-height: 100%;
+  }
+
+  &__content-info {
+    display: flex;
+    width: 80%;
+  }
+
+  &__avatar {
+    height: 5rem;
+    width: 5rem;
+
+    &--online {
+      box-shadow: 0 0 2px 1px #90ee90;
+    }
+  }
+
+  &__header {
+    width: 100%;
+  }
+
+  &__head {
+
+    @include titleFont;
+
+    font-size: 1.2rem;
+    color: $color-white;
+
+    &--tag{
+      margin-left: 1rem;
+      color: $color-secondary;
+    }
+
+    &--online {
+      color: $color-success-bs;
+    }
+  }
+
+  &__badges {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  &__badge {
+    @include titleFont;
+
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: $color-primary;
+    padding: .2rem .4rem;
+    margin-bottom: .3rem;
+    display: inline-block;
+
+    &:not(:last-of-type) {
+      margin-right: .5rem;
+    }
+  }
+
+  &__number {
+    @include titleFont;
+    font-size: 3rem;
+  }
+
+  &__friends {
+    display: flex;
+    flex-wrap: wrap;
+    width: 40%;
+  }
+
+  &__friends-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+  }
+
+  &__friend {
+    display: inline-block;
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-right: 1rem;
+  }
+
+  &__single-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__match {
+    display: block;
+    position: relative;
+    padding: 0 3rem;
+    height: 12rem;
+    text-decoration: none;
+
+    &:nth-of-type(odd) {
+      background-color: $color-tertiary-dark;
+    }
+
+    &:nth-of-type(even) {
+      background-color: $color-tertiary;
+    }
+  }
+
+  &__match-icon {
+
+    @include absTop;
+
+    display: inline-block;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  &__match-game {
+
+    @include absTop;
+    @include titleFont;
+
+    left: 12rem;
+    font-size: 1.3rem;
+    display: inline-block;
+  }
+
+  &__match-status {
+
+    @include absTop;
+    @include titleFont;
+
+    right: 3rem;
+    font-size: 1.3rem;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    display: inline-block;
+
+    &--lose {
+      background-color: $color-danger-bs;
+    }
+
+    &--win {
+      background-color: $color-success-bs;
+    }
+
+    &--anulated {
+      background-color: $color-warning-bs;
+    }
+  }
+
+  &__sections {
+    margin: 2rem 1rem;
+  }
+
+  &__menu {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__section-selector {
+    padding: 1rem 3rem;
+  }
+
+  &__tab {
+    margin: 2rem 0;
+    width: calc(100% - 4rem);
+    background-color: $color-tertiary-dark;
+    border-top: 3px solid $color-secondary;
+    padding: 2rem 3rem;
+  }
+
+  &__social-title {
+    @include titleFont;
+    font-size: 1.3rem;
+  }
+
+  &__social-link {
+    border-left: 3px solid $color-tertiary;
+    padding-left: 1rem;
+
+    & a {
+
+      @include titleFont;
+
+      font-size: 1.3rem;
+      text-decoration: none;
+    }
+  }
+
+  &__social-row {
+    margin: 2rem 0;
+  }
+
+  &__social-field {
+    background-color: $color-tertiary;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+}

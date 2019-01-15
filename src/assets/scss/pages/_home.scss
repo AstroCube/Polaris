@@ -1,0 +1,23 @@
+.home {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  &__announcements {
+    height: 50rem;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    top: -16.2rem;
+    left: 0;
+  }
+
+  &__news {
+    position: relative;
+    top: -8rem;
+    background-color: $color-tertiary-dark;
+    border-top: 3px solid $color-secondary;
+    margin: 0 10.4rem;
+    padding: 0 1.5rem;
+  }
+}

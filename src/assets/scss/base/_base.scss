@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  font-size: 62.5%; // 1 rem = 10px; 10px/16px = 62.5%
+  -webkit-font-smoothing: antialiased;
+
+  @include respond(tab-land) { // Width < 1200px?
+    font-size: 56.25%; // 1 rem = 9px; 0px/16px = 56.25%
+  }
+
+  @include respond(tab-port) { // Width < 900px?
+    font-size: 50%; // 1 rem = 8px; 8px/16px = 50%
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; //1rem = 12, 12/16
+  }
+}
+
+body {
+  box-sizing: content-box;
+  background-color: darken($color-tertiary-dark, 5%);
+
+  @include respond(tab-port) {
+    padding: 0;
+  }
+}
+
+section {
+  @include clearfix;
+  margin: 3rem 10.4rem;
+  padding: 0 1.5rem;
+}

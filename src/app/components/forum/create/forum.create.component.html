@@ -1,0 +1,60 @@
+<section>
+  <div class="breadcrumb__section forum-admin__breadcumb">
+    <a class="breadcrumb__link">Panel de administrador</a>
+    <a routerLink="/admin/foros" class="breadcrumb__link">Foros</a>
+    <a routerLink="/admin/foros/crear" class="breadcrumb__link">Nuevo foro</a>
+  </div>
+  <h1 class="heading">Nuevo foro</h1>
+  <form #create_forum="ngForm" (submit)="onSubmit()">
+    <div class="row">
+      <div class="col-1-of-2">
+        <div class="forum-admin__form">
+          <label for="name" class="form__icon"><fa-icon [icon]="faPencilAlt"></fa-icon></label>
+          <input id="name" name="name" #name="ngModel" [(ngModel)]="forum.name" type="text" class="form__input" [class.form__input--invalid]="!name.valid && name.touched" placeholder="Nombre" required>
+        </div>
+        <div class="forum-admin__form">
+          <label for="order" class="form__icon"><fa-icon [icon]="faSort"></fa-icon>&nbsp;</label>
+          <input id="order" name="order" #order="ngModel" [(ngModel)]="forum.order" type="number" class="form__input" [class.form__input--invalid]="!order.valid && order.touched" placeholder="Órden" required>
+        </div>
+        <div class="forum-admin__form">
+          <label class="form__icon"><fa-icon [icon]="faIndent"></fa-icon>&nbsp;</label>
+          <div class="forum__tree-form">
+            <ng-select
+              *ngIf="!only_categories"
+              id="parent"
+              name="parent"
+              #parent="ngModel"
+              [items]="forum_tree"
+              bindLabel="name"
+              groupBy="category"
+              [selectableGroup]="true"
+              [(ngModel)]="forum.parent"
+              class="form__select"
+              [searchable]="false"
+              required
+            ></ng-select>
+            <ng-select
+              *ngIf="only_categories"
+              id="parent_categories"
+              name="parent_categories"
+              #parent_categories="ngModel"
+              [items]="forum_tree"
+              bindLabel="name"
+              bindValue="_id"
+              [(ngModel)]="forum.category"
+              class="form__select"
+              [searchable]="false"
+              required
+            ></ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-1-of-2 u-margin-bottom-small">
+        <textarea id="description" name="order" #description="ngModel" [(ngModel)]="forum.description" cols="30" rows="10" class="form__textarea" placeholder="Descripción del foro"></textarea>
+      </div>
+    </div>
+    <div class="u-right-text">
+      <button class="btn btn--primary" [disabled]="!create_forum.valid"><fa-icon class="btn__icon--left" [icon]="faPlus"></fa-icon>Crear foro</button>
+    </div>
+  </form>
+</section>

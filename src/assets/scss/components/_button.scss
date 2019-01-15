@@ -1,0 +1,131 @@
+.btn {
+  &,
+  &:link,
+  &:visited {
+    text-decoration: none;
+    padding: 1rem 2rem;
+    display: inline-block;
+    transition: all .3s;
+    position: relative;
+    font-size: $default-font-size;
+    user-select: none;
+
+    //Change for the <button> element
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: $color-grey-dark;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $color-grey-dark;
+    }
+  }
+
+  &--uppercase {
+    text-transform: uppercase;
+  }
+
+  &:hover {
+    box-shadow: $shadow-small;
+  }
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-primary, 5%);
+    }
+  }
+
+  &--secondary {
+    background-color: $color-secondary;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-secondary, 5%);
+    }
+  }
+
+  &--blue {
+    background-color: $color-primary-bs;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-primary-bs, 5%);
+    }
+  }
+
+  &--red {
+    background-color: $color-danger-bs;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-danger-bs, 5%);
+    }
+  }
+
+  &--green {
+    background-color: $color-success-bs;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-success-bs, 5%);
+    }
+  }
+
+  &--white {
+    background-color: $color-white;
+    color: $color-grey-dark-2;
+
+    &:hover {
+      background-color: darken($color-white, 5%);
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    color: $color-white;
+    transition: all .2s;
+    box-shadow: none;
+
+    &:hover {
+      color: $color-secondary;
+      box-shadow: none;
+    }
+  }
+
+  &--strong {
+    font-family: $font-headings;
+    font-weight: 700;
+  }
+
+
+  &::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+  }
+
+  &__icon {
+    &--left {
+      margin-right: 1rem;
+    }
+
+    &--right {
+      margin-left: 1rem;
+    }
+  }
+
+}

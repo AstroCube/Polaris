@@ -1,0 +1,104 @@
+<section>
+  <h1 class="heading">Tus amigos</h1>
+  <div class="friendship__menu">
+    <button class="tab__link tab__link--horizontal tab__link--active" tab tab_id="all"><fa-icon [icon]="faUsers"></fa-icon> Todos tus amigos</button>
+    <button class="tab__link tab__link--horizontal u-float-right" tab tab_id="rejected"><fa-icon [icon]="faUserTimes"></fa-icon> Solicitudes rechazadas</button>
+    <button class="tab__link tab__link--horizontal u-float-right" tab tab_id="pending"><fa-icon [icon]="faUserPlus"></fa-icon> Solicitudes pendientes</button>
+  </div>
+  <div id="all" class="tab tab--active friendship__panel">
+    <h2 class="heading">Amigos conectados</h2>
+    <div class="friendship__wrapper">
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+    </div>
+    <h2 class="heading">Amigos desconectados</h2>
+    <div class="friendship__wrapper">
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+      <a href="#" class="tooltip friendship__user">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est">
+        <span class="tooltip__text tooltip__text--right tooltip__text--white tooltip__text--small">ElTomate</span>
+      </a>
+    </div>
+  </div>
+  <div id="rejected" class="tab friendship__panel">
+    <h2 class="heading u-center-text">¡No tienes solicitudes rechazadas!</h2>
+    <div class="table--black">
+      <div class="table__header">
+        <div class="table__cell">
+          <p>Jugador</p>
+        </div>
+        <div class="table__cell">
+          <p>Acción</p>
+        </div>
+        <div class="table__cell">
+          <p>Enviada</p>
+        </div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell">
+          <p>Tu a <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="xd" class="friendship__head"><a href="#" class="friendship__nickname">ElTomate</a></p>
+        </div>
+        <div class="table__cell">
+          <a href="#" class="btn btn--primary shop__description-slug-button shop__cart-button">Reenviar</a>
+        </div>
+        <div class="table__cell">
+          <p>hace menos de un minuto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pending" class="tab friendship__panel">
+    <h2 class="heading u-center-text">¡No tienes solicitudes pendientes!</h2>
+    <div class="table--black">
+      <div class="table__header">
+        <div class="table__cell">
+          <p>Jugador</p>
+        </div>
+        <div class="table__cell">
+          <p>Acción</p>
+        </div>
+        <div class="table__cell">
+          <p>Enviada</p>
+        </div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell">
+          <p>Tu a <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="xd" class="friendship__head"><a href="#" class="friendship__nickname">ElTomate</a></p>
+        </div>
+        <div class="table__cell">
+          <a href="#" class="btn btn--green shop__description-slug-button shop__cart-button">Aceptar</a>
+          <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button">Rechazar</a>
+          <a href="#" class="btn btn--primary shop__description-slug-button shop__cart-button">Cancelar</a>
+        </div>
+        <div class="table__cell">
+          <p>hace menos de un minuto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

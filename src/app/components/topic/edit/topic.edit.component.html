@@ -1,0 +1,30 @@
+<section>
+  <div class="row">
+    <div class="col-3-of-4">
+      <div class="breadcrumb">
+        <div class="breadcrumb__section">
+          <a class="breadcrumb__link" routerLink="/foro">Foro</a>
+          <a *ngIf="forum_data.breadcrumb.parent" class="breadcrumb__link" routerLink="{{'/foro/' + forum_data.breadcrumb.parent._id}}">{{forum_data.breadcrumb.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + forum_data.breadcrumb.actual._id}}">{{forum_data.breadcrumb.actual.name}}</a>
+          <a class="breadcrumb__link">Editar</a>
+        </div>
+      </div>
+      <form class="topic" #topic_edit="ngForm" (submit)="onSubmit()">
+        <h1 class="heading u-margin-bottom-small">Editando en <span class="heading--secondary"><a routerLink="{{'/foro/tema/' + topic_data.topic_info.id}}">{{post.subject}}</a></span></h1>
+        <div *ngIf="post.id === original_post.id" class="u-margin-bottom-medium topic__edit">
+          <label class="account__label" for="subject">Asunto del tema</label>
+          <input id="subject" name="subject" #subject="ngModel" [(ngModel)]="post.subject" type="text" class="form__input form__input--full" maxlength="60" required>
+        </div>
+        <div class="u-margin-bottom-medium paragraph--white">
+          <ckeditor id="content" name="content" #content="ngModel" [(ngModel)]="post.content" [editor]="editor"></ckeditor>
+        </div>
+        <div class="u-right-text u-margin-bottom-small">
+          <button class="btn btn--secondary"><fa-icon [icon]="faEdit" class="btn__icon--left"></fa-icon>Actualizar</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-1-of-4">
+      <forum-feed></forum-feed>
+    </div>
+  </div>
+</section>

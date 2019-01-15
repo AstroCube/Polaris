@@ -1,0 +1,55 @@
+<section>
+  <div class="row">
+    <div class="col-3-of-4">
+      <div class="breadcrumb">
+        <div class="breadcrumb__section">
+          <a class="breadcrumb__link" routerLink="/foro">Foro</a>
+          <a *ngIf="pre_fetch.breadcrumb.parent" class="breadcrumb__link" routerLink="{{'/foro/' + pre_fetch.breadcrumb.parent._id}}">{{pre_fetch.breadcrumb.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + pre_fetch.breadcrumb.actual._id}}">{{pre_fetch.breadcrumb.actual.name}}</a>
+          <a class="breadcrumb__link">Nuevo tema</a>
+        </div>
+      </div>
+      <form class="topic" #topic_new="ngForm" (submit)="onSubmit()">
+        <h1 class="heading u-margin-bottom-small">Nuevo tema en <span class="heading--secondary">{{pre_fetch.breadcrumb.actual.name}}</span></h1>
+        <div class="row u-margin-bottom-medium">
+          <div class="col-1-of-2">
+            <label class="account__label" for="subject">Asunto del tema</label>
+            <input id="subject" name="subject" #subject="ngModel" [(ngModel)]="topic.subject" [class.form__input--invalid]="subject.touched && !subject.valid" type="text" class="form__input form__input--full" maxlength="60" required>
+          </div>
+          <div class="col-1-of-2">
+            <div *ngIf="pre_fetch.permissions.pin" class="u-margin-bottom-small tooltip--top">
+              <label for="pin" class="form__checkbox" tooltip content="Con esta opción tu tema se mostrará al inicio del foro" placement="top">
+                <input id="pin" name="pin" #pin="ngModel" [(ngModel)]="topic.pinned" class="form__checkbox-input" type="checkbox">
+                <span class="form__checkbox-checkmark"></span>
+              </label>
+              <label for="pin" class="link link--small link--white"><fa-icon [icon]="faThumbtack"></fa-icon> Anclar</label>
+            </div>
+            <div *ngIf="pre_fetch.permissions.lock" class="u-margin-bottom-small">
+              <label for="lock" class="form__checkbox" tooltip content="Con esta opción las personas no podrán responder a tu tema" placement="top">
+                <input id="lock" name="lock" #lock="ngModel" [(ngModel)]="topic.locked" class="form__checkbox-input" type="checkbox">
+                <span class="form__checkbox-checkmark"></span>
+              </label>
+              <label for="lock" class="link link--small link--white"><fa-icon [icon]="faLock"></fa-icon> Cerrar</label>
+            </div>
+            <div *ngIf="pre_fetch.permissions.official" class="u-margin-bottom-small">
+              <label for="official" class="form__checkbox" tooltip content="Esta opción marcará el tema como mensaje oficial del staff" placement="top">
+                <input id="official" name="official" #official="ngModel" [(ngModel)]="topic.official" class="form__checkbox-input" type="checkbox">
+                <span class="form__checkbox-checkmark"></span>
+              </label>
+              <label for="official" class="link link--small link--white"><fa-icon [icon]="faBookmark"></fa-icon> Oficial</label>
+            </div>
+          </div>
+        </div>
+        <div class="u-margin-bottom-medium paragraph--white">
+          <ckeditor id="content" name="content" #content="ngModel" [(ngModel)]="topic.content" tagName="editor" [editor]="editor"></ckeditor>
+        </div>
+        <div class="u-right-text u-margin-bottom-small">
+          <button class="btn btn--secondary"><fa-icon [icon]="faPlus" class="btn__icon--left"></fa-icon>Crear tema</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-1-of-4">
+      <forum-feed></forum-feed>
+    </div>
+  </div>
+</section>

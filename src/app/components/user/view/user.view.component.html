@@ -1,0 +1,238 @@
+<section>
+  <div class="row">
+    <div class="col-1-of-2">
+      <h1 class="heading heading--primary profile__name">{{user.username}}</h1>
+    </div>
+    <div class="col-1-of-2 u-right-text" *ngIf="!logged_details.own_profile && logged_details.logged">
+      <a href="#" *ngIf="!logged_details.are_friends" class="btn btn--green btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserPlus"></fa-icon> Añadir amigo</a>
+      <a href="#" *ngIf="logged_details.are_riends" class="btn btn--red btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserTimes"></fa-icon> Eliminar amigo</a>
+      <div class="profile__dropdown" *ngIf="logged_details.can_punish">
+        <div class="profile__dropdown-label">
+          <span class="btn btn--blue btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserTie"></fa-icon></span>
+        </div>
+        <div class="profile__dropdown-content">
+          <a href="#" class="profile__dropdown-link" *ngIf="logged_details.can_punish"><fa-icon [icon]="faGavel"></fa-icon> Sancionar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="profile__content">
+    <div class="profile__content--left">
+      <div class="profile__content-section">
+        <div class="profile__content-indicator">
+          <img src="{{'https://minotar.net/avatar/' + user.skin}}" alt="{{user.username}}" class="profile__avatar" [class.profile__avatar--online]="user.last_seen == 'conectado'">
+        </div>
+        <div class="profile__content-info">
+          <div class="profile__header">
+            <h3 class="profile__head">
+              <span *ngIf="user.last_seen != 'conectado'">Última vez: {{user.last_seen | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+              <span *ngIf="user.last_seen == 'conectado'" class="profile__head--online">Conectado ahora mismo</span>
+              <span class="profile__head--tag" *ngIf="user.show_status">en {{user.last_game}}</span>
+            </h3>
+            <h3 class="profile__head">Nível en el juego: <span class="profile__head--tag">{{user.level}}</span></h3>
+            <div class="profile__badges" *ngIf="groups && groups.length >= 1">
+              <span *ngFor="let group of groups">
+                <a *ngIf="group.badge_color && group.badge_link" [href]="group.badge_link" [style.background]="group.badge_color" class="profile__badge">{{group.name}}</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile__content-section">
+        <div class="profile__content-indicator">
+          <span class="profile__number">
+            {{user.friends}}
+          </span>
+        </div>
+        <div class="profile__content-info">
+          <div class="profile__friends-title">
+            <h3 class="profile__head">Amigos <span *ngIf="logged_details.common_friends != 0">({{logged_details.common_friends}}) en común</span><span *ngIf="logged_details.common_friends == 0">en el servidor</span></h3>
+          </div>
+          <div class="profile__friends">
+            <a href="#" class="tooltip">
+              <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="TakeMyTomato" class="profile__friend">
+              <span class="tooltip__text tooltip__text--left tooltip__text--white tooltip__text--small">TakeMyTomato</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="profile__content-section">
+        <div class="profile__content-indicator">
+          <span class="profile__number">
+            0
+          </span>
+        </div>
+        <div class="profile__content-info">
+          <div class="profile__single-info">
+            <h3 class="profile__head">Partidas ganadas</h3>
+            <p class="paragraph">De 100.000 partidas jugadas desde que ingresó al servidor.</p>
+          </div>
+        </div>
+      </div>
+      <div class="profile__content-section">
+        <div class="profile__content-indicator">
+          <span class="profile__number">
+            0
+          </span>
+        </div>
+        <div class="profile__content-info">
+          <div class="profile__single-info">
+            <h3 class="profile__head">Puntos de logro</h3>
+            <p class="paragraph">Obtenidos a lo largo de su historia.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile__content--right" scrollbar>
+      <a href="#" class="profile__match">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
+        <span class="profile__match-game">SkyWars</span>
+        <span class="profile__match-status profile__match-status--win">Victoria</span>
+      </a>
+      <a href="#" class="profile__match">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
+        <span class="profile__match-game">SkyWars</span>
+        <span class="profile__match-status profile__match-status--win">Victoria</span>
+      </a>
+      <a href="#" class="profile__match">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
+        <span class="profile__match-game">SkyWars</span>
+        <span class="profile__match-status profile__match-status--anulated">Anulada</span>
+      </a>
+      <a href="#" class="profile__match">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
+        <span class="profile__match-game">SkyWars</span>
+        <span class="profile__match-status profile__match-status--win">Victoria</span>
+      </a>
+      <a href="#" class="profile__match">
+        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
+        <span class="profile__match-game">SkyWars</span>
+        <span class="profile__match-status profile__match-status--lose">Derrota</span>
+      </a>
+    </div>
+  </div>
+  <div class="profile__sections">
+    <div class="profile__menu">
+      <button class="tab__link tab__link--horizontal tab__link--active profile__section-selector" tab tab_id="profile">Perfil</button>
+      <button class="tab__link tab__link--horizontal profile__section-selector" tab tab_id="achievements">Logros</button>
+      <button class="tab__link tab__link--horizontal profile__section-selector" tab tab_id="stats">Estadísticas</button>
+      <button class="tab__link tab__link--horizontal profile__section-selector" tab tab_id="punishments">Infracciones</button>
+    </div>
+    <div id="profile" class="tab tab--active profile__tab">
+      <h1 class="heading">Perfil</h1>
+      <div class="row profile__social-row">
+        <div class="col-1-of-4" *ngIf="user.twitter">
+          <span class="profile__social-title">Twitter</span>
+          <div class="profile__social-link"><a href="{{'https://www.twitter.com/' + user.twitter}}">{{user.twitter}}</a></div>
+        </div>
+        <div class="col-1-of-4" *ngIf="user.reddit">
+          <span class="profile__social-title">Reddit</span>
+          <div class="profile__social-link"><a href="{{'https://www.reddit.com/' + user.reddit}}">{{user.reddit}}</a></div>
+        </div>
+        <div class="col-1-of-4" *ngIf="user.steam">
+          <span class="profile__social-title">Steam</span>
+          <div class="profile__social-link"><a href="{{'https://steamcommunity.com/id/' + user.steam}}">{{user.steam}}</a></div>
+        </div>
+        <div class="col-1-of-4">
+          <span class="profile__social-title" *ngIf="user.twitch">Twitch</span>
+          <div class="profile__social-link"><a href="{{'https://twitch.tv/' + user.twitch}}">{{user.twitch}}</a></div>
+        </div>
+      </div>
+      <div class="row profile__social-row">
+        <div class="col-1-of-2">
+          <span class="profile__social-title">Email público</span>
+          <div class="profile__social-field">
+            <p class="paragraph paragraph--white" *ngIf="user.public_email">{{user.public_email}}</p>
+            <p class="paragraph paragraph--white" *ngIf="!user.public_email">No hay información.</p>
+          </div>
+        </div>
+        <div class="col-1-of-2">
+          <span class="profile__social-title">Ocupación</span>
+          <div class="profile__social-field">
+            <p class="paragraph paragraph--white" *ngIf="user.occupation">{{user.occupation}}</p>
+            <p class="paragraph paragraph--white" *ngIf="!user.occupation">No hay información.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row profile__social-row">
+        <div class="col-1-of-2">
+          <span class="profile__social-title">Ubicación</span>
+          <div class="profile__social-field">
+            <p class="paragraph paragraph--white" *ngIf="user.location">{{user.location}}</p>
+            <p class="paragraph paragraph--white" *ngIf="!user.location">No hay información.</p>
+          </div>
+        </div>
+        <div class="col-1-of-2">
+          <span class="profile__social-title">Interéses</span>
+          <div class="profile__social-field">
+            <p class="paragraph paragraph--white" *ngIf="user.interests">{{user.interests}}</p>
+            <p class="paragraph paragraph--white" *ngIf="!user.interests">No hay información.</p>
+          </div>
+        </div>
+      </div>
+      <span class="profile__social-title">Acerca de mí</span>
+      <div class="profile__social-field" *ngIf="!user.about">
+        ElTomate no ha escrito nada aún.
+      </div>
+      <div class="profile__social-field paragraph--white" [innerHTML]="user.about | noSanitize" *ngIf="user.about"></div>
+    </div>
+    <div id="achievements" class="tab profile__tab">
+      <h2 class="heading">Logros</h2>
+    </div>
+    <div id="stats" class="tab profile__tab">
+      <h2 class="heading">Estadísticas</h2>
+
+    </div>
+    <div id="punishments" class="tab profile__tab">
+      <h2 class="heading u-margin-bottom-small">Infracciones</h2>
+      <div class="table">
+        <div class="table__header">
+          <div class="table__cell">
+            <p>Hecha por</p>
+          </div>
+          <div class="table__cell">
+            <p>Sancionado</p>
+          </div>
+          <div class="table__cell">
+            <p>Razón</p>
+          </div>
+          <div class="table__cell">
+            <p>Tipo</p>
+          </div>
+          <div class="table__cell">
+            <p>Estado</p>
+          </div>
+          <div class="table__cell">
+            <p>Fecha</p>
+          </div>
+        </div>
+        <div class="table__row punishment__row table--fixed" *ngFor="let punishment of punishments">
+          <div class="table__cell punishment__profile-others">
+            <a [style.color]="punishment.punisher_placeholder.user_color" routerLink="{{ '/' + punishment.punisher_placeholder.username}}">{{punishment.punisher_placeholder.username}}</a>
+          </div>
+          <div class="table__cell punishment__profile-others">
+            <a [style.color]="punishment.punished_placeholder.user_color" routerLink="{{ '/' + punishment.punished_placeholder.username}}">{{punishment.punished_placeholder.username}}</a>
+          </div>
+          <div class="table__cell punishment__profile-reason">
+            <span>{{punishment.punishment_details.reason}}</span>
+          </div>
+          <div class="table__cell punishment__profile-others">
+            <span *ngIf="punishment.punishment_details.type == 'warn'" style="color: green">{{punishment.punishment_details.type | titlecase}}</span>
+            <span *ngIf="punishment.punishment_details.type =='kick'" style="color: orange">{{punishment.punishment_details.type | titlecase}}</span>
+            <span *ngIf="punishment.punishment_details.type == 'ban' || punishment.punishment_details.type =='tempban'" style="color: red">{{punishment.punishment_details.type | titlecase}}</span>
+
+          </div>
+          <div class="table__cell punishment__profile-others">
+            <span *ngIf="punishment.punishment_details.active && !punishment.punishment_details.automatic && !punishment.punishment_details.appealed">Activo</span>
+            <span *ngIf="punishment.punishment_details.active && punishment.punishment_details.automatic" style="color: orange">Automatico</span>
+            <span *ngIf="punishment.punishment_details.active && punishment.punishment_details.appealed" style="color: dodgerblue">En disputa</span>
+            <span *ngIf="!punishment.punishment_details.active" style="color: green">Inactivo/Apelado</span>
+          </div>
+          <div class="table__cell">
+            <a routerLink="{{ '/punishments/' + punishment.punishment_details._id}}">{{punishment.punishment_details.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

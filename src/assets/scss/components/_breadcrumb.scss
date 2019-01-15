@@ -1,0 +1,32 @@
+.breadcrumb {
+  max-width: 100%;
+  min-height: 3rem;
+  list-style: none;
+  overflow: hidden;
+  background-color: $color-tertiary-dark;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  &__link {
+
+    @include titleFont;
+
+    display: inline-block;
+    font-size: 1.4rem;
+    text-decoration: none;
+    padding: 0 1rem 0 2rem;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-secondary;
+    }
+
+    &:not(:last-of-type):after {
+      content: '»';
+      font-size: 1.8rem;
+      margin-left: 2rem;
+      color: $color-primary;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+body {
+  font-family: $font-body;
+  font-weight: 400;
+  font-size: $default-font-size;
+  line-height: 1.7;
+  color: $color-grey-dark;
+}
+
+.heading {
+  font-weight: 600;
+  letter-spacing: -1px;
+  font-family: $font-headings;
+  text-transform: uppercase;
+  color: $color-white;
+
+
+  &--primary {
+    color: $color-primary;
+  }
+
+  &--secondary {
+    color: $color-secondary;
+  }
+
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.paragraph {
+  font-size: 1.4rem;
+
+  & a {
+    text-decoration: none;
+    font-weight: 700;
+    color: $color-secondary;
+    transition: all .3s;
+
+    &:hover {
+      color: darken($color-secondary, 10%);
+    }
+  }
+
+  &--gutter {
+    &:not(last-child) {
+      margin-bottom: 3rem;
+    }
+  }
+
+  &--lead {
+    font-size: 1.8rem;
+  }
+
+  &--white {
+    color: $color-white;
+  }
+}
+
+.link {
+  text-decoration: none;
+  user-select: none;
+
+  &--small {
+    font-size: 1.4rem;
+  }
+
+  &--regular {
+    font-size: $default-font-size;
+  }
+
+  &--big {
+    font-size: 1.8rem;
+  }
+
+  &--primary {
+    color: $color-primary;
+    transition: all .3s;
+
+    &:hover {
+      color: darken($color-primary, 10%);
+    }
+  }
+
+  &--secondary {
+    color: $color-secondary;
+    transition: all .3s;
+
+    &:hover {
+      color: darken($color-secondary, 10%);
+    }
+  }
+
+  &--white {
+    color: $color-white;
+    transition: all .3s;
+
+    &:hover {
+      color: darken($color-white, 10%);
+    }
+  }
+}
+
+.medium-title {
+  font-size: 3rem;
+  font-weight: 400;
+
+  @include respond(phone) {
+    font-size: 2rem;
+  }
+}

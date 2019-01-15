@@ -1,0 +1,211 @@
+<section>
+  <div class="row">
+    <div class="col-1-of-4">
+      <div class="account__menu u-margin-top-big">
+        <button class="tab__link tab__link--vertical tab__link--active" tab tab_id="personal_info"><fa-icon [icon]="faUser"></fa-icon> Información Personal</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="account_settings"><fa-icon [icon]="faFingerprint"></fa-icon> Ajústes de cuenta</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="social_networks"><fa-icon [icon]="faShareSquare"></fa-icon> Redes sociales</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="profile_customization"><fa-icon [icon]="faColumns"></fa-icon> Personalizar perfil</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="rank_privileges"><fa-icon [icon]="faStar"></fa-icon> Privilégios de rango</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="website_configuration"><fa-icon [icon]="faKeyboard"></fa-icon> Configuración web</button>
+      </div>
+    </div>
+    <div class="col-3-of-4">
+      <h1 *ngIf="own" class="heading heading--primary u-center-text u-margin-bottom-medium">
+        Editando tu cuenta
+      </h1>
+      <h1 *ngIf="!own" class="heading heading--primary u-center-text u-margin-bottom-medium">
+        Editando el perfil de <img [alt]="user.username" class="account__avatar" src="{{ 'https://minotar.net/avatar/' + user.skin }}"> <span class="heading--secondary">{{user.username}}</span>
+      </h1>
+      <form id="personal_info" #personal_info="ngForm" (ngSubmit)="formSubmit()" class="tab tab--active account__panel">
+        <h1 class="heading">Información personal</h1>
+        <div class="row">
+          <div class="col-1-of-2">
+            <div class="account__field">
+              <label class="account__label">Género</label>
+              <ng-select id="gender" #gender="ngModel" name="gender" [(ngModel)]="user.gender" [searchable]="false" [items]="gender_options" bindValue="value"></ng-select>
+            </div>
+            <div class="account__field">
+              <label class="account__label" for="occupation">Ocupación</label>
+              <input id="occupation" name="occupation" #occupation="ngModel" [(ngModel)]="user.occupation" type="text" class="form__input form__input--full" placeholder="Ocupación">
+            </div>
+          </div>
+          <div class="col-1-of-2">
+            <div class="account__field">
+              <label class="account__label" for="location">Ubicación</label>
+              <input id="location" name="location" #location="ngModel" [(ngModel)]="user.location" type="text" class="form__input form__input--full" placeholder="Ubicación">
+            </div>
+            <div class="account__field">
+              <label class="account__label" for="interests">Interéses</label>
+              <input id="interests" name="interests" #interests="ngModel" [(ngModel)]="user.interests" type="text" class="form__input form__input--full" placeholder="Interéses">
+            </div>
+            <button class="btn btn--primary u-float-right u-margin-top-small">Actualizar</button>
+          </div>
+        </div>
+      </form>
+      <form #account_settings="ngForm" (ngSubmit)="passwordUpdate()" id="account_settings" class="tab account__panel">
+        <h1 class="heading">Ajústes de cuenta</h1>
+        <div class="account__field">
+          <label class="account__label" for="email_locked">Correo electrónico</label>
+          <div class="row account__email-button">
+            <div class="col-1-of-2">
+              <input id="email_locked" name="email_locked" #email="ngModel" [(ngModel)]="user.email" type="text" class="form__input form__input--full" disabled>
+            </div>
+            <div class="col-1-of-2">
+              <a class="btn btn--secondary" popup popup_id="account-popup" (click)="openPopup()"><fa-icon [icon]="faMarker"></fa-icon> Actualiza tu correo electrónico</a>
+            </div>
+          </div>
+        </div>
+        <div class="account__field">
+          <div class="row">
+            <div class="col-1-of-3">
+              <label class="account__label" for="new-password">Nueva contraseña</label>
+              <input id="new-password" name="persistence" #form_new_password="ngModel" [(ngModel)]="new_password" type="password" class="form__input form__input--full" placeholder="Nueva contraseña">
+            </div>
+            <div class="col-1-of-3">
+              <label class="account__label" for="confirm-new-password">Confirmar contraseña</label>
+              <input id="confirm-new-password" name="confirm-new-password" #form_confirm_password="ngModel" [(ngModel)]="confirm_password" type="password" class="form__input form__input--full" placeholder="Confirmar contraseña">
+            </div>
+            <div class="col-1-of-3">
+              <label class="account__label" for="actual-password">Contraseña actual</label>
+              <input id="actual-password" name="actual-password" #form_actual_password="ngModel" [(ngModel)]="actual_password" type="password" class="form__input form__input--full" placeholder="Contraseña actual">
+            </div>
+          </div>
+          <div class="row u-margin-top-small">
+            <div class="col-1-of-2 account__security">
+              <span>Seguridad de contraseña: </span>
+              <ng2-password-strength-bar [passwordToCheck]="new_password" [strengthLabels]="labels"></ng2-password-strength-bar>
+            </div>
+            <div class="col-1-of-2">
+              <button class="btn btn--primary u-float-right">Actualizar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form id="social_networks" #social_networks="ngForm" (ngSubmit)="formSubmit()" class="tab account__panel">
+        <h1 class="heading">Redes sociales</h1>
+        <div class="row">
+          <div class="col-1-of-2">
+            <div class="account__field">
+              <label class="account__label" for="public_email"><fa-icon [icon]="faEnvelope"></fa-icon> Email público</label>
+              <input id="public_email" name="public_email" #public_email="ngModel" [(ngModel)]="user.public_email" type="text" class="form__input form__input--full" placeholder="Email público">
+            </div>
+            <div class="account__field">
+              <label class="account__label" for="twitter"><fa-icon [icon]="faTwitter"></fa-icon> Twitter</label>
+              <input id="twitter" name="twitter" #twitter="ngModel" [(ngModel)]="user.twitter" type="text" class="form__input form__input--full" placeholder="Twitter">
+            </div>
+            <div class="account__field">
+              <label class="account__label" for="steam"><fa-icon [icon]="faSteam"></fa-icon> Steam</label>
+              <input id="steam" name="steam" #steam="ngModel" [(ngModel)]="user.steam" type="text" class="form__input form__input--full" placeholder="Steam">
+            </div>
+          </div>
+          <div class="col-1-of-2">
+            <div class="account__field">
+              <label class="account__label"><fa-icon [icon]="faDiscord"></fa-icon> Discord</label>
+              <a *ngIf="!user.discord" href="{{url + 'discord-sync?id=' + user._id}}" class="account__discord-button">
+                <span class="account__discord-button--text">¡Inicia sesión con discord!</span>
+                <span class="account__discord-button--logo"><fa-icon [icon]="faDiscord"></fa-icon></span>
+              </a>
+              <div *ngIf="user.discord" class="account__discord-placeholder">
+                <div class="account__discord-avatar">
+                  <img src="{{'https://cdn.discordapp.com/avatars/' + user.discord.id + '/' + discord.avatar}}" alt="Avatar">
+                </div>
+                <span class="account__discord-message">
+                    @{{discord.username}}
+                </span>
+                <a class="account__discord-button account__discord-button--logout" (click)="discordLogout()"><fa-icon [icon]="faTimes"></fa-icon> Logout</a>
+              </div>
+            </div>
+            <div class="account__field">
+              <label class="account__label" for="reddit"><fa-icon [icon]="faReddit"></fa-icon> Reddit</label>
+              <input id="reddit" name="reddit" #reddit="ngModel" [(ngModel)]="user.reddit" type="text" class="form__input form__input--full" placeholder="Reddit">
+            </div>
+            <div class="account__field">
+              <label class="account__label" for="twitch"><fa-icon [icon]="faTwitch"></fa-icon> Twitch</label>
+              <input id="twitch" name="twitch" #twitch="ngModel" [(ngModel)]="user.twitch" type="text" class="form__input form__input--full" placeholder="Twitch">
+            </div>
+            <button class="btn btn--primary u-float-right u-margin-top-small">Actualizar</button>
+          </div>
+        </div>
+      </form>
+      <form id="profile_customization" #profile_customization="ngForm" (ngSubmit)="formSubmit()" class="tab account__panel">
+        <h1 class="heading">Personalización del perfil</h1>
+        <p class="paragraph paragraph--white">Usa este espacio para añadir contenido personalizado al final de tu <a routerLink="{{ '/' + user.username}}">perfil</a>. Puedes personalizarlo con el HTML dado con algunas exepciones:</p>
+        <ul class="account__customization-rules">
+          <li>Seguir nuestras <a routerLink="{{ '/reglas'}}">reglas</a> para el uso del sitio web.</li>
+          <li>No intentar usar código para salir de los espacios.</li>
+        </ul>
+        <strong class="account__customization-warning">*El no cumplir con lo anterior podrá llevar a una suspensión permanente de tu perfil.</strong>
+        <div class="account__customization-box u-margin-bottom-small paragraph--white">
+          <ckeditor id="about" name="about" #about="ngModel" [(ngModel)]="user.about" tagName="editor" [editor]="editor"></ckeditor>
+        </div>
+        <div class="u-right-text">
+          <button class="btn btn--primary">Actualizar</button>
+        </div>
+      </form>
+      <div id="rank_privileges" class="tab account__panel">
+        <h1 class="heading">Privilégios de rango</h1>
+        <h2 class="heading heading--secondary u-center-text">¡Muy pronto estarán disponibles los privilegios de rango!</h2>
+      </div>
+      <form id="website_configuration" #website_configuration="ngForm" (ngSubmit)="formSubmit()" class="tab account__panel">
+        <h1 class="heading">Configuración web</h1>
+        <div class="account__web-option">
+          <label for="subscribe" class="form__checkbox">
+            <input type="checkbox" id="subscribe" name="subscribe" #subscribe="ngModel" [(ngModel)]="user.subscribe_topics" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="subscribe" class="link link--small link--white">Subscribirme a los temas cuando respondo</label>
+        </div>
+        <div class="account__web-option">
+          <label for="quote" class="form__checkbox">
+            <input type="checkbox" id="quote" name="quote" #quote="ngModel" [(ngModel)]="user.alert_quoted" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="quote" class="link link--small link--white">Alertarme cuando citan uno de mis mensajes</label>
+        </div>
+        <div class="account__web-option">
+          <label for="gift" class="form__checkbox">
+            <input type="checkbox" id="gift" name="gift" #gift="ngModel" [(ngModel)]="user.accept_gifts" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="gift" class="link link--small link--white">Aceptar regalos de la tienda de otros usuarios</label>
+        </div>
+        <div class="account__web-option">
+          <label for="friend" class="form__checkbox">
+            <input type="checkbox" id="friend" name="friend" #friend="ngModel" [(ngModel)]="user.accept_friends" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="friend" class="link link--small link--white">Aceptar solicitudes de amistad de otros usuarios</label>
+        </div>
+        <div class="account__web-option">
+          <label for="display" class="form__checkbox">
+            <input type="checkbox" id="display" name="display" #display="ngModel" [(ngModel)]="user.show_status" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="display" class="link link--small link--white">Mostrar el juego que estoy jugando</label>
+        </div>
+        <div class="u-right-text">
+          <button class="btn btn--primary">Actualizar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<section class="account-popup" id="account-popup">
+  <form id="email_update" #email_update="ngForm" (ngSubmit)="emailUpdate()" class="account-popup__content">
+    <h2 class="heading heading--primary u-margin-bottom-small">Actualiza tu correo electrónico</h2>
+    <p class="paragraph paragraph--white">Para Socraft Network es muy importante la seguridad de tu cuenta, por lo que preferimos confirmar antes de que realmente quieras hacer este cambio. Al momento de actualizar tu correo electrónico tu cuenta migrará con ella, así que te hemos enviado un correo de seguridad con un código para verificar que eres tú. Simplemente ingresa el código recibido junto al nuevo correo electrónico para actualizarlo.</p>
+    <a popup popup_id="account-popup" #popup_close class="account-popup__close"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <div class="row u-margin-bottom-small">
+      <div class="col-1-of-2">
+        <label class="account__label" for="new_email">Nuevo correo electrónico</label>
+        <input id="new_email" name="new_email" #form_new_email="ngModel" [(ngModel)]="new_email" type="text" class="form__input form__input--full" [class.form__input--invalid]="!form_new_email.valid && form_new_email.touched" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+      </div>
+      <div class="col-1-of-2">
+        <label class="account__label" for="verification_code" >Código de seguridad</label>
+        <input id="verification_code" name="verification_code" #form_verification_code="ngModel" [(ngModel)]="verification_code" type="password" class="form__input form__input--full" [class.form__input--invalid]="!form_verification_code.valid && form_verification_code.touched" maxlength="6" required>
+      </div>
+    </div>
+    <button class="btn btn--primary" [disabled]="!email_update.valid">¡Actualiza mi correo!</button>
+  </form>
+</section>

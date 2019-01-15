@@ -1,0 +1,422 @@
+.header {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+
+  &__top {
+    height: 5rem;
+    position: relative;
+
+    @include respond(tab-port) {
+      background-color: $color-tertiary-dark;
+      height: 5rem;
+      position: relative;
+    }
+  }
+
+  &__top-background {
+    clip-path: polygon(0 0, 94% 0, 90% 100%, 0 100%);
+    background-color: $color-tertiary-dark;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__main {
+    height: 11rem;
+    position: relative;
+
+    @include respond(tab-port) {
+      background-color: $color-tertiary;
+      height: 11rem;
+      position: relative;
+    }
+  }
+
+  &__main-background {
+    clip-path: polygon(6% 0, 100% 0, 100% 100%, 10% 100%);
+    background-color: $color-tertiary;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__social-media {
+    padding: 1rem 1rem 1rem 10rem;
+    width: 8%;
+    float: left;
+    position: relative;
+
+    @include respond(tab-land) {
+      width: 10%;
+    }
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__announcements {
+    width: 40%;
+    height: 1rem;
+    padding: 1rem;
+    float: left;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__announcements-slider {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    animation-name: slide-words;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+  }
+
+  &__announcement {
+    font-size: 1.3rem;
+    color: $color-white;
+    display: block;
+    line-height: 1.3rem;
+    text-align: left;
+  }
+
+  &__buttons {
+    width: 25%;
+    height: 100%;
+    margin-right: 8%;
+    float: right;
+    position: relative;
+
+    @include respond(tab-port) {
+      width: auto;
+      margin: 0;
+      float: none;
+      text-align: center;
+    }
+  }
+
+  &__profile {
+    width: 25%;
+    height: 100%;
+    margin-right: 8%;
+    float: right;
+    position: relative;
+
+    @include respond(tab-port) {
+      width: 15rem;
+      margin: auto;
+      padding: 1rem;
+      float: none;
+    }
+  }
+
+  &__profile-container {
+    display: flex;
+    margin: 1rem 6rem;
+    float: right;
+    position: relative;
+
+    @include respond(tab-port) {
+      height: 100%;
+      margin: 0;
+      float: none;
+    }
+  }
+
+  &__alerts {
+    position: relative;
+    top: .3rem;
+    background-color: $color-primary;
+    text-decoration: none;
+    color: $color-white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 100%;
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+  }
+
+  &__profile-avatar {
+    position: relative;
+    display: inline-block;
+    width: 2.5rem;
+    float: left;
+    height: auto;
+    padding: 0 1rem;
+    cursor: pointer;
+  }
+
+  &__profile-image {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  &__profile-name {
+    font-size: 1.3rem;
+    padding-top: -.5rem;
+    cursor: pointer;
+    color: $color-white;
+    user-select: none;
+
+    @include respond(tab-port) {
+      font-size: 1.5rem;
+    }
+
+    &:after {
+      content: '\25BC';
+      display: block;
+      float: right;
+      font-size: 1rem;
+      margin-top: .6rem;
+      cursor: pointer;
+      margin-left: .8rem;
+      color: $color-white;
+      transition: all .3s;
+
+      @include respond(tab-port) {
+        display: inline-block;
+        float: none;
+        margin-top: 0;
+      }
+    }
+
+    &--active {
+      &:after {
+        color: $color-primary;
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+
+  &__menu {
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    max-height: 0;
+    background-color: $color-tertiary-dark;
+    overflow: hidden;
+    width: 23rem;
+    transition: all .5s;
+    border-bottom: 3px transparent;
+    z-index: 5;
+
+    &--expanded {
+      max-height: 50rem;
+    }
+
+    @include respond(tab-port) {
+
+      @include absCenterLineal;
+      width: 100vw;
+      top: 4.06rem;
+
+    }
+  }
+
+  &__menu-link {
+
+    @include titleFont;
+
+    text-decoration: none;
+    font-size: 1.4rem;
+    display: block;
+    padding: .5rem 0;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__menu-nav {
+    margin: .5rem 2.5rem 1rem 2.5rem;
+  }
+  &__menu-admin {
+    margin: 1.5rem;
+  }
+
+  &__social-icons {
+    padding: .5rem;
+    font-size: $default-font-size;
+    color: $color-white;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  &__logo {
+    position: relative;
+    display: block;
+    height: auto;
+    padding: .8rem;
+    width: 8rem;
+    margin-left: 10%;
+    float: left;
+
+    @include respond(tab-port) {
+      margin: auto;
+      float: none;
+    }
+  }
+
+  &__image {
+    width: 100%;
+  }
+
+  &__navigator {
+    width: 80%;
+    height: 100%;
+    float: right;
+    position: relative;
+    transition: all .7s;
+
+
+    @include respond(tab-land) {
+      width: 55%;
+    }
+
+    @include respond(tab-port) {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: -100%;
+      right: 0;
+      bottom: 0;
+      background: rgba($color-black, .6);
+    }
+
+    &--active {
+      @include respond(tab-port) {
+        left: 0;
+      }
+    }
+
+    & ul {
+      @include absTop;
+      left: 25%;
+      list-style-type: none;
+
+      @include respond(tab-land) {
+        left: 5%;
+      }
+
+      @include respond(tab-port) {
+        @include absCenter;
+      }
+    }
+
+    & li {
+
+      @include titleFont;
+
+      display: inline;
+      font-size: 1.4rem;
+      padding: 0 3rem;
+      float: left;
+
+      @include respond(tab-land) {
+        padding: 0 1rem;
+      }
+
+      @include respond(tab-port) {
+
+        display: block;
+        float: none;
+        font-size: 2rem;
+        text-align: center;
+        padding: 2rem 0;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $color-tertiary;
+        }
+      }
+
+      & a {
+        text-decoration: none;
+        color: $color-white;
+        transition: all .2s;
+
+        &:hover {
+          color: $color-secondary;
+        }
+      }
+    }
+  }
+
+  &__navigator-close {
+    &:link,
+    &:visited {
+
+      display: none;
+
+      @include respond(tab-port) {
+        color: $color-white;
+        position: absolute;
+        top: 2.5rem;
+        right: 2.5rem;
+        font-size: 3rem;
+        text-decoration: none;
+        display: inline-block;
+        transition: all .2s;
+        line-height: 1;
+      }
+
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__slug {
+    width: auto;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  &__navigator-responsive {
+    display: none;
+
+    @include respond(tab-port) {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      transform: translate(-10%, -50%);
+      color: $color-white;
+      font-size: 4rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .2s;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+
+  }
+}

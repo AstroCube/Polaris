@@ -1,0 +1,40 @@
+.search {
+  &__navbar {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: $color-tertiary;
+    color: $color-white;
+    border: 1px solid $color-tertiary-dark;
+    display: inline-block;
+    outline: 0;
+    transition: .3s all;
+    width: 60%;
+    height: 1.5rem;
+
+    &:focus {
+      border: 1px solid $color-primary;
+    }
+  }
+
+  &__navbar-button {
+    &,
+    &:link,
+    &:visited {
+      text-decoration: none;
+      padding: 1rem;
+      margin: 1.2rem 0;
+      position: relative;
+      top: .2rem;
+      height: 1.5rem;
+      display: inline-block;
+      transition: all .3s;
+      font-size: $default-font-size;
+      background-color: $color-primary;
+
+      //Change for the <button> element
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}

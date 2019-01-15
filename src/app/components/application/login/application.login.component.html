@@ -1,0 +1,42 @@
+<section>
+  <div class="row row--gutter">
+    <div class="col-1-of-2">
+      <form #login_request="ngForm" (ngSubmit)="loginRequest()" class="login__form">
+        <h1 class="heading heading--primary u-center-text u-margin-bottom-small">
+          Iniciar sesión
+        </h1>
+        <div class="login__cell">
+          <label for="email" class="form__icon"><fa-icon [icon]="faUser"></fa-icon></label>
+          <input class="form__input" [class.form__input--invalid]="!email.valid && email.touched" id="email" name="email" type="email" #email="ngModel" [(ngModel)]="requested_email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Correo electrónico" required>
+        </div>
+        <div class="login__cell">
+          <label for="password" class="form__icon"><fa-icon [icon]="faLock"></fa-icon></label>
+          <input class="form__input" [class.form__input--invalid]="!password.valid && password.touched" id="password" name="password" type="password" #password="ngModel" [(ngModel)]="requested_password" placeholder="Contraseña" required>
+        </div>
+        <div class="login__link">
+          <label for="persistence" class="form__checkbox">
+            <input class="form__checkbox-input" id="persistence" name="persistence" type="checkbox" #persistence="ngModel" [(ngModel)]="requested_persistence">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="persistence" class="link link--small link--white">Mantener la sesión iniciada</label>
+        </div>
+        <button class="btn btn--primary" [disabled]="!login_request.valid">Iniciar sesión</button>
+        <a href="#" class="login__link link link--small link--white">¿Olvidaste tu contraseña?</a>
+      </form>
+    </div>
+    <div class="col-1-of-2">
+      <div class="login__register">
+        <h1 class="heading heading--primary u-center-text u-margin-bottom-small">
+          ¿Como registrarte?
+        </h1>
+        <ol class="login__register-steps">
+          <li>Ingresa a nuestro servidor de Minecraft usando la IP <strong>mc.seocraft.net</strong> y sigue las instrucciones.</li>
+          <li>Una ves hayas <em>iniciado sesión</em> o ya estés <em>registrado</em> en el servidor, ingresa en el chat el comando <strong>/linkaccount</strong> seguido de tu correo electrónico. <em>(Ejemplo: /linkaccount tomatito@hotmail.com)</em></li>
+          <li>Inicia sesión en el correo electrónico que registraste y busca en tu <em>Bandeja de Entrada</em> el correo que te ha enviado <strong>Seocraft Network</strong>, y haz click en el vínculo <strong>"Verificar mi cuenta"</strong>. <em>(Recuerda: Si no encuentras tu correo revisa tu bandeja de Spam)</em></li>
+          <li>En la página se te pedirá que ingreses tu contraseña, escoge una que sea fácil de recordar, en caso de olvidarla puedes darle click a <strong>"¿Olvidaste tu contraseña?"</strong>.</li>
+        </ol>
+        <p class="u-center-text login__tip">* Recuerda que el staff de Seocraft Network nunca te pedirá tu contraseña... Nosotros ya la tenemos ¯\_(ツ)_/¯</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+<section>
+  <h1 class="heading u-margin-bottom-small">Sanción de XXX</h1>
+  <div class="row">
+    <div class="col-1-of-2">
+      <div class="u-margin-bottom-medium">
+        <label class="form__label" for="user">Usuario</label>
+        <input id="user" type="text" class="form__input form__input--full" placeholder="Ej. TakeMyTomato">
+      </div>
+      <div class="u-margin-bottom-medium">
+        <label class="form__label" for="type">Tipo de sanción</label>
+        <div class="form__select">
+          <select id="type">
+            <option value="0">Elíge un tipo de sanción</option>
+            <option value="1">Warn</option>
+            <option value="2">Kick</option>
+            <option value="3">Temporal ban</option>
+            <option value="4">Forum ban</option>
+            <option value="5">Ban</option>
+          </select>
+        </div>
+      </div>
+      <div class="u-margin-bottom-medium">
+        <label class="form__label" for="reason">Razón</label>
+        <input id="reason" type="text" class="form__input form__input--full" placeholder="Ej. Hack - Fly">
+      </div>
+      <div class="u-margin-bottom-medium">
+        <label class="form__label" for="evidence">Evidencia</label>
+        <input id="evidence" type="text" class="form__input form__input--full" placeholder="Ej. https://imgur.com/image">
+      </div>
+      <div class="u-margin-bottom-medium">
+        <label class="form__label" for="date">Expira</label>
+        <input id="date" type="text" class="form__input form__date form__input--full" placeholder="Haz click para seleccionar la fecha">
+      </div>
+    </div>
+    <div class="col-1-of-2">
+      <div class="punishment__checkout">
+        <h3 class="heading heading--primary u-margin-bottom-small">Resúmen de la sanción</h3>
+        <p class="punishment__checkout-indicator">
+          <span>Usuario a sancionar:</span> <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est"> ElTomate
+        </p>
+        <p class="punishment__checkout-indicator">
+          <span>Tipo de sanción:</span> Warn
+        </p>
+        <p class="punishment__checkout-indicator">
+          <span>Fecha en que expira:</span> 24/05/2001 a las 2:14
+        </p>
+        <p class="punishment__checkout-indicator">
+          <label for="active" class="form__checkbox">
+            <input type="checkbox" id="active" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="active" class="link link--small link--white">La sanción se encuentra activa</label>
+        </p>
+        <p class="punishment__checkout-indicator">
+          <label for="appealed" class="form__checkbox">
+            <input type="checkbox" id="appealed" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="appealed" class="link link--small link--white">La sanción se ha intentado apelar</label>
+        </p>
+        <div class="u-right-text"><a href="#" class="btn btn--secondary">Actualizar sanción</a></div>
+      </div>
+      <span class="punishment__advice">* Los cambios guardados surgirán efecto inmediatamente en el servidor.</span>
+    </div>
+  </div>
+</section>

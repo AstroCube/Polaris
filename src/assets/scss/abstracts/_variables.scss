@@ -1,0 +1,44 @@
+// -- Colors Variables -- //
+
+$color-primary: #f6b352;
+$color-secondary: #f68657;
+$color-tertiary: #383a3f;
+$color-tertiary-dark: #1f2124;
+
+$color-white: #fff;
+$color-black: #000;
+$color-light-black: #050404;
+
+$color-grey-light-1: #f7f7f7;
+$color-grey-light-2: #eeeeee;
+
+$color-grey-dark: #777;
+$color-grey-dark-2: #999;
+$color-grey-dark-3: #333;
+
+// -- Bootstrap Colors -- //
+
+$color-primary-bs: #0275d8;
+$color-success-bs: #38a220;
+$color-info-bs: #22a2b1;
+$color-warning-bs: #ef9e2b;
+$color-danger-bs: #e2361f;
+
+// -- Miscellaneous Colors -- //
+$color-discord: #7289da;
+
+// -- Font -- //
+
+$default-font-size: 1.6rem;
+$font-headings: "Montserrat", sans-serif !default;
+$font-body: "Open Sans", sans-serif !default;
+
+// -- Grid Variables -- //
+
+$grid-width: 114rem;
+$gutter-horizontal: 6rem;
+$gutter-vertical: 6rem;
+$gutter-vertical-small: 6rem;
+
+// -- Shadows -- //
+$shadow-small: 0 .1rem .3rem rgba($color-black,.2);

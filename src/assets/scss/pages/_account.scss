@@ -1,0 +1,243 @@
+.account {
+  &__menu {
+    width: 100%;
+  }
+
+  &__panel {
+    position: relative;
+    background-color: $color-tertiary-dark;
+    border-top: 3px solid $color-secondary;
+    padding: 2rem 3rem;
+  }
+
+  &__label {
+    display: block;
+    color: $color-white;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: .3rem 0;
+  }
+
+  &__avatar {
+    width: 1.9rem;
+    height: 1.9rem;
+    margin: 0 1rem;
+  }
+
+  &__security {
+    display: flex;
+    align-items: center;
+
+    & span {
+      font-size: 1.3rem;
+      color: $color-white;
+    }
+  }
+
+  &__field {
+    margin: 1rem 0;
+  }
+
+  &__email-input {
+    width: 50%;
+    float: left;
+  }
+
+  &__email-button  {
+    display: flex;
+    align-items: center;
+  }
+
+  &__discord-placeholder {
+    width: 100%;
+    height: 3.5rem;
+    position: relative;
+  }
+
+  &__discord-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: inline-block;
+
+    & img {
+      width: 100%;
+      height: 100%;
+      border-radius: .5rem;
+    }
+  }
+
+  &__discord-message {
+    @include absTop;
+    font-weight: 700;
+    font-family: $font-headings;
+    font-size: 1.4rem;
+    padding: 0 1rem;
+    color: $color-white;
+    text-transform: uppercase;
+  }
+
+  &__discord-button {
+    &,
+    &:link,
+    &:visited {
+      text-decoration: none;
+      display: inline-block;
+      transition: all .3s;
+      position: relative;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: $color-white;
+      font-family: $font-headings;
+      text-transform: uppercase;
+      user-select: none;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      width: 100%;
+
+      &:hover .account__discord-button--logo {
+        background-color: darken($color-discord, 10%);
+      }
+
+      &:hover .account__discord-button--text {
+        background-color: darken($color-discord, 5%);
+      }
+    }
+
+    &--text {
+      background-color: $color-discord;
+      padding: .6rem 1rem;
+      width: calc(90% - 2rem);
+      float: left;
+      display: block;
+      transition: all .3s;
+    }
+
+    &--logout {
+      background-color: $color-secondary;
+      width: auto;
+      padding: .6rem 1rem;
+      display: block;
+      float: right;
+      transition: all .3s;
+    }
+
+    &--logo {
+      background-color: darken($color-discord, 5%);
+      padding: .6rem 1rem;
+      width: calc(10% - 2rem);
+      float: right;
+      display: block;
+      text-align: center;
+      transition: all .3s;
+
+      & fa-icon {
+        display: inline-block;
+      }
+    }
+  }
+
+  &__customization-rules {
+
+    padding: 0 2rem;
+
+    & li {
+      font-size: 1.4rem;
+      color: $color-white;
+    }
+
+    & a {
+      text-decoration: none;
+      font-weight: 700;
+      color: $color-secondary;
+      transition: all .3s;
+
+      &:hover {
+        color: darken($color-secondary, 10%);
+      }
+    }
+  }
+
+  &__customization-warning {
+    display: block;
+    margin: 1rem 0;
+    color: $color-white;
+    font-size: 1.4rem;
+  }
+
+  &__customization-box {
+    width: 100%;
+    min-height: 28rem;
+  }
+
+  &__web-option {
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+}
+
+.account-popup {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  margin: 0;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: rgba($color-black, .6);
+  opacity: 0;
+  visibility: hidden;
+  transition: all .3s;
+
+  &--active {
+    opacity: 1;
+    visibility: visible;
+
+    & .account-popup__content {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  &__content {
+    @include absCenter;
+    padding: 3rem;
+    max-width: 100%;
+    background-color: $color-tertiary-dark;
+    box-shadow: 0 2rem 4rem rgba($color-black, .2);
+    border-radius: 3px;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: all .5s .2s;
+    text-align: center;
+    overflow: hidden;
+
+    @include respond(phone) {
+      padding: 3rem;
+      width: 80%;
+    }
+  }
+
+  &__close {
+    &,
+    &:link,
+    &:visited {
+      color: $color-grey-dark;
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      font-size: 2rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all .2s;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+}

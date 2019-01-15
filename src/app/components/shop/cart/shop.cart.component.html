@@ -1,0 +1,207 @@
+<section>
+  <nav class="shop__header">
+    <ul>
+      <li>
+        <a class="shop__header-link" href="#"><fa-icon [icon]="faHome"></fa-icon> Inicio</a>
+      </li>
+      <li>
+        <a class="shop__header-link" href="#"><fa-icon [icon]="faStar"></fa-icon> Rangos</a>
+      </li>
+      <li>
+        <a class="shop__header-link" href="#"><fa-icon [icon]="faDog"></fa-icon> Mascotas</a>
+      </li>
+      <li>
+        <a class="shop__header-link" href="#"><fa-icon [icon]="faKey"></fa-icon> Llaves</a>
+      </li>
+    </ul>
+    <a class="shop__header-cart-icon" href="#">
+      <fa-icon  [icon]="faShoppingCart"></fa-icon>
+      <span class="shop__header-cart-indicator">1</span>
+    </a>
+  </nav>
+  <h1 class="heading">Carrito de compras</h1>
+  <div class="shop__cart">
+    <div class="table table--fixed">
+      <div class="table__header">
+        <div class="table__cell shop__cart-name">
+          <p>Nombre</p>
+        </div>
+        <div class="table__cell shop__cart-indicator">
+          <p>Precio</p>
+        </div>
+        <div class="table__cell shop__cart-indicator">
+          <p>Ctd</p>
+        </div>
+        <div class="table__cell shop__cart-indicator">
+          <p>Subtotal</p>
+        </div>
+        <div class="table__cell shop__cart-actions">
+        </div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell shop__cart-name shop__cart-item">
+          <p>Rango chimbo</p>
+        </div>
+        <div class="table__cell shop__cart-indicator shop__cart-item">
+          <p>10$</p>
+        </div>
+        <div class="table__cell shop__cart-indicator shop__cart-item">
+          <p><input type="number" class="form__input"></p>
+        </div>
+        <div class="table__cell">
+          <p>100$</p>
+        </div>
+        <div class="table__cell">
+          <a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button"><fa-icon class="btn__icon--left" [icon]="faInfo"></fa-icon>Info</a>
+          <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button"><fa-icon [icon]="faTimes"></fa-icon></a>
+        </div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell shop__cart-name shop__cart-item">
+          <p>Rango chimbo</p>
+        </div>
+        <div class="table__cell shop__cart-indicator shop__cart-item">
+          <p>10$</p>
+        </div>
+        <div class="table__cell shop__cart-indicator shop__cart-item">
+          <p><input type="number" class="form__input"></p>
+        </div>
+        <div class="table__cell">
+          <p>100$</p>
+        </div>
+        <div class="table__cell">
+          <a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button"><fa-icon class="btn__icon--left" [icon]="faInfo"></fa-icon>Info</a>
+          <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button"><fa-icon [icon]="faTimes"></fa-icon></a>
+        </div>
+      </div>
+      <div class="table__row">
+        <div class="table__cell shop__cart-name shop__cart-item">
+          <p>Rango chimbo</p>
+        </div>
+        <div class="table__cell shop__cart-indicator shop__cart-item">
+          <p>10$</p>
+        </div>
+        <div class="table__cell shop__cart-indicator shop__cart-item">
+          <p><input  type="number" class="form__input"></p>
+        </div>
+        <div class="table__cell">
+          <p>100$</p>
+        </div>
+        <div class="table__cell">
+          <a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button"><fa-icon class="btn__icon--left" [icon]="faInfo"></fa-icon>Info</a>
+          <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button"><fa-icon [icon]="faTimes"></fa-icon></a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2-of-3">
+        <h3 class="heading u-margin-bottom-small">¿Tienes un cupón?, ¡Úsalo!</h3>
+        <div class="shop__cart-coupons">
+          <input type="text" class="form__input form__input--full" placeholder="ingresa el código de descuento">
+        </div>
+        <a href="#" class="btn btn--primary shop__description-slug-button">Canjear<fa-icon class="btn__icon--right" [icon]="faTag"></fa-icon></a>
+        <div class="row u-margin-top-small">
+          <div class="col-1-of-2">
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="name">Nombre completo</label>
+              <input id="name" type="text" class="form__input form__input--full" placeholder="Ej. Orlanda Diéguez">
+            </div>
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="address-first">Dirección</label>
+              <input id="address-first" type="text" class="form__input form__input--full" placeholder="Ej. Calle 184 # 13 - 23">
+            </div>
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="city">Ciudad</label>
+              <input id="city" type="text" class="form__input form__input--full" placeholder="Ej. Bogotá">
+            </div>
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="country">País</label>
+              <div class="form__select">
+                <select id="country">
+                  <option value="0">Elíge un país</option>
+                  <option value="1">Hombre</option>
+                  <option value="2">Mujer</option>
+                  <option value="3">Otro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-1-of-2">
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="email">Correo electrónico</label>
+              <input id="email" type="text" class="form__input form__input--full" placeholder="Ej. contacto@seocraft.net">
+            </div>
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="address-second">Complemento dirección</label>
+              <input id="address-second" type="text" class="form__input form__input--full" placeholder="Torre 300, Apartamento 808">
+            </div>
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="state">Región / Estado</label>
+              <input id="state" type="text" class="form__input form__input--full" placeholder="Ej. Florida">
+            </div>
+            <div class="u-margin-bottom-small">
+              <label class="form__label" for="postcode">Código postal</label>
+              <input id="postcode" type="text" class="form__input form__input--full" placeholder="Ej. 111512">
+            </div>
+          </div>
+        </div>
+        <div class="shop__terms">
+          <h3 class="heading u-margin-bottom-small">Política de privacidad</h3>
+          <label for="privacy" class="form__checkbox">
+            <input type="checkbox" id="privacy" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="privacy" class="link link--small link--white">Nosotros almacenamos datos para procesar tu órden y mantenerte actualizado según nuestra
+            <a href="#">política de privacidad</a>. Al marcar esta casilla afirmas que eres mayor de 18 años o que tienes el consentimiento de tus padres y nos autorizar a procesar tus datos de esta manera.
+          </label>
+        </div>
+        <div class="shop__terms">
+          <h3 class="heading u-margin-bottom-small">Términos y condiciones</h3>
+          <label for="terms" class="form__checkbox">
+            <input type="checkbox" id="terms" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="terms" class="link link--small link--white">Acepto los <a href="#">Términos y Condiciones</a> de esta compra.</label>
+        </div>
+      </div>
+      <div class="col-1-of-3">
+        <div class="shop__total">
+          <div class="shop__subtotal">
+            <span class="shop__subtotal-label">
+              Subtotal
+            </span>
+            <span class="shop__subtotal-price">
+              $100
+            </span>
+          </div>
+          <div class="shop__discount">
+            <span class="shop__discount-label">
+              Descuento
+            </span>
+            <span class="shop__discount-price">
+              -$10
+            </span>
+          </div>
+          <div class="shop__user">
+            <span class="shop__user-gift">
+              ¿Deseas regalarle esto a alguien?
+            </span>
+            <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="">
+            <input id="gift" type="text" class="form__input" placeholder="Escríbe un nombre">
+          </div>
+          <div class="shop__total-total">
+            <span class="shop__total-label">
+              Total
+            </span>
+            <span class="shop__total-price">
+              $100
+            </span>
+          </div>
+          <div class="u-right-text">
+            <a href="#" class="btn btn--secondary shop__description-slug-button">Comprar ahora</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

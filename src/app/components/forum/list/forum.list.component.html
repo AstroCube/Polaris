@@ -1,0 +1,50 @@
+<section>
+  <div class="breadcrumb__section forum-admin__breadcumb">
+    <a class="breadcrumb__link">Panel de administrador</a>
+    <a routerLink="/admin/foros" class="breadcrumb__link">Foros</a>
+  </div>
+  <div class="row">
+    <div class="col-1-of-2">
+      <h1 class="heading">Foros</h1>
+    </div>
+    <div class="col-1-of-2 u-right-text">
+      <a routerLink="crear" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faPlus"></fa-icon>Crear foro</a>
+    </div>
+  </div>
+  <div class="u-margin-bottom-small" *ngFor="let node of tree">
+    <h2 class="forum-admin__category">
+      {{node.category.name}}
+    </h2>
+    <div class="table--black">
+      <div class="table__header">
+        <div class="table__cell">
+          <p>Órden</p>
+        </div>
+        <div class="table__cell">
+          <p>Nombre</p>
+        </div>
+        <div class="table__cell">
+          <p>Foro Padre</p>
+        </div>
+        <div class="table__cell">
+          <p>Acciones</p>
+        </div>
+      </div>
+      <div class="table__row" *ngFor="let forum of node.forums">
+        <div class="table__cell">
+          <p>{{forum.order}}</p>
+        </div>
+        <div class="table__cell">
+          <p>{{forum.name}}</p>
+        </div>
+        <div class="table__cell">
+          <p>{{forum.parent}}</p>
+        </div>
+        <div class="table__cell">
+          <a routerLink="{{'editar/' + forum._id }}" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faPencilAlt"></fa-icon></a>
+          <a (click)="deleteForum" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faTimes"></fa-icon></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

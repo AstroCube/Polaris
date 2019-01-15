@@ -1,0 +1,21 @@
+<section>
+  <div class="breadcrumb__section category__breadcumb">
+    <a class="breadcrumb__link">Panel de administrador</a>
+    <a routerLink="/admin/categorias" class="breadcrumb__link">Categorías</a>
+    <a routerLink="{{'/admin/categorias/editar/' + category._id}}" class="breadcrumb__link">Editar categoría</a>
+  </div>
+  <h1 class="heading">Editando {{category.name}}</h1>
+  <form #category_edit="ngForm" (submit)="onSubmit()">
+    <div class="category__form">
+      <label for="name" class="form__icon"><fa-icon [icon]="faPencilAlt"></fa-icon></label>
+      <input id="name" name="name" #name="ngModel" [(ngModel)]="category.name" type="text" class="form__input" [class.form__input--invalid]="!name.valid && name.touched" placeholder="Nombre" required>
+    </div>
+    <div class="category__form">
+      <label for="order" class="form__icon"><fa-icon [icon]="faSort"></fa-icon>&nbsp;</label>
+      <input id="order" name="order" #order="ngModel" [(ngModel)]="category.order" type="number" class="form__input" [class.form__input--invalid]="!order.valid && order.touched" placeholder="Órden" required>
+    </div>
+    <div class="u-right-text">
+      <button class="btn btn--primary" [disabled]="!category_edit.valid"><fa-icon class="btn__icon--left" [icon]="faPencilAlt"></fa-icon>Editar categoría</button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,45 @@
+<section>
+  <div class="breadcrumb__section category__breadcumb">
+    <a class="breadcrumb__link">Panel de administrador</a>
+    <a routerLink="/admin/categorias" class="breadcrumb__link">Categorías</a>
+  </div>
+  <div class="row">
+    <div class="col-1-of-2">
+      <h1 class="heading">Categorías</h1>
+    </div>
+    <div class="col-1-of-2 u-right-text">
+      <a routerLink="crear" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faPlus"></fa-icon>Crear categoría</a>
+    </div>
+  </div>
+  <div class="table--black">
+    <div class="table__header">
+      <div class="table__cell">
+        <p>Órden</p>
+      </div>
+      <div class="table__cell">
+        <p>Nombre</p>
+      </div>
+      <div class="table__cell">
+        <p>Acciones</p>
+      </div>
+    </div>
+    <div *ngFor="let category of categories" class="table__row">
+      <div class="table__cell">
+        <p>{{category.order}}</p>
+      </div>
+      <div class="table__cell">
+        <p>{{category.name}}</p>
+      </div>
+      <div class="table__cell">
+        <a routerLink="{{'editar/' + category._id}}" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faPencilAlt"></fa-icon></a>
+        <a (click)="deleteCategory(category._id)" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faTimes"></fa-icon></a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="categories.length <= 0" class="u-center-text category__no-record">
+    No hay categorías creadas
+  </div>
+  <div class="category__advice">
+    <span>* Al eliminar una categoría los foros hijos pasarán a la primera en el órden o se creará una nueva categoría.</span>
+  </div>
+</section>
