@@ -64,6 +64,7 @@ export class PunishmentCreateGuard {
   async dataFinal(): Promise<any> {
     return {
       permissions: await this.dataPromise().then((response) => {
+        console.log(response);
         return response;
       }).catch((err) => {
         switch (err.status) {
@@ -93,27 +94,27 @@ export class PunishmentCreateGuard {
   async dataPromise(): Promise<any> {
     return {
       manage: await this._userService.permission_checker_promise("web_permissions.punishments.manage").then((permission) => {
-        return permission;
+        return permission.has_permission;
       }).catch((err) => {
         console.log(err);
       }),
       warn: await this._userService.permission_checker_promise("web_permissions.punishments.create.warn").then((permission) => {
-        return permission;
+        return permission.has_permission;
       }).catch((err) => {
         console.log(err);
       }),
       kick: await this._userService.permission_checker_promise("web_permissions.punishments.create.kick").then((permission) => {
-        return permission;
+        return permission.has_permission;
       }).catch((err) => {
         console.log(err);
       }),
       temp_ban: await this._userService.permission_checker_promise("web_permissions.punishments.create.temp_ban").then((permission) => {
-        return permission;
+        return permission.has_permission;
       }).catch((err) => {
         console.log(err);
       }),
       ban: await this._userService.permission_checker_promise("web_permissions.punishments.create.ban").then((permission) => {
-        return permission;
+        return permission.has_permission;
       }).catch((err) => {
         console.log(err);
       })

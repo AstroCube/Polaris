@@ -90,6 +90,7 @@ import {PunishmentService} from './services/punishment.service';
 import {PunishmentCreateGuard} from './guards/punishment/punishment.create.guard';
 import { MyDatePickerModule } from 'mydatepicker';
 import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
+import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
 
 @NgModule({
   declarations: [
@@ -191,6 +192,7 @@ import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
     ForumViewGuard,
     ForumService,
     PunishmentCreateGuard,
+    PunishmentEditGuard,
     PunishmentViewGuard,
     PunishmentService,
     TopicCreateGuard,

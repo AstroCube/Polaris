@@ -67,12 +67,14 @@
   }
 
   &__item {
+    display: flex;
+    flex-direction: column;
     margin: 2rem 0;
     color: $color-white;
+  }
 
-    & span {
-      @include titleFont;
-    }
+  &__label {
+    @include titleFont;
   }
 
   &__advice {

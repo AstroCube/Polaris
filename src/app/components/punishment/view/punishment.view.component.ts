@@ -31,7 +31,6 @@ export class PunishmentViewComponent implements OnInit {
       this.punisher_placeholder = data.PunishmentViewGuard.punisher_placeholder;
       this.punishment_details = data.PunishmentViewGuard.punishment_details;
       this.can_edit = data.PunishmentViewGuard.can_edit;
-      console.log(data.PunishmentViewGuard);
     }));
   }
 }

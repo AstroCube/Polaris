@@ -58,6 +58,7 @@ import {ForumViewGuard} from './guards/forum/forum.view.guard';
 import {ForumMainGuard} from './guards/forum/forum.main.guard';
 import {PunishmentCreateGuard} from './guards/punishment/punishment.create.guard';
 import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
+import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
@@ -100,7 +101,7 @@ const app_routes: Routes = [
   },
   {path: "sancion",
     children:[
-      {path: "editar/:id", component: PunishmentEditComponent},
+      {path: "editar/:id", component: PunishmentEditComponent, canActivate: [PunishmentEditGuard], resolve: {PunishmentEditGuard}},
       {path: "crear", component: PunishmentCreateComponent, canActivate: [PunishmentCreateGuard], resolve: {PunishmentCreateGuard}},
       {path: ":id", component: PunishmentViewComponent, resolve: {PunishmentViewGuard}},
       {path: "", redirectTo: "/sanciones", pathMatch: "full"}
