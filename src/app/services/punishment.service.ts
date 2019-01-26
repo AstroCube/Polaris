@@ -26,4 +26,14 @@ export class PunishmentService {
     return this._http.get(this.url + "punishment/get/" + id, {headers: headers}).toPromise();
   }
 
+  punishment_update(id: string, punishment: Punishment): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.put(this.url + "punishment/update/" + id, punishment, {headers: headers});
+  }
+
+  punishment_list(page: number): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "punishment/list/" + page,{headers: headers}).toPromise();
+  }
+
 }

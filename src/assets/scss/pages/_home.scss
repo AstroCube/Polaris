@@ -19,5 +19,9 @@
     border-top: 3px solid $color-secondary;
     margin: 0 10.4rem;
     padding: 0 1.5rem;
+
+    @include respond(phone) {
+      margin: 0 1rem;
+    }
   }
 }

@@ -43,7 +43,7 @@ export class PunishmentCreateComponent implements OnInit {
       {value: "ban", label: "Suspensión permanente"}
     ];
 
-    this.punishment = new Punishment("","", "","","","","","","", null,false,false,false);
+    this.punishment = new Punishment("","","", "","","","","","","", null,false,false,false);
 
   }
 
@@ -59,7 +59,7 @@ export class PunishmentCreateComponent implements OnInit {
     this.punishment.expires = this.punishment.expires.epoc;
     this._punishmentService.punishment_create(this.punishment).subscribe(
       response => {
-        if(!response) {
+        if (!response) {
           this._notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
         } else {
           this._notifierService.notify('success', "Se ha creado la sanción correctamente.");

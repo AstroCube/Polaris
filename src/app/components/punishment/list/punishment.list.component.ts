@@ -1,19 +1,31 @@
-import {Component} from '@angular/core';
-import {faDog, faHome, faInfo, faKey, faShoppingCart, faStar, faTag, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {} from '@fortawesome/free-brands-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faStar, faTimes} from '@fortawesome/free-solid-svg-icons';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'punishment-list',
   templateUrl: './punishment.list.component.html'
 })
 
-export class PunishmentListComponent {
-  faDog = faDog;
-  faHome = faHome;
-  faInfo = faInfo;
-  faKey = faKey;
-  faShoppingCart = faShoppingCart;
+export class PunishmentListComponent implements OnInit {
+  public pages: number;
+  public page: number;
+  public punishments: any;
   faStar = faStar;
-  faTag = faTag;
   faTimes = faTimes;
+
+  constructor(
+    private _route: ActivatedRoute,
+  ) {}
+
+  ngOnInit() {
+    this._route.data.subscribe((data => {
+      this.punishments = data.PunishmentListGuard.paginatedPunishments;
+      this.pages = data.PunishmentListGuard.pages;
+      this.page = data.PunishmentListGuard.page;
+    }));
+    console.log(this.punishments);
+    console.log(this.pages);
+    console.log(this.page);
+  }
 }

@@ -1,31 +1,19 @@
 <section>
   <h1 class="heading u-margin-bottom-small">Sanción de XXX</h1>
-  <div class="row">
+  <form #punishment_edit="ngForm" (ngSubmit)="onSubmit()" class="row">
     <div class="col-1-of-2">
       <div class="u-margin-bottom-medium">
-        <label class="form__label" for="type">Tipo de sanción</label>
-        <div class="form__select">
-          <select id="type">
-            <option value="0">Elíge un tipo de sanción</option>
-            <option value="1">Warn</option>
-            <option value="2">Kick</option>
-            <option value="3">Temporal ban</option>
-            <option value="4">Forum ban</option>
-            <option value="5">Ban</option>
-          </select>
-        </div>
-      </div>
-      <div class="u-margin-bottom-medium">
         <label class="form__label" for="reason">Razón</label>
-        <input id="reason" type="text" class="form__input form__input--full" placeholder="Ej. Hack - Fly">
+        <input id="reason" name="reason" #reason="ngModel" [class.form__input--invalid]="!reason.valid && reason.touched"  [(ngModel)]="punishment.reason" type="text" class="form__input form__input--full" placeholder="Ej. Hack - Fly" required>
       </div>
       <div class="u-margin-bottom-medium">
         <label class="form__label" for="evidence">Evidencia</label>
-        <input id="evidence" type="text" class="form__input form__input--full" placeholder="Ej. https://imgur.com/image">
+        <textarea id="evidence" name="evidence" #evidence="ngModel" [class.form__textarea--invalid]="!evidence.valid && evidence.touched" [(ngModel)]="punishment.evidence" cols="30" rows="10" class="form__textarea" placeholder="Ej. https://imgur.com/image" required></textarea>
       </div>
       <div class="u-margin-bottom-medium">
-        <label class="form__label" for="date">Expira</label>
-        <input id="date" type="text" class="form__input form__date form__input--full" placeholder="Haz click para seleccionar la fecha">
+        <label class="form__label">Expira</label>
+        <my-date-picker id="expires" name="expires" [options]="picker_options" [(ngModel)]="punishment.expires" required></my-date-picker>
+        <span class="punishment__advice">* Por razones administrativas las sanciones temporales son mínimo de un día.</span>
       </div>
     </div>
     <div class="col-1-of-2">
@@ -42,21 +30,21 @@
         </p>
         <p class="punishment__checkout-indicator">
           <label for="active" class="form__checkbox">
-            <input type="checkbox" id="active" class="form__checkbox-input">
+            <input type="checkbox" id="active" class="form__checkbox-input" name="active" #active="ngModel" [(ngModel)]="punishment.active">
             <span class="form__checkbox-checkmark"></span>
           </label>
           <label for="active" class="link link--small link--white">La sanción se encuentra activa</label>
         </p>
         <p class="punishment__checkout-indicator">
           <label for="appealed" class="form__checkbox">
-            <input type="checkbox" id="appealed" class="form__checkbox-input">
+            <input type="checkbox" id="appealed" class="form__checkbox-input" name="appealed" #appealed="ngModel" [(ngModel)]="punishment.appealed">
             <span class="form__checkbox-checkmark"></span>
           </label>
           <label for="appealed" class="link link--small link--white">La sanción se ha intentado apelar</label>
         </p>
-        <div class="u-right-text"><a href="#" class="btn btn--secondary">Actualizar sanción</a></div>
+        <div class="u-right-text"><button class="btn btn--secondary">Actualizar sanción</button></div>
       </div>
       <span class="punishment__advice">* Los cambios guardados surgirán efecto inmediatamente en el servidor.</span>
     </div>
-  </div>
+  </form>
 </section>

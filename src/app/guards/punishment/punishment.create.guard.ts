@@ -64,7 +64,6 @@ export class PunishmentCreateGuard {
   async dataFinal(): Promise<any> {
     return {
       permissions: await this.dataPromise().then((response) => {
-        console.log(response);
         return response;
       }).catch((err) => {
         switch (err.status) {

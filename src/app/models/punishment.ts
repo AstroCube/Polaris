@@ -1,5 +1,6 @@
 export class Punishment {
   constructor(
+    public _id: string,
     public type: any,
     public punisher: String,
     public punished: any,

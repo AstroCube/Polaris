@@ -21,18 +21,21 @@
         <p>Fecha</p>
       </div>
     </div>
-    <div class="table__row">
+    <div *ngFor="let punishment of punishments" class="table__row">
       <div class="table__cell punishment__table-small">
-        <p>Tomate</p>
+        <a routerLink="{{'/' + punishment.punisher_placeholder.username}}" [style.color]="punishment.punisher_placeholder.user_color">{{punishment.punisher_placeholder.username}}</a>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Flux</p>
+        <a routerLink="{{'/' + punishment.punished_placeholder.username}}" [style.color]="punishment.punished_placeholder.user_color">{{punishment.punished_placeholder.username}}</a>
       </div>
       <div class="table__cell punishment__table-large">
-        <p>Hack - AntiKnockback</p>
+        <p>{{punishment.punishment_details.reason}}</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Warn</p>
+        <span style="color: red" *ngIf="punishment.type === 'temp-ban'">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.type === 'ban'">Perma-ban</span>
+        <span style="color: darkorange" *ngIf="punishment.type === 'kick'">Expulsión</span>
+        <span style="color: green" *ngIf="punishment.type === 'warn'">Advertencia</span>
       </div>
       <div class="table__cell punishment__table-small">
         <p>Permanente</p>
@@ -42,5 +45,5 @@
       </div>
     </div>
   </div>
-  <pagination [actual_page]="1" [last_page]="100" [centered]="true"></pagination>
+  <pagination [actual_page]="page" [last_page]="pages" route="{{'/sanciones'}}" [centered]="true"></pagination>
 </section>
