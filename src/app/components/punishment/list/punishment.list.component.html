@@ -15,9 +15,6 @@
         <p>Tipo</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Estado</p>
-      </div>
-      <div class="table__cell punishment__table-small">
         <p>Fecha</p>
       </div>
     </div>
@@ -32,18 +29,15 @@
         <p>{{punishment.punishment_details.reason}}</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <span style="color: red" *ngIf="punishment.type === 'temp-ban'">Temp-ban</span>
-        <span style="color: red" *ngIf="punishment.type === 'ban'">Perma-ban</span>
-        <span style="color: darkorange" *ngIf="punishment.type === 'kick'">Expulsión</span>
-        <span style="color: green" *ngIf="punishment.type === 'warn'">Advertencia</span>
+        <span style="color: red" *ngIf="punishment.punishment_details.type === 'temp-ban'">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.punishment_details.type === 'ban'">Perma-ban</span>
+        <span style="color: darkorange" *ngIf="punishment.punishment_details.type === 'kick'">Expulsión</span>
+        <span style="color: green" *ngIf="punishment.punishment_details.type === 'warn'">Advertencia</span>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Permanente</p>
-      </div>
-      <div class="table__cell punishment__table-small">
-        <p>Hace 1 hora</p>
+        <p>{{punishment.punishment_details.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
       </div>
     </div>
   </div>
-  <pagination [actual_page]="page" [last_page]="pages" route="{{'/sanciones'}}" [centered]="true"></pagination>
+  <pagination [actual_page]="page" [last_page]="pages" route="{{'/sanciones/'}}" [centered]="true"></pagination>
 </section>

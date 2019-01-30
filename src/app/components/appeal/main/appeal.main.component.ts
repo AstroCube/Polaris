@@ -7,5 +7,6 @@ import {faList} from '@fortawesome/free-solid-svg-icons';
 })
 
 export class AppealMainComponent {
+
   faList = faList;
 }

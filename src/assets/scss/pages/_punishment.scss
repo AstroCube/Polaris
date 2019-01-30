@@ -7,6 +7,10 @@
 
   &__table-small {
     width: 15%;
+
+    & a {
+      text-decoration: none;
+    }
   }
 
   &__table-large {

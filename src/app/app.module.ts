@@ -92,6 +92,8 @@ import { MyDatePickerModule } from 'mydatepicker';
 import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
 import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
 import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
+import {AppealService} from './services/appeal.service';
+import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 
 @NgModule({
   declarations: [
@@ -182,6 +184,8 @@ import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
   providers: [
     app_routing_providers,
     ApplicationLoginGuard,
+    AppealListGuard,
+    AppealService,
     CategoryCreateGuard,
     CategoryEditGuard,
     CategoryListGuard,
