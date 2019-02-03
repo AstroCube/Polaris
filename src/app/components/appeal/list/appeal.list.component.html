@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <p class="paragraph--white u-margin-bottom-small">Selecciona que infracción deseas apelar.</p>
+  <p class="paragraph--white u-margin-bottom-small">Selecciona que infracción deseas apelar. (Recuerda que puedes apelar infracciones activas y que no séan automáticas)</p>
   <div class="table--black table--fixed">
     <div class="table__header">
       <div class="table__cell punishment__table-small">
@@ -47,31 +47,50 @@
         <p>Tipo</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Estado</p>
+        <p>Expira</p>
       </div>
       <div class="table__cell punishment__table-small">
 
       </div>
     </div>
-    <div class="table__row">
+    <div *ngFor="let punishment of not_appealed" class="table__row">
       <div class="table__cell punishment__table-small">
-        <p>Tomate</p>
+        <a routerLink="{{'/' + punishment.punisher.username}}" [style.color]="punishment.punisher.user_color">{{punishment.punisher.username}}</a>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Flux</p>
+        <a routerLink="{{'/' + punishment.punished.username}}" [style.color]="punishment.punished.user_color">{{punishment.punished.username}}</a>
       </div>
       <div class="table__cell punishment__table-large">
-        <p>Hack - AntiKnockback</p>
+        <p>{{punishment.reason}}</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Warn</p>
+        <span style="color: red" *ngIf="punishment.type === 'temp-ban'">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.type === 'ban'">Perma-ban</span>
+        <span style="color: darkorange" *ngIf="punishment.type === 'kick'">Expulsión</span>
+        <span style="color: green" *ngIf="punishment.type === 'warn'">Advertencia</span>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Permanente</p>
+        <p *ngIf="punishment.expires && punishment.expires !== 'never'">{{punishment.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
+        <p *ngIf="!punishment.expires || punishment.expires == 'never'">Nunca</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <a href="#" class="btn btn--green shop__description-slug-button shop__cart-button">Apelar</a>
+        <a popup popup_id="appeal-popup" (click)="appealInsert(punishment.id)" class="btn btn--green shop__description-slug-button shop__cart-button">Apelar</a>
       </div>
     </div>
   </div>
+</section>
+<section class="appeal-popup" id="appeal-popup">
+  <form #appeal_request="ngForm" (ngSubmit)="appealRequest()" class="appeal-popup__content">
+    <h2 class="heading heading--primary">Abrir una apelación</h2>
+    <p class="appeal__id">(IP registrada: {{user_ip}})</p>
+    <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="appealReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <p class="paragraph paragraph--white u-margin-bottom-small">Recuerda que al abrir una apelación entrarás en contacto directo con el moderador que aplicó la sanción.</p>
+    <p class="paragraph paragraph--white">Escribe la razón por la cual deseas apelar esta sanción.</p>
+    <div class="appeal__form">
+      <textarea id="description" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
+    </div>
+    <div class="u-right-text">
+      <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Crear apelación</button>
+    </div>
+  </form>
 </section>

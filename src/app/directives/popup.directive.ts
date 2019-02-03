@@ -27,6 +27,12 @@ export class PopupDirective implements OnInit {
         } else {
           this._renderer.addClass(popup, "account-popup--active");
         }
+      } else if (this.popup_id == "appeal-popup") {
+        if (popup.classList.contains("appeal-popup--active")) {
+          this._renderer.removeClass(popup, "appeal-popup--active");
+        } else {
+          this._renderer.addClass(popup, "appeal-popup--active");
+        }
       }
     });
   }

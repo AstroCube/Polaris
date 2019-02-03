@@ -89,6 +89,12 @@ export class UserService {
     return this._http.get(this.url + "user/list-names", {headers: headers}).toPromise();
   }
 
+  user_ip(): Promise<any> {
+
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this._http.get("http://freegeoip.net/json/", {headers: headers}).toPromise();
+  }
+
 
   getToken() {
     let token = localStorage.getItem("token");
