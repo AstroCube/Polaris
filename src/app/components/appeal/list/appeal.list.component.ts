@@ -34,7 +34,7 @@ export class AppealListComponent {
       this.not_appealed = data.AppealListGuard.not_appealed;
     }));
     this.user_ip = await this._userService.user_ip().then((ip) => {
-      return ip;
+      return ip.ip;
     }).catch((err) => {
       switch (err.status) {
         case 404: {
@@ -71,9 +71,9 @@ export class AppealListComponent {
 
     this._appealService.appeal_create(request).subscribe(
       response => {
-        console.log(response);
         if (response) {
-
+          this._notifierService.notify('success', "La apelación se ha creado correctamente.");
+          this._router.navigate(['/apelar/' + response.appeal._id]);
         } else {
           this._notifierService.notify('error', "Ha ocurrido un error al crear la apelación.");
         }

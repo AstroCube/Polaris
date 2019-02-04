@@ -87,7 +87,7 @@
     <p class="paragraph paragraph--white u-margin-bottom-small">Recuerda que al abrir una apelación entrarás en contacto directo con el moderador que aplicó la sanción.</p>
     <p class="paragraph paragraph--white">Escribe la razón por la cual deseas apelar esta sanción.</p>
     <div class="appeal__form">
-      <textarea id="description" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
+      <textarea id="appeal_explanation" name="appeal_explanation" #explain="ngModel" [(ngModel)]="appeal_explanation" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
     </div>
     <div class="u-right-text">
       <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Crear apelación</button>

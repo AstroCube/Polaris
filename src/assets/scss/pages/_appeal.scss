@@ -6,6 +6,11 @@
     font-size: 1.2rem;
   }
 
+  &__id-small {
+    color: $color-secondary;
+    font-size: 1rem;
+  }
+
   &__form {
     margin: 2rem 3rem;
     width: calc(100% - 6rem);

@@ -25,4 +25,24 @@ export class AppealService {
     return this._http.post(this.url + "appeal/create", request,{headers: headers});
   }
 
+  appeal_permissions(id: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/permissions/" + id, {headers: headers}).toPromise();
+  }
+
+  appeal_get(id: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/get/" + id, {headers: headers}).toPromise();
+  }
+
+  appeal_comment(id: string, comment: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.post(this.url + "appeal/comment/" + id, {comment: comment}, {headers: headers});
+  }
+
+  appeal_status(id: string, comment: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.post(this.url + "appeal/status/" + id, {comment: comment}, {headers: headers});
+  }
+
 }

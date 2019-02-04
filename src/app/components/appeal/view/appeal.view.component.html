@@ -1,11 +1,12 @@
 <section>
   <div class="row">
     <div class="col-1-of-2">
-      <h1 class="heading u-margin-bottom-small">Apelando infracción XXX</h1>
+      <h1 class="heading u-margin-bottom-small">Apelando infracción <span class="appeal__id-small">(ID: {{appeal._id}})</span></h1>
     </div>
     <div class="col-1-of-2 u-right-text">
       <a href="#" class="btn btn--primary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faUserTie"></fa-icon> Escalar</a>
-      <a href="#" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Apelar</a>
+      <a *ngIf="punishment.active" (click)="createAction('appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Apelar</a>
+      <a *ngIf="!punishment.active" (click)="createAction('un-appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Retractar</a>
       <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button"><fa-icon [icon]="faLock"></fa-icon> Cerrar</a>
       <a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button"><fa-icon [icon]="faLock"></fa-icon> Bloquear</a>
     </div>
@@ -33,81 +34,115 @@
     </div>
     <div class="table__row">
       <div class="table__cell punishment__table-small">
-        <p>Tomate</p>
+        <a routerLink="{{'/' + punishment.punisher_placeholder.username}}" [style.color]="punishment.punisher_placeholder.user_color">{{punishment.punisher_placeholder.username}}</a>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Flux</p>
+        <a routerLink="{{'/' + punishment.punished_placeholder.username}}" [style.color]="punishment.punished_placeholder.user_color">{{punishment.punished_placeholder.username}}</a>
       </div>
       <div class="table__cell punishment__table-large">
-        <p>Hack - AntiKnockback</p>
+        <p>{{punishment.reason}}</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Warn</p>
+        <span style="color: red" *ngIf="punishment.type === 'temp-ban'">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.type === 'ban'">Perma-ban</span>
+        <span style="color: darkorange" *ngIf="punishment.type === 'kick'">Expulsión</span>
+        <span style="color: green" *ngIf="punishment.type === 'warn'">Advertencia</span>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Permanente</p>
+        <p *ngIf="punishment.expires && punishment.expires !== 'never'">{{punishment.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
+        <p *ngIf="!punishment.expires || punishment.expires == 'never'">Nunca</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <p>Hace un minuto</p>
+        <p>{{punishment.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
       </div>
     </div>
   </div>
   <p class="appeal__explanation">
-    <span>Explicación del usuario:</span> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    <span>Explicación del usuario:</span> {{action_create.content}}
   </p>
   <div class="appeal">
     <div class="appeal__action">
       <div class="appeal__action--left">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam">
-        <p class="appeal__action-info"><a href="#">TakeMyTomato</a> creó la apelación</p>
+        <img src="{{'https://minotar.net/avatar/' + action_create.user.skin}}" alt="{{action_create.user.username}}">
+        <p class="appeal__action-info">
+          <a [style.color]="action_create.user.user_color" href="{{'/' + action_create.user.username}}">{{action_create.user.username}} </a> creó la apelación
+        </p>
       </div>
       <div class="appeal__action--right">
-        <span class="appeal__date">hace 8 días</span>
+        <span class="appeal__date">{{action_create.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
       </div>
     </div>
-    <div class="appeal__comment">
-      <div class="appeal__comment-image">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam" class="appeal__comment-image">
-      </div>
-      <div class="appeal__comment-action">
-        <div class="u-margin-bottom__small">
-          <div class="appeal__action--left">
-            <p class="appeal__action-info"><a href="#">TakeMyTomato</a> comentó</p>
-          </div>
-          <div class="appeal__action--right">
-            <span class="appeal__date">hace 8 días</span>
-          </div>
+    <div *ngFor="let action of actions; let i = index;">
+      <div *ngIf="!action.content && i !== 0" class="appeal__action">
+        <div class="appeal__action--left">
+          <img src="{{'https://minotar.net/avatar/' + action.user.skin}}" alt="{{action.user.username}}">
+          <p class="appeal__action-info">
+            <a [style.color]="action.user.user_color" href="{{'/' + action.user.username}}">{{action.user.username}} </a>
+            <span *ngIf="action.type === 'open'">abrió la apelación</span>
+            <span *ngIf="action.type === 'close'">cerró la apelación</span>
+            <span *ngIf="action.type === 'lock'">bloqueó la apelación</span>
+            <span *ngIf="action.type === 'unlock'">desbloqueó la apelación</span>
+            <span *ngIf="action.type === 'comment'">comentó la apelación</span>
+            <span *ngIf="action.type === 'escalate'">escaló la apleación</span>
+            <span *ngIf="action.type === 'appeal'">aceptó la apelación</span>
+            <span *ngIf="action.type === 'un-appeal'">retractó la apelación</span>
+            <span *ngIf="action.type === 'assign-escalate'">tomó la apelación</span>
+          </p>
         </div>
-        <p class="appeal__comment-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-      </div>
-    </div>
-    <div class="appeal__comment">
-      <div class="appeal__comment-image">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam" class="appeal__comment-image">
-      </div>
-      <div class="appeal__comment-action">
-        <div class="u-margin-bottom__small">
-          <div class="appeal__action--left">
-            <p class="appeal__action-info"><a href="#">TakeMyTomato</a> comentó</p>
-          </div>
-          <div class="appeal__action--right">
-            <span class="appeal__date">hace 8 días</span>
-          </div>
+        <div class="appeal__action--right">
+          <span class="appeal__date">{{action.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
         </div>
-        <p class="appeal__comment-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
       </div>
-    </div>
-    <div class="appeal__action">
-      <div class="appeal__action--left">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam">
-        <p class="appeal__action-info"><a href="#">TakeMyTomato</a> cerró la apelación</p>
-      </div>
-      <div class="appeal__action--right">
-        <span class="appeal__date">hace 8 días</span>
+      <div *ngIf="action.content && i !== 0" class="appeal__comment">
+        <div class="appeal__comment-image">
+          <img src="{{'https://minotar.net/avatar/' + action.user.skin}}" alt="{{action.user.username}}" class="appeal__comment-image">
+        </div>
+        <div class="appeal__comment-action">
+          <div class="u-margin-bottom__small">
+            <div class="appeal__action--left">
+              <p class="appeal__action-info">
+                <a [style.color]="action.user.user_color" href="{{'/' + action.user.username}}">{{action.user.username}} </a>
+                <span *ngIf="action.type === 'open'">abrió la apelación</span>
+                <span *ngIf="action.type === 'close'">cerró la apelación</span>
+                <span *ngIf="action.type === 'lock'">bloqueó la apelación</span>
+                <span *ngIf="action.type === 'unlock'">desbloqueó la apelación</span>
+                <span *ngIf="action.type === 'comment'">comentó la apelación</span>
+                <span *ngIf="action.type === 'escalate'">escaló la apleación</span>
+                <span *ngIf="action.type === 'appeal'">aceptó la apelación</span>
+                <span *ngIf="action.type === 'un-appeal'">retractó la apelación</span>
+                <span *ngIf="action.type === 'assign-escalate'">tomó la apelación</span>
+              </p>
+            </div>
+            <div class="appeal__action--right">
+              <span class="appeal__date">{{action.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
+            </div>
+          </div>
+          <p class="appeal__comment-text">{{action.content}}</p>
+        </div>
       </div>
     </div>
   </div>
   <div class="u-right-text">
-    <a href="#" class="btn btn--primary"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</a>
+    <a *ngIf="!appeal.closed && !appeal.locked" class="btn btn--primary" popup popup_id="appeal-popup" (click)="createAction('comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</a>
   </div>
+</section>
+<section class="appeal-popup" id="appeal-popup">
+  <form #appeal_request="ngForm" (ngSubmit)="submitAction()" class="appeal-popup__content">
+    <h2 class="heading heading--primary">
+      <span *ngIf="new_action === 'open' || new_action === 'close'">Abrir/Crear</span>
+      <span *ngIf="new_action === 'comment'">Comentar</span>
+      <span *ngIf="new_action === 'escalate'">Escalar</span>
+      <span *ngIf="new_action === 'appeal' || new_action === 'un-appeal'">Aceptar/Retractar</span>
+      <span *ngIf="new_action === 'assign-escalate'">Tomar</span>
+       apelación
+    </h2>
+    <p *ngIf="new_action === 'open' || new_action === 'close' || new_action === 'appeal' || new_action === 'un-appeal'" class="paragraph paragraph--white">El comentario en esta acción es opcional.</p>
+    <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="actionReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <div class="appeal__form">
+      <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="new_comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
+    </div>
+    <div class="u-right-text">
+      <button [disabled]="!new_comment && new_action === 'comment'" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar apelación</button>
+    </div>
+  </form>
 </section>

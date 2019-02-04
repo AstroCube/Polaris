@@ -61,6 +61,7 @@ import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
 import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
 import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
+import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
@@ -111,8 +112,8 @@ const app_routes: Routes = [
   },
   {path: "apelar",
     children: [
-      {path: "info", component: AppealViewComponent},
       {path: "ver", component: AppealListComponent, canActivate: [AppealListGuard], resolve: {AppealListGuard}},
+      {path: ":id", component: AppealViewComponent, canActivate: [AppealViewGuard], resolve: {AppealViewGuard}},
       {path: "", component: AppealMainComponent}
     ]
   },

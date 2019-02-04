@@ -90,9 +90,8 @@ export class UserService {
   }
 
   user_ip(): Promise<any> {
-
     let headers = new HttpHeaders().set("Content-Type", "application/json");
-    return this._http.get("http://freegeoip.net/json/", {headers: headers}).toPromise();
+    return this._http.get("https://api.ipify.org/?format=json", {headers: headers}).toPromise();
   }
 
 

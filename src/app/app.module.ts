@@ -94,6 +94,7 @@ import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
 import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
 import {AppealService} from './services/appeal.service';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
+import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 
 @NgModule({
   declarations: [
@@ -185,6 +186,7 @@ import {AppealListGuard} from './guards/appeal/appeal.list.guard';
     app_routing_providers,
     ApplicationLoginGuard,
     AppealListGuard,
+    AppealViewGuard,
     AppealService,
     CategoryCreateGuard,
     CategoryEditGuard,

@@ -24,8 +24,5 @@ export class PunishmentListComponent implements OnInit {
       this.pages = data.PunishmentListGuard.pages;
       this.page = data.PunishmentListGuard.page;
     }));
-    console.log(this.punishments);
-    console.log(this.pages);
-    console.log(this.page);
   }
 }
