@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {faComment, faGavel, faList, faLock, faTimes, faUserTie} from '@fortawesome/free-solid-svg-icons';
+import {faComment, faGavel, faList, faLock, faMarker, faTimes, faUnlock, faUserTie} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppealService} from '../../../services/appeal.service';
 import {NotifierService} from 'angular-notifier';
@@ -24,6 +24,8 @@ export class AppealViewComponent implements OnInit {
   faList = faList;
   faLock = faLock;
   faTimes = faTimes;
+  faMarker = faMarker;
+  faUnlock = faUnlock;
   faUserTie = faUserTie;
 
   constructor(
@@ -52,7 +54,7 @@ export class AppealViewComponent implements OnInit {
     if (this.new_action == 'comment') {
       this._appealService.appeal_comment(this.appeal._id, this.new_comment).subscribe(
         response => {
-          if(!response.updated) {
+          if (!response.updated) {
             this._notifierService.notify('error', "Ha ocurrido un error al comentar la apelación.");
           } else {
             window.open("/apelar/" + this.appeal._id, '_self');
@@ -69,7 +71,24 @@ export class AppealViewComponent implements OnInit {
     } else if (this.new_action === 'appeal' || this.new_action === 'un-appeal') {
       this._appealService.appeal_status(this.appeal._id, this.new_comment).subscribe(
         response => {
-          if(!response.updated) {
+          if (!response.updated) {
+            this._notifierService.notify('error', "Ha ocurrido un error al comentar la apelación.");
+          } else {
+            window.open("/apelar/" + this.appeal._id, '_self');
+          }
+        },
+
+        error => {
+          let error_message = <any> error;
+          if (error_message != null) {
+            this._notifierService.notify('error', error.error.message);
+          }
+        }
+      );
+    } else if (this.new_action === 'open' || this.new_action === 'close') {
+      this._appealService.appeal_close(this.appeal._id, this.new_comment).subscribe(
+        response => {
+          if (!response.updated) {
             this._notifierService.notify('error', "Ha ocurrido un error al comentar la apelación.");
           } else {
             window.open("/apelar/" + this.appeal._id, '_self');
@@ -84,6 +103,25 @@ export class AppealViewComponent implements OnInit {
         }
       );
     }
+  }
+
+  lockAppeal() {
+    this._appealService.appeal_lock(this.appeal._id).subscribe(
+      response => {
+        if (!response.updated) {
+          this._notifierService.notify('error', "Ha ocurrido un error al comentar la apelación.");
+        } else {
+          window.open("/apelar/" + this.appeal._id, '_self');
+        }
+      },
+
+      error => {
+        let error_message = <any> error;
+        if (error_message != null) {
+          this._notifierService.notify('error', error.error.message);
+        }
+      }
+    );
   }
 
   actionReset() {

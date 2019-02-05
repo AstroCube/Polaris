@@ -5,10 +5,12 @@
     </div>
     <div class="col-1-of-2 u-right-text">
       <a href="#" class="btn btn--primary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faUserTie"></fa-icon> Escalar</a>
-      <a *ngIf="punishment.active" (click)="createAction('appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Apelar</a>
-      <a *ngIf="!punishment.active" (click)="createAction('un-appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Retractar</a>
-      <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button"><fa-icon [icon]="faLock"></fa-icon> Cerrar</a>
-      <a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button"><fa-icon [icon]="faLock"></fa-icon> Bloquear</a>
+      <a *ngIf="permissions.appeal && (punishment.active && !appeal.locked)" (click)="createAction('appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Apelar</a>
+      <a *ngIf="permissions.appeal && (!punishment.active && !appeal.locked)" (click)="createAction('un-appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Retractar</a>
+      <a *ngIf="permissions.lock && !appeal.locked" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><fa-icon [icon]="faLock"></fa-icon> Bloquear</a>
+      <a *ngIf="permissions.lock && appeal.locked" class="btn btn--green shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><fa-icon [icon]="faUnlock"></fa-icon> Desbloquear</a>
+      <a *ngIf="permissions.close && (!appeal.closed && !appeal.locked)" class="btn btn--red shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('close')"><fa-icon [icon]="faTimes"></fa-icon> Cerrar</a>
+      <a *ngIf="permissions.close && (appeal.closed && !appeal.locked)" class="btn btn--green shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('open')"><fa-icon [icon]="faMarker"></fa-icon> Abrir</a>
     </div>
   </div>
   <div class="table--black table--fixed">

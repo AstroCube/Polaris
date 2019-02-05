@@ -45,4 +45,14 @@ export class AppealService {
     return this._http.post(this.url + "appeal/status/" + id, {comment: comment}, {headers: headers});
   }
 
+  appeal_lock(id: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/lock/" + id, {headers: headers});
+  }
+
+  appeal_close(id: string, comment: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.post(this.url + "appeal/close/" + id, {comment: comment},  {headers: headers});
+  }
+
 }
