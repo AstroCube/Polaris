@@ -62,6 +62,7 @@ import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
 import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
+import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
@@ -117,6 +118,8 @@ const app_routes: Routes = [
       {path: "", component: AppealMainComponent}
     ]
   },
+  {path: "apelaciones/:page", component: AppealGlobalComponent},
+  {path: "apelaciones", component: AppealGlobalComponent},
   {path: "sanciones/:page", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "sanciones", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "cuenta", component: UserEditComponent, canActivate: [UserEditGuard], resolve: {UserEditGuard}},

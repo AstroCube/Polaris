@@ -28,10 +28,6 @@ export class NavbarDropdownDirective implements OnInit {
         }
       });
     }
-
-    if (this._element.nativeElement.classList.contains("header__navigator-responsive")) {
-
-    }
   }
 
 }

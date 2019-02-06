@@ -55,4 +55,9 @@ export class AppealService {
     return this._http.post(this.url + "appeal/close/" + id, {comment: comment},  {headers: headers});
   }
 
+  appeal_escalate(id: string, comment: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.post(this.url + "appeal/escalate/" + id, {comment: comment},  {headers: headers});
+  }
+
 }

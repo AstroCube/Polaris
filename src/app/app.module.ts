@@ -95,12 +95,15 @@ import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
 import {AppealService} from './services/appeal.service';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
+import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
+import {ClassifierDirective} from './directives/classifier.directive';
 
 @NgModule({
   declarations: [
 
     // --- Components --- //
 
+    AppealGlobalComponent,
     AppealListComponent,
     AppealMainComponent,
     AppealViewComponent,
@@ -152,6 +155,7 @@ import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 
     // --- Directives --- //
 
+    ClassifierDirective,
     CollapsibleDirective,
     NavbarDropdownDirective,
     NavbarResponsiveDirective,

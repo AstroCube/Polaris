@@ -4,7 +4,7 @@
       <h1 class="heading u-margin-bottom-small">Apelando infracción <span class="appeal__id-small">(ID: {{appeal._id}})</span></h1>
     </div>
     <div class="col-1-of-2 u-right-text">
-      <a href="#" class="btn btn--primary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faUserTie"></fa-icon> Escalar</a>
+      <a *ngIf="permissions.escalate && !appeal.locked && !appeal.escalated" class="btn btn--primary shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('escalate')"><fa-icon [icon]="faUserTie"></fa-icon> Escalar</a>
       <a *ngIf="permissions.appeal && (punishment.active && !appeal.locked)" (click)="createAction('appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Apelar</a>
       <a *ngIf="permissions.appeal && (!punishment.active && !appeal.locked)" (click)="createAction('un-appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Retractar</a>
       <a *ngIf="permissions.lock && !appeal.locked" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><fa-icon [icon]="faLock"></fa-icon> Bloquear</a>
@@ -119,7 +119,7 @@
               <span class="appeal__date">{{action.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
             </div>
           </div>
-          <p class="appeal__comment-text">{{action.content}}</p>
+          <p class="appeal__comment-text" [class.appeal__comment-text--assigned]="action.user.id === appeal.escalated_assigned">{{action.content}}</p>
         </div>
       </div>
     </div>
@@ -135,16 +135,15 @@
       <span *ngIf="new_action === 'comment'">Comentar</span>
       <span *ngIf="new_action === 'escalate'">Escalar</span>
       <span *ngIf="new_action === 'appeal' || new_action === 'un-appeal'">Aceptar/Retractar</span>
-      <span *ngIf="new_action === 'assign-escalate'">Tomar</span>
        apelación
     </h2>
     <p *ngIf="new_action === 'open' || new_action === 'close' || new_action === 'appeal' || new_action === 'un-appeal'" class="paragraph paragraph--white">El comentario en esta acción es opcional.</p>
     <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="actionReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
     <div class="appeal__form">
-      <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="new_comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
+      <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="new_comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explícito posible, nos ayudarás mucho."></textarea>
     </div>
     <div class="u-right-text">
-      <button [disabled]="!new_comment && new_action === 'comment'" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar apelación</button>
+      <button [disabled]="!new_comment && (new_action === 'comment' || new_action === 'escalate')" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar apelación</button>
     </div>
   </form>
 </section>

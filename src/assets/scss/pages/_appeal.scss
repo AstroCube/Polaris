@@ -6,6 +6,11 @@
     font-size: 1.2rem;
   }
 
+  &__classifier {
+    width: 70%;
+    float: right;
+  }
+
   &__id-small {
     color: $color-secondary;
     font-size: 1rem;
@@ -19,6 +24,10 @@
 
   &__table-small {
     width: 20%;
+  }
+
+  &__table-buttons {
+    width: 10%;
   }
 
   &__table-large {
@@ -106,6 +115,10 @@
     color: $color-white;
     overflow-wrap: break-word;
     word-wrap: break-word;
+
+    &--assigned {
+      border-left: 3px solid $color-primary;
+    }
   }
 }
 

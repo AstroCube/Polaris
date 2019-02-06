@@ -102,6 +102,23 @@ export class AppealViewComponent implements OnInit {
           }
         }
       );
+    } else if (this.new_action === 'escalate') {
+      this._appealService.appeal_escalate(this.appeal._id, this.new_comment).subscribe(
+        response => {
+          if (!response.updated) {
+            this._notifierService.notify('error', "Ha ocurrido un error al comentar la apelación.");
+          } else {
+            window.open("/apelar/" + this.appeal._id, '_self');
+          }
+        },
+
+        error => {
+          let error_message = <any> error;
+          if (error_message != null) {
+            this._notifierService.notify('error', error.error.message);
+          }
+        }
+      );
     }
   }
 
