@@ -60,4 +60,9 @@ export class AppealService {
     return this._http.post(this.url + "appeal/escalate/" + id, {comment: comment},  {headers: headers});
   }
 
+  appeal_list(page: number, type: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/escalate/" + page + "/" + type, {headers: headers}).toPromise();
+  }
+
 }
