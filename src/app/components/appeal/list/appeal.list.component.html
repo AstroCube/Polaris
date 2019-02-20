@@ -84,6 +84,7 @@
       </div>
     </div>
   </div>
+  <p *ngIf="not_appealed.length <= 0" class="u-center-text u-margin-top-small paragraph--white">No se han encontrado sanciones sin apelar.</p>
 </section>
 <section class="appeal-popup" id="appeal-popup">
   <form #appeal_request="ngForm" (ngSubmit)="appealRequest()" class="appeal-popup__content">

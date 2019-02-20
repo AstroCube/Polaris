@@ -30,6 +30,11 @@ export class AppealService {
     return this._http.get(this.url + "appeal/permissions/" + id, {headers: headers}).toPromise();
   }
 
+  appeal_list_permission(): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/list-permissions/", {headers: headers}).toPromise();
+  }
+
   appeal_get(id: string): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
     return this._http.get(this.url + "appeal/get/" + id, {headers: headers}).toPromise();
@@ -62,7 +67,12 @@ export class AppealService {
 
   appeal_list(page: number, type: string): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "appeal/escalate/" + page + "/" + type, {headers: headers}).toPromise();
+    return this._http.get(this.url + "appeal/list/" + page + "/" + type, {headers: headers}).toPromise();
+  }
+
+  appeal_assign(id: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/assign-escalated/" + id, {headers: headers});
   }
 
 }

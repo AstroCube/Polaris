@@ -97,6 +97,7 @@ import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
 import {ClassifierDirective} from './directives/classifier.directive';
+import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
 
 @NgModule({
   declarations: [
@@ -189,6 +190,7 @@ import {ClassifierDirective} from './directives/classifier.directive';
   providers: [
     app_routing_providers,
     ApplicationLoginGuard,
+    AppealGlobalGuard,
     AppealListGuard,
     AppealViewGuard,
     AppealService,

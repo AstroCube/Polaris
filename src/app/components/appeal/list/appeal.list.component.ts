@@ -15,7 +15,8 @@ export class AppealListComponent {
 
   public appeal_id: string;
   public appeal_explanation: string;
-  public not_appealed: any = {};
+  public not_appealed: any[] = [];
+  public appeals: any[] = [];
   public user_ip: Promise<any | never>;
   faTimes = faTimes;
   faList = faList;
@@ -31,6 +32,7 @@ export class AppealListComponent {
 
   async ngOnInit() {
     this._route.data.subscribe((data => {
+      console.log(data.AppealListGuard);
       this.not_appealed = data.AppealListGuard.not_appealed;
     }));
     this.user_ip = await this._userService.user_ip().then((ip) => {
