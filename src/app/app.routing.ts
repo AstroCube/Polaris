@@ -64,6 +64,7 @@ import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
 import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
+import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
@@ -116,7 +117,7 @@ const app_routes: Routes = [
     children: [
       {path: "ver", component: AppealListComponent, canActivate: [AppealListGuard], resolve: {AppealListGuard}},
       {path: ":id", component: AppealViewComponent, canActivate: [AppealViewGuard], resolve: {AppealViewGuard}},
-      {path: "", component: AppealMainComponent}
+      {path: "", component: AppealMainComponent, canActivate: [AppealMainGuard], resolve: {AppealMainGuard}}
     ]
   },
   {path: "apelaciones/:page/:type", component: AppealGlobalComponent, canActivate: [AppealGlobalGuard], resolve: {AppealGlobalGuard}},

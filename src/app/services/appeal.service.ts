@@ -75,4 +75,9 @@ export class AppealService {
     return this._http.get(this.url + "appeal/assign-escalated/" + id, {headers: headers});
   }
 
+  appeal_can(): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "appeal/can", {headers: headers}).toPromise();
+  }
+
 }

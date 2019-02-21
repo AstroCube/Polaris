@@ -1,5 +1,5 @@
 <section>
-  <h1 class="heading u-margin-bottom-small">Apelando sanciones de xxx</h1>
+  <h1 class="heading u-margin-bottom-small">Apelando sanciones de <a routerLink="{{'/' + user.username}}" [style.color]="user.user_color">{{user.username}}</a></h1>
   <p class="paragraph--white u-margin-bottom-small">Ver tus otras apelaciones.</p>
   <div class="table--black table--fixed">
     <div class="table__header">
@@ -19,23 +19,40 @@
         <p>Acciones</p>
       </div>
     </div>
-    <div class="table__row">
+    <div *ngFor="let appeal of appeals" class="table__row">
       <div class="table__cell appeal__table-small">
-        <p>En disPUTA</p>
+        <span *ngIf="appeal.status == 'appealing'" style="color: aqua">Apelando</span>
+        <span *ngIf="appeal.status == 'appealed'" style="color: green">Apelada</span>
+        <span *ngIf="appeal.status == 'closed'" style="color: gray">Cerrada</span>
+        <span *ngIf="appeal.status == 'locked'" style="color: red">Bloqueada</span>
+        <span *ngIf="appeal.status == 'escalated'" style="color: darkorange">Escalada</span>
       </div>
-      <div class="table__cell appeal__table-small ">
-        <p>El Tomato</p>
+      <div class="table__cell appeal__table-small">
+        <a [style.color]="appeal.staff.user_color" routerLink="{{'/' + appeal.staff.username}}">{{appeal.staff.username}}</a>
       </div>
       <div class="table__cell appeal__table-large">
-        <p>Respuesta de XDX</p>
+        <p>
+          <span *ngIf="appeal.last_action.action == 'create'">Creada por </span>
+          <span *ngIf="appeal.last_action.action == 'open'">Abierta por </span>
+          <span *ngIf="appeal.last_action.action == 'close'">Cerrada por </span>
+          <span *ngIf="appeal.last_action.action == 'lock'">Bloqueada por </span>
+          <span *ngIf="appeal.last_action.action == 'unlock'">Desbloqueada por </span>
+          <span *ngIf="appeal.last_action.action == 'comment'">Respuesta de </span>
+          <span *ngIf="appeal.last_action.action == 'escalate'">Escalada por </span>
+          <span *ngIf="appeal.last_action.action == 'assign-escalate'">Asignada a </span>
+          <span *ngIf="appeal.last_action.action == 'appeal'">Apelada por </span>
+          <span *ngIf="appeal.last_action.action == 'un-appeal'">Des-apelada por </span>
+          <a [style.color]="appeal.last_action.user.user_color" routerLink="{{'/' + appeal.last_action.user.username}}">{{appeal.last_action.user.username}}</a>
+        </p>
       </div>
       <div class="table__cell appeal__table-small">
-        <p>hace 3 días</p>
+        <span>{{appeal.last_action.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
       </div>
       <div class="table__cell appeal__table-buttons">
-        <a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button">Asignar</a>
+        <a routerLink="{{'/apelar/' + appeal.id}}" class="btn btn--blue shop__description-slug-button shop__cart-button">Ver</a>
       </div>
     </div>
+    <p *ngIf="appeals.length <= 0" class="u-center-text u-margin-top-small paragraph--white">No se han encontrado apelaciones.</p>
   </div>
   <p class="paragraph--white u-margin-bottom-small">Selecciona que infracción deseas apelar. (Recuerda que puedes apelar infracciones activas y que no séan automáticas)</p>
   <div class="table--black table--fixed">
