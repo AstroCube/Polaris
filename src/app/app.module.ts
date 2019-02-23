@@ -99,6 +99,9 @@ import {AppealGlobalComponent} from './components/appeal/global/appeal.global.co
 import {ClassifierDirective} from './directives/classifier.directive';
 import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
 import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
+import {ReportService} from './services/report.service';
+import {ReportMainGuard} from './guards/report/report.main.guard';
+import {ReportCreateGuard} from './guards/report/report.create.guard';
 
 @NgModule({
   declarations: [
@@ -211,6 +214,9 @@ import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
     PunishmentListGuard,
     PunishmentViewGuard,
     PunishmentService,
+    ReportCreateGuard,
+    ReportMainGuard,
+    ReportService,
     TopicCreateGuard,
     TopicEditGuard,
     TopicReplyGuard,

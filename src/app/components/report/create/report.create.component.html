@@ -1,8 +1,8 @@
 <section>
-  <h1 class="heading u-margin-bottom-small">Reportando a Insanegay_</h1>
+  <h1 class="heading u-margin-bottom-small">Reportando a <a [style.color]="user_info.user_color" routerLink="{{'/' + user_info.username}}">{{user_info.username}}</a></h1>
   <div class="row u-margin-bottom-small">
     <div class="col-1-of-4">
-      <p class="report__new-question">¿Que regla ha roto Insanegay_?</p>
+      <p class="report__new-question">¿Que regla ha roto <span [style.color]="user_info.user_color">{{user_info.username}}</span>?</p>
     </div>
     <div class="col-3-of-4">
       <textarea id="rules" cols="30" rows="10" class="form__textarea"></textarea>
