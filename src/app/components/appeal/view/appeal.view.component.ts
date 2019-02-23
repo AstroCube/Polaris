@@ -42,7 +42,6 @@ export class AppealViewComponent implements OnInit {
       this.appeal = data.AppealViewGuard.appeal.appeal;
       this.permissions = data.AppealViewGuard.permissions;
       this.punishment = data.AppealViewGuard.appeal.punishment;
-      console.log(data.AppealViewGuard);
     });
   }
 

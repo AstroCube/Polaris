@@ -67,6 +67,7 @@ import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
 import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
 import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
+import {ReportViewGuard} from './guards/report/report.view.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
@@ -128,7 +129,7 @@ const app_routes: Routes = [
   {path: "reportar",
     children: [
       {path: "nuevo", component: ReportCreateComponent, canActivate: [ReportCreateGuard], resolve: {ReportCreateGuard}},
-      {path: ":id", component: ReportViewComponent},
+      {path: ":id", component: ReportViewComponent, canActivate: [ReportViewGuard], resolve: {ReportViewGuard}},
       {path: "", component: ReportMainComponent, canActivate: [ReportMainGuard], resolve: {ReportMainGuard}}
     ]
   },

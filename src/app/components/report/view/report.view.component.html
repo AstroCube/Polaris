@@ -1,23 +1,24 @@
 <section>
   <div class="row">
     <div class="col-1-of-2">
-      <h1 class="heading u-margin-bottom-small">Apelando infracción XXX</h1>
+      <h1 class="heading u-margin-bottom-small">Reportando a <a routerLink="{{'/' + report.involved.username}}" [style.color]="report.involved.user_color">{{report.involved.username}}</a></h1>
     </div>
     <div class="col-1-of-2 u-right-text">
       <a href="#" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Sancionar usuario</a>
-      <a href="#" class="btn btn--red shop__description-slug-button shop__cart-button"><fa-icon [icon]="faLock"></fa-icon> Cerrar</a>
+      <a *ngIf="permissions.close && !report.closed" class="btn btn--red shop__description-slug-button shop__cart-button" popup popup_id="report-popup" (click)="createAction('close')"><fa-icon [icon]="faTimes"></fa-icon> Cerrar</a>
+      <a *ngIf="permissions.close && report.closed" class="btn btn--green shop__description-slug-button shop__cart-button" popup popup_id="report-popup" (click)="createAction('open')"><fa-icon [icon]="faMarker"></fa-icon> Abrir</a>
     </div>
   </div>
   <div class="table--black table--fixed">
     <div class="table__header">
       <div class="table__cell report__table-small">
-        <p>Estado</p>
+        <p>Reportador</p>
       </div>
       <div class="table__cell report__table-small">
-        <p>Encargado</p>
+        <p>Involucrado</p>
       </div>
       <div class="table__cell report__table-large">
-        <p>Última acción</p>
+        <p>Encargado</p>
       </div>
       <div class="table__cell report__table-large">
         <p>Fecha</p>
@@ -25,87 +26,109 @@
     </div>
     <div class="table__row">
       <div class="table__cell report__table-small">
-        <p>En disPUTA</p>
+        <a routerLink="{{'/' + report.creator.username}}" [style.color]="report.creator.user_color">{{report.creator.username}}</a>
       </div>
-      <div class="table__cell report__table-small ">
-        <p>El Tomato</p>
-      </div>
-      <div class="table__cell report__table-large">
-        <p>Respuesta de XDX</p>
+      <div class="table__cell report__table-small">
+        <a routerLink="{{'/' + report.involved.username}}" [style.color]="report.involved.user_color">{{report.involved.username}}</a>
       </div>
       <div class="table__cell report__table-large">
-        <p>hace 3 días &nbsp;<a href="#" class="btn btn--blue shop__description-slug-button shop__cart-button">Ver</a></p>
+        <span *ngIf="!report.assigned">Esperando Asignación</span>
+        <a *ngIf="report.assigned" routerLink="{{'/' + report.assigned.username}}" [style.color]="report.assigned.user_color">{{report.assigned.username}}</a>
+      </div>
+      <div class="table__cell report__table-large">
+        <span>{{report.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
       </div>
     </div>
   </div>
   <p class="report__details">
-    <span>Reglas rotas:</span> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    <span>Reglas rotas:</span> {{report.rule}}
   </p>
   <div class="row">
     <div class="col-1-of-2">
       <p class="report__details">
-        <span>Evidencia:</span> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        <span>Evidencia:</span> {{report.evidence}}
       </p>
     </div>
     <div class="col-1-of-2">
-      <p class="report__details">
-        <span>Información adicional:</span> "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      <p *ngIf="report.miscellaneous" class="report__details">
+        <span>Información adicional:</span> {{report.miscellaneous}}
+      </p>
+      <p *ngIf="!report.miscellaneous" class="report__details">
+        <span>Información adicional:</span> Ninguna.
       </p>
     </div>
   </div>
   <div class="report">
     <div class="report__action">
       <div class="report__action--left">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam">
-        <p class="report__action-info"><a href="#">TakeMyTomato</a> creó la apelación</p>
+        <img src="{{'https://minotar.net/avatar/' + action_create.user.skin}}" alt="{{action_create.user.username}}">
+        <p class="report__action-info">
+          <a [style.color]="action_create.user.user_color" href="{{'/' + action_create.user.username}}">{{action_create.user.username}} </a> creó el reporte
+        </p>
       </div>
       <div class="report__action--right">
-        <span class="report__date">hace 8 días</span>
+        <span class="report__date">{{action_create.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
       </div>
     </div>
-    <div class="report__comment">
-      <div class="report__comment-image">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam" class="report__comment-image">
-      </div>
-      <div class="report__comment-action">
-        <div class="u-margin-bottom__small">
-          <div class="report__action--left">
-            <p class="report__action-info"><a href="#">TakeMyTomato</a> comentó</p>
-          </div>
-          <div class="report__action--right">
-            <span class="report__date">hace 8 días</span>
-          </div>
+    <div *ngFor="let action of actions; let i = index;">
+      <div *ngIf="!action.content && i !== 0" class="report__action">
+        <div class="report__action--left">
+          <img src="{{'https://minotar.net/avatar/' + action.user.skin}}" alt="{{action.user.username}}">
+          <p class="report__action-info">
+            <a [style.color]="action.user.user_color" href="{{'/' + action.user.username}}">{{action.user.username}} </a>
+            <span *ngIf="action.type === 'open'">abrió el reporte</span>
+            <span *ngIf="action.type === 'close'">cerró el reporte</span>
+            <span *ngIf="action.type === 'comment'">comentó el reporte</span>
+            <span *ngIf="action.type === 'punish'">ha sancionado al usuario</span>
+          </p>
         </div>
-        <p class="report__comment-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-      </div>
-    </div>
-    <div class="report__comment">
-      <div class="report__comment-image">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam" class="report__comment-image">
-      </div>
-      <div class="report__comment-action">
-        <div class="u-margin-bottom__small">
-          <div class="report__action--left">
-            <p class="report__action-info"><a href="#">TakeMyTomato</a> comentó</p>
-          </div>
-          <div class="report__action--right">
-            <span class="report__date">hace 8 días</span>
-          </div>
+        <div class="report__action--right">
+          <span class="report__date">{{action.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
         </div>
-        <p class="report__comment-text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
       </div>
-    </div>
-    <div class="report__action">
-      <div class="report__action--left">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Ajam">
-        <p class="report__action-info"><a href="#">TakeMyTomato</a> cerró la apelación</p>
-      </div>
-      <div class="report__action--right">
-        <span class="report__date">hace 8 días</span>
+      <div *ngIf="action.content && i !== 0" class="report__comment">
+        <div class="report__comment-image">
+          <img src="{{'https://minotar.net/avatar/' + action.user.skin}}" alt="{{action.user.username}}" class="report__comment-image">
+        </div>
+        <div class="report__comment-action">
+          <div class="u-margin-bottom__small">
+            <div class="report__action--left">
+              <p class="report__action-info">
+                <a [style.color]="action.user.user_color" href="{{'/' + action.user.username}}">{{action.user.username}} </a>
+                <span *ngIf="action.type === 'open'">abrió el reporte</span>
+                <span *ngIf="action.type === 'close'">cerró el reporte</span>
+                <span *ngIf="action.type === 'comment'">comentó el reporte</span>
+                <span *ngIf="action.type === 'punish'">ha sancionado al usuario</span>
+              </p>
+            </div>
+            <div class="report__action--right">
+              <span class="report__date">{{action.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
+            </div>
+          </div>
+          <p class="report__comment-text">{{action.content}}</p>
+        </div>
       </div>
     </div>
   </div>
   <div class="u-right-text">
-    <a href="#" class="btn btn--primary"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</a>
+    <button class="btn btn--primary" popup popup_id="report-popup" (click)="createAction('comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</button>
   </div>
 </section>
+<section class="report-popup" id="report-popup">
+  <form #report_request="ngForm" (ngSubmit)="submitAction()" class="report-popup__content">
+    <h2 class="heading heading--primary">
+      <span *ngIf="new_action === 'open' || new_action === 'close'">Abrir/Cerrar</span>
+      <span *ngIf="new_action === 'comment'">Comentar</span>
+      reporte
+    </h2>
+    <p *ngIf="new_action === 'open' || new_action === 'close'" class="paragraph paragraph--white">El comentario en esta acción es opcional.</p>
+    <a popup popup_id="report-popup" #report_close class="report-popup__close" (click)="actionReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <div class="report__form">
+      <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="new_comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explícito posible, nos ayudarás mucho."></textarea>
+    </div>
+    <div class="u-right-text">
+      <button [disabled]="!new_comment && (new_action === 'comment' || new_action === 'escalate')" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar reporte</button>
+    </div>
+  </form>
+</section>
+

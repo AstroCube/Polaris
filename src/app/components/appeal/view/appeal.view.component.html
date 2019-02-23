@@ -131,7 +131,7 @@
 <section class="appeal-popup" id="appeal-popup">
   <form #appeal_request="ngForm" (ngSubmit)="submitAction()" class="appeal-popup__content">
     <h2 class="heading heading--primary">
-      <span *ngIf="new_action === 'open' || new_action === 'close'">Abrir/Crear</span>
+      <span *ngIf="new_action === 'open' || new_action === 'close'">Abrir/Cerrar</span>
       <span *ngIf="new_action === 'comment'">Comentar</span>
       <span *ngIf="new_action === 'escalate'">Escalar</span>
       <span *ngIf="new_action === 'appeal' || new_action === 'un-appeal'">Aceptar/Retractar</span>
@@ -143,7 +143,7 @@
       <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="new_comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explícito posible, nos ayudarás mucho."></textarea>
     </div>
     <div class="u-right-text">
-      <button [disabled]="!new_comment && (new_action === 'comment' || new_action === 'escalate')" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar apelación</button>
+      <button [disabled]="!new_comment && new_action === 'comment'" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar apelación</button>
     </div>
   </form>
 </section>

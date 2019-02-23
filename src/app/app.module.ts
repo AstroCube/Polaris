@@ -102,6 +102,7 @@ import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
 import {ReportService} from './services/report.service';
 import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
+import {ReportViewGuard} from './guards/report/report.view.guard';
 
 @NgModule({
   declarations: [
@@ -216,6 +217,7 @@ import {ReportCreateGuard} from './guards/report/report.create.guard';
     PunishmentService,
     ReportCreateGuard,
     ReportMainGuard,
+    ReportViewGuard,
     ReportService,
     TopicCreateGuard,
     TopicEditGuard,
