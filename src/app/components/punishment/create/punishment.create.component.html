@@ -2,7 +2,7 @@
   <h1 class="heading u-margin-bottom-small">Sancionar usuario</h1>
   <form #punishment_create="ngForm" (ngSubmit)="onSubmit()" class="row">
     <div class="col-1-of-2">
-      <div class="u-margin-bottom-medium">
+      <div *ngIf="!report" class="u-margin-bottom-medium">
         <label class="form__label">Usuario</label>
         <ng-select id="punished" name="punished" #punished="ngModel" [(ngModel)]="punishment.punished" [searchable]="true" [items]="users" bindLabel="username" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
           <ng-template ng-option-tmp let-item="item">

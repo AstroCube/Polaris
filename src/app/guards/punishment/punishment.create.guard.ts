@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRouteSnapshot, Router} from '@angular/router';
 import {UserService} from '../../services/user.service';
+import {ReportService} from '../../services/report.service';
 @Injectable()
 export class PunishmentCreateGuard {
 
   constructor (
     private _userService: UserService,
+    private _reportService: ReportService,
     private _router: Router
   ) {}
 
@@ -40,8 +42,8 @@ export class PunishmentCreateGuard {
     }
   }
 
-  resolve(): Promise<any> {
-    return this.dataFinal().then((response) => {
+  resolve(route: ActivatedRouteSnapshot): Promise<any> {
+    return this.dataFinal(route).then((response) => {
       return response;
     }).catch((err) => {
       switch (err.status) {
@@ -61,7 +63,7 @@ export class PunishmentCreateGuard {
     });
   }
 
-  async dataFinal(): Promise<any> {
+  async dataFinal(route: ActivatedRouteSnapshot): Promise<any> {
     return {
       permissions: await this.dataPromise().then((response) => {
         return response;
@@ -86,7 +88,50 @@ export class PunishmentCreateGuard {
       }).catch((err) => {
         console.log(err);
         return null;
+      }),
+      report: await this.report(route).then((response) => {
+        return response;
+      }).catch((err) => {
+        switch (err.status) {
+          case 404: {
+            this._router.navigate(['/error'] , { queryParams: {type: "404"}});
+            return false;
+          }
+          case 403: {
+            this._router.navigate(['/error'] , { queryParams: {type: "403"}});
+            return false;
+          }
+          default: {
+            this._router.navigate(['/error'] , { queryParams: {type: "500"}});
+            return false;
+          }
+        }
       })
+    }
+  }
+
+  async report(route: ActivatedRouteSnapshot): Promise<any> {
+    if (route.queryParams && route.queryParams.report)  {
+      return await this._reportService.report_get_punish(route.queryParams.report).then((report) => {
+        return report;
+      }).catch((err) => {
+        switch (err.status) {
+          case 404: {
+            this._router.navigate(['/error'] , { queryParams: {type: "404"}});
+            return false;
+          }
+          case 403: {
+            this._router.navigate(['/error'] , { queryParams: {type: "403"}});
+            return false;
+          }
+          default: {
+            this._router.navigate(['/error'] , { queryParams: {type: "500"}});
+            return false;
+          }
+        }
+      });
+    } else {
+      return null;
     }
   }
 

@@ -12,8 +12,9 @@ import {NotifierService} from 'angular-notifier';
 
 export class PunishmentCreateComponent implements OnInit {
 
-  public users: any = {};
+  public users: any[] = [];
   public punishment: Punishment;
+  public report: any  ;
   public punishment_options: any[];
   public picker_options: IMyDpOptions;
 
@@ -44,20 +45,27 @@ export class PunishmentCreateComponent implements OnInit {
     ];
 
     this.punishment = new Punishment("","","", "","","","","","","", null,false,false,false);
-
   }
 
   ngOnInit() {
     this._route.data.subscribe((data => {
+      this.report = data.PunishmentCreateGuard.report;
       this.users = data.PunishmentCreateGuard.list.fixed_users;
     }));
+    if (this.report) {
+      this.punishment.punished = this.users.filter(user => {
+        return user.username === this.report.placeholder.username;
+      })[0];
+    }
   }
 
   onSubmit() {
     this.punishment.punished = this.punishment.punished._id;
     this.punishment.type = this.punishment.type.value;
-    this.punishment.expires = this.punishment.expires.epoc;
-    this._punishmentService.punishment_create(this.punishment).subscribe(
+    if (this.punishment.expires) this.punishment.expires = this.punishment.expires.epoc;
+    let has_report = null;
+    if (this.report) has_report = this.report.report;
+    this._punishmentService.punishment_create(this.punishment, has_report).subscribe(
       response => {
         if (!response) {
           this._notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");

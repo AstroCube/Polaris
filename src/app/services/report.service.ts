@@ -35,4 +35,19 @@ export class ReportService {
     return this._http.get(this.url + "report/view/" + id, {headers: headers}).toPromise();
   }
 
+  report_comment(id: any, content: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.post(this.url + "report/comment/" + id, {content: content}, {headers: headers});
+  }
+
+  report_close(id: any, content: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.post(this.url + "report/close/" + id, {content: content}, {headers: headers});
+  }
+
+  report_get_punish(id: any): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "report/get-punish/" + id, {headers: headers}).toPromise();
+  }
+
 }

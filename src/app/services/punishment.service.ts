@@ -16,9 +16,13 @@ export class PunishmentService {
     this.url = GLOBAL.url;
   }
 
-  punishment_create(punishment: Punishment): Observable<any> {
+  punishment_create(punishment: Punishment, report: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.post(this.url + "punishment/create", punishment, {headers: headers});
+    if (report) {
+      return this._http.post(this.url + "punishment/create/" + report, punishment, {headers: headers});
+    } else {
+      return this._http.post(this.url + "punishment/create", punishment, {headers: headers});
+    }
   }
 
   punishment_get(id: string): Promise<any> {
