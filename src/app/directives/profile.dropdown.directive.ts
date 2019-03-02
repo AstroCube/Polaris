@@ -22,13 +22,11 @@ export class ProfileDropdownDirective implements OnInit {
             this._renderer.addClass(name, "header__profile-name--active");
           }
         });
-        if (panel.classList.contains("header__menu")) {
-          if (panel.classList.contains("header__menu--expanded")) {
-            this._renderer.removeClass(panel,"header__menu--expanded");
-            this._renderer.removeStyle(panel, "maxHeight");
-          } else {
-            this._renderer.addClass(panel,"header__menu--expanded");
-          }
+        if (panel.classList.contains("header__menu") && panel.classList.contains("header__menu--expanded")) {
+          this._renderer.removeClass(panel,"header__menu--expanded");
+          this._renderer.removeStyle(panel, "maxHeight");
+        } else {
+          this._renderer.addClass(panel,"header__menu--expanded");
         }
       });
     }

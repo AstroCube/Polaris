@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ReportMainComponent implements OnInit {
 
   public users: any = {};
-  public reported_user: any = {};
+  public reported_user: any = null;
   faList = faList;
 
   constructor(

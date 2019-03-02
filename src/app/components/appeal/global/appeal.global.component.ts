@@ -31,6 +31,7 @@ export class AppealGlobalComponent implements OnInit{
       this.pages = data.AppealGlobalGuard.list.pages;
       this.type = data.AppealGlobalGuard.list.type;
     }));
+    if ((this.type === "involved" && !this.permissions.involved) || (this.type === "waiting" && !this.permissions.waiting)) this._router.navigate(['/error'] , { queryParams: {type: "403"}});
   }
 
   assignAppeal(id: string) {

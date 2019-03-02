@@ -19,8 +19,8 @@
             <a href="{{'/apelaciones/' + page + '/open'}}" [class.classifier__option--active]="type =='open'" class="classifier__option">Abiertas</a>
             <a href="{{'/apelaciones/' + page + '/closed'}}" [class.classifier__option--active]="type =='closed'" class="classifier__option">Cerradas</a>
             <a href="{{'/apelaciones/' + page + '/escalated'}}" [class.classifier__option--active]="type =='escalated'" class="classifier__option">Escaladas</a>
-            <a href="{{'/apelaciones/' + page + '/involved'}}" [class.classifier__option--active]="type =='involved'" class="classifier__option">Involucrado</a>
-            <a href="{{'/apelaciones/' + page + '/waiting'}}" [class.classifier__option--active]="type =='waiting'" class="classifier__option">Esperando</a>
+            <a *ngIf="permissions.involved" href="{{'/apelaciones/' + page + '/involved'}}" [class.classifier__option--active]="type =='involved'" class="classifier__option">Involucrado</a>
+            <a *ngIf="permissions.waiting" href="{{'/apelaciones/' + page + '/waiting'}}" [class.classifier__option--active]="type =='waiting'" class="classifier__option">Esperando</a>
           </div>
         </div>
       </div>

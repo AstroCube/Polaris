@@ -68,6 +68,7 @@ import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
 import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
 import {ReportViewGuard} from './guards/report/report.view.guard';
+import {ReportListGuard} from './guards/report/report.list.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
@@ -133,7 +134,9 @@ const app_routes: Routes = [
       {path: "", component: ReportMainComponent, canActivate: [ReportMainGuard], resolve: {ReportMainGuard}}
     ]
   },
-  {path: "reportar/list", component: ReportListComponent},
+  {path: "reportes/:page/:type", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
+  {path: "reportes/:page", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
+  {path: "reportes", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
   {path: "sanciones/:page", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "sanciones", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "cuenta", component: UserEditComponent, canActivate: [UserEditGuard], resolve: {UserEditGuard}},

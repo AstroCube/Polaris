@@ -103,6 +103,8 @@ import {ReportService} from './services/report.service';
 import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
 import {ReportViewGuard} from './guards/report/report.view.guard';
+import {ReportListGuard} from './guards/report/report.list.guard';
+import {BodyDirective} from './directives/body.directive';
 
 @NgModule({
   declarations: [
@@ -161,6 +163,7 @@ import {ReportViewGuard} from './guards/report/report.view.guard';
 
     // --- Directives --- //
 
+    BodyDirective,
     ClassifierDirective,
     CollapsibleDirective,
     NavbarDropdownDirective,
@@ -216,6 +219,7 @@ import {ReportViewGuard} from './guards/report/report.view.guard';
     PunishmentViewGuard,
     PunishmentService,
     ReportCreateGuard,
+    ReportListGuard,
     ReportMainGuard,
     ReportViewGuard,
     ReportService,

@@ -4,7 +4,7 @@
       <h1 class="heading u-margin-bottom-small">Reportando a <a routerLink="{{'/' + report.involved.username}}" [style.color]="report.involved.user_color">{{report.involved.username}}</a></h1>
     </div>
     <div class="col-1-of-2 u-right-text">
-      <a *ngIf="!report.punishment" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Sancionar usuario</a>
+      <a *ngIf="!report.punishment" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="punishUser()"><fa-icon [icon]="faGavel"></fa-icon> Sancionar usuario</a>
       <a *ngIf="permissions.close && !report.closed" class="btn btn--red shop__description-slug-button shop__cart-button" popup popup_id="report-popup" (click)="createAction('close')"><fa-icon [icon]="faTimes"></fa-icon> Cerrar</a>
       <a *ngIf="permissions.close && report.closed" class="btn btn--green shop__description-slug-button shop__cart-button" popup popup_id="report-popup" (click)="createAction('open')"><fa-icon [icon]="faMarker"></fa-icon> Abrir</a>
     </div>
@@ -32,7 +32,7 @@
         <a routerLink="{{'/' + report.involved.username}}" [style.color]="report.involved.user_color">{{report.involved.username}}</a>
       </div>
       <div class="table__cell report__table-large">
-        <span *ngIf="!report.assigned">Esperando Asignación</span>
+        <span *ngIf="!report.assigned && (report.creator.id !== report.involved.id)">Esperando Asignación</span>
         <a *ngIf="report.assigned" routerLink="{{'/' + report.assigned.username}}" [style.color]="report.assigned.user_color">{{report.assigned.username}}</a>
       </div>
       <div class="table__cell report__table-large">

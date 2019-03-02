@@ -52,7 +52,7 @@
           <section class="header__menu-nav">
             <a routerLink="{{'/' + username}}" class="header__menu-link">Perfil</a>
             <a href="#" class="header__menu-link">Amigos</a>
-            <a href="#" class="header__menu-link">Reportes</a>
+            <a routerLink="/reportes" class="header__menu-link">Reportes</a>
             <a routerLink="/apelaciones" class="header__menu-link">Apelaciones</a>
             <a href="#" [routerLink]="['/cuenta']" class="header__menu-link">Mi cuenta</a>
             <a [routerLink]="'/'" (click)="logout()" class="header__menu-link">Cerrar sesión</a>

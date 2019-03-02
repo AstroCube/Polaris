@@ -85,4 +85,8 @@ export class ReportViewComponent implements OnInit {
     }
   }
 
+  punishUser() {
+    this._router.navigate(['sancion/crear'], {queryParams: {report: this.report.id}});
+  }
+
 }

@@ -37,12 +37,11 @@
     position: absolute;
     top: 4rem;
     left: 0;
-    height: 0;
+    max-height: 0;
     background-color: $color-tertiary-dark;
     overflow: hidden;
     width: 24rem;
-    transition: all .5s;
-    padding-bottom: 0;
+    transition: max-height .5s;
     border-bottom: 3px transparent;
 
     @include respond(tab-land) {
@@ -53,9 +52,8 @@
     }
 
       &--active {
-        height: auto;
+        max-height: 50rem;
         border-bottom: 3px solid $color-primary;
-        padding-bottom: 1rem;
 
         @include respond(tab-land) {
 
