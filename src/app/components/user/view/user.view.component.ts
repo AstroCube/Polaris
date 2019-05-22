@@ -26,7 +26,10 @@ export class UserViewComponent implements OnInit{
 
   ngOnInit(): void {
     this._route.data.subscribe((data => {
-      this.user = data.UserViewGuard.user;
+      this.user = data.UserViewGuard;
+      this.logged_details = data.UserViewGuard.logged_details;
+      this.punishments = data.UserViewGuard.punishments;
+      this.groups = data.UserViewGuard.groups;
     }));
   }
 }
