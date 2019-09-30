@@ -80,20 +80,13 @@
   }
 
   &__announcements-slider {
+
+    @include titleFont;
+
     display: inline-block;
     margin: 0;
     padding: 0;
-    list-style: none;
-    animation-name: slide-words;
-    animation-timing-function: ease-out;
-    animation-iteration-count: infinite;
-    animation-duration: 3s;
-  }
-
-  &__announcement {
-    font-size: 1.3rem;
-    color: $color-white;
-    display: block;
+    font-size: 1.5rem;
     line-height: 1.3rem;
     text-align: left;
   }

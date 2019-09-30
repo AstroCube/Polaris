@@ -1,9 +1,11 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {faFacebookF, faGitlab, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
+import {faFacebookF, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
 import {faBars, faComments, faCompass, faGamepad, faLock, faSearch, faShoppingBag, faSignInAlt, faTimes, faUser, faUsers} from '@fortawesome/free-solid-svg-icons';
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
+import {faGithub} from '@fortawesome/free-brands-svg-icons/faGithub';
+import Typed from 'typed.js';
 
 @Component({
   selector: 'application-header',
@@ -25,7 +27,7 @@ export class ApplicationHeaderComponent implements OnInit {
   faComments = faComments;
   faFacebookF = faFacebookF;
   faGamepad = faGamepad;
-  faGitlab = faGitlab;
+  faGithub = faGithub;
   faLock = faLock;
   faSearch = faSearch;
   faShoppingBag = faShoppingBag;
@@ -56,6 +58,22 @@ export class ApplicationHeaderComponent implements OnInit {
         this.skin = response.user.skin;
       });
     }
+
+    const options = {
+      strings: [
+        '¡Juega en mc.seocraft.net!',
+        'Lleva casco, ¡Estamos en beta!',
+        '¡Recuerda ser amable con los demás!',
+        '¡Puedes entrar siendo no premium!'
+      ],
+      typeSpeed: 60,
+      backSpeed: 60,
+      backDelay: 1000,
+      shuffle: true,
+      loop: true
+    };
+
+    const typed = new Typed('.header__announcements-slider', options);
   }
 
   changeEvent(): void {

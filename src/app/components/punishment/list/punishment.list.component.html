@@ -46,5 +46,6 @@
       </div>
     </div>
   </div>
+  <p *ngIf="!punishments" class="u-center-text u-margin-top-small paragraph--white">¿La división staff no trabaja?, ¿O no hay sanciones aún?, si es la segunda, estamos orgullosos ♥</p>
   <pagination [actual_page]="page" [last_page]="pages" route="{{'/sanciones/'}}" [centered]="true"></pagination>
 </section>

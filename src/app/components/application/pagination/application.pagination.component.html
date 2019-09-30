@@ -22,7 +22,7 @@
     <span class="pagination__point">...</span>
     <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" routerLink="{{ '/' + route + (page) }}">{{page}}</a>
   </nav>
-  <a routerLink="{{ '/' + route + (actual_page+1) }}" class="pagination__arrow" *ngIf="actual_page != last_page">
+  <a routerLink="{{ '/' + route + (actual_page+1) }}" class="pagination__arrow" *ngIf="actual_page != last_page && actual_page != 1">
     <fa-icon [icon]="faAngleDoubleRight"></fa-icon>
   </a>
 </div>

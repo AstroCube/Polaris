@@ -106,6 +106,7 @@ import {ReportViewGuard} from './guards/report/report.view.guard';
 import {ReportListGuard} from './guards/report/report.list.guard';
 import {BodyDirective} from './directives/body.directive';
 
+
 @NgModule({
   declarations: [
 

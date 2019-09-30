@@ -20,6 +20,7 @@ export class ForumMainComponent implements OnInit {
   async ngOnInit() {
     this._route.data.subscribe((data => {
       this.categories = data.ForumMainGuard.categories;
+      console.log(this.categories);
     }));
   }
 

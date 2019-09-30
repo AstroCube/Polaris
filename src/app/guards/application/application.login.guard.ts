@@ -13,8 +13,8 @@ export class ApplicationLoginGuard {
 
   canActivate() {
     const token = this._userService.getToken();
-    if (token) {
-      this._router.navigate(['/']);
+    if (token == "none") {
+      this._router.navigate(['/login']);
       return false;
     } else {
       return true;

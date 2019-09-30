@@ -71,8 +71,8 @@ import {ReportViewGuard} from './guards/report/report.view.guard';
 import {ReportListGuard} from './guards/report/report.list.guard';
 
 const app_routes: Routes = [
-  {path: "login", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
-  {path: "registrarse", component: ApplicationLoginComponent, canActivate: [ApplicationLoginGuard]},
+  {path: "login", component: ApplicationLoginComponent},
+  {path: "registrarse", component: ApplicationLoginComponent},
   {path: "admin",
     children: [
       {path: "", redirectTo: "/", pathMatch: "full"},

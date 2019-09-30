@@ -28,10 +28,13 @@
                 <span class="category__node-number">{{forum.messages}}</span>
               </div>
               <div class="category__node-last">
-                <a routerLink="{{'/foro/tema/' + forum.last_topic.id}}" class="category__node-top">
+                <a *ngIf="forum.last_topic" routerLink="{{'/foro/tema/' + forum.last_topic.id}}" class="category__node-top">
                   {{forum.last_topic.subject}}
                 </a>
-                <div class="category__node-bottom">
+                <a *ngIf="!forum.last_topic" routerLink="{{'/foro/' + forum.id}}" class="category__node-top">
+                  No hay temas aún :(
+                </a>
+                <div *ngIf="forum.last_topic" class="category__node-bottom">
                   <img src="{{'https://minotar.net/avatar/' + forum.last_topic.writer.skin}}" alt="Category image" class="category__node-avatar">
                   <a routerLink="{{'/' + forum.last_topic.writer.username}}" class="category__node-username" [style.color]="forum.last_topic.writer.user_color">{{forum.last_topic.writer.username}}</a>
                   <span tooltip content="Creado en {{forum.last_topic.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="top" class="category__node-date">{{forum.last_topic.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>

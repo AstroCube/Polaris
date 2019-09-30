@@ -42,6 +42,7 @@
     "rxjs": "~6.3.3",
     "seocraft-editor": "./text_editor",
     "tippy.js": "^3.3.0",
+    "typed.js": "^2.0.11",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

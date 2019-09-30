@@ -28,6 +28,8 @@ export class ApplicationLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let token = this._userService.getToken();
+    if (token != "none") this._router.navigate(['/']);
     if (this._activatedRoute.snapshot.queryParams.verified) this._notifierService.notify('success', "Haz verificado correctamente tu cuenta, solo te queda iniciar sesión.");
   }
 
