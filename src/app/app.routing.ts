@@ -69,6 +69,7 @@ import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
 import {ReportViewGuard} from './guards/report/report.view.guard';
 import {ReportListGuard} from './guards/report/report.list.guard';
+import {MapViewGuard} from './guards/map/map.view.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -140,11 +141,15 @@ const app_routes: Routes = [
   {path: "sanciones/:page", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "sanciones", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "cuenta", component: UserEditComponent, canActivate: [UserEditGuard], resolve: {UserEditGuard}},
+  {path: "mapas",
+    children: [
+      {path: ":id", component: MapViewComponent, resolve: {MapViewGuard}},
+      {path: "", component: MapMainComponent}
+    ]
+  },
   {path: "alertas", component: ApplicationAlertComponent},
   {path: "amigos", component: FriendshipComponent},
   {path: "desarrollo", component: ApplicationDevelopementComponent},
-  {path: "mapa/view", component: MapViewComponent},
-  {path: "mapas", component: MapMainComponent},
   {path: "foroint", component: ForumViewComponent},
   {path: "privacidad", component: ApplicationPrivacyComponent},
   {path: "reglas", component: ApplicationRulesComponent},

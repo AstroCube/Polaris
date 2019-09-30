@@ -37,6 +37,12 @@ export class UserService {
     return this._http.get(this.url + "user/get-user/" + id, {headers: headers}).toPromise();
   }
 
+  getPrefix(id: string): Promise<any> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
+    if (!id) return this._http.get(this.url + "user/get-placeholder", {headers: headers}).toPromise();
+    return this._http.get(this.url + "user/get-placeholder/" + id, {headers: headers}).toPromise();
+  }
+
   get_profile(username: string): Promise<any> {
     if (this.getToken()) {
       let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());

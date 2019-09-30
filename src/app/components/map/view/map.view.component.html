@@ -3,60 +3,24 @@
     <h1 class="heading map__main-title">Mapas</h1>
     <h4 class="heading heading--primary map__main-title">Una gran colección de mapas y variedades únicas</h4>
   </div>
-  <div class="map__navigator">
-    <span class="map__navigator-slug">
-      Seleccionar mapas:
-    </span>
-    <div class="dropdown map__navigator-dropdown map__navigator-dropdown--1">
-        <span class="dropdown__label dropdown map__navigator-dropdown-label">
-          Modos de juego
-        </span>
-      <div class="dropdown__content">
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">InsaneWars</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">TNT Games</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">SkyWars</a>
-      </div>
-    </div>
-    <div class="dropdown map__navigator-dropdown map__navigator-dropdown--2">
-        <span class="dropdown__label dropdown map__navigator-dropdown-label">
-          Calificación
-        </span>
-      <div class="dropdown__content">
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">1 estrella</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">2 estrellas</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">3 estrellas</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">4 estrellas</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">5 estrellas</a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
+  <div class="row u-margin-bottom-small">
     <div class="col-2-of-3">
-      <h2 class="heading">Golden drought IV</h2>
+      <h2 class="heading">{{map.name}}</h2>
       <p class="map__author-info">
-        por <a href="#">TakeMyTomato</a>
+        por <a routerLink="{{'/' + map.author.username}}" [style.color]="placeholder.userColor">{{map.author.username}}</a>
       </p>
       <div class="map__info">
         <div class="map__objective">
           <span class="map__info-placeholder">Objetivo:</span>
-          <p>Utilizar todos los poderes de la transformación Rainbow y la magia de la amistad para ganar.</p>
-        </div>
-        <div class="map__teams">
-          <span class="map__info-placeholder">Equipos:</span>
-          <ul>
-            <li><span>Equipo rojo:</span> 4 jugadores</li>
-            <li><span>Equipo verde:</span> 4 jugadores</li>
-            <li><span>Equipo amarillo:</span> 4 jugadores</li>
-            <li><span>Equipo azul:</span> 4 jugadores</li>
-          </ul>
+          <p>{{map.description}}</p>
         </div>
       </div>
     </div>
     <div class="col-1-of-3">
       <div class="map__info-slug u-center-text">
         <img src="../../../../assets/images/map_placeholder.png" class="map__image">
-        <a class="btn btn--green map__info-button" href="#"><fa-icon class="btn__icon--left" [icon]="faMapSigns"></fa-icon>Descargar Mapa</a>
-        <a class="btn btn--blue map__info-button" href="#"><fa-icon class="btn__icon--left" [icon]="faCode"></fa-icon>Descargar XML</a>
+        <a *ngIf="canDownload" class="btn btn--green map__info-button" href="#"><fa-icon class="btn__icon--left" [icon]="faMapSigns"></fa-icon>Descargar Mapa</a>
+        <a *ngIf="canDownload" class="btn btn--blue map__info-button" href="#"><fa-icon class="btn__icon--left" [icon]="faCode"></fa-icon>Descargar Config</a>
       </div>
     </div>
   </div>
