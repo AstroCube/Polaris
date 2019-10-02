@@ -18,39 +18,9 @@
     </div>
     <div class="col-1-of-3">
       <div class="map__info-slug u-center-text">
-        <img src="../../../../assets/images/map_placeholder.png" class="map__image">
-        <a *ngIf="canDownload" class="btn btn--green map__info-button" href="#"><fa-icon class="btn__icon--left" [icon]="faMapSigns"></fa-icon>Descargar Mapa</a>
-        <a *ngIf="canDownload" class="btn btn--blue map__info-button" href="#"><fa-icon class="btn__icon--left" [icon]="faCode"></fa-icon>Descargar Config</a>
-      </div>
-    </div>
-  </div>
-  <div class="table">
-    <div class="table__header">
-      <div class="table__cell">
-        <p>Fecha</p>
-      </div>
-      <div class="table__cell">
-        <p>Duración</p>
-      </div>
-      <div class="table__cell">
-        <p>Participantes</p>
-      </div>
-      <div class="table__cell">
-        <p>Ganador</p>
-      </div>
-    </div>
-    <div class="table__row">
-      <div class="table__cell">
-        <p>Hace 777 lustros</p>
-      </div>
-      <div class="table__cell">
-        <p>8 lunas</p>
-      </div>
-      <div class="table__cell">
-        <p>32</p>
-      </div>
-      <div class="table__cell">
-        <p>El webo enmascarado</p>
+        <img src="{{url + 'map/get-image/' + map.image}}" class="map__image">
+        <a *ngIf="canDownload" class="btn btn--green map__info-button" (click)="downloadFile()"><fa-icon class="btn__icon--left" [icon]="faMapSigns"></fa-icon>Descargar Mapa</a>
+        <a *ngIf="canDownload" class="btn btn--blue map__info-button" (click)="downloadJSON()"><fa-icon class="btn__icon--left" [icon]="faCode"></fa-icon>Descargar Config</a>
       </div>
     </div>
   </div>
