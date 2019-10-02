@@ -36,7 +36,6 @@ import {ApplicationRulesComponent} from './components/application/rules/applicat
 import {ApplicationRefundComponent} from './components/application/refund/application.refund.component';
 import {ApplicationTermsComponent} from './components/application/terms/application.terms.component';
 import {ApplicationDevelopementComponent} from './components/application/developement/application.developement.component';
-import {ApplicationLoginGuard} from './guards/application/application.login.guard';
 import {UserEditGuard} from './guards/user/user.edit.guard';
 import {UserViewGuard} from './guards/user/user.view.guard';
 import {CategoryListGuard} from './guards/category/category.list.guard';
@@ -70,6 +69,7 @@ import {ReportCreateGuard} from './guards/report/report.create.guard';
 import {ReportViewGuard} from './guards/report/report.view.guard';
 import {ReportListGuard} from './guards/report/report.list.guard';
 import {MapViewGuard} from './guards/map/map.view.guard';
+import {MapMainGuard} from './guards/map/map.main.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -144,7 +144,7 @@ const app_routes: Routes = [
   {path: "mapas",
     children: [
       {path: ":id", component: MapViewComponent, resolve: {MapViewGuard}},
-      {path: "", component: MapMainComponent}
+      {path: "", component: MapMainComponent, resolve: {MapMainGuard}}
     ]
   },
   {path: "alertas", component: ApplicationAlertComponent},

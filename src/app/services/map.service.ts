@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserService} from './user.service';
 import {GLOBAL} from './global';
 import {Observable} from 'rxjs';
@@ -28,6 +28,17 @@ export class MapService {
   mapDownloadJSON(file: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
     return this._http.get(this.url + "map/get-config/" + file, {headers: headers, responseType: 'blob'});
+  }
+
+  mapGetQuery(page: number, gamemode: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    let query = "";
+    if (gamemode) {
+      query = new HttpParams()
+        .set("gamemode", "?" + gamemode)
+        .toString();
+    }
+    return this._http.get(this.url + "map/get-query" + page + query, {headers: headers}).toPromise();
   }
 
 }

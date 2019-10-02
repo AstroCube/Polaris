@@ -107,6 +107,7 @@ import {ReportListGuard} from './guards/report/report.list.guard';
 import {BodyDirective} from './directives/body.directive';
 import {MapService} from './services/map.service';
 import {MapViewGuard} from './guards/map/map.view.guard';
+import {MapMainGuard} from './guards/map/map.main.guard';
 
 
 @NgModule({
@@ -217,6 +218,7 @@ import {MapViewGuard} from './guards/map/map.view.guard';
     ForumViewGuard,
     ForumService,
     MapViewGuard,
+    MapMainGuard,
     MapService,
     PunishmentCreateGuard,
     PunishmentEditGuard,
