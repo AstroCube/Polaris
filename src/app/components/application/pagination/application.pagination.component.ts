@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {faAngleDoubleLeft, faAngleDoubleRight} from '@fortawesome/free-solid-svg-icons';
+import {Router} from '@angular/router';
 
 @Component({
   selector: "pagination",
@@ -10,21 +11,25 @@ export class ApplicationPaginationComponent implements OnInit {
 
   @Input() actual_page;
   @Input() route;
+  @Input() queryParams;
   @Input() last_page;
   @Input() centered;
+  @Input() pageAsQuery = false;
   public paginator_type;
   public first_page;
   public pages: number[];
   faAngleDoubleLeft = faAngleDoubleLeft;
   faAngleDoubleRight = faAngleDoubleRight;
 
+  constructor(
+    private _router: Router
+  ) {}
 
   ngOnInit() {
     this.paginator(this.last_page, this.actual_page);
   }
 
   paginator(totalPages: number, currentPage: number = 1) {
-    console.log(this.route);
     this.last_page = totalPages;
     this.actual_page = currentPage;
     this.first_page = 1;
@@ -52,4 +57,18 @@ export class ApplicationPaginationComponent implements OnInit {
       }
     }
   }
+
+  navigate(page: number) {
+    console.log(page);
+    let params = {};
+    if (this.queryParams) params = this.queryParams;
+    if (this.pageAsQuery) params["page"] = page;
+    if (!this.pageAsQuery) {
+      this._router.navigate([this.route + page], {queryParams: params});
+    } else {
+      this._router.navigate([this.route], {queryParams: params});
+    }
+  }
+
+
 }
