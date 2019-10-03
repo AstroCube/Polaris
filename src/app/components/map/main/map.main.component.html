@@ -12,9 +12,7 @@
           Modos de juego
         </span>
       <div class="dropdown__content">
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">InsaneWars</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">TNT Games</a>
-        <a href="#" class="dropdown__link map__navigator-dropdown-link">SkyWars</a>
+        <a *ngFor="let gamemode of options" href="{{'/mapas?gamemode=' + gamemode._id}}" class="dropdown__link map__navigator-dropdown-link">{{gamemode.scoreboard}}</a>
       </div>
     </div>
     <!--
@@ -32,15 +30,15 @@
     </div>
     -->
   </div>
-  <div class="map">
-    <a href="#">
-      <img src="../../../../assets/images/map_placeholder.png" class="map__image">
+  <div *ngFor="let map of mapList" class="map">
+    <a routerLink="{{'/mapas/' + map._id}}">
+      <img src="{{url + 'map/get-image/' + map.image}}" class="map__image">
     </a>
-    <a href="#" class="map__title">
-      Golden Drought IV
+    <a routerLink="{{'/mapas/' + map._id}}" class="map__title">
+      {{map.name}}
     </a>
     <p class="map__author">
-      por <a href="#">TakeMyTomato</a>
+      por <a routerLink="{{'/' + map.author.username}}">{{map.author.username}}</a>
     </p>
     <!--
     <div class="map__stars">
@@ -52,4 +50,5 @@
     </div>
     -->
   </div>
+  <pagination [actual_page]="page" [last_page]="pages" route="{{'' + route}}" [centered]="true"></pagination>
 </section>

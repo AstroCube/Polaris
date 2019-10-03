@@ -28,7 +28,7 @@ export class MapViewComponent {
     this.url = GLOBAL.url;
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this._route.data.subscribe((data) => {
       this.map = data.MapViewGuard.map;
       this.canDownload = data.MapViewGuard.canDownload;

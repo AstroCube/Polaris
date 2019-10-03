@@ -35,10 +35,15 @@ export class MapService {
     let query = "";
     if (gamemode) {
       query = new HttpParams()
-        .set("gamemode", "?" + gamemode)
+        .set("gamemode", gamemode)
         .toString();
     }
-    return this._http.get(this.url + "map/get-query" + page + query, {headers: headers}).toPromise();
+    return this._http.get(this.url + "map/get-query/" + page + query, {headers: headers}).toPromise();
+  }
+
+  mapGamemodeList(): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "gamemode/list", {headers: headers}).toPromise();
   }
 
 }

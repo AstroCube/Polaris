@@ -2,6 +2,7 @@ import {User} from '../user';
 
 export class Map {
   constructor(
+    public _id: string,
     public name: string,
     public file: string,
     public configuration: string,

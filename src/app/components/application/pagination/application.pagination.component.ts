@@ -24,6 +24,7 @@ export class ApplicationPaginationComponent implements OnInit {
   }
 
   paginator(totalPages: number, currentPage: number = 1) {
+    console.log(this.route);
     this.last_page = totalPages;
     this.actual_page = currentPage;
     this.first_page = 1;
