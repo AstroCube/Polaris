@@ -1,28 +1,28 @@
 <div class="pagination" [class.pagination--centered]="centered">
-  <a (click)="navigate(actual_page-1)" class="pagination__arrow" *ngIf="actual_page != 1">
+  <a routerLink="{{ '/' + route + (actual_page-1) }}" class="pagination__arrow" *ngIf="actual_page != 1">
     <fa-icon [icon]="faAngleDoubleLeft"></fa-icon>
   </a>
   <nav *ngIf="paginator_type == 'less_five'">
-    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" (click)="navigate(page)">{{page}}</a>
+    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" routerLink="{{ '/' + route + (page) }}">{{page}}</a>
   </nav>
   <nav *ngIf="paginator_type == 'first_five'">
-    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" (click)="navigate(page)">{{page}}</a>
+    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" routerLink="{{ '/' + route + (page) }}">{{page}}</a>
     <span class="pagination__point">...</span>
-    <a class="pagination__link" (click)="navigate(last_page)">{{last_page}}</a>
+    <a class="pagination__link" routerLink="{{ '/' + route + (last_page) }}">{{last_page}}</a>
   </nav>
   <nav *ngIf="paginator_type == 'middle_paginator'">
-    <a class="pagination__link" (click)="navigate(first_page)">{{first_page}}</a>
+    <a class="pagination__link" routerLink="{{ '/' + route + (first_page) }}">{{first_page}}</a>
     <span class="pagination__point">...</span>
-    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" (click)="navigate(page)">{{page}}</a>
+    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" routerLink="{{ '/' + route + (page) }}">{{page}}</a>
     <span class="pagination__point">...</span>
-    <a class="pagination__link" (click)="navigate(last_page)">{{last_page}}</a>
+    <a class="pagination__link" routerLink="{{ '/' + route + (last_page) }}">{{last_page}}</a>
   </nav>
   <nav *ngIf="paginator_type == 'last_five'">
-    <a class="pagination__link" (click)="navigate(first_page)">{{first_page}}</a>
+    <a class="pagination__link" routerLink="{{ '/' + route + (first_page) }}">{{first_page}}</a>
     <span class="pagination__point">...</span>
-    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" (click)="navigate(page)">{{page}}</a>
+    <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" routerLink="{{ '/' + route + (page) }}">{{page}}</a>
   </nav>
-  <a (click)="navigate(actual_page+1)" class="pagination__arrow" *ngIf="actual_page != last_page && actual_page != 1">
+  <a routerLink="{{ '/' + route + (actual_page+1) }}" class="pagination__arrow" *ngIf="actual_page != last_page && actual_page != 1">
     <fa-icon [icon]="faAngleDoubleRight"></fa-icon>
   </a>
 </div>

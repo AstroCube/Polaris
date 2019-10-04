@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faList} from '@fortawesome/free-solid-svg-icons';
-import {AppealService} from '../../../services/appeal.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {NotifierService} from 'angular-notifier';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'appeal-main',
@@ -12,6 +10,7 @@ import {NotifierService} from 'angular-notifier';
 export class AppealMainComponent implements OnInit {
 
   public can_appeal: boolean = false;
+  public gamemode : any = {};
   faList = faList;
 
   constructor(

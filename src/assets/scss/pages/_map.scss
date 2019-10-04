@@ -58,6 +58,10 @@
     &:hover {
       color: $color-secondary;
     }
+
+    &--active {
+      color: $color-secondary;
+    }
   }
 
   &__navigator-dropdown-label {
