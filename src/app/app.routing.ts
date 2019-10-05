@@ -70,6 +70,8 @@ import {ReportViewGuard} from './guards/report/report.view.guard';
 import {ReportListGuard} from './guards/report/report.list.guard';
 import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
+import {MatchViewComponent} from './components/match/view/match.view.component';
+import {ApplicationDonationComponent} from './components/application/donation/application.donation.component';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -147,22 +149,24 @@ const app_routes: Routes = [
       {path: "", component: MapMainComponent, resolve: {MapMainGuard}}
     ]
   },
+  {path: "desarrollo", component: ApplicationDevelopementComponent},
+  {path: "partida", component: MatchViewComponent},
   {path: "alertas", component: ApplicationAlertComponent},
   {path: "amigos", component: FriendshipComponent},
-  {path: "desarrollo", component: ApplicationDevelopementComponent},
-  {path: "foroint", component: ForumViewComponent},
+  // --- Application static content related component --- //
+  {path: "donaciones", component: ApplicationDonationComponent},
   {path: "privacidad", component: ApplicationPrivacyComponent},
   {path: "reglas", component: ApplicationRulesComponent},
   {path: "reembolsos", component: ApplicationRefundComponent},
   {path: "terminos", component: ApplicationTermsComponent},
-  {path: "tienda/carrito", component: ShopCartComponent},
-  {path: "tienda/categoria", component: ShopCategoryComponent},
-  {path: "tienda", component: ShopMainComponent},
-  {path: "transacciones", component: ShopTransactionComponent},
-  {path: "topic", component: TopicViewComponent},
   {path: "error", component: ApplicationErrorComponent},
+
   {path: ":username", component: UserViewComponent, resolve: {UserViewGuard: UserViewGuard}},
   {path: "", component: ApplicationHomepageComponent}
+  /* {path: "tienda/carrito", component: ShopCartComponent}, //TODO: Shop Creation
+  {path: "tienda/categoria", component: ShopCategoryComponent},
+  {path: "tienda", component: ShopMainComponent},
+  {path: "transacciones", component: ShopTransactionComponent},*/
 ];
 
 export const app_routing_providers: any[] = [];

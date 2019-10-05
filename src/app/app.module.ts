@@ -108,6 +108,8 @@ import {BodyDirective} from './directives/body.directive';
 import {MapService} from './services/map.service';
 import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
+import {MatchViewComponent} from './components/match/view/match.view.component';
+import {ApplicationDonationComponent} from './components/application/donation/application.donation.component';
 
 
 @NgModule({
@@ -121,6 +123,7 @@ import {MapMainGuard} from './guards/map/map.main.guard';
     AppealViewComponent,
     ApplicationAlertComponent,
     ApplicationDevelopementComponent,
+    ApplicationDonationComponent,
     ApplicationErrorComponent,
     ApplicationFooterComponent,
     ApplicationHeaderComponent,
@@ -143,6 +146,7 @@ import {MapMainGuard} from './guards/map/map.main.guard';
     FriendshipComponent,
     MapMainComponent,
     MapViewComponent,
+    MatchViewComponent,
     NoSanitizePipe,
     PunishmentCreateComponent,
     PunishmentEditComponent,

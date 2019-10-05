@@ -1,0 +1,12 @@
+.match {
+
+  &__main-title {
+    display: inline-block;
+    margin-right: 2rem;
+
+    & span {
+      color: $color-primary;
+    }
+  }
+
+}

@@ -31,6 +31,16 @@ body {
 .paragraph {
   font-size: 1.4rem;
 
+  & li {
+    margin-left: 1.5rem;
+    font-size: 1.4rem;
+
+    & a {
+      color: $color-secondary;
+      text-decoration: none;
+    }
+  }
+
   & a {
     text-decoration: none;
     font-weight: 700;
@@ -46,6 +56,10 @@ body {
     &:not(last-child) {
       margin-bottom: 3rem;
     }
+  }
+
+  &--donor {
+    color: $color-success-bs;
   }
 
   &--lead {

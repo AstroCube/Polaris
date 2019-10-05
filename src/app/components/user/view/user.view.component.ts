@@ -3,6 +3,8 @@ import {faGavel, faUserPlus, faUserTie, faUserTimes} from '@fortawesome/free-sol
 import {ActivatedRoute} from '@angular/router';
 import {User} from '../../../models/user';
 import {Group} from '../../../models/group';
+import {Map} from '../../../models/minecraft/map';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'user-view',
@@ -15,6 +17,8 @@ export class UserViewComponent implements OnInit{
   public logged_details: any;
   public punishments: any[];
   public user: User;
+  public maps: Map[];
+  public url: string;
   faGavel = faGavel;
   faUserPlus = faUserPlus;
   faUserTie = faUserTie;
@@ -22,14 +26,17 @@ export class UserViewComponent implements OnInit{
 
   constructor(
     private _route: ActivatedRoute
-  ) {}
+  ) {
+    this.url = GLOBAL.url;
+  }
 
   ngOnInit(): void {
     this._route.data.subscribe((data => {
-      this.user = data.UserViewGuard;
-      this.logged_details = data.UserViewGuard.logged_details;
-      this.punishments = data.UserViewGuard.punishments;
-      this.groups = data.UserViewGuard.groups;
+      this.user = data.UserViewGuard.user;
+      this.maps = data.UserViewGuard.maps;
+      this.logged_details = data.UserViewGuard.user.logged_details;
+      this.punishments = data.UserViewGuard.user.punishments;
+      this.groups = data.UserViewGuard.user.groups;
     }));
   }
 }

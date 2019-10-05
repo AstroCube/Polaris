@@ -1,10 +1,17 @@
 .map {
-  background-color: $color-tertiary-dark;
   padding: 1rem;
   text-align: center;
   display: inline-block;
   width: 29rem;
   margin: 2rem 3rem;
+
+  &--main {
+    background-color: $color-tertiary-dark;
+  }
+
+  &--profile {
+    background-color: $color-light-black;
+  }
 
   &__section {
     display: flex;
