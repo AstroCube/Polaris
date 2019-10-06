@@ -110,6 +110,8 @@ import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
 import {MatchViewComponent} from './components/match/view/match.view.component';
 import {ApplicationDonationComponent} from './components/application/donation/application.donation.component';
+import {ApplicationDevelopementGuard} from './guards/application/application.developement.guard';
+import {GithubService} from './services/github.service';
 
 
 @NgModule({
@@ -206,6 +208,7 @@ import {ApplicationDonationComponent} from './components/application/donation/ap
   providers: [
     app_routing_providers,
     ApplicationLoginGuard,
+    ApplicationDevelopementGuard,
     AppealGlobalGuard,
     AppealListGuard,
     AppealMainGuard,
@@ -221,6 +224,7 @@ import {ApplicationDonationComponent} from './components/application/donation/ap
     ForumMainGuard,
     ForumViewGuard,
     ForumService,
+    GithubService,
     MapViewGuard,
     MapMainGuard,
     MapService,

@@ -24,21 +24,22 @@
           <p>Fecha</p>
         </div>
       </div>
-      <div class="table__row">
+      <div *ngFor="let commit of apiCommits; let i = index" class="table__row">
         <div class="table__cell">
-          <p></p>
+          <p>{{i + 1}}</p>
         </div>
         <div class="table__cell">
-          <p>asdfasd</p>
+          <p>{{commit.sha.substring(0, 5)}}</p>
         </div>
         <div class="table__cell">
-          <p>ElTomate</p>
+          <p *ngIf="commit.committer">{{commit.committer.login}}</p>
+          <a *ngIf="!commit.committer" class="developer-sign" routerLink="/staff">División Developement</a>
         </div>
         <div class="table__cell">
-          <p>Creado todo c:</p>
+          <p>{{commit.commit.message}}</p>
         </div>
         <div class="table__cell">
-          <p>hace 777 años</p>
+          <p>{{commit.commit.author.date.split("T")[0]}}</p>
         </div>
       </div>
     </div>
@@ -62,21 +63,22 @@
           <p>Fecha</p>
         </div>
       </div>
-      <div class="table__row">
+      <div *ngFor="let commit of websiteCommits; let i = index" class="table__row">
         <div class="table__cell">
-          <p></p>
+          <p>{{i + 1}}</p>
         </div>
         <div class="table__cell">
-          <p>asdfasd</p>
+          <p>{{commit.sha.substring(0, 5)}}</p>
         </div>
         <div class="table__cell">
-          <p>ElTomate</p>
+          <p *ngIf="commit.committer">{{commit.committer.login}}</p>
+          <a *ngIf="!commit.committer" class="developer-sign" routerLink="/staff">División Developement</a>
         </div>
         <div class="table__cell">
-          <p>Creado todo c:</p>
+          <p>{{commit.commit.message}}</p>
         </div>
         <div class="table__cell">
-          <p>hace 777 años</p>
+          <p>{{commit.commit.author.date.split("T")[0]}}</p>
         </div>
       </div>
     </div>
@@ -100,21 +102,22 @@
           <p>Fecha</p>
         </div>
       </div>
-      <div class="table__row">
+      <div *ngFor="let commit of minecraftCommits; let i = index" class="table__row">
         <div class="table__cell">
-          <p></p>
+          <p>{{i + 1}}</p>
         </div>
         <div class="table__cell">
-          <p>asdfasd</p>
+          <p>{{commit.sha.substring(0, 5)}}</p>
         </div>
         <div class="table__cell">
-          <p>ElTomate</p>
+          <p *ngIf="commit.committer">{{commit.committer.login}}</p>
+          <a *ngIf="!commit.committer" class="developer-sign" routerLink="/staff">División Developement</a>
         </div>
         <div class="table__cell">
-          <p>Creado todo c:</p>
+          <p>{{commit.commit.message.split("\n")[0]}}</p>
         </div>
         <div class="table__cell">
-          <p>hace 777 años</p>
+          <p>{{commit.commit.author.date.split("T")[0]}}</p>
         </div>
       </div>
     </div>

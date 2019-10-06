@@ -72,6 +72,7 @@ import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
 import {MatchViewComponent} from './components/match/view/match.view.component';
 import {ApplicationDonationComponent} from './components/application/donation/application.donation.component';
+import {ApplicationDevelopementGuard} from './guards/application/application.developement.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -149,7 +150,7 @@ const app_routes: Routes = [
       {path: "", component: MapMainComponent, resolve: {MapMainGuard}}
     ]
   },
-  {path: "desarrollo", component: ApplicationDevelopementComponent},
+  {path: "desarrollo", component: ApplicationDevelopementComponent, resolve: {ApplicationDevelopementGuard}},
   {path: "partida", component: MatchViewComponent},
   {path: "alertas", component: ApplicationAlertComponent},
   {path: "amigos", component: FriendshipComponent},

@@ -1,22 +1,25 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { GLOBAL } from "./global";
-import {Forum} from '../models/forum/forum';
+import {CREDENTIALS} from './github';
 
 @Injectable()
 export class GithubService {
 
   public url: String;
+  public credentials: any;
 
   constructor(
     private _http: HttpClient
   ){
     this.url = GLOBAL.url;
+    this.credentials = CREDENTIALS;
   }
 
-  /*getCommits(forum: Forum): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.post(this.url + "forum/create", params, {headers: headers});
-  }*/
+  getCommits(repo : string): Promise<any> {
+    let auth = 'Basic ' + window.btoa(this.credentials.username + ":" + this.credentials.password);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', auth);
+    return this._http.get("https://api.github.com/repos/" + this.credentials.group + "/" + repo +"/commits", {headers: headers}).toPromise();
+  }
 
 }
