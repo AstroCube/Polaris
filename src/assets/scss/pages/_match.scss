@@ -9,4 +9,97 @@
     }
   }
 
+  &__basics {
+    display: flex;
+    height: 19rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__info {
+    @include titleFont;
+
+    & b {
+      color: $color-primary;
+    }
+  }
+
+  &__team {
+    margin: 1.5rem 0;
+  }
+
+  &__team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+
+  &__team-member {
+    @include titleFont;
+
+    text-decoration: none;
+    margin: 1rem 1rem 1rem 0;
+  }
+
+  &__team-title {
+    @include titleFont;
+
+    &--winner {
+      color: $color-primary;
+    }
+
+    &--black {
+      color: $color-mc-black;
+    }
+
+    &--dark-blue {
+      color: $color-mc-dark-blue;
+    }
+
+    &--dark-green {
+      color: $color-mc-dark-green;
+    }
+
+    &--dark-red {
+      color: $color-mc-dark-red;
+    }
+
+    &--gold {
+      color: $color-mc-gold;
+    }
+
+    &--gray {
+      color: $color-mc-gray;
+    }
+
+    &--dark-gray {
+      color: $color-mc-dark-gray;
+    }
+
+    &--blue {
+      color: $color-mc-blue;
+    }
+
+    %--green {
+      color: $color-mc-green;
+    }
+
+    &--aqua {
+      color: $color-mc-aqua;
+    }
+
+    &--red {
+      color: $color-mc-red;
+    }
+
+    &--light-purple {
+      color: $color-mc-light-purple;
+    }
+
+    &--white {
+      color: $color-white;
+    }
+  }
 }
