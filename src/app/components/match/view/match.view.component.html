@@ -30,9 +30,9 @@
     </div>
   </div>
   <div *ngFor="let team of match.teams" class="match__team">
-    <h3 class="match__team-title">{{team.name}}</h3>
+    <h3 [class]="'match__team-title match__team-title--' + team.color.replace('_', '-')">{{team.name}}</h3>
     <div class="match__team-members">
-      <a *ngFor="let member of team.members" class="match__team-member">TakeMyTomato</a>
+      <a *ngFor="let member of team.members" class="match__team-member">{{member.user.username}}</a>
     </div>
   </div>
 </section>
