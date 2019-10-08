@@ -1,24 +1,24 @@
 <section>
   <div class="u-margin-bottom-small">
-    <h1 class="heading match__main-title">Partida en <span>mapita pro 777</span></h1>
-    <h4 class="heading heading--secondary match__main-title">INGAME</h4>
+    <h1 class="heading match__main-title">Partida en <span>{{match.map.name}}</span></h1>
+    <h4 class="heading heading--secondary match__main-title">{{match.status}}</h4>
   </div>
   <div class="row u-margin-bottom-small">
     <div class="col-1-of-3">
       <div class="map__info-slug u-center-text">
-        <img src="../../../../assets/images/map_placeholder.png" class="map__image">
+        <img src="{{url + 'map/get-image/' + match.map.image}}" class="map__image">
       </div>
     </div>
     <div class="col-2-of-3">
       <div class="match__basics">
         <p class="match__info u-margin-bottom-small">
-          <b>Mapa: </b> Testmap
+          <b>Mapa: </b> {{match.map.name}}
         </p>
         <p class="match__info u-margin-bottom-small">
-          <b>Juego: </b> SkyAss
+          <b>Juego: </b> {{match.gamemode.name}}
         </p>
         <p class="match__info u-margin-bottom-small">
-          <b>Fecha: </b> 24/04/2MILPOPPER
+          <b>Fecha: </b> {{match.createdAt | amLocale: 'es' | amTimeAgo}}
         </p>
       </div>
     </div>
@@ -26,13 +26,13 @@
   <div class="match__team">
     <h3 class="match__team-title match__team-title--winner">Ganador</h3>
     <div class="match__team-members">
-      <a class="match__team-member">TakeMyTomato</a>
+      <a *ngFor="let winner of match.winner" routerLink="{{'/' + winner.username}}" class="match__team-member">{{winner.username}}</a>
     </div>
   </div>
-  <div class="match__team">
-    <h3 class="match__team-title">Rojo</h3>
+  <div *ngFor="let team of match.teams" class="match__team">
+    <h3 class="match__team-title">{{team.name}}</h3>
     <div class="match__team-members">
-      <a class="match__team-member">TakeMyTomato</a>
+      <a *ngFor="let member of team.members" class="match__team-member">TakeMyTomato</a>
     </div>
   </div>
 </section>

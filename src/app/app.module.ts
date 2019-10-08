@@ -112,6 +112,8 @@ import {MatchViewComponent} from './components/match/view/match.view.component';
 import {ApplicationDonationComponent} from './components/application/donation/application.donation.component';
 import {ApplicationDevelopementGuard} from './guards/application/application.developement.guard';
 import {GithubService} from './services/github.service';
+import {MatchService} from './services/match.service';
+import {MatchViewGuard} from './guards/match/match.view.guard';
 
 
 @NgModule({
@@ -228,6 +230,8 @@ import {GithubService} from './services/github.service';
     MapViewGuard,
     MapMainGuard,
     MapService,
+    MatchViewGuard,
+    MatchService,
     PunishmentCreateGuard,
     PunishmentEditGuard,
     PunishmentListGuard,
