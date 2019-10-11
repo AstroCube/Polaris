@@ -116,6 +116,8 @@ import {MatchService} from './services/match.service';
 import {MatchViewGuard} from './guards/match/match.view.guard';
 import {ApplicationHomepageGuard} from './guards/application/application.homepage.guard';
 import {ApplicationStaffComponent} from './components/application/staff/application.staff.component';
+import {GroupService} from './services/group.service';
+import {ApplicationStaffGuard} from './guards/application/application.staff.guard';
 
 
 @NgModule({
@@ -215,6 +217,7 @@ import {ApplicationStaffComponent} from './components/application/staff/applicat
     ApplicationLoginGuard,
     ApplicationDevelopementGuard,
     ApplicationHomepageGuard,
+    ApplicationStaffGuard,
     AppealGlobalGuard,
     AppealListGuard,
     AppealMainGuard,
@@ -231,6 +234,7 @@ import {ApplicationStaffComponent} from './components/application/staff/applicat
     ForumViewGuard,
     ForumService,
     GithubService,
+    GroupService,
     MapViewGuard,
     MapMainGuard,
     MapService,

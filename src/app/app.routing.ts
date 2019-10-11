@@ -76,6 +76,7 @@ import {ApplicationDevelopementGuard} from './guards/application/application.dev
 import {MatchViewGuard} from './guards/match/match.view.guard';
 import {ApplicationHomepageGuard} from './guards/application/application.homepage.guard';
 import {ApplicationStaffComponent} from './components/application/staff/application.staff.component';
+import {ApplicationStaffGuard} from './guards/application/application.staff.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -154,7 +155,7 @@ const app_routes: Routes = [
     ]
   },
 
-  {path: "staff", component: ApplicationStaffComponent},
+  {path: "staff", component: ApplicationStaffComponent, resolve: [ApplicationStaffGuard]},
   {path: "desarrollo", component: ApplicationDevelopementComponent, resolve: {ApplicationDevelopementGuard}},
   {path: "partida/:id", component: MatchViewComponent, resolve: {MatchViewGuard}},
   {path: "alertas", component: ApplicationAlertComponent},
