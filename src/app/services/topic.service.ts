@@ -76,4 +76,14 @@ export class TopicService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
     return this._http.delete(this.url + "topic/delete/" + id, {headers: headers});
   }
+
+  topicHomepage(id: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "topic/mainTopics/" + id, {headers: headers}).toPromise();
+  }
+
+  topicHomepagePosts(id: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "topic/mainPosts/" + id, {headers: headers}).toPromise();
+  }
 }

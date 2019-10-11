@@ -1,0 +1,63 @@
+.staff {
+  background-color: $color-light-black;
+  width: 100%;
+  padding: 3rem;
+
+  &__name {
+    @include titleFont;
+
+    display: inline-block;
+  }
+
+  &__indicator {
+    @include titleFont;
+
+    margin-left: 2rem;
+    color: $color-grey-dark;
+    display: inline-block;
+  }
+
+  &__item {
+    display: flex;
+    padding: 2rem 0;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__image {
+    width: 9rem;
+    height: 9rem;
+    margin-bottom: 1rem;
+    display: block;
+
+    & img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__username {
+    font-family: $font-headings;
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: $color-white;
+    text-decoration: none;
+    padding: .5rem 0;
+    border-bottom: 2px solid $color-white;
+    display: block;
+  }
+
+  &__comment {
+    display: block;
+    font-size: 1.4rem;
+    margin: 1rem 0;
+  }
+
+  &__icons {
+    display: block;
+
+    & li {
+      display: inline-block;
+    }
+  }
+}

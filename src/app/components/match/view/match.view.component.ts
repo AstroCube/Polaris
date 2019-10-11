@@ -22,8 +22,8 @@ export class MatchViewComponent {
   ngOnInit() {
     this._route.data.subscribe((data) => {
       this.match = data.MatchViewGuard;
-      console.log(data.MatchViewGuard);
     });
+    console.log(this.match);
   }
 
 }

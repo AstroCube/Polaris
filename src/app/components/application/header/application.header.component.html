@@ -22,7 +22,7 @@
     </div>
     <div class="header__profile" *ngIf="logged">
       <div class="header__profile-container">
-        <a href="#" class="header__alerts">3</a>
+        <a (click)="comingSoon()" class="header__alerts u-pointer">?</a>
         <div class="header__menu-slug" profile-dropdown>
           <div class="header__profile-avatar">
             <img src="{{'https://minotar.net/avatar/' + skin}}" alt="" class="header__profile-image">
@@ -33,26 +33,26 @@
           <section *ngIf="staff" class="header__menu-admin">
             <button id="admin-button" class="collapsible__button" collapsible>Administración</button>
             <div class="collapsible__panel">
-              <a href="#" class="header__menu-link">
+              <a (click)="comingSoon()" class="header__menu-link u-pointer">
                 Usuarios
               </a>
-              <a href="#" class="header__menu-link">
+              <a (click)="comingSoon()" class="header__menu-link u-pointer">
                 Grupos
               </a>
               <a [routerLink]="['/admin/categorias']" class="header__menu-link">
                 Categorías
               </a>
-              <a href="#" class="header__menu-link">
+              <a routerLink="{{'/admin/foros'}}" class="header__menu-link">
                 Foros
               </a>
             </div>
           </section>
           <section class="header__menu-nav">
             <a routerLink="{{'/' + username}}" class="header__menu-link">Perfil</a>
-            <a href="#" class="header__menu-link">Amigos</a>
+            <a (click)="comingSoon()" class="header__menu-link u-pointer">Amigos</a>
             <a routerLink="/reportes" class="header__menu-link">Reportes</a>
             <a routerLink="/apelaciones" class="header__menu-link">Apelaciones</a>
-            <a href="#" [routerLink]="['/cuenta']" class="header__menu-link">Mi cuenta</a>
+            <a [routerLink]="['/cuenta']" class="header__menu-link">Mi cuenta</a>
             <a [routerLink]="'/'" (click)="logout()" class="header__menu-link">Cerrar sesión</a>
           </section>
         </nav>
@@ -69,7 +69,7 @@
       <a href="#" class="header__navigator-close" navbar-responsive><fa-icon [icon]="faTimes"></fa-icon></a>
       <ul>
         <li>
-          <a href="#">
+          <a (click)="comingSoon()" class="u-pointer">
             <fa-icon [icon]="faGamepad"></fa-icon>
             Jugar
           </a>
@@ -90,7 +90,7 @@
             <button class="search__navbar-button">
               <fa-icon [icon]="faSearch"></fa-icon>
             </button>
-            <a href="#" class="dropdown__link">Estadísticas</a>
+            <a (click)="comingSoon()" class="dropdown__link u-pointer">Estadísticas</a>
             <a href="#" class="dropdown__link">Conóce al staff</a>
           </div>
         </li>

@@ -121,4 +121,8 @@ export class ApplicationHeaderComponent implements OnInit {
     this._router.navigate(['/']);
   }
 
+  comingSoon(): void {
+    this._router.navigate(['/error'], {queryParams: {type: 308}});
+  }
+
 }

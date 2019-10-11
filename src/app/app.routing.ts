@@ -74,6 +74,8 @@ import {MatchViewComponent} from './components/match/view/match.view.component';
 import {ApplicationDonationComponent} from './components/application/donation/application.donation.component';
 import {ApplicationDevelopementGuard} from './guards/application/application.developement.guard';
 import {MatchViewGuard} from './guards/match/match.view.guard';
+import {ApplicationHomepageGuard} from './guards/application/application.homepage.guard';
+import {ApplicationStaffComponent} from './components/application/staff/application.staff.component';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -151,10 +153,13 @@ const app_routes: Routes = [
       {path: "", component: MapMainComponent, resolve: {MapMainGuard}}
     ]
   },
+
+  {path: "staff", component: ApplicationStaffComponent},
   {path: "desarrollo", component: ApplicationDevelopementComponent, resolve: {ApplicationDevelopementGuard}},
   {path: "partida/:id", component: MatchViewComponent, resolve: {MatchViewGuard}},
   {path: "alertas", component: ApplicationAlertComponent},
   {path: "amigos", component: FriendshipComponent},
+
   // --- Application static content related component --- //
   {path: "donaciones", component: ApplicationDonationComponent},
   {path: "privacidad", component: ApplicationPrivacyComponent},
@@ -164,7 +169,7 @@ const app_routes: Routes = [
   {path: "error", component: ApplicationErrorComponent},
 
   {path: ":username", component: UserViewComponent, resolve: {UserViewGuard: UserViewGuard}},
-  {path: "", component: ApplicationHomepageComponent}
+  {path: "", component: ApplicationHomepageComponent, resolve: {ApplicationHomepageGuard}}
   /* {path: "tienda/carrito", component: ShopCartComponent}, //TODO: Shop Creation
   {path: "tienda/categoria", component: ShopCategoryComponent},
   {path: "tienda", component: ShopMainComponent},

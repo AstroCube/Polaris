@@ -22,7 +22,6 @@ export class ApplicationDevelopementComponent {
       this.websiteCommits = data.ApplicationDevelopementGuard.website;
       this.minecraftCommits = data.ApplicationDevelopementGuard.minecraft;
     });
-    console.log(this.minecraftCommits);
   }
 
 }

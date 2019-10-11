@@ -114,6 +114,8 @@ import {ApplicationDevelopementGuard} from './guards/application/application.dev
 import {GithubService} from './services/github.service';
 import {MatchService} from './services/match.service';
 import {MatchViewGuard} from './guards/match/match.view.guard';
+import {ApplicationHomepageGuard} from './guards/application/application.homepage.guard';
+import {ApplicationStaffComponent} from './components/application/staff/application.staff.component';
 
 
 @NgModule({
@@ -135,6 +137,7 @@ import {MatchViewGuard} from './guards/match/match.view.guard';
     ApplicationLoginComponent,
     ApplicationPaginationComponent,
     ApplicationPrivacyComponent,
+    ApplicationStaffComponent,
     ApplicationRefundComponent,
     ApplicationRulesComponent,
     ApplicationTermsComponent,
@@ -211,6 +214,7 @@ import {MatchViewGuard} from './guards/match/match.view.guard';
     app_routing_providers,
     ApplicationLoginGuard,
     ApplicationDevelopementGuard,
+    ApplicationHomepageGuard,
     AppealGlobalGuard,
     AppealListGuard,
     AppealMainGuard,

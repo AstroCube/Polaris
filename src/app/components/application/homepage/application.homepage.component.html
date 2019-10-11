@@ -15,39 +15,17 @@
     </div>
   </div>
   <div class="home__news">
-    <div class="announcement">
+    <div *ngFor="let post of posts" class="announcement">
       <div class="announcement__head">
-        <h2 class="heading announcement__title">¡Bienvenido a Seocraft Network!</h2>
+        <h2 class="heading announcement__title">{{post.topic_title}}</h2>
         <div class="announcement__author">
-          Posteado por <a href="#" class="announcement__author-placeholder"><img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="" class="announcement__author-image"><span>TakeMyTomato</span></a> el 17-11-2018
+          Posteado por <a routerLink="{{'/' + post.created_by.username}}" class="announcement__author-placeholder"><img src="{{'https://minotar.net/avatar/' + post.created_by.username}}" alt="" class="announcement__author-image"><span>{{post.created_by.username}}</span></a> {{post.created_at | valueOf | amLocale: 'es' | amTimeAgo}}
         </div>
       </div>
       <div class="announcement__post">
-
-        <div class="announcement__content">
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        </div>
-
+        <div class="announcement__content" [innerHTML]="post.content"></div>
         <div class="announcement__button">
-          <a href="#" class="btn btn--secondary">Seguir leyendo &#187;</a>
-        </div>
-      </div>
-    </div>
-    <div class="announcement">
-      <div class="announcement__head">
-        <h2 class="heading announcement__title">¡Bienvenido a Seocraft Network!</h2>
-        <div class="announcement__author">
-          Posteado por <a href="#" class="announcement__author-placeholder"><img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="" class="announcement__author-image"><span>TakeMyTomato</span></a> el 17-11-2018
-        </div>
-      </div>
-      <div class="announcement__post">
-
-        <div class="announcement__content">
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        </div>
-
-        <div class="announcement__button">
-          <a href="#" class="btn btn--secondary">Seguir leyendo &#187;</a>
+          <a routerLink="{{'/foro/tema/' + post.topic_id}}" class="btn btn--secondary">Seguir leyendo &#187;</a>
         </div>
       </div>
     </div>

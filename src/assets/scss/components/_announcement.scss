@@ -32,6 +32,7 @@
 
     span {
       font-weight: 700;
+      color: $color-primary;
     }
   }
 
@@ -40,6 +41,8 @@
   }
 
   &__content {
+    max-height: 900px;
+    overflow: hidden;
     padding: 3rem 0;
   }
 

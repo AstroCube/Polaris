@@ -30,7 +30,7 @@ export class TopicReplyComponent implements OnInit {
   ) {
     this.forum_data = {};
     this.topic_data = {};
-    this.post = new Post("","","","","","","","","", []);
+    this.post = new Post("","","","","","","","","","","", []);
   }
 
   ngOnInit() {

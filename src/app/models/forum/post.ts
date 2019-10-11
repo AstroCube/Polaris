@@ -1,6 +1,8 @@
 export class Post {
   constructor(
     public _id: string,
+    public topic_title: string,
+    public topic_id: string,
     public content: string,
     public created_at: string,
     public created_by: any,
