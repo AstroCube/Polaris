@@ -2,6 +2,7 @@
   background-color: $color-light-black;
   width: 100%;
   padding: 3rem;
+  margin: 2rem 0;
 
   &__name {
     @include titleFont;
@@ -17,8 +18,14 @@
     display: inline-block;
   }
 
-  &__item {
+  &__members {
     display: flex;
+    flex-flow: wrap;
+  }
+
+  &__item {
+    display: inline-flex;
+    width: 25%;
     padding: 2rem 0;
     align-items: center;
     flex-direction: column;
@@ -58,6 +65,16 @@
 
     & li {
       display: inline-block;
+      margin: 0 .5rem;
+    }
+
+    & a {
+      color: $color-grey-dark;
+      transition: all .3s;
+
+      &:hover {
+        color: $color-secondary;
+      }
     }
   }
 }
