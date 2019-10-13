@@ -23,7 +23,6 @@ export class ApplicationStaffComponent implements OnInit{
   ngOnInit(): void {
     this._route.data.subscribe((data => {
       this.groups = data[0];
-      console.log(this.groups);
     }));
   }
 
