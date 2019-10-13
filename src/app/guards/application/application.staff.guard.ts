@@ -17,7 +17,6 @@ export class ApplicationStaffGuard {
   resolve(): Promise<any> {
     return this.getData().then((response) => {
       if (response) {
-        console.log(response);
         return response;
       } else {
         this._router.navigate(['/error'] , { queryParams: {type: "500"}});
@@ -31,7 +30,6 @@ export class ApplicationStaffGuard {
   async getData(): Promise<any> {
     let data : any[] = [];
     await this._groupService.groupStaffList().then(async (groups) => {
-
 
       await groups.forEach(async (group) => {
 
@@ -47,7 +45,7 @@ export class ApplicationStaffGuard {
           members.forEach(async (member) => {
             member.group = member.group.filter((a) => a._id === group._id)[0];
             member.discord = await this._userService.discord_placeholder(member._id).then((discord) => {
-              console.log(discord);
+              return discord;
             }).catch(null);
             finalGroup.members.push(member);
           });

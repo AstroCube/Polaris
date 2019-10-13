@@ -1,19 +1,25 @@
 <section>
   <h1 class="heading heading--primary u-margin-bottom-small">Staff</h1>
-  <section class="staff">
+  <section *ngFor="let group of groups" class="staff">
     <div class="staff__title">
-      <h2 class="staff__name">Prosexo</h2>
-      <span class="staff__indicator">10</span>
+      <h2 [style.color]="group.color" class="staff__name">{{group.name}}</h2>
+      <span class="staff__indicator">{{group.members.length}}</span>
     </div>
     <div class="staff_members">
-      <article class="staff__item">
-        <a href="#" class="staff__image"><img src="https://minotar.net/avatar/poppera" alt=""></a>
-        <a href="#" class="staff__username">MomlessCuliada</a>
-        <p class="staff__comment">Professional</p>
+      <article *ngFor="let member of group.members" class="staff__item">
+        <a routerLink="{{'/' + member.username}}" class="staff__image"><img src="{{'https://minotar.net/avatar/' + member.username}}" alt="{{member.username}}"></a>
+        <a
+          [style.color]="group.color"
+          [style.border-bottom]="'2px solid ' + group.color"
+          routerLink="{{'/' + member.username}}"
+          class="staff__username"
+        >{{member.username}}</a>
+        <p *ngIf="member.group.role_comment" class="staff__comment">{{member.group.role_comment}}</p>
+        <p *ngIf="!member.group.role_comment" class="staff__comment">{{group.name | titlecase}}</p>
         <ul class="staff__icons">
-          <li><a href="#"><fa-icon [icon]="faTwitter"></fa-icon></a></li>
-          <li><a href="#"><fa-icon [icon]="faDiscord"></fa-icon></a></li>
-          <li><a href="#"><fa-icon [icon]="faEnvelope"></fa-icon></a></li>
+          <li *ngIf="member.twitter"><a href="{{'https://www.twitter.com/' + member.twitter}}" target="_blank"><fa-icon [icon]="faTwitter"></fa-icon></a></li>
+          <li *ngIf="member.discord.username" tooltip content="{{member.discord.username + '#' + member.discord.discriminator}}" placement="bottom"><a><fa-icon [icon]="faDiscord"></fa-icon></a></li>
+          <li *ngIf="member.public_email"><a href="{{'mailto:' + member.public_email}}"><fa-icon [icon]="faEnvelope"></fa-icon></a></li>
         </ul>
       </article>
     </div>

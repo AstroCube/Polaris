@@ -70,6 +70,7 @@
 
     & a {
       color: $color-grey-dark;
+      cursor: pointer;
       transition: all .3s;
 
       &:hover {
