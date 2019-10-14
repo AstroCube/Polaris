@@ -1,0 +1,129 @@
+<section>
+  <nav class="breadcrumb__section forum-admin__breadcumb">
+    <a class="breadcrumb__link">Panel de administrador</a>
+    <a routerLink="/admin/grupos" class="breadcrumb__link">Grupos</a>
+  </nav>
+  <h1 class="heading heading--primary u-margin-bottom-small">Grupos</h1>
+  <div class="table table--fixed">
+    <div class="table__header">
+      <div class="table__cell group__list-big">
+        <p>Nombre</p>
+      </div>
+      <div class="table__cell group__list-big">
+        <p>Discord</p>
+      </div>
+      <div class="table__cell group__list-small">
+        <p>Prioridad</p>
+      </div>
+      <div class="table__cell group__list-small">
+        <p>Acciones</p>
+      </div>
+    </div>
+    <div *ngFor="let group of groups" class="table__row">
+      <div class="table__cell group__list-big">
+        <span [style.color]="group.html_color">{{group.name | titlecase}}</span>
+      </div>
+      <div class="table__cell group__list-big">
+        <span>{{group.discord_role}}</span>
+      </div>
+      <div class="table__cell group__list-small">
+        <span>{{group.priority}}</span>
+      </div>
+      <div class="table__cell group__list-small">
+        <a
+          class="btn btn--blue btn--slug"
+          tooltip
+          content="Editar Grupo (No incluye permisos)"
+          placement="top"
+          popup popup_id="group-popup"
+          (click)="editGroup(group, 'edit')"
+        >
+          <fa-icon [icon]="faPencilAlt"></fa-icon>
+        </a>
+        <a
+          class="btn btn--green btn--slug"
+          tooltip
+          content="Agregar usuario"
+          placement="top"
+          popup popup_id="group-popup"
+          (click)="editGroup(group, 'add')"
+        >
+          <fa-icon [icon]="faUserPlus"></fa-icon>
+        </a>
+        <a
+          class="btn btn--red btn--slug"
+          tooltip
+          content="Eliminar usuario"
+          placement="top"
+          popup popup_id="group-popup"
+          (click)="editGroup(group, 'remove')"
+        >
+          <fa-icon [icon]="faUserMinus"></fa-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="group-popup" id="group-popup">
+  <div class="group-popup__content">
+    <h2 *ngIf="type === 'edit'" class="heading heading--primary u-margin-bottom-small">
+      Editando <span [style.color]="selectedGroup.html_color">{{selectedGroup.name}}</span>
+    </h2>
+    <h2 *ngIf="type === 'add'" class="heading heading--primary u-margin-bottom-small">
+      Añadir usuario al grupo <span [style.color]="selectedGroup.html_color">{{selectedGroup.name}}</span>
+    </h2>
+    <h2 *ngIf="type === 'remove'" class="heading heading--primary u-margin-bottom-small">
+      Eliminar usuario al grupo <span [style.color]="selectedGroup.html_color">{{selectedGroup.name}}</span>
+    </h2>
+    <a popup popup_id="group-popup" class="group-popup__close"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <form *ngIf="type === 'edit'" #groupEdit="ngForm" (ngSubmit)="editAction()">
+      <div class="row">
+        <div class="col-1-of-2 group__field">
+          <label class="account__label" for="name">Nombre</label>
+          <input id="name" name="name" #name="ngModel" [(ngModel)]="selectedGroup.name" type="text" class="form__input form__input--full" placeholder="Nombre">
+        </div>
+        <div class="col-1-of-2 group__field">
+          <label class="account__label" for="html_color">Color HTML</label>
+          <input id="html_color" name="html_color" #html_color="ngModel" [(ngModel)]="selectedGroup.html_color" type="text" class="form__input form__input--full" placeholder="Color HTML">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1-of-2 group__field">
+          <label class="account__label" for="discord_role">Rol de discord</label>
+          <input id="discord_role" name="discord_role" #discord_role="ngModel" [(ngModel)]="selectedGroup.discord_role" type="text" class="form__input form__input--full" placeholder="Rol de discord">
+        </div>
+        <div class="col-1-of-2 group__field">
+          <label class="account__label" for="badge_color">Color de la placa</label>
+          <input id="badge_color" name="badge_color" #badge_color="ngModel" [(ngModel)]="selectedGroup.badge_color" type="text" class="form__input form__input--full" placeholder="Color de la placa">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1-of-2 group__field">
+          <label class="account__label" for="badge_link">Rol de discord</label>
+          <input id="badge_link" name="badge_link" #badge_link="ngModel" [(ngModel)]="selectedGroup.badge_link" type="text" class="form__input form__input--full" placeholder="Link de la placa">
+        </div>
+      </div>
+      <div class="u-right-text">
+        <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar Grupo</button>
+      </div>
+    </form>
+    <div class="group__selector">
+      <form *ngIf="type === 'add'" #groupAdd="ngForm" (ngSubmit)="editAction()">
+        <ng-select id="user" name="user" #user="ngModel" [(ngModel)]="updatableUser" [searchable]="true" [items]="users" bindLabel="username" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
+          <ng-template ng-option-tmp let-item="item">
+            <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
+            <span class="paragraph--white">{{item.username}}</span>
+          </ng-template>
+          <ng-template ng-label-tmp let-item="item">
+            <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
+            <span class="paragraph--white">{{item.username}}</span>
+          </ng-template>
+        </ng-select>
+      </form>
+    </div>
+    <form *ngIf="type === 'remove'" #groupRemove="ngForm" (ngSubmit)="editAction()">
+
+    </form>
+  </div>
+</section>
+

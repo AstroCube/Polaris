@@ -115,9 +115,11 @@ import {GithubService} from './services/github.service';
 import {MatchService} from './services/match.service';
 import {MatchViewGuard} from './guards/match/match.view.guard';
 import {ApplicationHomepageGuard} from './guards/application/application.homepage.guard';
-import {ApplicationStaffComponent} from './components/application/staff/application.staff.component';
+import {GroupStaffComponent} from './components/group/staff/group.staff.component';
 import {GroupService} from './services/group.service';
-import {ApplicationStaffGuard} from './guards/application/application.staff.guard';
+import {GroupStaffGuard} from './guards/group/group.staff.guard';
+import {GroupListComponent} from './components/group/list/group.list.component';
+import {GroupListGuard} from './guards/group/group.list.guard';
 
 
 @NgModule({
@@ -139,7 +141,8 @@ import {ApplicationStaffGuard} from './guards/application/application.staff.guar
     ApplicationLoginComponent,
     ApplicationPaginationComponent,
     ApplicationPrivacyComponent,
-    ApplicationStaffComponent,
+    GroupListComponent,
+    GroupStaffComponent,
     ApplicationRefundComponent,
     ApplicationRulesComponent,
     ApplicationTermsComponent,
@@ -217,7 +220,8 @@ import {ApplicationStaffGuard} from './guards/application/application.staff.guar
     ApplicationLoginGuard,
     ApplicationDevelopementGuard,
     ApplicationHomepageGuard,
-    ApplicationStaffGuard,
+    GroupListGuard,
+    GroupStaffGuard,
     AppealGlobalGuard,
     AppealListGuard,
     AppealMainGuard,

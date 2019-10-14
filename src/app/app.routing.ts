@@ -75,8 +75,10 @@ import {ApplicationDonationComponent} from './components/application/donation/ap
 import {ApplicationDevelopementGuard} from './guards/application/application.developement.guard';
 import {MatchViewGuard} from './guards/match/match.view.guard';
 import {ApplicationHomepageGuard} from './guards/application/application.homepage.guard';
-import {ApplicationStaffComponent} from './components/application/staff/application.staff.component';
-import {ApplicationStaffGuard} from './guards/application/application.staff.guard';
+import {GroupStaffComponent} from './components/group/staff/group.staff.component';
+import {GroupStaffGuard} from './guards/group/group.staff.guard';
+import {GroupListComponent} from './components/group/list/group.list.component';
+import {GroupListGuard} from './guards/group/group.list.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -84,6 +86,11 @@ const app_routes: Routes = [
   {path: "admin",
     children: [
       {path: "", redirectTo: "/", pathMatch: "full"},
+      {path: "grupos",
+        children: [
+          {path: "", component: GroupListComponent, canActivate: [GroupListGuard], resolve: {GroupListGuard}}
+        ]
+      },
       {path: "editar-usuario/:id", component: UserEditComponent, canActivate: [UserEditGuard], resolve: {UserEditGuard}},
       {path: "categorias",
         children: [
@@ -155,7 +162,7 @@ const app_routes: Routes = [
     ]
   },
 
-  {path: "staff", component: ApplicationStaffComponent, resolve: [ApplicationStaffGuard]},
+  {path: "staff", component: GroupStaffComponent, resolve: [GroupStaffGuard]},
   {path: "desarrollo", component: ApplicationDevelopementComponent, resolve: {ApplicationDevelopementGuard}},
   {path: "partida/:id", component: MatchViewComponent, resolve: {MatchViewGuard}},
   {path: "alertas", component: ApplicationAlertComponent},

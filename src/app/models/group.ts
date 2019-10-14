@@ -6,9 +6,10 @@ export class Group {
     public html_color: String,
     public badge_color: String,
     public badge_link: String,
+    public discord_role: String,
     public minecraft_flair: any[],
     public minecraft_permissions: any[],
-    public staff: Boolean,
+    public staff: boolean,
     public web_permissions: any[]
   ){}
 }

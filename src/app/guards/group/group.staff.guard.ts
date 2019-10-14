@@ -4,7 +4,7 @@ import {GroupService} from '../../services/group.service';
 import {UserService} from '../../services/user.service';
 
 @Injectable()
-export class ApplicationStaffGuard {
+export class GroupStaffGuard {
 
 
   constructor (

@@ -5,11 +5,11 @@ import {faEnvelope} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'application-staff',
-  templateUrl: './application.staff.component.html'
+  selector: 'group-staff',
+  templateUrl: './group.staff.component.html'
 })
 
-export class ApplicationStaffComponent implements OnInit{
+export class GroupStaffComponent implements OnInit{
 
   public groups: any[];
   faTwitter = faTwitter;
