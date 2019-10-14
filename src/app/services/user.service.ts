@@ -90,9 +90,11 @@ export class UserService {
     return this._http.get(this.url + "user/token-validation", {headers: headers});
   }
 
-  user_names(): Promise<any> {
+  userListAutocompleter(own: boolean): Promise<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
-    return this._http.get(this.url + "user/list-names", {headers: headers}).toPromise();
+    let route = "";
+    if (own) route = "/true";
+    return this._http.get(this.url + "user/list-names" + route, {headers: headers}).toPromise();
   }
 
   user_ip(): Promise<any> {

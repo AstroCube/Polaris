@@ -8,6 +8,13 @@
     }
   }
 
+  &__alert {
+    margin: 1rem 0;
+    display: block;
+    font-size: 1.4rem;
+    color: $color-mc-red;
+  }
+
   &__list-big {
     width: 30%;
   }
@@ -18,8 +25,7 @@
   }
 
   &__selector {
-    display: flex;
-    align-items: center;
+    margin: auto;
     width: 70%;
   }
 

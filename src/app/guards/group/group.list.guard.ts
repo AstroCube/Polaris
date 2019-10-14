@@ -57,8 +57,8 @@ export class GroupListGuard {
       group: await this._groupService.groupList().then((groups) => {
         return groups;
       }),
-      users: await this._userService.user_names().then((users) => {
-        return users.fixed_users;
+      users: await this._userService.userListAutocompleter(true).then((users) => {
+        return users;
       })
     };
   }

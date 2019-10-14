@@ -14,7 +14,8 @@ export class GroupListComponent implements OnInit {
 
   public groups : Group[];
   public selectedGroup : Group;
-  public updatableUser : string;
+  public updatableUser : any;
+  public updatableComment: string;
   public users: any;
   public type : string;
   faList = faList;
@@ -29,6 +30,7 @@ export class GroupListComponent implements OnInit {
     private _notifierService: NotifierService
   ) {
     this.selectedGroup = new Group("","",0,"","","","",[],[],false,[]);
+    this.updatableComment = "";
   }
 
   ngOnInit(): void {
@@ -40,12 +42,8 @@ export class GroupListComponent implements OnInit {
 
   editAction(): void {
     this._groupService.groupUpdate(this.selectedGroup).subscribe(
-        (response) => {
-        if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar la apelación.");
-        } else {
+        () => {
           window.open("/admin/grupos", '_self');
-        }
       },
 
       (error) => {
@@ -57,7 +55,38 @@ export class GroupListComponent implements OnInit {
     );
   }
 
-  editGroup(id: Group, type: string) {
+  addUser(): void {
+    if (this.updatableComment === "") this.updatableComment = this.selectedGroup.name.toLowerCase();
+    this._groupService.groupUserAdd(this.updatableUser._id, this.selectedGroup._id, this.updatableComment).subscribe(
+      () => {
+        window.open("/admin/grupos", '_self');
+      },
+
+      (error) => {
+        let error_message = <any> error;
+        if (error_message != null) {
+          this._notifierService.notify('error', error.error.message);
+        }
+      }
+    );
+  }
+
+  removeUser(): void {
+    this._groupService.groupUserRemove(this.updatableUser._id, this.selectedGroup._id).subscribe(
+      () => {
+        window.open("/admin/grupos", '_self');
+      },
+
+      (error) => {
+        let error_message = <any> error;
+        if (error_message != null) {
+          this._notifierService.notify('error', error.error.message);
+        }
+      }
+    );
+  }
+
+  openAction(id: Group, type: string) {
     this.selectedGroup = id;
     this.type = type;
   }

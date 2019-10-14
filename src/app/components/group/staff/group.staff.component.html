@@ -14,7 +14,7 @@
           routerLink="{{'/' + member.username}}"
           class="staff__username"
         >{{member.username}}</a>
-        <p *ngIf="member.group.role_comment" class="staff__comment">{{member.group.role_comment}}</p>
+        <p *ngIf="member.group.role_comment" class="staff__comment">{{member.group.role_comment | titlecase}}</p>
         <p *ngIf="!member.group.role_comment" class="staff__comment">{{group.name | titlecase}}</p>
         <ul class="staff__icons">
           <li *ngIf="member.twitter"><a href="{{'https://www.twitter.com/' + member.twitter}}" target="_blank"><fa-icon [icon]="faTwitter"></fa-icon></a></li>

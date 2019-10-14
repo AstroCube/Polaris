@@ -36,7 +36,7 @@
           content="Editar Grupo (No incluye permisos)"
           placement="top"
           popup popup_id="group-popup"
-          (click)="editGroup(group, 'edit')"
+          (click)="openAction(group, 'edit')"
         >
           <fa-icon [icon]="faPencilAlt"></fa-icon>
         </a>
@@ -46,7 +46,7 @@
           content="Agregar usuario"
           placement="top"
           popup popup_id="group-popup"
-          (click)="editGroup(group, 'add')"
+          (click)="openAction(group, 'add')"
         >
           <fa-icon [icon]="faUserPlus"></fa-icon>
         </a>
@@ -56,7 +56,7 @@
           content="Eliminar usuario"
           placement="top"
           popup popup_id="group-popup"
-          (click)="editGroup(group, 'remove')"
+          (click)="openAction(group, 'remove')"
         >
           <fa-icon [icon]="faUserMinus"></fa-icon>
         </a>
@@ -73,7 +73,7 @@
       Añadir usuario al grupo <span [style.color]="selectedGroup.html_color">{{selectedGroup.name}}</span>
     </h2>
     <h2 *ngIf="type === 'remove'" class="heading heading--primary u-margin-bottom-small">
-      Eliminar usuario al grupo <span [style.color]="selectedGroup.html_color">{{selectedGroup.name}}</span>
+      Eliminar usuario del grupo <span [style.color]="selectedGroup.html_color">{{selectedGroup.name}}</span>
     </h2>
     <a popup popup_id="group-popup" class="group-popup__close"><fa-icon [icon]="faTimes"></fa-icon></a>
     <form *ngIf="type === 'edit'" #groupEdit="ngForm" (ngSubmit)="editAction()">
@@ -108,8 +108,8 @@
       </div>
     </form>
     <div class="group__selector">
-      <form *ngIf="type === 'add'" #groupAdd="ngForm" (ngSubmit)="editAction()">
-        <ng-select id="user" name="user" #user="ngModel" [(ngModel)]="updatableUser" [searchable]="true" [items]="users" bindLabel="username" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
+      <form *ngIf="type === 'add'" #groupAdd="ngForm" (ngSubmit)="addUser()">
+        <ng-select id="useradd" name="useradd" #useradd="ngModel" [(ngModel)]="updatableUser" [searchable]="true" [items]="users" bindLabel="username" class="u-margin-bottom-small" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
           <ng-template ng-option-tmp let-item="item">
             <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
             <span class="paragraph--white">{{item.username}}</span>
@@ -119,10 +119,32 @@
             <span class="paragraph--white">{{item.username}}</span>
           </ng-template>
         </ng-select>
+        <div class="group__field">
+          <label class="account__label" for="add_user">Comentario</label>
+          <input id="add_user" name="add_user" #add_user="ngModel" [(ngModel)]="updatableComment" type="text" class="form__input form__input--full" placeholder="Comentarios">
+        </div>
+        <div class="u-right-text">
+          <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faUserPlus"></fa-icon>Añadir Jugador</button>
+        </div>
       </form>
     </div>
-    <form *ngIf="type === 'remove'" #groupRemove="ngForm" (ngSubmit)="editAction()">
-
+    <form *ngIf="type === 'remove'" #groupRemove="ngForm" (ngSubmit)="removeUser()">
+      <ng-select id="userrem" name="userrem" #userrem="ngModel" [(ngModel)]="updatableUser" [searchable]="true" [items]="users" bindLabel="username" class="u-margin-bottom-small" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
+        <ng-template ng-option-tmp let-item="item">
+          <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
+          <span class="paragraph--white">{{item.username}}</span>
+        </ng-template>
+        <ng-template ng-label-tmp let-item="item">
+          <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
+          <span class="paragraph--white">{{item.username}}</span>
+        </ng-template>
+      </ng-select>
+      <b class="group__alert">
+        PRECAUCIÓN: Si eliminas tus propios rangos podrías afectar tus permisos de acceso aquí. ¡Ten cuidado!
+      </b>
+      <div class="u-right-text">
+        <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faUserPlus"></fa-icon>Eliminar Jugador</button>
+      </div>
     </form>
   </div>
 </section>

@@ -21,7 +21,7 @@ export class ReportMainGuard {
   }
 
   resolve(): Promise<any> {
-    return this._userService.user_names().then((users) => {
+    return this._userService.userListAutocompleter(false).then((users) => {
       return users;
     }).catch((err) => {
       console.log(err);

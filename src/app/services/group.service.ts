@@ -18,7 +18,7 @@ export class GroupService {
 
   groupStaffList(): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "group/group", {headers: headers}).toPromise();
+    return this._http.get(this.url + "group/staff", {headers: headers}).toPromise();
   }
 
   groupList(): Promise<any> {
@@ -34,7 +34,19 @@ export class GroupService {
 
   groupGetStaffMembers(id : string): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "group/group-members/" + id, {headers: headers}).toPromise();
+    return this._http.get(this.url + "group/staff-members/" + id, {headers: headers}).toPromise();
+  }
+
+  groupUserAdd(id: string, group: string, comment: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    let params = JSON.stringify({group: group, comment: comment});
+    return this._http.post(this.url + "group/add/" + id,  params,{headers: headers});
+  }
+
+  groupUserRemove(id: string, group: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    let params = JSON.stringify({group: group});
+    return this._http.post(this.url + "group/remove/" + id,  params,{headers: headers});
   }
 
 }

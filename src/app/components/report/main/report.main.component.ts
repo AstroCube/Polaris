@@ -20,7 +20,7 @@ export class ReportMainComponent implements OnInit {
 
   ngOnInit() {
     this._route.data.subscribe(data => {
-      this.users = data.ReportMainGuard.fixed_users;
+      this.users = data.ReportMainGuard;
     });
   }
 

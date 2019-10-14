@@ -83,7 +83,7 @@ export class PunishmentCreateGuard {
           }
         }
       }),
-      list: await this._userService.user_names().then((users) => {
+      list: await this._userService.userListAutocompleter(false).then((users) => {
         return users;
       }).catch((err) => {
         console.log(err);
