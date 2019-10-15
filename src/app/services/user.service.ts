@@ -43,17 +43,6 @@ export class UserService {
     return this._http.get(this.url + "user/get-placeholder/" + id, {headers: headers}).toPromise();
   }
 
-  get_profile(username: string): Promise<any> {
-    if (this.getToken()) {
-      let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
-      return this._http.get(this.url + 'user/get-profile/' + username, {headers: headers}).toPromise();
-    } else {
-      let headers = new HttpHeaders().set('Content-Type', 'application/json');
-      return this._http.get(this.url + 'user/get-profile/' + username, {headers: headers}).toPromise();
-    }
-
-  }
-
   mail_verification(): Observable<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
     return this._http.get(this.url + "user/email-verification", {headers: headers});

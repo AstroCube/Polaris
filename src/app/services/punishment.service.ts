@@ -40,4 +40,9 @@ export class PunishmentService {
     return this._http.get(this.url + "punishment/list/" + page,{headers: headers}).toPromise();
   }
 
+  punishmentUserList(user: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "punishment/user/" + user,{headers: headers}).toPromise();
+  }
+
 }

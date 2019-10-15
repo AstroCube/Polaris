@@ -9,7 +9,7 @@ export class User {
     public group: any[],
     // -- Automatic fields -- //
     public skin: string,
-    public last_seen: string,
+    public last_seen: String,
     public last_game: string,
     public member_since: Number,
     public level: number,

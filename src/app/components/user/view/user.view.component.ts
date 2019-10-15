@@ -5,6 +5,7 @@ import {User} from '../../../models/user';
 import {Group} from '../../../models/group';
 import {Map} from '../../../models/minecraft/map';
 import {GLOBAL} from '../../../services/global';
+import {Punishment} from '../../../models/punishment';
 
 @Component({
   selector: 'user-view',
@@ -13,12 +14,12 @@ import {GLOBAL} from '../../../services/global';
 
 export class UserViewComponent implements OnInit{
 
-  public groups: Group[];
-  public logged_details: any;
-  public punishments: any[];
   public user: User;
+  public friends: any;
   public maps: Map[];
+  public punishments: Punishment[];
   public url: string;
+  public groups: Group[];
   faGavel = faGavel;
   faUserPlus = faUserPlus;
   faUserTie = faUserTie;
@@ -33,10 +34,11 @@ export class UserViewComponent implements OnInit{
   ngOnInit(): void {
     this._route.data.subscribe((data => {
       this.user = data.UserViewGuard.user;
+      this.punishments = data.UserViewGuard.punishments;
+      console.log(this.punishments.length);
+      this.friends = data.UserViewGuard.friends;
+      this.groups = data.UserViewGuard.group.badges;
       this.maps = data.UserViewGuard.maps;
-      this.logged_details = data.UserViewGuard.user.logged_details;
-      this.punishments = data.UserViewGuard.user.punishments;
-      this.groups = data.UserViewGuard.user.groups;
     }));
   }
 }

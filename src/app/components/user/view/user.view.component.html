@@ -1,8 +1,10 @@
 <section>
+
   <div class="row">
     <div class="col-1-of-2">
       <h1 class="heading heading--primary profile__name">{{user.username}}</h1>
     </div>
+    <!--
     <div class="col-1-of-2 u-right-text" *ngIf="!logged_details.own_profile && logged_details.logged">
       <a href="#" *ngIf="!logged_details.are_friends" class="btn btn--green btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserPlus"></fa-icon> Añadir amigo</a>
       <a href="#" *ngIf="logged_details.are_riends" class="btn btn--red btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserTimes"></fa-icon> Eliminar amigo</a>
@@ -15,6 +17,7 @@
         </div>
       </div>
     </div>
+    -->
   </div>
   <div class="profile__content">
     <div class="profile__content--left">
@@ -25,8 +28,8 @@
         <div class="profile__content-info">
           <div class="profile__header">
             <h3 class="profile__head">
-              <span *ngIf="user.last_seen != 'conectado'">Última vez: {{user.last_seen | valueOf | amLocale: 'es' | amTimeAgo}}</span>
-              <span *ngIf="user.last_seen == 'conectado'" class="profile__head--online">Conectado ahora mismo</span>
+              <span *ngIf="user.last_seen !== '0'">Última vez: {{user.last_seen | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+              <span *ngIf="user.last_seen === '0'" class="profile__head--online">Conectado ahora mismo</span>
               <span class="profile__head--tag" *ngIf="user.show_status">en {{user.last_game}}</span>
             </h3>
             <h3 class="profile__head">Nível en el juego: <span class="profile__head--tag">{{user.level}}</span></h3>
@@ -41,16 +44,16 @@
       <div class="profile__content-section">
         <div class="profile__content-indicator">
           <span class="profile__number">
-            {{user.friends}}
+            {{friends.friends.length}}
           </span>
         </div>
         <div class="profile__content-info">
           <div class="profile__friends-title">
-            <h3 class="profile__head">Amigos <span *ngIf="logged_details.common_friends != 0">({{logged_details.common_friends}}) en común</span><span *ngIf="logged_details.common_friends == 0">en el servidor</span></h3>
+            <h3 class="profile__head">Amigo(s) en el servidor. <span>({{friends.commons}}) en común</span></h3>
           </div>
           <div class="profile__friends">
-            <a href="#" class="tooltip">
-              <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="TakeMyTomato" class="profile__friend" tooltip content="TakeMyTomato" placement="top">
+            <a *ngFor="let  friend of friends.friends" routerLink="{{'/' + friend.username}}" class="tooltip">
+              <img src="{{'https://minotar.net/avatar/' + friend.skin}}" [alt]="friend.username" class="profile__friend" tooltip [content]="friend.username" placement="top">
             </a>
           </div>
         </div>
@@ -171,7 +174,7 @@
         </div>
       </div>
       <span class="profile__social-title">Acerca de mí</span>
-      <div class="profile__social-field" *ngIf="!user.about">
+      <div class="profile__social-field paragraph paragraph--white" *ngIf="!user.about">
         ElTomate no ha escrito nada aún.
       </div>
       <div class="profile__social-field paragraph--white" [innerHTML]="user.about | noSanitize" *ngIf="user.about"></div>
@@ -188,6 +191,7 @@
         <p class="map__author">
           por <a routerLink="{{'/' + user.username}}">{{user.username}}</a>
         </p>
+
         <!--
         <div class="map__stars">
           <fa-icon class="map__star map__star--active" [icon]="faStar"></fa-icon>
@@ -197,6 +201,7 @@
           <fa-icon class="map__star" [icon]="faStar"></fa-icon>
         </div>
         -->
+
       </div>
     </div>
     <div id="achievements" class="tab profile__tab">
@@ -208,7 +213,8 @@
     </div>
     <div id="punishments" class="tab profile__tab">
       <h2 class="heading u-margin-bottom-small">Infracciones</h2>
-      <div class="table">
+      <p *ngIf="punishments.length === 0" class="paragraph paragraph--white u-center-text">¡Este usuario es un ejemplo a seguir! (No tiene infracciones)</p>
+      <div *ngIf="punishments > 0" class="table">
         <div class="table__header">
           <div class="table__cell">
             <p>Hecha por</p>
@@ -231,28 +237,27 @@
         </div>
         <div class="table__row punishment__row table--fixed" *ngFor="let punishment of punishments">
           <div class="table__cell punishment__profile-others">
-            <a [style.color]="punishment.punisher_placeholder.user_color" routerLink="{{ '/' + punishment.punisher_placeholder.username}}">{{punishment.punisher_placeholder.username}}</a>
+            <a color [id]="punishment.punisher"></a>
           </div>
           <div class="table__cell punishment__profile-others">
-            <a [style.color]="punishment.punished_placeholder.user_color" routerLink="{{ '/' + punishment.punished_placeholder.username}}">{{punishment.punished_placeholder.username}}</a>
+            <a color [id]="punishment.punished"></a>
           </div>
           <div class="table__cell punishment__profile-reason">
-            <span>{{punishment.punishment_details.reason}}</span>
+            <span>{{punishment.reason}}</span>
           </div>
           <div class="table__cell punishment__profile-others">
-            <span *ngIf="punishment.punishment_details.type == 'warn'" style="color: green">{{punishment.punishment_details.type | titlecase}}</span>
-            <span *ngIf="punishment.punishment_details.type =='kick'" style="color: orange">{{punishment.punishment_details.type | titlecase}}</span>
-            <span *ngIf="punishment.punishment_details.type == 'ban' || punishment.punishment_details.type =='tempban'" style="color: red">{{punishment.punishment_details.type | titlecase}}</span>
-
+            <span *ngIf="punishment.type == 'warn'" style="color: green">{{punishment.type | titlecase}}</span>
+            <span *ngIf="punishment.type =='kick'" style="color: orange">{{punishment.type | titlecase}}</span>
+            <span *ngIf="punishment.type == 'ban'" style="color: red">{{punishment.type | titlecase}}</span>
           </div>
           <div class="table__cell punishment__profile-others">
-            <span *ngIf="punishment.punishment_details.active && !punishment.punishment_details.automatic && !punishment.punishment_details.appealed">Activo</span>
-            <span *ngIf="punishment.punishment_details.active && punishment.punishment_details.automatic" style="color: orange">Automatico</span>
-            <span *ngIf="punishment.punishment_details.active && punishment.punishment_details.appealed" style="color: dodgerblue">En disputa</span>
-            <span *ngIf="!punishment.punishment_details.active" style="color: green">Inactivo/Apelado</span>
+            <span *ngIf="punishment.active && !punishment.automatic && !punishment.appealed">Activo</span>
+            <span *ngIf="punishment.active && punishment.automatic" style="color: orange">Automatico</span>
+            <span *ngIf="punishment.active && punishment.appealed" style="color: dodgerblue">En disputa</span>
+            <span *ngIf="!punishment.active" style="color: green">Inactivo/Apelado</span>
           </div>
           <div class="table__cell">
-            <a routerLink="{{ '/punishments/' + punishment.punishment_details._id}}">{{punishment.punishment_details.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</a>
+            <a routerLink="{{ '/sancion/' + punishment._id}}">{{punishment.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</a>
           </div>
         </div>
       </div>

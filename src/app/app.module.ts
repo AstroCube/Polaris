@@ -120,6 +120,8 @@ import {GroupService} from './services/group.service';
 import {GroupStaffGuard} from './guards/group/group.staff.guard';
 import {GroupListComponent} from './components/group/list/group.list.component';
 import {GroupListGuard} from './guards/group/group.list.guard';
+import {FriendService} from './services/friend.service';
+import {ColorDirective} from './directives/color.directive';
 
 
 @NgModule({
@@ -186,6 +188,7 @@ import {GroupListGuard} from './guards/group/group.list.guard';
     BodyDirective,
     ClassifierDirective,
     CollapsibleDirective,
+    ColorDirective,
     NavbarDropdownDirective,
     NavbarResponsiveDirective,
     PopupDirective,
@@ -237,6 +240,7 @@ import {GroupListGuard} from './guards/group/group.list.guard';
     ForumMainGuard,
     ForumViewGuard,
     ForumService,
+    FriendService,
     GithubService,
     GroupService,
     MapViewGuard,
