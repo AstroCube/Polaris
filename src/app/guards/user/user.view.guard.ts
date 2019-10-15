@@ -4,6 +4,7 @@ import {UserService} from '../../services/user.service';
 import {MapService} from '../../services/map.service';
 import {FriendService} from '../../services/friend.service';
 import {PunishmentService} from '../../services/punishment.service';
+import {MatchService} from '../../services/match.service';
 
 @Injectable()
 export class UserViewGuard {
@@ -13,6 +14,7 @@ export class UserViewGuard {
     private _mapService: MapService,
     private _friendService: FriendService,
     private _punishmentService: PunishmentService,
+    private _matchService: MatchService,
     private _router: Router
   ) {}
 
@@ -57,8 +59,11 @@ export class UserViewGuard {
       return punishments;
     });
     data.friends = await this._friendService.listFriends(data.user._id).then((friends) => {
-      console.log(friends);
       return friends;
+    });
+    data.matches = await this._matchService.matchPlayerInfo(data.user._id).then((matches) => {
+      console.log(matches);
+      return matches;
     });
     return data;
   }

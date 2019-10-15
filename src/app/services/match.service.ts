@@ -19,4 +19,9 @@ export class MatchService {
     return this._http.get(this.url + "match/get-website/" + id, {headers: headers}).toPromise();
   }
 
+  matchPlayerInfo(id: string): Promise<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+    return this._http.get(this.url + "match/get-user/" + id, {headers: headers}).toPromise();
+  }
+
 }

@@ -35,7 +35,6 @@ export class UserViewComponent implements OnInit{
     this._route.data.subscribe((data => {
       this.user = data.UserViewGuard.user;
       this.punishments = data.UserViewGuard.punishments;
-      console.log(this.punishments.length);
       this.friends = data.UserViewGuard.friends;
       this.groups = data.UserViewGuard.group.badges;
       this.maps = data.UserViewGuard.maps;
