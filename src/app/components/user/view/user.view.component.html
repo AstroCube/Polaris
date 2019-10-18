@@ -61,13 +61,13 @@
       <div class="profile__content-section">
         <div class="profile__content-indicator">
           <span class="profile__number">
-            0
+            {{won}}
           </span>
         </div>
         <div class="profile__content-info">
           <div class="profile__single-info">
             <h3 class="profile__head">Partidas ganadas</h3>
-            <p class="paragraph">De 100.000 partidas jugadas desde que ingresó al servidor.</p>
+            <p class="paragraph">De {{played}} partidas jugadas desde que ingresó al servidor.</p>
           </div>
         </div>
       </div>
@@ -86,30 +86,14 @@
       </div>
     </div>
     <div class="profile__content--right" scrollbar>
-      <a href="#" class="profile__match">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
-        <span class="profile__match-game">SkyWars</span>
-        <span class="profile__match-status profile__match-status--win">Victoria</span>
-      </a>
-      <a href="#" class="profile__match">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
-        <span class="profile__match-game">SkyWars</span>
-        <span class="profile__match-status profile__match-status--win">Victoria</span>
-      </a>
-      <a href="#" class="profile__match">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
-        <span class="profile__match-game">SkyWars</span>
-        <span class="profile__match-status profile__match-status--anulated">Anulada</span>
-      </a>
-      <a href="#" class="profile__match">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
-        <span class="profile__match-game">SkyWars</span>
-        <span class="profile__match-status profile__match-status--win">Victoria</span>
-      </a>
-      <a href="#" class="profile__match">
-        <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Match #444" class="profile__match-icon">
-        <span class="profile__match-game">SkyWars</span>
-        <span class="profile__match-status profile__match-status--lose">Derrota</span>
+      <a *ngFor="let match of matches" routerLink="{{'/' + match._id}}" class="profile__match">
+        <img src="{{'../../../../assets/images/games/' + match.gamemode._id + '.png'}}" [alt]="match.gamemode.name" class="profile__match-icon">
+        <span class="profile__match-game">{{match.gamemode.name}}</span>
+        <span *ngIf="match.winner.includes(user._id) && (match.status === 'finished' || match.status === 'forced')" class="profile__match-status profile__match-status--win">Victoria</span>
+        <span *ngIf="!match.winner.includes(user._id) && (match.status === 'finished' || match.status === 'forced')" class="profile__match-status profile__match-status--lose">Derrota</span>
+        <span *ngIf="match.status === 'ingame' || match.status === 'starting'" class="profile__match-status profile__match-status--alert">En juego</span>
+        <span *ngIf="match.status === 'waiting'" class="profile__match-status profile__match-status--alert">Esperando</span>
+        <span *ngIf="match.status === 'invalidated'" class="profile__match-status profile__match-status--alert">Invalidada</span>
       </a>
     </div>
   </div>
@@ -175,7 +159,7 @@
       </div>
       <span class="profile__social-title">Acerca de mí</span>
       <div class="profile__social-field paragraph paragraph--white" *ngIf="!user.about">
-        ElTomate no ha escrito nada aún.
+        {{user.username}} no ha escrito nada aún.
       </div>
       <div class="profile__social-field paragraph--white" [innerHTML]="user.about | noSanitize" *ngIf="user.about"></div>
     </div>

@@ -9,7 +9,7 @@ export class Match {
     public map: Map,
     public createdAt: string,
     public teams: Team[],
-    public winner: User[],
+    public winner: any,
     public status: string,
     public gamemode: Gamemode,
     public subGamemode: string
