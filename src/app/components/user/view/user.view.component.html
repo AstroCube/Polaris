@@ -86,7 +86,7 @@
       </div>
     </div>
     <div class="profile__content--right" scrollbar>
-      <a *ngFor="let match of matches" routerLink="{{'/' + match._id}}" class="profile__match">
+      <a *ngFor="let match of matches" routerLink="{{'/partida/' + match._id}}" class="profile__match">
         <img src="{{'../../../../assets/images/games/' + match.gamemode._id + '.png'}}" [alt]="match.gamemode.name" class="profile__match-icon">
         <span class="profile__match-game">{{match.gamemode.name}}</span>
         <span *ngIf="match.winner.includes(user._id) && (match.status === 'finished' || match.status === 'forced')" class="profile__match-status profile__match-status--win">Victoria</span>
@@ -198,7 +198,7 @@
     <div id="punishments" class="tab profile__tab">
       <h2 class="heading u-margin-bottom-small">Infracciones</h2>
       <p *ngIf="punishments.length === 0" class="paragraph paragraph--white u-center-text">¡Este usuario es un ejemplo a seguir! (No tiene infracciones)</p>
-      <div *ngIf="punishments > 0" class="table">
+      <div *ngIf="punishments.length > 0" class="table">
         <div class="table__header">
           <div class="table__cell">
             <p>Hecha por</p>

@@ -62,7 +62,6 @@ export class UserViewGuard {
       return friends;
     });
     data.matches = await this._matchService.matchPlayerInfo(data.user._id).then((matches) => {
-      console.log(matches);
       return matches;
     });
     return data;

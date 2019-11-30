@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {faDog, faHome, faKey, faShoppingCart, faStar} from '@fortawesome/free-solid-svg-icons';
+import {faAngleLeft, faAngleRight, faDog, faHome, faKey, faShoppingCart, faStar} from '@fortawesome/free-solid-svg-icons';
 import {
   faCcAmazonPay,
   faCcAmex,
@@ -10,13 +10,14 @@ import {
   faCcPaypal,
   faCcVisa
 } from '@fortawesome/free-brands-svg-icons';
-
 @Component({
   selector: 'shop-main',
   templateUrl: './shop.main.component.html'
 })
 
 export class ShopMainComponent {
+  faAngleLeft = faAngleLeft;
+  faAngleRight = faAngleRight;
   faCcAmazonPay = faCcAmazonPay;
   faCcApplePay = faCcApplePay;
   faCcAmex = faCcAmex;

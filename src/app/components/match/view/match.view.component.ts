@@ -23,7 +23,6 @@ export class MatchViewComponent {
     this._route.data.subscribe((data) => {
       this.match = data.MatchViewGuard;
     });
-    console.log(this.match);
   }
 
 }

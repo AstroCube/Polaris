@@ -40,7 +40,6 @@ export class PunishmentEditComponent implements OnInit{
   onSubmit() {
     this._punishmentService.punishment_update(this.punishment._id, this.punishment).subscribe(
       response => {
-        console.log(response);
         if (!response) {
           this._notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
         } else {
