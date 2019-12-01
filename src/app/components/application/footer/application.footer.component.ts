@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {faFacebookF, faGitlab, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
+import {faFacebookF, faGithub, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'application-footer',
@@ -7,8 +7,11 @@ import {faFacebookF, faGitlab, faTwitter, faYoutube} from '@fortawesome/free-bra
 })
 
 export class ApplicationFooterComponent {
+
+  public date = new Date();
+
   faFacebookF = faFacebookF;
-  faGitlab = faGitlab;
+  faGithub = faGithub;
   faTwitter = faTwitter;
   faYoutube = faYoutube;
 }

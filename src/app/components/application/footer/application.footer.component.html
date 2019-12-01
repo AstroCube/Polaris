@@ -29,15 +29,14 @@
       <div class="col-1-of-4 u-center-text">
         <h2 class="heading secondary-heading--primary">Redes sociales</h2>
         <ul class="footer__link-list">
-          <li><a href="https://www.facebook.com/SeocraftNetwork"><fa-icon [icon]="faFacebookF"></fa-icon> Facebook</a></li>
-          <li><a href="https://twitter.com/SeocraftNetwork"><fa-icon [icon]="faTwitter"></fa-icon> Twitter</a></li>
-          <li><a href="#"><fa-icon [icon]="faYoutube"></fa-icon> YouTube</a></li>
-          <li><a href="https://gitlab.com/SeocraftNetwork"><fa-icon [icon]="faGitlab"></fa-icon> GitLab</a></li>
+          <li><a href="https://www.facebook.com/SeocraftNetwork" target="_blank"><fa-icon [icon]="faFacebookF"></fa-icon> Facebook</a></li>
+          <li><a href="https://twitter.com/SeocraftNetwork" target="_blank"><fa-icon [icon]="faTwitter"></fa-icon> Twitter</a></li>
+          <li><a href="https://gitlab.com/SeocraftNetwork" target="_blank"><fa-icon [icon]="faGithub"></fa-icon> GitHub</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div class="footer__copyright">
-    <p class="footer__copyright-text">© 2019 Seocraft Network. Todos los derechos reservados.</p>
+    <p class="footer__copyright-text">© {{ date | date: "yyyy" }} Seocraft Network. Todos los derechos reservados.</p>
   </div>
 </footer>
