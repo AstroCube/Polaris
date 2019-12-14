@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
 import {AppealService} from '../../../services/appeal.service';
+import {Meta, Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'appeal-global',
@@ -18,12 +20,22 @@ export class AppealGlobalComponent implements OnInit{
 
   constructor(
     private _appealService: AppealService,
+    private _metaService: Meta,
+    private _titleService: Title,
     private _route: ActivatedRoute,
     private _router: Router,
     private _notifierService: NotifierService
   ) {}
 
   ngOnInit() {
+
+    this._titleService.setTitle("Apelaciones - " + GLOBAL.title);
+    this._metaService.addTags([
+      {name: 'keywords', content: GLOBAL.tags},
+      {name: 'description', content: '¿Te han sancionado?, No te preocupes, si crees que fué injusto puedes apelar en esta página.'},
+      {name: 'robots', content: 'index, follow'}
+    ]);
+
     this._route.data.subscribe((data => {
       this.appeals = data.AppealGlobalGuard.list.appeals;
       this.permissions = data.AppealGlobalGuard.permissions;

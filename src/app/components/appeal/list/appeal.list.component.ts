@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {UserService} from '../../../services/user.service';
 import {AppealService} from '../../../services/appeal.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import { Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'appeal-list',
@@ -23,6 +25,7 @@ export class AppealListComponent {
   faList = faList;
 
   constructor(
+    private _titleService: Title,
     private _http: HttpClient,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -32,6 +35,9 @@ export class AppealListComponent {
   ) {}
 
   async ngOnInit() {
+
+    this._titleService.setTitle("Lista de apelaciones - " + GLOBAL.title);
+
     this._route.data.subscribe((data => {
       this.appeals = data.AppealListGuard.appeals;
       this.not_appealed = data.AppealListGuard.not_appealed;

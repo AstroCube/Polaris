@@ -3,6 +3,8 @@ import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service';
 import {NotifierService} from 'angular-notifier';
+import {Meta, Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'application-login',
@@ -18,6 +20,8 @@ export class ApplicationLoginComponent implements OnInit {
   faLock = faLock;
 
   constructor(
+    private _metaService: Meta,
+    private _titleService: Title,
     private _activatedRoute: ActivatedRoute,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
@@ -25,6 +29,12 @@ export class ApplicationLoginComponent implements OnInit {
     private _userService: UserService
   ) {
     this.requested_persistence = false;
+    this._titleService.setTitle("Iniciar sesión - " + GLOBAL.title);
+    this._metaService.addTags([
+      {name: 'keywords', content: GLOBAL.tags},
+      {name: 'description', content: 'Inicia sesión en nuestro sitio web o registrate desde tu cuenta en Minecraft.'},
+      {name: 'robots', content: 'index, follow'}
+    ]);
   }
 
   ngOnInit(): void {
