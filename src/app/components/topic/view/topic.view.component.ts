@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TopicService} from '../../../services/topic.service';
 import {NotifierService} from 'angular-notifier';
 import * as moment from 'moment';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'topic-view',
@@ -30,6 +32,7 @@ export class TopicViewComponent implements OnInit {
   faStar = faStar;
 
   constructor(
+    private _titleService: Title,
     private _topicService: TopicService,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
@@ -42,7 +45,6 @@ export class TopicViewComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this._route.data.subscribe((data => {
       this.forum_data = data.TopicViewGuard.forum_data;
       this.posts = data.TopicViewGuard.topic_data.posts;
@@ -58,6 +60,7 @@ export class TopicViewComponent implements OnInit {
     if (this.forum_data.permissions.delete === "own" && this.topic_data.topic_info.own && moment(time).add('1', 'hours').unix() > moment().unix()) this.can_delete = true;
     if (this.forum_data.permissions.edit === "all") this.can_edit = true;
     if (this.forum_data.permissions.edit === "own" && this.topic_data.topic_info.own && moment(time).add('1', 'hours').unix() > moment().unix()) this.can_edit = true;
+    this._titleService.setTitle(this.topic_data.topic_info.subject + " - " + GLOBAL.title);
   }
 
   quoteLink(id) {

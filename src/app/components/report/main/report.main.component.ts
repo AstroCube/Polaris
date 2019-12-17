@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'report-main',
@@ -14,11 +16,13 @@ export class ReportMainComponent implements OnInit {
   faList = faList;
 
   constructor(
+    private _titleService: Title,
     private _route: ActivatedRoute,
     private _router: Router
   ) {}
 
   ngOnInit() {
+    this._titleService.setTitle("Reportes - " + GLOBAL.title);
     this._route.data.subscribe(data => {
       this.users = data.ReportMainGuard;
     });

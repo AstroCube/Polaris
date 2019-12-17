@@ -4,6 +4,8 @@ import {Category} from '../../../models/forum/category';
 import {CategoryService} from '../../../services/category.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'category-edit',
@@ -17,6 +19,7 @@ export class CategoryEditComponent implements OnInit{
   faSort = faSort;
 
   constructor(
+    private _titleService: Title,
     private _categoryService: CategoryService,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
@@ -24,8 +27,8 @@ export class CategoryEditComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this._titleService.setTitle("Editar categoría - " + GLOBAL.title);
     this._route.data.subscribe((data => {
-      console.log(data.CategoryEditGuard);
       this.category = data.CategoryEditGuard.category;
     }));
   }

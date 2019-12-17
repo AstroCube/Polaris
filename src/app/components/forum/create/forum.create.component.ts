@@ -4,6 +4,8 @@ import {Forum} from '../../../models/forum/forum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ForumService} from '../../../services/forum.service';
 import {NotifierService} from 'angular-notifier';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'forum-create',
@@ -21,6 +23,7 @@ export class ForumCreateComponent implements OnInit {
   faSort = faSort;
 
   constructor(
+    private _titleService: Title,
     private _forumService: ForumService,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
@@ -30,6 +33,7 @@ export class ForumCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._titleService.setTitle("Crear foro - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.only_categories = data.ForumCreateGuard.only_categories;
       this.forum_tree = data.ForumCreateGuard.forum_tree;

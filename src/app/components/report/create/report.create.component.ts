@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service';
 import {ReportService} from '../../../services/report.service';
 import {NotifierService} from 'angular-notifier';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'report-create',
@@ -18,6 +20,7 @@ export class ReportCreateComponent implements OnInit{
   faPlus = faPlus;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _reportService: ReportService,
     private _userService: UserService,
@@ -49,6 +52,8 @@ export class ReportCreateComponent implements OnInit{
         }
       });
     });
+
+    this._titleService.setTitle("Reportando a " + this.user_info.user_color + " - " + GLOBAL.title);
   }
 
   createReport() {

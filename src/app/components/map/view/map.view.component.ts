@@ -5,6 +5,7 @@ import {Map} from '../../../models/minecraft/map';
 import { GLOBAL } from '../../../services/global';
 import {User} from '../../../models/user';
 import {MapService} from '../../../services/map.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'map-view',
@@ -22,6 +23,7 @@ export class MapViewComponent {
   faMapSigns = faMapSigns;
 
   constructor(
+    private _titleService: Title,
     private _route: ActivatedRoute,
     private _mapService: MapService
   ) {
@@ -35,6 +37,8 @@ export class MapViewComponent {
       this.placeholder = data.MapViewGuard.placeholder;
       this.user = data.MapViewGuard.map;
     });
+
+    this._titleService.setTitle(this.map.name + " - " + GLOBAL.title);
     if (!this.canDownload) this.canDownload = this.user._id === this.map.author._id;
   }
 

@@ -5,6 +5,8 @@ import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Post} from '../../../models/forum/post';
 import {faComment} from '@fortawesome/free-solid-svg-icons';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'topic-reply',
@@ -23,6 +25,7 @@ export class TopicReplyComponent implements OnInit {
   faComment = faComment;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -40,6 +43,7 @@ export class TopicReplyComponent implements OnInit {
       this.topic_data = data.TopicReplyGuard.topic_data;
       if (this._route.snapshot.queryParams.quote) this.quote_post = data.TopicReplyGuard.quoted_data.fixed_post;
     }));
+    this._titleService.setTitle("Respondiendo a " + this.topic_data.topic_info.subject + " - " + GLOBAL.title);
     this.topic_id = this._route.snapshot.params.id;
   }
 

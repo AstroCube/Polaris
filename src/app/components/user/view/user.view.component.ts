@@ -7,6 +7,7 @@ import {Map} from '../../../models/minecraft/map';
 import {GLOBAL} from '../../../services/global';
 import {Punishment} from '../../../models/punishment';
 import {Match} from '../../../models/minecraft/match';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'user-view',
@@ -30,6 +31,7 @@ export class UserViewComponent implements OnInit{
   faUserTimes = faUserTimes;
 
   constructor(
+    private _titleService: Title,
     private _route: ActivatedRoute
   ) {
     this.url = GLOBAL.url;
@@ -46,5 +48,6 @@ export class UserViewComponent implements OnInit{
       this.played = data.UserViewGuard.matches.playedMatches;
       this.won = data.UserViewGuard.matches.wonMatches;
     }));
+    this._titleService.setTitle(this.user.username + " - " + GLOBAL.title);
   }
 }

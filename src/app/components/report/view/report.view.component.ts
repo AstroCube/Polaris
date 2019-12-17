@@ -3,6 +3,8 @@ import {faComment, faGavel, faList, faMarker, faTimes} from '@fortawesome/free-s
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'report-view',
@@ -24,6 +26,7 @@ export class ReportViewComponent implements OnInit {
   faList = faList;
 
   constructor(
+    private _titleService: Title,
     private _router: Router,
     private _reportService: ReportService,
     private _notifierService: NotifierService,
@@ -31,6 +34,7 @@ export class ReportViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this._titleService.setTitle("Ver reporte - " + GLOBAL.title);
     this._route.data.subscribe(data => {
       this.actions = data.ReportViewGuard.report.actions;
       this.action_create = this.actions[0];

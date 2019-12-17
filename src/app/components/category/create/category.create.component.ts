@@ -1,16 +1,18 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {faPencilAlt, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
 import {Category} from '../../../models/forum/category';
 import {CategoryService} from '../../../services/category.service';
 import {NotifierService} from 'angular-notifier';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'category-create',
   templateUrl: './category.create.component.html'
 })
 
-export class CategoryCreateComponent {
+export class CategoryCreateComponent implements OnInit {
 
   public category: Category;
   faPencilAlt = faPencilAlt;
@@ -18,11 +20,16 @@ export class CategoryCreateComponent {
   faSort = faSort;
 
   constructor(
+    private _titleService: Title,
     private _categoryService: CategoryService,
     private _notifierService: NotifierService,
     private _router: Router
   ) {
     this.category = new Category("","",0);
+  }
+
+  ngOnInit(): void {
+    this._titleService.setTitle("Crear categoría - " + GLOBAL.title);
   }
 
   onSubmit(): void {

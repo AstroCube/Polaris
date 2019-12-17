@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Punishment} from '../../../models/punishment';
 import {PunishmentService} from '../../../services/punishment.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'punishment-edit',
@@ -16,6 +18,7 @@ export class PunishmentEditComponent implements OnInit{
   public punished_placeholder: any = {};
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _punishmentService: PunishmentService,
     private _router: Router,
@@ -30,11 +33,11 @@ export class PunishmentEditComponent implements OnInit{
   }
 
   ngOnInit() {
+    this._titleService.setTitle("Editar sanción - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.punishment = data.PunishmentEditGuard.punishment_details;
       this.punished_placeholder = data.PunishmentEditGuard.punished_placeholder;
     }));
-
   }
 
   onSubmit() {

@@ -4,6 +4,8 @@ import {Forum} from '../../../models/forum/forum';
 import {ForumService} from '../../../services/forum.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'forum-edit',
@@ -21,6 +23,7 @@ export class ForumEditComponent implements OnInit{
   faIndent = faIndent;
 
   constructor(
+    private _titleService: Title,
     private _forumService: ForumService,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
@@ -30,6 +33,7 @@ export class ForumEditComponent implements OnInit{
   }
 
   ngOnInit() {
+    this._titleService.setTitle("Editar foro - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.forum = data.ForumEditGuard.forum_info.forum;
       this.only_categories = data.ForumEditGuard.forum_tree.only_categories;

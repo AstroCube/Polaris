@@ -4,6 +4,8 @@ import {Category} from '../../../models/forum/category';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryService} from '../../../services/category.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'category-list',
@@ -19,6 +21,7 @@ export class CategoryListComponent implements OnInit {
   faTimes = faTimes;
 
   constructor(
+    private _titleService: Title,
     private _categoryService: CategoryService,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute
@@ -28,6 +31,7 @@ export class CategoryListComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this._titleService.setTitle("Categorías - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.categories = data.CategoryListGuard.categories;
       this.empty_record = data.CategoryListGuard.empty_record;

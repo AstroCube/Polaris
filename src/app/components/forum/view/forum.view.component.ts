@@ -3,6 +3,8 @@ import {faBookmark, faEllipsisV, faListUl, faLock, faPlus, faThumbtack} from '@f
 import {ActivatedRoute, Router} from '@angular/router';
 import {ForumService} from '../../../services/forum.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'forum-view',
@@ -21,6 +23,7 @@ export class ForumViewComponent implements OnInit{
   faThumbtack = faThumbtack;
 
   constructor(
+    private _titleService: Title,
     private _forumService: ForumService,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
@@ -44,7 +47,7 @@ export class ForumViewComponent implements OnInit{
         this.forum_info.topics = topics_own;
       }
     }
-
+    this._titleService.setTitle(this.forum_data.breadcrumb.actual.name + " - " + GLOBAL.title);
   }
 
   newTopic() {

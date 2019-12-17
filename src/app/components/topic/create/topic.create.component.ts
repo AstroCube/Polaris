@@ -7,6 +7,8 @@ import {TopicService} from '../../../services/topic.service';
 import {NotifierService} from 'angular-notifier';
 import {UserService} from '../../../services/user.service';
 import {Socket} from 'ngx-socket-io';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'topic-create',
@@ -24,6 +26,7 @@ export class TopicCreateComponent implements OnInit{
   faBookmark = faBookmark;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _topicService: TopicService,
     private _route: ActivatedRoute,
@@ -35,6 +38,7 @@ export class TopicCreateComponent implements OnInit{
   }
 
   ngOnInit() {
+    this._titleService.setTitle("Crear tema - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.pre_fetch = data.TopicCreateGuard.pre_fetch;
     }));

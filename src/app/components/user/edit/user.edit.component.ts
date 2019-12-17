@@ -17,6 +17,7 @@ import {UserService} from '../../../services/user.service';
 import {NotifierService} from 'angular-notifier';
 import {GLOBAL} from '../../../services/global';
 import * as ClassicEditor from "../../../../../text_editor";
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'user-edit',
@@ -54,6 +55,7 @@ export class UserEditComponent implements OnInit {
   faUser = faUser;
 
   constructor(
+    private _titleService: Title,
     private _activatedRoute: ActivatedRoute,
     private _notifierService: NotifierService,
     private _renderer: Renderer2,
@@ -73,6 +75,7 @@ export class UserEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._titleService.setTitle("Mi cuenta - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.user = data.UserEditGuard.user;
       this.own = data.UserEditGuard.own;

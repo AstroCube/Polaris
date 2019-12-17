@@ -4,6 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TopicService} from '../../../services/topic.service';
 import * as ClassicEditor from "../../../../../text_editor";
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'topic-edit',
@@ -21,6 +23,7 @@ export class TopicEditComponent implements OnInit {
   faEdit = faEdit;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -28,6 +31,7 @@ export class TopicEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this._titleService.setTitle("Editar tema - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.forum_data = data.TopicEditGuard.forum_data;
       this.original_post = data.TopicEditGuard.topic_data.posts;

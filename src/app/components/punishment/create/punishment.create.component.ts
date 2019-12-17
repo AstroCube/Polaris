@@ -4,6 +4,8 @@ import {Punishment} from '../../../models/punishment';
 import {IMyDpOptions} from 'mydatepicker';
 import {PunishmentService} from '../../../services/punishment.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'punishment-create',
@@ -19,6 +21,7 @@ export class PunishmentCreateComponent implements OnInit {
   public picker_options: IMyDpOptions;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _punishmentService: PunishmentService,
     private _router: Router,
@@ -43,7 +46,7 @@ export class PunishmentCreateComponent implements OnInit {
       {value: "temp-ban", label: "Suspensión temporal"},
       {value: "ban", label: "Suspensión permanente"}
     ];
-
+    this._titleService.setTitle("Crear sanción - " + GLOBAL.title);
     this.punishment = new Punishment("","","", "","","","","","","", null,false,false,false);
   }
 

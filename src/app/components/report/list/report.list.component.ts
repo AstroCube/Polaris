@@ -3,6 +3,8 @@ import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReportService} from '../../../services/report.service';
 import {NotifierService} from 'angular-notifier';
+import {GLOBAL} from '../../../services/global';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'report-list',
@@ -19,6 +21,7 @@ export class ReportListComponent {
   faList = faList;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _reportService: ReportService,
     private _route: ActivatedRoute,
@@ -26,8 +29,8 @@ export class ReportListComponent {
   ) {}
 
   ngOnInit() {
+    this._titleService.setTitle("Tus reportes - " + GLOBAL.title);
     this._route.data.subscribe((data => {
-      console.log(data.ReportListGuard);
       this.reports = data.ReportListGuard.list.reports;
       this.can_assign = data.ReportListGuard.can_assign;
       this.page = data.ReportListGuard.list.page;

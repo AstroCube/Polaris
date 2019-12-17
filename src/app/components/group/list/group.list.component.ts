@@ -4,6 +4,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Group} from '../../../models/group';
 import {GroupService} from '../../../services/group.service';
 import {NotifierService} from 'angular-notifier';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'group-list',
@@ -25,6 +27,7 @@ export class GroupListComponent implements OnInit {
   faUserMinus = faUserMinus;
 
   constructor(
+    private _titleService: Title,
     private _route: ActivatedRoute,
     private _groupService: GroupService,
     private _notifierService: NotifierService
@@ -34,6 +37,7 @@ export class GroupListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._titleService.setTitle("Grupos - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.groups = data.GroupListGuard.group;
       this.users = data.GroupListGuard.users;

@@ -3,6 +3,8 @@ import {faComment, faGavel, faList, faLock, faMarker, faTimes, faUnlock, faUserT
 import {ActivatedRoute, Router} from '@angular/router';
 import {AppealService} from '../../../services/appeal.service';
 import {NotifierService} from 'angular-notifier';
+import {Title} from '@angular/platform-browser';
+import {GLOBAL} from '../../../services/global';
 
 @Component({
   selector: 'appeal-view',
@@ -29,6 +31,7 @@ export class AppealViewComponent implements OnInit {
   faUserTie = faUserTie;
 
   constructor(
+    private _titleService: Title,
     private _notifierService: NotifierService,
     private _route: ActivatedRoute,
     private _router: Router,
@@ -36,6 +39,7 @@ export class AppealViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this._titleService.setTitle("Apelaciones - " + GLOBAL.title);
     this._route.data.subscribe((data) => {
       this.actions = data.AppealViewGuard.appeal.actions;
       this.action_create = this.actions[0];
