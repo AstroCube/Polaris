@@ -80,5 +80,5 @@
     </div>
   </div>
   <p *ngIf="!appeals" class="u-center-text u-margin-top-small paragraph--white">No se han encontrado apelaciones.</p>
-  <pagination [centered]="true" [actual_page]="page" [last_page]="pages" [route]="'/apelaciones/'"></pagination>
+  <pagination *ngIf="appeals" [centered]="true" [actual_page]="page" [last_page]="pages" [route]="'/apelaciones/'"></pagination>
 </section>

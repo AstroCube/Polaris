@@ -53,8 +53,20 @@ export class ApplicationHeaderComponent implements OnInit {
   ngOnInit(): void {
     if (this._userService.getToken() && this._userService.getToken() != "none") {
       this.logged = true;
-      this._userService.get_user(null).then(response => {
+      this._userService.get_user(null).then(async (response) => {
         this.username = response.user.username;
+        await this._userService.permission_checker_promise("web_permissions.group.manage").then((permission) => {
+          if (permission.has_permission) this.staff = true;
+        }).catch(() => {});
+        await this._userService.permission_checker_promise("web_permissions.category.manage").then((permission) => {
+          if (permission.has_permission) this.staff = true;
+        }).catch(() => {});
+        await this._userService.permission_checker_promise("web_permissions.user.manage").then((permission) => {
+          if (permission.has_permission) this.staff = true;
+        }).catch(() => {});
+        await this._userService.permission_checker_promise("web_permissions.forum.manage").then((permission) => {
+          if (permission.has_permission) this.staff = true;
+        }).catch(() => {});
         this.skin = response.user.skin;
       });
     }
