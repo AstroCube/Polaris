@@ -43,9 +43,9 @@ export class UserService {
     return this._http.get(this.url + "user/get-placeholder/" + id, {headers: headers}).toPromise();
   }
 
-  mail_verification(): Observable<any> {
+  mail_verification(id: string): Observable<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
-    return this._http.get(this.url + "user/email-verification", {headers: headers});
+    return this._http.get(this.url + "user/email-verification/" + id, {headers: headers});
   }
 
   mail_update(request: any): Observable<any> {

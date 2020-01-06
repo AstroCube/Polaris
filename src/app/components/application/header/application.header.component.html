@@ -30,19 +30,19 @@
           <span class="header__profile-name">{{username}}</span>
         </div>
         <nav class="header__menu">
-          <section *ngIf="staff" class="header__menu-admin">
+          <section *ngIf="generalAccess" class="header__menu-admin">
             <button id="admin-button" class="collapsible__button" collapsible>Administración</button>
             <div class="collapsible__panel">
-              <a (click)="comingSoon()" class="header__menu-link u-pointer">
+              <a *ngIf="userEdit" (click)="comingSoon()" class="header__menu-link u-pointer">
                 Usuarios
               </a>
-              <a routerLink="/admin/grupos" class="header__menu-link u-pointer">
+              <a *ngIf="groupEdit" routerLink="/admin/grupos" class="header__menu-link u-pointer">
                 Grupos
               </a>
-              <a [routerLink]="['/admin/categorias']" class="header__menu-link">
+              <a *ngIf="categoryEdit" [routerLink]="['/admin/categorias']" class="header__menu-link">
                 Categorías
               </a>
-              <a routerLink="{{'/admin/foros'}}" class="header__menu-link">
+              <a *ngIf="forumEdit" routerLink="{{'/admin/foros'}}" class="header__menu-link">
                 Foros
               </a>
             </div>

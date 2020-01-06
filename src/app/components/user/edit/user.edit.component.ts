@@ -62,6 +62,7 @@ export class UserEditComponent implements OnInit {
     private _route: ActivatedRoute,
     private _userService: UserService
   ) {
+    this.user = new User("", "", "", "", "", null, "", "", "", 0, 0, false, [], "", "", "", "", "", "", "", "", "", "", "", false, false, false, false, false);
     this.discord = {};
     this.gender_options = [
       {value: 0, label: "Selecciona un género"},
@@ -78,6 +79,7 @@ export class UserEditComponent implements OnInit {
     this._titleService.setTitle("Mi cuenta - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.user = data.UserEditGuard.user;
+      console.log(data.UserEditGuard.user);
       this.own = data.UserEditGuard.own;
     }));
     this._userService.discord_placeholder(this.user._id).then(response => {
@@ -109,7 +111,7 @@ export class UserEditComponent implements OnInit {
   }
 
   openPopup(): void {
-    this._userService.mail_verification().subscribe(
+    this._userService.mail_verification(this.user._id).subscribe(
       response => {
         if (response.email_sent) {
           this._notifierService.notify('success', "¡Se ha enviado un correo electrónico a " + this.user.email + "!");

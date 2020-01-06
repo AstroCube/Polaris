@@ -21,7 +21,11 @@ export class ApplicationHeaderComponent implements OnInit {
   public logged: boolean;
   public username: string;
   public skin: string;
-  public staff = true;
+  public userEdit = false;
+  public groupEdit = false;
+  public categoryEdit = false;
+  public forumEdit = false;
+  public generalAccess = false;
   faBars = faBars;
   faCompass = faCompass;
   faComments = faComments;
@@ -56,17 +60,18 @@ export class ApplicationHeaderComponent implements OnInit {
       this._userService.get_user(null).then(async (response) => {
         this.username = response.user.username;
         await this._userService.permission_checker_promise("web_permissions.group.manage").then((permission) => {
-          if (permission.has_permission) this.staff = true;
+          if (permission.has_permission) this.groupEdit = true;
         }).catch(() => {});
         await this._userService.permission_checker_promise("web_permissions.category.manage").then((permission) => {
-          if (permission.has_permission) this.staff = true;
+          if (permission.has_permission) this.categoryEdit = true;
         }).catch(() => {});
         await this._userService.permission_checker_promise("web_permissions.user.manage").then((permission) => {
-          if (permission.has_permission) this.staff = true;
+          if (permission.has_permission) this.userEdit = true;
         }).catch(() => {});
         await this._userService.permission_checker_promise("web_permissions.forum.manage").then((permission) => {
-          if (permission.has_permission) this.staff = true;
+          if (permission.has_permission) this.forumEdit = true;
         }).catch(() => {});
+        if (this.groupEdit || this.categoryEdit || this.userEdit || this.forumEdit) this.generalAccess = true;
         this.skin = response.user.skin;
       });
     }

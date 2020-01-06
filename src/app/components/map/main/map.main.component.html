@@ -54,5 +54,6 @@
     </div>
     -->
   </div>
+  <p *ngIf="mapList.length === 0" class="u-center-text paragraph--white">No hay mapas actualmente</p>
   <pagination [queryParams]="query" [actual_page]="page" [last_page]="pages" route="/mapas/" [pageAsQuery]="true" [centered]="true"></pagination>
 </section>

@@ -11,7 +11,7 @@ import {Meta, Title} from '@angular/platform-browser';
 
 export class ForumMainComponent implements OnInit {
 
-  public categories: any;
+  public categories: any[];
   faEllipsisV = faEllipsisV;
 
   constructor(
@@ -28,9 +28,10 @@ export class ForumMainComponent implements OnInit {
       {name: 'description', content: 'Date a conocer, haz amigos y relacionate con la comunidad.'},
       {name: 'robots', content: 'index, follow'}
     ]);
-    this._route.data.subscribe((data => {
+    this._route.data.subscribe((data) => {
       this.categories = data.ForumMainGuard.categories;
-    }));
+      this.categories = this.categories.filter(e => e !== null);
+    });
   }
 
 }
