@@ -61,6 +61,7 @@ export class ForumEditComponent implements OnInit{
   }
 
   onSubmit() {
+    if (this.forum.parent === null) this.forum.parent = undefined;
     this.getId(this.forum.parent);
     this._forumService.forum_update(this.forum._id.toString(), this.forum).subscribe(
       response => {
