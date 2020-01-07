@@ -7,7 +7,7 @@ import {Post} from '../../models/forum/post';
 @Injectable()
 export class ApplicationHomepageGuard {
 
-  private forum : string = "5d9183df95f4771aeb30b218";
+  private forum : string = "5e1145c5485a5f328baa709d";
 
   constructor (
     private _topicService: TopicService,

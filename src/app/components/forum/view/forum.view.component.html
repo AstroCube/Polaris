@@ -11,7 +11,7 @@
         </div>
         <div class="forum__title">
           <h1 class="heading"><a routerLink="{{'/foro/' + forum_data.breadcrumb.actual._id}}">{{forum_info.info.name}}</a></h1>
-          <p *ngIf="forum_info.info.description" class="paragraph">{{forum_info.info.description}}.</p>
+          <p *ngIf="forum_info.info.description" class="paragraph">{{forum_info.info.description}}</p>
         </div>
         <div class="forum__subforums">
           <div *ngFor="let sub_forum of forum_info.sub_forums" class="subforum">
