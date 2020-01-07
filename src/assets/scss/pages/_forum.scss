@@ -1,5 +1,9 @@
 .forum {
 
+  &__section {
+    margin: 0 !important;
+  }
+
   &__tree {
     background-color: $color-light-black;
     padding: 2rem;
