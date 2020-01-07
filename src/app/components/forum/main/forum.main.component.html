@@ -1,8 +1,8 @@
-<section class="forum__section">
+<section>
   <div class="row">
     <div class="col-3-of-4">
       <div class="forum__tree">
-        <section *ngIf="categories.length > 0">
+        <section *ngIf="categories.length > 0"  class="forum__section">
           <div *ngFor="let category of categories" class="category">
             <div *ngIf="category">
               <div class="category__header">
