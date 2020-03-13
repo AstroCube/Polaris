@@ -81,7 +81,8 @@ import {GroupListComponent} from './components/group/list/group.list.component';
 import {GroupListGuard} from './guards/group/group.list.guard';
 
 const app_routes: Routes = [
-  {path: "login", component: ApplicationLoginComponent},
+  /*
+    {path: "login", component: ApplicationLoginComponent},
   {path: "registrarse", component: ApplicationLoginComponent},
   {path: "admin",
     children: [
@@ -162,7 +163,7 @@ const app_routes: Routes = [
     ]
   },
 
-  {path: "staff", component: GroupStaffComponent, resolve: [GroupStaffGuard]},
+  {path: "staff", component: GroupStaffComponent, resolve: {GroupStaffGuard}},
   {path: "desarrollo", component: ApplicationDevelopementComponent, resolve: {ApplicationDevelopementGuard}},
   {path: "partida/:id", component: MatchViewComponent, resolve: {MatchViewGuard}},
   {path: "alertas", component: ApplicationAlertComponent},
@@ -177,7 +178,8 @@ const app_routes: Routes = [
   {path: "error", component: ApplicationErrorComponent},
 
   {path: ":username", component: UserViewComponent, resolve: {UserViewGuard: UserViewGuard}},
-  {path: "", component: ApplicationHomepageComponent, resolve: {ApplicationHomepageGuard}}
+   */
+  {path: "", component: ApplicationHomepageComponent, /*resolve: {ApplicationHomepageGuard}*/}
   /* {path: "tienda/carrito", component: ShopCartComponent}, //TODO: Shop Creation
   {path: "tienda/categoria", component: ShopCategoryComponent},
   {path: "tienda", component: ShopMainComponent},

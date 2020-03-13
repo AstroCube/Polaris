@@ -23,16 +23,18 @@ export class ApplicationHomepageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // Meta
-    this._titleService.setTitle("Seocraft Network - ¡Una network para todos!");
-    this._metaService.addTags([
-      {name: 'keywords', content: GLOBAL.tags},
-      {name: 'description', content: 'Juega tus minijuegos favoritos en uno de los servidores no premium más prometedoras de Minecraft. ¡Totalmente gratis!'},
-      {name: 'robots', content: 'index, follow'}
-    ]);
+    /*
+      // Meta
+      this._titleService.setTitle("Seocraft Network - ¡Una network para todos!");
+      this._metaService.addTags([
+        {name: 'keywords', content: GLOBAL.tags},
+        {name: 'description', content: 'Juega tus minijuegos favoritos en uno de los servidores no premium más prometedoras de Minecraft. ¡Totalmente gratis!'},
+        {name: 'robots', content: 'index, follow'}
+      ]);
 
-    this._route.data.subscribe((data) => {
-      this.posts = data.ApplicationHomepageGuard;
-    });
+      this._route.data.subscribe((data) => {
+        this.posts = data.ApplicationHomepageGuard;
+      });
+     */
   }
 }
