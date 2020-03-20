@@ -31,6 +31,12 @@ export class ForumMainComponent implements OnInit {
     this._route.data.subscribe((data) => {
       this.categories = data.ForumMainGuard.categories;
       this.categories = this.categories.filter(e => e !== null);
+      this.categories = this.categories.map(cat => {
+        let fixedCategory = cat;
+        fixedCategory.forums = fixedCategory.forums.filter(e => e !== null);
+        return cat;
+      });
+      this.categories = this.categories.filter(e => e.forums && e.forums.length >= 1);
     });
   }
 
