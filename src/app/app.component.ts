@@ -15,8 +15,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    /* Uncomment when deployed
-      if (this._userService.getToken() && this._userService.getToken() !== "none") {
+    if (this._userService.getToken() && this._userService.getToken() !== "none") {
       this._userService.token_validation().subscribe(
         response => {
           if (response.expired) {
@@ -32,6 +31,5 @@ export class AppComponent implements OnInit {
         }
       );
     }
-     */
   }
 }

@@ -122,7 +122,6 @@ import {GroupListComponent} from './components/group/list/group.list.component';
 import {GroupListGuard} from './guards/group/group.list.guard';
 import {FriendService} from './services/friend.service';
 import {ColorDirective} from './directives/color.directive';
-import {OrderByPipe} from './pipes/OrderBy.pipe';
 
 
 @NgModule({
@@ -163,7 +162,6 @@ import {OrderByPipe} from './pipes/OrderBy.pipe';
     MapViewComponent,
     MatchViewComponent,
     NoSanitizePipe,
-    OrderByPipe,
     PunishmentCreateComponent,
     PunishmentEditComponent,
     PunishmentListComponent,

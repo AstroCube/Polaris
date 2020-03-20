@@ -13,7 +13,7 @@ import {Title} from '@angular/platform-browser';
 
 export class GroupStaffComponent implements OnInit{
 
-  public groups: any[] = [];
+  public groups: any[];
   faTwitter = faTwitter;
   faDiscord = faDiscord;
   faEnvelope = faEnvelope;
@@ -26,7 +26,7 @@ export class GroupStaffComponent implements OnInit{
   ngOnInit(): void {
     this._titleService.setTitle("Grupos - " + GLOBAL.title);
     this._route.data.subscribe((data => {
-      this.groups = data.GroupStaffGuard;
+      this.groups = data[0];
     }));
   }
 

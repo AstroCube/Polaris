@@ -14,8 +14,8 @@ export class GroupStaffGuard {
   )
   {}
 
-  async resolve(): Promise<any> {
-    return await this.getData().then((response) => {
+  resolve(): Promise<any> {
+    return this.getData().then((response) => {
       if (response) {
         return response;
       } else {
@@ -37,7 +37,6 @@ export class GroupStaffGuard {
         let finalGroup : any = {};
         finalGroup.name = group.name;
         finalGroup.color = group.html_color;
-        finalGroup.priority = group.priority;
         finalGroup.members = [];
 
         await this._groupService.groupGetStaffMembers(group._id).then( (members) => {
