@@ -2,20 +2,20 @@
   <h1 class="heading heading--primary u-margin-bottom-small">Staff</h1>
   <section *ngFor="let group of groups" class="staff">
     <div class="staff__title">
-      <h2 [style.color]="group.color" class="staff__name">{{group.name}}</h2>
-      <span class="staff__indicator">{{group.members.length}}</span>
+      <h2 [style.color]="group.details.html_color" class="staff__name">{{group.details.name}}</h2>
+      <span class="staff__indicator">{{group.users.length}}</span>
     </div>
     <div class="staff_members">
-      <article *ngFor="let member of group.members" class="staff__item">
+      <article *ngFor="let member of group.users" class="staff__item">
         <a routerLink="{{'/' + member.username}}" class="staff__image"><img src="{{'https://minotar.net/avatar/' + member.username}}" alt="{{member.username}}"></a>
         <a
-          [style.color]="group.color"
-          [style.border-bottom]="'2px solid ' + group.color"
+          [style.color]="group.details.html_color"
+          [style.border-bottom]="'2px solid ' + group.details.html_color"
           routerLink="{{'/' + member.username}}"
           class="staff__username"
         >{{member.username}}</a>
         <p *ngIf="member.group.role_comment" class="staff__comment">{{member.group.role_comment | titlecase}}</p>
-        <p *ngIf="!member.group.role_comment" class="staff__comment">{{group.name | titlecase}}</p>
+        <p *ngIf="!member.group.role_comment" class="staff__comment">{{group.details.name | titlecase}}</p>
         <ul class="staff__icons">
           <li *ngIf="member.twitter"><a href="{{'https://www.twitter.com/' + member.twitter}}" target="_blank"><fa-icon [icon]="faTwitter"></fa-icon></a></li>
           <li *ngIf="member.discord.username" tooltip content="{{member.discord.username + '#' + member.discord.discriminator}}" placement="bottom"><a><fa-icon [icon]="faDiscord"></fa-icon></a></li>

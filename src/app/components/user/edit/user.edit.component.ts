@@ -79,7 +79,6 @@ export class UserEditComponent implements OnInit {
     this._titleService.setTitle("Mi cuenta - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.user = data.UserEditGuard.user;
-      console.log(data.UserEditGuard.user);
       this.own = data.UserEditGuard.own;
     }));
     this._userService.discord_placeholder(this.user._id).then(response => {

@@ -16,9 +16,9 @@ export class GroupService {
     this.url = GLOBAL.url;
   }
 
-  groupStaffList(): Promise<any> {
+  groupStaffList(): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "group/staff", {headers: headers}).toPromise();
+    return this._http.get(this.url + "group/staff", {headers: headers});
   }
 
   groupList(): Promise<any> {
@@ -32,9 +32,9 @@ export class GroupService {
     return this._http.put(this.url + "group/update/" + group._id,  params,{headers: headers});
   }
 
-  groupGetStaffMembers(id : string): Promise<any> {
+  groupGetStaffMembers(id : string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "group/staff-members/" + id, {headers: headers}).toPromise();
+    return this._http.get(this.url + "group/staff-members/" + id, {headers: headers});
   }
 
   groupUserAdd(id: string, group: string, comment: string): Observable<any> {

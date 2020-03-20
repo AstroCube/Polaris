@@ -25,6 +25,11 @@ export class UserService {
     return this._http.get(this.url + 'discord-placeholder/' + id, {headers: headers}).toPromise();
   }
 
+  discordPlaceholderObservable(id: String): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
+    return this._http.get(this.url + 'discord-placeholder/' + id, {headers: headers});
+  }
+
   login(request: any): Observable<any> {
     let params = JSON.stringify(request);
     let headers = new HttpHeaders().set("Content-Type", "application/json");

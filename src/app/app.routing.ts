@@ -162,7 +162,7 @@ const app_routes: Routes = [
     ]
   },
 
-  {path: "staff", component: GroupStaffComponent, resolve: [GroupStaffGuard]},
+  {path: "staff", component: GroupStaffComponent, resolve: {GroupStaffGuard}},
   {path: "desarrollo", component: ApplicationDevelopementComponent, resolve: {ApplicationDevelopementGuard}},
   {path: "partida/:id", component: MatchViewComponent, resolve: {MatchViewGuard}},
   {path: "alertas", component: ApplicationAlertComponent},

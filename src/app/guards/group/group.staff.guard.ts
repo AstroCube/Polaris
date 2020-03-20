@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {Resolve, Router} from '@angular/router';
 import {GroupService} from '../../services/group.service';
 import {UserService} from '../../services/user.service';
+import {IStaffList} from '../../models/group/IStaffList';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Injectable()
-export class GroupStaffGuard {
-
+export class GroupStaffGuard implements Resolve<IStaffList[]> {
 
   constructor (
     private _groupService: GroupService,
@@ -14,64 +16,45 @@ export class GroupStaffGuard {
   )
   {}
 
-  resolve(): Promise<any> {
-    return this.getData().then((response) => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    }).catch(() => {
-      return false;
-    });
-  }
+  resolve(): Observable<IStaffList[]> {
+    return this._groupService.groupStaffList().pipe(map((response: any[]) => {
+      let data: IStaffList[] = [];
+      try {
+        if (response) {
 
-  async getData(): Promise<any> {
-    let data : any[] = [];
-    await this._groupService.groupStaffList().then(async (groups) => {
+          response.forEach((group) => {
+            let finalGroup: IStaffList = {details: group, users: []};
+            this._groupService.groupGetStaffMembers(finalGroup.details._id).subscribe(
+              (user) => {
 
-      await groups.forEach(async (group) => {
+                user.forEach(async (member) => {
+                  member.group = member.group.filter((a) => a._id === group._id)[0];
+                  member.discord = await this._userService.discord_placeholder(member._id).then((discord) => {
+                    return discord;
+                  }).catch(null);
+                  finalGroup.users.push(member);
+                });
 
-        // Construct the finalGroup object.
-        let finalGroup : any = {};
-        finalGroup.name = group.name;
-        finalGroup.color = group.html_color;
-        finalGroup.members = [];
-
-        await this._groupService.groupGetStaffMembers(group._id).then( (members) => {
-
-          // Filter group to get the correct one according to the group
-          members.forEach(async (member) => {
-            member.group = member.group.filter((a) => a._id === group._id)[0];
-            member.discord = await this._userService.discord_placeholder(member._id).then((discord) => {
-              return discord;
-            }).catch(null);
-            finalGroup.members.push(member);
+              }
+            );
+            data.push(finalGroup);
           });
-
-        }).catch(null);
-
-        data.push(finalGroup);
-
-      });
-
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
+          return data;
+        } else {
+          throw new Error("Response was not received correctly");
         }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
+      } catch (err) {
+        switch (err.status) {
+          case 404: {
+            this._router.navigate(['/error'] , { queryParams: {type: "404"}});
+            return null;
+          }
+          default: {
+            this._router.navigate(['/error'] , { queryParams: {type: "500"}});
+            return null;
+          }
         }
       }
-    });
-    return data;
+    }));
   }
 }
