@@ -14,6 +14,10 @@
       width: calc(100% - 2rem);
     }
 
+    &--full-gutter {
+      width: 100% !important;
+    }
+
     &:disabled {
       cursor: not-allowed;
       background-color: darken($color-danger-bs, 40%);

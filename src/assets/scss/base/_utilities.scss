@@ -34,5 +34,9 @@
 .u-float-right {float: right !important;}
 
 .u-pointer {
-  cursor: pointer;
+  cursor: pointer !important;
+}
+
+.u-border-box {
+  box-sizing: border-box !important;
 }
