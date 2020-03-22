@@ -37,4 +37,8 @@ section {
   @include clearfix;
   margin: 3rem 10.4rem;
   padding: 0 1.5rem;
+
+  @include respond(tab-land) {
+    margin: 3rem 1rem;
+  }
 }

@@ -12,6 +12,12 @@
     }
   }
 
+  &--fluid {
+    @include respond(tab-port) {
+      padding: 0 !important;
+    }
+  }
+
   @include respond(tab-port) {
     max-width: 50rem;
     padding: 0 3rem;

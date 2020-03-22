@@ -2,11 +2,20 @@
 
   &__section {
     margin: 0 !important;
+
+    @include respond(phone) {
+      padding: 0;
+    }
   }
 
   &__tree {
     background-color: $color-light-black;
     padding: 2rem;
+
+    @include respond(phone) {
+      padding: 2rem;
+    }
+
   }
 
   &__recent {
@@ -143,6 +152,10 @@
     text-transform: none;
     width: 10%;
     text-align: center;
+
+    @include respond(tab-port) {
+      display: none;
+    }
   }
 
   &__topics-header-last {
@@ -154,6 +167,11 @@
     text-transform: none;
     width: 25%;
     text-align: center;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+
   }
 
   &__node {
@@ -167,6 +185,10 @@
     display: flex;
     align-items: center;
     width: 55%;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
   }
 
   &__node-title-link {
@@ -223,6 +245,10 @@
     align-items: center;
     justify-content: center;
     width: 10%;
+
+    @include respond(tab-port) {
+      display: none;
+    }
   }
 
   &__node-last {
@@ -233,6 +259,10 @@
     justify-content: center;
     border-left: 3px solid $color-primary;
     padding: 0 1rem;
+
+    @include respond(tab-port) {
+      display: none;
+    }
   }
 
   &__node-top {
@@ -423,7 +453,7 @@
 
 
 .category {
-  width: 100;
+  width: 100%;
 
   &:not(:last-of-type) {
     margin-bottom: 3rem;
@@ -439,6 +469,11 @@
     @include titleFont;
     display: inline-block;
     width: 35%;
+
+    @include respond(tab-port) {
+      width: calc(100% - 4rem);
+    }
+
   }
 
   &__header-indicator {
@@ -448,6 +483,10 @@
     text-transform: none;
     width: 15%;
     text-align: center;
+
+    @include respond(tab-port) {
+      display: none;
+    }
   }
 
   &__node {
@@ -461,6 +500,10 @@
     display: flex;
     align-items: center;
     width: 35%;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
   }
 
   &__node-title-link {
@@ -491,6 +534,10 @@
     align-items: center;
     justify-content: center;
     width: 15%;
+
+    @include respond(tab-port) {
+      display: none;
+    }
   }
 
   &__node-last {
@@ -501,6 +548,10 @@
     justify-content: center;
     border-left: 3px solid $color-primary;
     padding: 0 1rem;
+
+    @include respond(tab-port) {
+      display: none;
+    }
   }
 
   &__node-top {
@@ -547,7 +598,11 @@
     margin-top: .35rem;
   }
 
-
 }
 
-
+.forum-overriding {
+  @include respond(tab-port) {
+    margin: 2rem 0 !important;
+    padding: 0 !important;
+  }
+}

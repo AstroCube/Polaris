@@ -5,14 +5,33 @@
   border-top: 3px solid $color-secondary;
   overflow: auto;
 
+  &__replier {
+    @include respond(tab-port) {
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  @include respond(tab-port) {
+    padding: 1rem 0;
+  }
+
   &__header {
     display: flex;
     align-items: center;
+
+    @include respond(tab-port) {
+      justify-content: center;
+    }
+
   }
 
   &__header-buttons {
     position: relative;
     top: .3rem;
+
+    @include respond(tab-port) {
+      text-align: center;
+    }
   }
 
   &__title {
