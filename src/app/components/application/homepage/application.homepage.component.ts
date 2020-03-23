@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Post} from '../../../models/forum/post';
 import {Meta, Title} from '@angular/platform-browser';
 import {GLOBAL} from '../../../services/global';
+import {faInstagram, faTwitter} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'application-homepage',
@@ -15,6 +16,8 @@ export class ApplicationHomepageComponent implements OnInit {
   public posts : Post[];
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
+  faInstagram = faInstagram;
+  faTwitter = faTwitter;
 
   constructor(
     private _metaService: Meta,

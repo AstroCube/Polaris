@@ -15,7 +15,7 @@ export class SliderDirective implements OnInit {
       const customers = new Glide(this._element.nativeElement, {
         type: "carousel",
         perView: 1,
-        direction: "rtl",
+        direction: "ltr",
         autoplay: "10000"
       });
       customers.mount();
