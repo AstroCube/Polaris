@@ -1,5 +1,4 @@
 <section>
-
   <div class="row">
     <div class="col-1-of-2">
       <h1 class="heading heading--primary profile__name">{{user.username}}</h1>
@@ -23,7 +22,7 @@
     <div class="profile__content--left">
       <div class="profile__content-section">
         <div class="profile__content-indicator">
-          <img src="{{'https://minotar.net/avatar/' + user.skin}}" alt="{{user.username}}" class="profile__avatar" [class.profile__avatar--online]="user.last_seen == 'conectado'">
+          <img src="{{'https://mc-heads.net/avatar/' + user.skin}}" alt="{{user.username}}" class="profile__avatar" [class.profile__avatar--online]="user.last_seen == 'conectado'">
         </div>
         <div class="profile__content-info">
           <div class="profile__header">
@@ -53,7 +52,7 @@
           </div>
           <div class="profile__friends">
             <a *ngFor="let  friend of friends.friends" routerLink="{{'/' + friend.username}}" class="tooltip">
-              <img src="{{'https://minotar.net/avatar/' + friend.skin}}" [alt]="friend.username" class="profile__friend" tooltip [content]="friend.username" placement="top">
+              <img src="{{'https://mc-heads.net/avatar/' + friend.skin}}" [alt]="friend.username" class="profile__friend" tooltip [content]="friend.username" placement="top">
             </a>
           </div>
         </div>

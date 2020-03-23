@@ -132,6 +132,10 @@
     @include titleFont;
     font-size: 1.3rem !important;
     padding: .5rem 1rem !important;
+
+    @include respond(tab-port) {
+      margin-bottom: .3rem !important;
+    }
   }
 
 }

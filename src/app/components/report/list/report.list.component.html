@@ -24,16 +24,16 @@
   </div>
   <div class="table--black table--fixed">
     <div class="table__header">
-      <div class="table__cell report__table-small">
+      <div class="table__cell report__table-small report__hidden">
         <p>Reportador</p>
       </div>
       <div class="table__cell report__table-small">
         <p>Involucrado</p>
       </div>
-      <div class="table__cell report__table-large">
+      <div class="table__cell report__table-large report__hidden">
         <p>Encargado</p>
       </div>
-      <div class="table__cell report__table-small">
+      <div class="table__cell report__table-small report__hidden">
         <p>Fecha</p>
       </div>
       <div class="table__cell report__table-buttons">
@@ -41,17 +41,17 @@
       </div>
     </div>
     <div *ngFor="let report of reports" class="table__row">
-      <div class="table__cell report__table-small">
+      <div class="table__cell report__table-small report__hidden">
         <a routerLink="{{'/' + report.creator.username}}" [style.color]="report.creator.user_color">{{report.creator.username}}</a>
       </div>
-      <div class="table__cell report__table-small ">
+      <div class="table__cell report__table-small">
         <a routerLink="{{'/' + report.involved.username}}" [style.color]="report.involved.user_color">{{report.involved.username}}</a>
       </div>
-      <div class="table__cell report__table-large">
+      <div class="table__cell report__table-large report__hidden">
         <span *ngIf="!report.assigned">Esperando Asignación</span>
         <a *ngIf="report.assigned" routerLink="{{'/' + report.assigned.username}}" [style.color]="report.assigned.user_color">{{report.assigned.username}}</a>
       </div>
-      <div class="table__cell report__table-small">
+      <div class="table__cell report__table-small report__hidden">
         <span>{{report.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
       </div>
       <div class="table__cell report__table-buttons">

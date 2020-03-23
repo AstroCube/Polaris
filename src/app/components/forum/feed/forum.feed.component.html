@@ -6,7 +6,7 @@
   </div>
   <div *ngIf="!topics || (topics && topics.length <= 0)" class="u-center-text u-margin-top-small paragraph--white">No hay temas recientes.</div>
   <div *ngFor="let topic of topics" class="forum__recent-node">
-    <img src="{{'https://minotar.net/avatar/' + topic.writer.skin}}" alt="Test" class="forum__recent-avatar">
+    <img src="{{'https://mc-heads.net/avatar/' + topic.writer.skin}}" alt="Test" class="forum__recent-avatar">
     <div class="forum__recent-container">
       <a routerLink="{{'/foro/tema/' + topic.id}}" class="forum__recent-topic">{{topic.subject}}</a>
       <p class="forum__recent-username-placeholder">

@@ -16,7 +16,7 @@ export class PunishmentCreateComponent implements OnInit {
 
   public users: any[] = [];
   public punishment: Punishment;
-  public report: any  ;
+  public report: any;
   public punishment_options: any[];
   public picker_options: IMyDpOptions;
 
@@ -53,7 +53,7 @@ export class PunishmentCreateComponent implements OnInit {
   ngOnInit() {
     this._route.data.subscribe((data => {
       this.report = data.PunishmentCreateGuard.report;
-      this.users = data.PunishmentCreateGuard.list.fixed_users;
+      this.users = data.PunishmentCreateGuard.list;
     }));
     if (this.report) {
       this.punishment.punished = this.users.filter(user => {

@@ -19,6 +19,7 @@ export class TopicViewComponent implements OnInit {
   public can_edit: boolean;
   public can_delete: boolean;
   public posts: any;
+  public guest: boolean;
   public topic_data: any;
   public topic_id: string;
   faBookmark = faBookmark;
@@ -42,6 +43,7 @@ export class TopicViewComponent implements OnInit {
     this.topic_data = {};
     this.can_reply = false;
     this.can_delete = false;
+    this.guest = false;
   }
 
   ngOnInit() {
@@ -61,6 +63,14 @@ export class TopicViewComponent implements OnInit {
     if (this.forum_data.permissions.edit === "all") this.can_edit = true;
     if (this.forum_data.permissions.edit === "own" && this.topic_data.topic_info.own && moment(time).add('1', 'hours').unix() > moment().unix()) this.can_edit = true;
     this._titleService.setTitle(this.topic_data.topic_info.subject + " - " + GLOBAL.title);
+
+    if (this.forum_data.permissions.guest) {
+      this.can_reply = false;
+      this.can_edit = false;
+      this.can_delete = false;
+      this.guest = true;
+    }
+
   }
 
   quoteLink(id) {

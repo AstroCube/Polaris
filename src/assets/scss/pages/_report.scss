@@ -13,6 +13,12 @@
     width: 30%;
   }
 
+  &__hidden {
+    @include respond(phone) {
+      display: none;
+    }
+  }
+
   &__search {
     margin: auto;
     width: 40rem;
@@ -87,6 +93,12 @@
     & img {
       width: 6rem;
       height: 6rem;
+
+      @include respond(tab-port) {
+        width: 3rem;
+        height: 3rem;
+      }
+
     }
   }
 

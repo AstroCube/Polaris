@@ -207,7 +207,7 @@ import {ColorDirective} from './directives/color.directive';
     PasswordStrengthBarModule,
     MyDatePickerModule,
     MomentModule,
-    SocketIoModule.forRoot({ url: 'http://localhost:7533', options: {} }),
+    SocketIoModule.forRoot({ url: 'http://149.56.40.174:7533', options: {} }),
     NgSelectModule,
     NotifierModule.withConfig( {
       position: {

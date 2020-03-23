@@ -22,8 +22,8 @@
           </div>
           <div class="col-1-of-3 u-right-text">
             <div class="topic__header-buttons">
-              <a *ngIf="!topic_data.topic_info.subscribed && !topic_data.topic_info.own" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
-              <a *ngIf="topic_data.topic_info.subscribed && !topic_data.topic_info.own" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
+              <a *ngIf="!topic_data.topic_info.subscribed && !topic_data.topic_info.own && !guest" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
+              <a *ngIf="topic_data.topic_info.subscribed && !topic_data.topic_info.own && !guest" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
               <a *ngIf="forum_data.permissions.pin && !topic_data.topic_info.pinned" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Ancla el tema (Aparecerá de primero en el foro)" placement="bottom"><fa-icon class="topic__icon ng-fa-icon" [icon]="faThumbtack"></fa-icon></a>
               <a *ngIf="forum_data.permissions.pin && topic_data.topic_info.pinned" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Desancla el tema (No aparecerá de primero en el foro)" placement="bottom"><fa-icon class="topic__icon ng-fa-icon" [icon]="faThumbtack"></fa-icon></a>
               <a *ngIf="forum_data.permissions.lock && !topic_data.topic_info.locked" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Bloquea el tema (Los usuarios no podrán responder el tema)" placement="bottom"><fa-icon class="topic__icon ng-fa-icon" [icon]="faLock"></fa-icon></a>
@@ -37,7 +37,7 @@
         <div *ngFor="let post of posts; let i = index;" class="topic__posts">
           <div id="{{post.id}}" class="post">
             <div class="post__header">
-              <a routerLink="{{'/' + post.writer.username}}"><img alt="Test" class="post__user-avatar" [class.post__user-avatar--online]="post.writer.last_seen === 'conectado'" src="{{'https://minotar.net/avatar/' + post.writer.skin}}"></a>
+              <a routerLink="{{'/' + post.writer.username}}"><img alt="Test" class="post__user-avatar" [class.post__user-avatar--online]="post.writer.last_seen === 'conectado'" src="{{'https://mc-heads.net/avatar/' + post.writer.skin}}"></a>
               <div class="post__placeholder">
                 <div class="post__top">
                   <a class="post__username" [style.color]="post.writer.user_color" routerLink="{{'/' + post.writer.username}}">{{post.writer.username}}</a>
@@ -63,11 +63,11 @@
                 <fa-icon class="btn__icon--left" [icon]="faEdit"></fa-icon>
                 Editar
               </a>
-              <a class="btn btn--transparent" (click)="likePost(post.id, i)">
+              <a class="btn btn--transparent" (click)="likePost(post.id, i)" *ngIf="!guest">
                 <fa-icon class="btn__icon--left" [icon]="faThumbsUp"></fa-icon>
                 {{post.likes}}
               </a>
-              <a class="btn btn--transparent">
+              <a class="btn btn--transparent" *ngIf="!guest">
                 <fa-icon class="btn__icon--left ng-fa-icon" [icon]="faFlag"></fa-icon>Reportar
               </a>
               <a *ngIf="can_reply" class="btn btn--transparent" (click)="quoteLink(post.id)" tooltip content="Aquí escribirás un comentario en el foro" placement="top">
