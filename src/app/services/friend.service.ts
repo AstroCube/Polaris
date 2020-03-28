@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserService} from './user.service';
 import {GLOBAL} from './global';
+import {Observable} from 'rxjs';
+import {IFriendProfile} from '../newModels/friend/IFriendProfile';
 
 @Injectable()
 export class FriendService {
@@ -14,9 +16,9 @@ export class FriendService {
     this.url = GLOBAL.url;
   }
 
-  listFriends(id: string): Promise<any> {
+  listFriends(id: string): Observable<IFriendProfile> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "friend/list-website/" + id, {headers: headers}).toPromise();
+    return this._http.get(this.url + "friend/list-website/" + id, {headers: headers}) as Observable<IFriendProfile>;
   }
 
 }

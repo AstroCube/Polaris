@@ -6,6 +6,9 @@ import {Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
 import {faGithub} from '@fortawesome/free-brands-svg-icons/faGithub';
 import Typed from 'typed.js';
+import {forkJoin, from} from 'rxjs';
+import {map, mergeMap} from 'rxjs/operators';
+import {IHeaderUser} from '../../../newModels/user/IUserProfile';
 
 @Component({
   selector: 'application-header',
@@ -15,17 +18,11 @@ import Typed from 'typed.js';
 export class ApplicationHeaderComponent implements OnInit {
 
   @ViewChild("login_close") public login_element: ElementRef;
+  public header: IHeaderUser;
   public requested_email: string;
   public requested_password: string;
   public requested_persistence: boolean;
   public logged: boolean;
-  public username: string;
-  public skin: string;
-  public userEdit = false;
-  public groupEdit = false;
-  public categoryEdit = false;
-  public forumEdit = false;
-  public generalAccess = false;
   faBars = faBars;
   faCompass = faCompass;
   faComments = faComments;
@@ -48,6 +45,7 @@ export class ApplicationHeaderComponent implements OnInit {
     private _userService: UserService,
     private _renderer: Renderer2
   ) {
+    this.header = {} as IHeaderUser;
     this._router.events.subscribe(() => {
       this.changeEvent();
     });
@@ -55,25 +53,39 @@ export class ApplicationHeaderComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this._userService.getToken() && this._userService.getToken() != "none") {
+    if (
+      this._userService.getToken() && this._userService.getToken() != "none" &&
+      this._userService.getEpsilonToken() && this._userService.getEpsilonToken() != "none"
+    ) {
       this.logged = true;
-      this._userService.get_user(null).then(async (response) => {
-        this.username = response.user.username;
-        await this._userService.permission_checker_promise("web_permissions.group.manage").then((permission) => {
-          if (permission.has_permission) this.groupEdit = true;
-        }).catch(() => {});
-        await this._userService.permission_checker_promise("web_permissions.category.manage").then((permission) => {
-          if (permission.has_permission) this.categoryEdit = true;
-        }).catch(() => {});
-        await this._userService.permission_checker_promise("web_permissions.user.manage").then((permission) => {
-          if (permission.has_permission) this.userEdit = true;
-        }).catch(() => {});
-        await this._userService.permission_checker_promise("web_permissions.forum.manage").then((permission) => {
-          if (permission.has_permission) this.forumEdit = true;
-        }).catch(() => {});
-        if (this.groupEdit || this.categoryEdit || this.userEdit || this.forumEdit) this.generalAccess = true;
-        this.skin = response.user.skin;
-      });
+      this._userService.getUserObservable().pipe(
+        mergeMap((user) =>
+          forkJoin(
+            from(this._userService.permission_checker_promise("web_permissions.group.manage")),
+            from(this._userService.permission_checker_promise("web_permissions.category.manage")),
+            from(this._userService.permission_checker_promise("web_permissions.user.manage")),
+            from(this._userService.permission_checker_promise("web_permissions.forum.manage"))
+          ).pipe(
+            map((response) => ({
+              user: user,
+              group: response[0].has_permission,
+              category: response[1].has_permission,
+              userEdit: response[2].has_permission,
+              forum: response[3].has_permission,
+              generalAccess: response[0] || response[1] || response[2] || response[3]
+            } as IHeaderUser))
+          )
+        )
+      ).subscribe(
+        (header) => {
+          this.header = header;
+        },
+
+        (error) => {
+          this.logout();
+          this._notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
+        }
+      );
     }
 
     const options = {
@@ -96,10 +108,16 @@ export class ApplicationHeaderComponent implements OnInit {
   changeEvent(): void {
     if (this._userService.getToken()  && this._userService.getToken() != "none") {
       this.logged = true;
-      this._userService.get_user(null).then(response => {
-        this.username = response.user.username;
-        this.skin = response.user.skin;
-      });
+      this._userService.getUserObservable().subscribe(
+        (user) => {
+          this.header.user = user;
+        },
+
+        (error) => {
+          this.logout();
+          this._notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
+        }
+      )
     }
   }
 
@@ -107,7 +125,8 @@ export class ApplicationHeaderComponent implements OnInit {
     let request: any = {};
     request.email = this.requested_email;
     request.password = this.requested_password;
-    request.persistence = this.requested_persistence;
+    //request.persistence = this.requested_persistence;
+    this._router.navigate(['']);
 
     this._userService.login(request).subscribe(
       response => {
@@ -115,6 +134,24 @@ export class ApplicationHeaderComponent implements OnInit {
           this._notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
         } else {
           localStorage.setItem("token", response.token);
+        }
+      },
+
+      error => {
+        let error_message = <any> error;
+        if(error_message != null) {
+          this._notifierService.notify('error', error.error.message);
+        }
+      }
+    );
+
+    this._userService.loginEpsilon(request).subscribe(
+      response => {
+        if (response.token.length == 0) {
+          this._notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
+          localStorage.clear();
+        } else {
+          localStorage.setItem("epsilonToken", response.token);
           if (this._router.url == "/registrarse" || this._router.url == "/login") this._router.navigate(['']);
           this.changeEvent();
           this._renderer.selectRootElement(this.login_element.nativeElement).click();
@@ -132,8 +169,7 @@ export class ApplicationHeaderComponent implements OnInit {
 
   logout(): void {
     this.logged = false;
-    this.username = null;
-    this.skin = null;
+    this.header = undefined;
     localStorage.clear();
     this._router.navigate(['/']);
   }

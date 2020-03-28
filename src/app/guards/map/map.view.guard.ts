@@ -47,7 +47,7 @@ export class MapViewGuard {
         }
       }
     });
-    data.user = this._userService.get_user(null).then((user) => {
+    data.user = this._userService.getUser(null).then((user) => {
       return user;
     }).catch((err) => {
       switch (err.status) {

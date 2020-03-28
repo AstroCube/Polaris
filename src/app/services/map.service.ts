@@ -46,9 +46,9 @@ export class MapService {
     return this._http.get(this.url + "gamemode/list", {headers: headers}).toPromise();
   }
 
-  mapListUser(user: string): Promise<any> {
+  mapListUser(user: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "map/get-user/" + user, {headers: headers}).toPromise();
+    return this._http.get(this.url + "map/get-user/" + user, {headers: headers});
   }
 
 }

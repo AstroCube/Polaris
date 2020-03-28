@@ -22,7 +22,7 @@ export class ColorDirective implements OnInit {
         this._renderer.setProperty(this._element.nativeElement, 'innerHTML', prefix.username);
         this._renderer.setStyle(this._element.nativeElement, 'color', prefix.userColor);
         this._renderer.setStyle(this._element.nativeElement, 'cursor', 'pointer');
-        this._renderer.setStyle(this._element.nativeElement, 'user-select', 'none');
+        this._renderer.setStyle(this._element.nativeElement, 'partial-select', 'none');
         this._renderer.listen(this._element.nativeElement, "click", () => {
           this._router.navigate(['/' + prefix.username]);
         });

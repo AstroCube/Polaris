@@ -7,8 +7,6 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ApplicationHomepageComponent} from './components/application/homepage/application.homepage.component';
 import {ApplicationFooterComponent} from './components/application/footer/application.footer.component';
 import {ApplicationLoginComponent} from './components/application/login/application.login.component';
-import {UserEditComponent} from './components/user/edit/user.edit.component';
-import {UserViewComponent} from './components/user/view/user.view.component';
 import {ForumMainComponent} from './components/forum/main/forum.main.component';
 import {ForumViewComponent} from './components/forum/view/forum.view.component';
 import {ApplicationPaginationComponent} from './components/application/pagination/application.pagination.component';
@@ -46,15 +44,12 @@ import {UserService} from './services/user.service';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ApplicationLoginGuard} from './guards/application/application.login.guard';
-import {UserEditGuard} from './guards/user/user.edit.guard';
 import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NotifierModule} from 'angular-notifier';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import {UserViewGuard} from './guards/user/user.view.guard';
-import {ValueOfPipe} from './pipes/ValueOf.pipe';
+import {UserViewGuard} from './modules/user/guards/user.view.guard';
 import {MomentModule} from 'ngx-moment';
-import {NoSanitizePipe} from './pipes/NoSanitize.pipe';
 import {CategoryService} from './services/category.service';
 import {CategoryListGuard} from './guards/category/category.list.guard';
 import {CategoryEditGuard} from './guards/category/category.edit.guard';
@@ -68,15 +63,6 @@ import {ApplicationAlertComponent} from './components/application/alert/applicat
 import {TopicCreateComponent} from './components/topic/create/topic.create.component';
 import {TopicCreateGuard} from './guards/topic/topic.create.guard';
 import {TopicService} from './services/topic.service';
-import {TooltipDirective} from './directives/tooltip.directive';
-import {CollapsibleDirective} from './directives/collapsible.directive';
-import {ProfileDropdownDirective} from './directives/profile.dropdown.directive';
-import {NavbarDropdownDirective} from './directives/navbar.dropdown.directive';
-import {NavbarResponsiveDirective} from './directives/navbar.responsive.directive';
-import {SliderDirective} from './directives/slider.directive';
-import {TabDirective} from './directives/tab.directive';
-import {ScrollbarDirective} from './directives/scrollbar.directive';
-import {PopupDirective} from './directives/popup.directive';
 import {TopicViewGuard} from './guards/topic/topic.view.guard';
 import {TopicReplyComponent} from './components/topic/reply/topic.reply.component';
 import {TopicReplyGuard} from './guards/topic/topic.reply.guard';
@@ -96,7 +82,6 @@ import {AppealService} from './services/appeal.service';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
-import {ClassifierDirective} from './directives/classifier.directive';
 import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
 import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
 import {ReportService} from './services/report.service';
@@ -104,7 +89,6 @@ import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
 import {ReportViewGuard} from './guards/report/report.view.guard';
 import {ReportListGuard} from './guards/report/report.list.guard';
-import {BodyDirective} from './directives/body.directive';
 import {MapService} from './services/map.service';
 import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
@@ -121,7 +105,8 @@ import {GroupStaffGuard} from './guards/group/group.staff.guard';
 import {GroupListComponent} from './components/group/list/group.list.component';
 import {GroupListGuard} from './guards/group/group.list.guard';
 import {FriendService} from './services/friend.service';
-import {ColorDirective} from './directives/color.directive';
+import {UserModule} from './modules/user/user.module';
+import {EpsilonModule} from './epsilon.module';
 
 
 @NgModule({
@@ -161,7 +146,6 @@ import {ColorDirective} from './directives/color.directive';
     MapMainComponent,
     MapViewComponent,
     MatchViewComponent,
-    NoSanitizePipe,
     PunishmentCreateComponent,
     PunishmentEditComponent,
     PunishmentListComponent,
@@ -178,38 +162,24 @@ import {ColorDirective} from './directives/color.directive';
     TopicEditComponent,
     TopicReplyComponent,
     TopicViewComponent,
-    UserEditComponent,
-    UserViewComponent,
-    ValueOfPipe,
     AppComponent,
 
     // --- Directives --- //
-
-    BodyDirective,
-    ClassifierDirective,
-    CollapsibleDirective,
-    ColorDirective,
-    NavbarDropdownDirective,
-    NavbarResponsiveDirective,
-    PopupDirective,
-    ProfileDropdownDirective,
-    ScrollbarDirective,
-    SliderDirective,
-    TabDirective,
-    TooltipDirective
   ],
   imports: [
     BrowserModule,
     CKEditorModule,
+    EpsilonModule,
+    UserModule,
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
     PasswordStrengthBarModule,
     MyDatePickerModule,
     MomentModule,
-    SocketIoModule.forRoot({ url: 'http://149.56.40.174:7533', options: {} }),
+    SocketIoModule.forRoot({url: 'http://149.56.40.174:7533', options: {}}),
     NgSelectModule,
-    NotifierModule.withConfig( {
+    NotifierModule.withConfig({
       position: {
         horizontal: {
           position: 'right'
@@ -263,10 +233,10 @@ import {ColorDirective} from './directives/color.directive';
     TopicReplyGuard,
     TopicViewGuard,
     TopicService,
-    UserEditGuard,
     UserViewGuard,
     UserService
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

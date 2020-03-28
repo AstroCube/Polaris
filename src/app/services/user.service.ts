@@ -3,11 +3,14 @@ import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { GLOBAL } from "./global";
 import {User} from '../models/user';
+import {IMailUpdateVerification, IPasswordUpdate, IUser} from '../newModels/user/IUser';
+import {IUserProfileDiscord} from '../newModels/user/IUserProfile';
 
 @Injectable()
 export class UserService {
   public url: String;
   public identity;
+  public epsilon;
 
   constructor(
     private _http: HttpClient
@@ -20,14 +23,14 @@ export class UserService {
     return this._http.get(this.url +'discord-logout/' + id, {headers: headers});
   }
 
+  discordPlaceholder(id: String): Observable<IUserProfileDiscord>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
+    return this._http.get(this.url + 'discord-placeholder/' + id, {headers: headers}) as Observable<IUserProfileDiscord>;
+  }
+
   discord_placeholder(id: String): Promise<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
     return this._http.get(this.url + 'discord-placeholder/' + id, {headers: headers}).toPromise();
-  }
-
-  discordPlaceholderObservable(id: String): Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.getToken());
-    return this._http.get(this.url + 'discord-placeholder/' + id, {headers: headers});
   }
 
   login(request: any): Observable<any> {
@@ -36,10 +39,22 @@ export class UserService {
     return this._http.post(this.url + "user/login-website", params, {headers: headers});
   }
 
-  get_user(id: string): Promise<any> {
+  loginEpsilon(request: any): Observable<any> {
+    let params = JSON.stringify(request);
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this._http.post(GLOBAL.epsilon + "authentication/login", params, {headers: headers});
+  }
+
+  getUser(id: string): Promise<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
     if (!id) return this._http.get(this.url + "user/get-user", {headers: headers}).toPromise();
     return this._http.get(this.url + "user/get-user/" + id, {headers: headers}).toPromise();
+  }
+
+  getUserObservable(id?: string): Observable<IUser> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
+    if (!id) return this._http.get(GLOBAL.epsilon + "users/me", {headers: headers}) as Observable<IUser>;
+    return this._http.get(GLOBAL.epsilon + "users/view/" + id, {headers: headers}) as Observable<IUser>;
   }
 
   getPrefix(id: string): Promise<any> {
@@ -48,25 +63,25 @@ export class UserService {
     return this._http.get(this.url + "user/get-placeholder/" + id, {headers: headers}).toPromise();
   }
 
-  mail_verification(id: string): Observable<any> {
-    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
-    return this._http.get(this.url + "user/email-verification/" + id, {headers: headers});
+  mailVerification(): Observable<any> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
+    return this._http.get(GLOBAL.epsilon + "users/update-mail-verification", {headers: headers});
   }
 
-  mail_update(request: any): Observable<any> {
-    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
-    return this._http.put(this.url + "user/email-update", request, {headers: headers});
+  mailUpdate(update: IMailUpdateVerification): Observable<any> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
+    return this._http.post(GLOBAL.epsilon + "users/update-mail-verification", update, {headers: headers});
   }
 
-  update_user(id: string, user: User): Observable<any> {
-    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
-    if (!id) return this._http.put(this.url + "user/update-user", {user}, {headers: headers});
-    return this._http.put(this.url + "user/update-user/" + id, {user},{headers: headers});
+  updateUser(user: IUser, id?: string): Observable<IUser> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
+    if (!id) return this._http.put(GLOBAL.epsilon + "users/update-profile", user, {headers: headers}) as Observable<IUser>;
+    return this._http.put(GLOBAL.epsilon + "users/update/" + id, user,{headers: headers}) as Observable<IUser>;
   }
 
-  password_update(request: any): Observable<any> {
-    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getToken());
-    return this._http.post(this.url +'user/password-update', request, {headers: headers});
+  passwordUpdate(request: IPasswordUpdate): Observable<boolean> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
+    return this._http.put(GLOBAL.epsilon +'users/update-password', request, {headers: headers}) as Observable<boolean>;
   }
 
   permission_checker(permission: string): Observable<any> {
@@ -106,6 +121,17 @@ export class UserService {
     }
     if (token === null) this.identity = "none";
     return this.identity;
+  }
+
+  getEpsilonToken() {
+    let token = localStorage.getItem("epsilonToken");
+    if(token != "undefined") {
+      this.epsilon = token;
+    } else {
+      this.epsilon = "none";
+    }
+    if (token === null) this.epsilon = "none";
+    return "Bearer " + token;
   }
 
 }

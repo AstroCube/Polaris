@@ -2,8 +2,6 @@ import {ModuleWithProviders } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ApplicationHomepageComponent} from './components/application/homepage/application.homepage.component';
 import {ApplicationLoginComponent} from './components/application/login/application.login.component';
-import {UserEditComponent} from './components/user/edit/user.edit.component';
-import {UserViewComponent} from './components/user/view/user.view.component';
 import {ForumMainComponent} from './components/forum/main/forum.main.component';
 import {ForumViewComponent} from './components/forum/view/forum.view.component';
 import {TopicViewComponent} from './components/topic/view/topic.view.component';
@@ -15,9 +13,6 @@ import {ForumCreateComponent} from './components/forum/create/forum.create.compo
 import {ForumEditComponent} from './components/forum/edit/forum.edit.component';
 import {MapMainComponent} from './components/map/main/map.main.component';
 import {MapViewComponent} from './components/map/view/map.view.component';
-import {ShopMainComponent} from './components/shop/main/shop.main.component';
-import {ShopCategoryComponent} from './components/shop/category/shop.category.component';
-import {ShopCartComponent} from './components/shop/cart/shop.cart.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
 import {PunishmentListComponent} from './components/punishment/list/punishment.list.component';
 import {PunishmentCreateComponent} from './components/punishment/create/punishment.create.component';
@@ -30,14 +25,12 @@ import {ReportMainComponent} from './components/report/main/report.main.componen
 import {ReportListComponent} from './components/report/list/report.list.component';
 import {ReportCreateComponent} from './components/report/create/report.create.component';
 import {ReportViewComponent} from './components/report/view/report.view.component';
-import {ShopTransactionComponent} from './components/shop/transaction/shop.transaction.component';
 import {ApplicationPrivacyComponent} from './components/application/privacy/application.privacy.component';
 import {ApplicationRulesComponent} from './components/application/rules/application.rules.component';
 import {ApplicationRefundComponent} from './components/application/refund/application.refund.component';
 import {ApplicationTermsComponent} from './components/application/terms/application.terms.component';
 import {ApplicationDevelopementComponent} from './components/application/developement/application.developement.component';
-import {UserEditGuard} from './guards/user/user.edit.guard';
-import {UserViewGuard} from './guards/user/user.view.guard';
+import {UserViewGuard} from './modules/user/guards/user.view.guard';
 import {CategoryListGuard} from './guards/category/category.list.guard';
 import {CategoryEditGuard} from './guards/category/category.edit.guard';
 import {CategoryCreateGuard} from './guards/category/category.create.guard';
@@ -79,6 +72,9 @@ import {GroupStaffComponent} from './components/group/staff/group.staff.componen
 import {GroupStaffGuard} from './guards/group/group.staff.guard';
 import {GroupListComponent} from './components/group/list/group.list.component';
 import {GroupListGuard} from './guards/group/group.list.guard';
+import {UserViewComponent} from './modules/user/components/view/user.view.component';
+import {UserEditComponent} from './modules/user/components/edit/user.edit.component';
+import {UserEditGuard} from './modules/user/guards/user.edit.guard';
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},

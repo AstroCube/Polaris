@@ -25,30 +25,30 @@
         <a (click)="comingSoon()" class="header__alerts u-pointer">?</a>
         <div class="header__menu-slug" profile-dropdown>
           <div class="header__profile-avatar">
-            <img src="{{'https://mc-heads.net/avatar/' + skin}}" alt="" class="header__profile-image">
+            <img src="{{'https://mc-heads.net/avatar/' + header.user.skin}}" alt="" class="header__profile-image">
           </div>
-          <span class="header__profile-name">{{username}}</span>
+          <span class="header__profile-name">{{header.user.display}}</span>
         </div>
         <nav class="header__menu">
-          <section *ngIf="generalAccess" class="header__menu-admin">
+          <section *ngIf="header.generalAccess" class="header__menu-admin">
             <button id="admin-button" class="collapsible__button" collapsible>Administración</button>
             <div class="collapsible__panel">
-              <a *ngIf="userEdit" (click)="comingSoon()" class="header__menu-link u-pointer">
+              <a *ngIf="header.userEdit" (click)="comingSoon()" class="header__menu-link u-pointer">
                 Usuarios
               </a>
-              <a *ngIf="groupEdit" routerLink="/admin/grupos" class="header__menu-link u-pointer">
+              <a *ngIf="header.group" routerLink="/admin/grupos" class="header__menu-link u-pointer">
                 Grupos
               </a>
-              <a *ngIf="categoryEdit" [routerLink]="['/admin/categorias']" class="header__menu-link">
+              <a *ngIf="header.category" [routerLink]="['/admin/categorias']" class="header__menu-link">
                 Categorías
               </a>
-              <a *ngIf="forumEdit" routerLink="{{'/admin/foros'}}" class="header__menu-link">
+              <a *ngIf="header.forum" routerLink="{{'/admin/foros'}}" class="header__menu-link">
                 Foros
               </a>
             </div>
           </section>
           <section class="header__menu-nav">
-            <a routerLink="{{'/' + username}}" class="header__menu-link">Perfil</a>
+            <a routerLink="{{'/' + header.user.username}}" class="header__menu-link">Perfil</a>
             <a (click)="comingSoon()" class="header__menu-link u-pointer">Amigos</a>
             <a routerLink="/reportes" class="header__menu-link">Reportes</a>
             <a routerLink="/apelaciones" class="header__menu-link">Apelaciones</a>
