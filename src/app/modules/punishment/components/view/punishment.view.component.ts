@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {faList, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
-import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {GLOBAL} from "../../../../services/global";
 
 @Component({
   selector: 'punishment-view',

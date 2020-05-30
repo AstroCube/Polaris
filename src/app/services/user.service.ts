@@ -106,6 +106,13 @@ export class UserService {
     return this._http.get(this.url + "user/list-names" + route, {headers: headers}).toPromise();
   }
 
+  userListAutocompleteObservable(own?: boolean): Observable<any> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
+    let route = "";
+    if (own) route = "/true";
+    return this._http.get(GLOBAL.epsilon + "users/list-all" + route, {headers: headers});
+  }
+
   user_ip(): Promise<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this._http.get("https://api.ipify.org/?format=json", {headers: headers}).toPromise();

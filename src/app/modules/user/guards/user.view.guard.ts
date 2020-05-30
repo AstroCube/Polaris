@@ -10,7 +10,7 @@ import {forkJoin, Observable} from 'rxjs';
 import {IUserProfile} from '../../../newModels/user/IUserProfile';
 
 @Injectable()
-export class UserViewGuard implements Resolve<IUserProfile>{
+export class UserViewGuard implements Resolve<IUserProfile> {
 
   constructor (
     private userService: UserService,
@@ -40,5 +40,5 @@ export class UserViewGuard implements Resolve<IUserProfile>{
       )
     );
   }
-  
+
 }

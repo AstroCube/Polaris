@@ -23,11 +23,7 @@ import {ShopMainComponent} from './components/shop/main/shop.main.component';
 import {ShopCategoryComponent} from './components/shop/category/shop.category.component';
 import {ShopCartComponent} from './components/shop/cart/shop.cart.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
-import {PunishmentListComponent} from './components/punishment/list/punishment.list.component';
-import {PunishmentCreateComponent} from './components/punishment/create/punishment.create.component';
-import {PunishmentViewComponent} from './components/punishment/view/punishment.view.component';
 import {AppealMainComponent} from './components/appeal/main/appeal.main.component';
-import {PunishmentEditComponent} from './components/punishment/edit/punishment.edit.component';
 import {AppealViewComponent} from './components/appeal/view/appeal.view.component';
 import {AppealListComponent} from './components/appeal/list/appeal.list.component';
 import {ReportMainComponent} from './components/report/main/report.main.component';
@@ -73,11 +69,11 @@ import {ForumMainGuard} from './guards/forum/forum.main.guard';
 import {SocketIoModule} from 'ngx-socket-io';
 import {ForumFeedComponent} from './components/forum/feed/forum.feed.component';
 import {PunishmentService} from './services/punishment.service';
-import {PunishmentCreateGuard} from './guards/punishment/punishment.create.guard';
+import {PunishmentCreateGuard} from './modules/punishment/guards/punishment.create.guard';
 import { MyDatePickerModule } from 'mydatepicker';
-import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
-import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
-import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
+import {PunishmentViewGuard} from './modules/punishment/guards/punishment.view.guard';
+import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.guard';
+import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealService} from './services/appeal.service';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
@@ -107,6 +103,10 @@ import {GroupListGuard} from './guards/group/group.list.guard';
 import {FriendService} from './services/friend.service';
 import {UserModule} from './modules/user/user.module';
 import {EpsilonModule} from './epsilon.module';
+import {PunishmentCreateComponent} from "./modules/punishment/components/create/punishment.create.component";
+import {PunishmentEditComponent} from "./modules/punishment/components/edit/punishment.edit.component";
+import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
+import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
 
 
 @NgModule({

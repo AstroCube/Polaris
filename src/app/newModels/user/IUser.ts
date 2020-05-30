@@ -59,3 +59,8 @@ export interface IMailUpdateVerification {
   code: number;
   update: string;
 }
+
+export interface IUserPlaceholder {
+  groups: Group[];
+  mainGroup: Group;
+}

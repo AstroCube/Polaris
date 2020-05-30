@@ -9,6 +9,7 @@ import Typed from 'typed.js';
 import {forkJoin, from} from 'rxjs';
 import {map, mergeMap} from 'rxjs/operators';
 import {IHeaderUser} from '../../../newModels/user/IUserProfile';
+import {IUser} from "../../../newModels/user/IUser";
 
 @Component({
   selector: 'application-header',
@@ -46,6 +47,8 @@ export class ApplicationHeaderComponent implements OnInit {
     private _renderer: Renderer2
   ) {
     this.header = {} as IHeaderUser;
+    this.header.user = {} as IUser;
+    this.header.user.username = '';
     this._router.events.subscribe(() => {
       this.changeEvent();
     });

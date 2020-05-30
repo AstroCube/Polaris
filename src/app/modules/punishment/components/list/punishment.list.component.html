@@ -1,0 +1,51 @@
+<section>
+  <h1 class="heading u-margin-bottom-small">Sanciones recientes</h1>
+  <div class="table table--fixed">
+    <div class="table__header">
+      <div class="table__cell punishment__table-small">
+        <p>Hecha por</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Usuario</p>
+      </div>
+      <div class="table__cell punishment__table-large">
+        <p>Razón</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Tipo</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Expira</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Fecha</p>
+      </div>
+    </div>
+    <div *ngFor="let punishment of result.data" class="table__row">
+      <div class="table__cell punishment__table-small">
+        <a routerLink="{{'/' + punishment.issuer.username}}" [style.color]="getPlaceholder(punishment.issuer).mainGroup.html_color">{{punishment.issuer.username}}</a>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <a routerLink="{{'/' + punishment.punished.username}}" [style.color]="getPlaceholder(punishment.punished).mainGroup.html_color">{{punishment.punished.username}}</a>
+      </div>
+      <div class="table__cell punishment__table-large">
+        <p>{{punishment.reason}}</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <span style="color: red" *ngIf="punishment.type === 'Ban'">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.type === 'Ban'">Perma-ban</span>
+        <span style="color: darkorange" *ngIf="punishment.type === 'Kick'">Expulsión</span>
+        <span style="color: green" *ngIf="punishment.type === 'Warn'">Advertencia</span>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p *ngIf="punishment.expires && punishment.expires !== 'never'">{{punishment.createdAt | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
+        <p *ngIf="!punishment.expires || punishment.expires == 'never'">Nunca</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>{{punishment.createdAt | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="result.data.length < 1" class="u-center-text u-margin-top-small paragraph--white">¿La división staff no trabaja?, ¿O no hay sanciones aún?, si es la segunda, estamos orgullosos ♥</p>
+  <pagination [actual_page]="result.pagination.page" [last_page]="result.pagination.totalPages" route="{{'/sanciones/'}}" [centered]="true"></pagination>
+</section>

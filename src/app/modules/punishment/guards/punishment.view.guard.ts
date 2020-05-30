@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Router} from '@angular/router';
-import {PunishmentService} from '../../services/punishment.service';
+import {PunishmentService} from '../../../services/punishment.service';
 
 @Injectable()
 export class PunishmentViewGuard {

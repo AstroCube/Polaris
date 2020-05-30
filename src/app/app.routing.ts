@@ -14,10 +14,6 @@ import {ForumEditComponent} from './components/forum/edit/forum.edit.component';
 import {MapMainComponent} from './components/map/main/map.main.component';
 import {MapViewComponent} from './components/map/view/map.view.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
-import {PunishmentListComponent} from './components/punishment/list/punishment.list.component';
-import {PunishmentCreateComponent} from './components/punishment/create/punishment.create.component';
-import {PunishmentViewComponent} from './components/punishment/view/punishment.view.component';
-import {PunishmentEditComponent} from './components/punishment/edit/punishment.edit.component';
 import {AppealMainComponent} from './components/appeal/main/appeal.main.component';
 import {AppealViewComponent} from './components/appeal/view/appeal.view.component';
 import {AppealListComponent} from './components/appeal/list/appeal.list.component';
@@ -48,10 +44,10 @@ import {TopicEditGuard} from './guards/topic/topic.edit.guard';
 import {TopicEditComponent} from './components/topic/edit/topic.edit.component';
 import {ForumViewGuard} from './guards/forum/forum.view.guard';
 import {ForumMainGuard} from './guards/forum/forum.main.guard';
-import {PunishmentCreateGuard} from './guards/punishment/punishment.create.guard';
-import {PunishmentViewGuard} from './guards/punishment/punishment.view.guard';
-import {PunishmentEditGuard} from './guards/punishment/punishment.edit.guard';
-import {PunishmentListGuard} from './guards/punishment/punishment.list.guard';
+import {PunishmentCreateGuard} from './modules/punishment/guards/punishment.create.guard';
+import {PunishmentViewGuard} from './modules/punishment/guards/punishment.view.guard';
+import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.guard';
+import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
@@ -75,6 +71,10 @@ import {GroupListGuard} from './guards/group/group.list.guard';
 import {UserViewComponent} from './modules/user/components/view/user.view.component';
 import {UserEditComponent} from './modules/user/components/edit/user.edit.component';
 import {UserEditGuard} from './modules/user/guards/user.edit.guard';
+import {PunishmentEditComponent} from "./modules/punishment/components/edit/punishment.edit.component";
+import {PunishmentCreateComponent} from "./modules/punishment/components/create/punishment.create.component";
+import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
+import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},

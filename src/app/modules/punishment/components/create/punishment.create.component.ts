@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Punishment} from '../../../models/punishment';
 import {IMyDpOptions} from 'mydatepicker';
-import {PunishmentService} from '../../../services/punishment.service';
 import {NotifierService} from 'angular-notifier';
-import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {IPunishment, IPunishmentCreateData, PunishmentType} from "../../../../newModels/IPunishment";
+import {PunishmentService} from "../../../../services/punishment.service";
+import {GLOBAL} from "../../../../services/global";
+import {IUser} from "../../../../newModels/user/IUser";
 
 @Component({
   selector: 'punishment-create',
@@ -14,11 +15,15 @@ import {Title} from '@angular/platform-browser';
 
 export class PunishmentCreateComponent implements OnInit {
 
-  public users: any[] = [];
-  public punishment: Punishment;
+  public createData: IPunishmentCreateData;
+  public punishment: IPunishment;
+  public options: any[];
+  public pickerOptions: IMyDpOptions;
+
+  public expiration: any;
+  public selectionLabel: string;
+  public expires: boolean;
   public report: any;
-  public punishment_options: any[];
-  public picker_options: IMyDpOptions;
 
   constructor(
     private _titleService: Title,
@@ -27,7 +32,7 @@ export class PunishmentCreateComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute
   ) {
-    this.picker_options = {
+    this.pickerOptions = {
       dayLabels: {su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab'},
       monthLabels: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
       dateFormat: 'dd-mm-yyyy',
@@ -40,41 +45,55 @@ export class PunishmentCreateComponent implements OnInit {
       minYear: 2019,
       maxYear: 2020
     };
-    this.punishment_options = [
-      {value: "warn", label: "Advertencia"},
-      {value: "kick", label: "Expulsión"},
-      {value: "temp-ban", label: "Suspensión temporal"},
-      {value: "ban", label: "Suspensión permanente"}
-    ];
+    this.options = [];
     this._titleService.setTitle("Crear sanción - " + GLOBAL.title);
-    this.punishment = new Punishment("","","", "","","","","","","", null,false,false,false);
+    this.punishment = {} as IPunishment;
+    this.punishment.punished = {} as IUser;
+    this.punishment.punished.username = '';
+    this.punishment.punished.skin = 'steve';
   }
 
   ngOnInit() {
     this._route.data.subscribe((data => {
-      this.report = data.PunishmentCreateGuard.report;
-      this.users = data.PunishmentCreateGuard.list;
+      // TODO: Add report again this.report = data.PunishmentCreateGuard.report;
+      this.createData = data.PunishmentCreateGuard;
+      if (this.createData.warn) this.options.push({value: "Warn", label: "Advertencia"});
+      if (this.createData.kick) this.options.push({value: "Kick", label: "Expulsión"});
+      if (this.createData.tempBan) this.options.push({value: "Ban", label: "Suspensión temporal"});
+      if (this.createData.ban) this.options.push({value: "Ban", label: "Suspensión permanente"});
     }));
-    if (this.report) {
-      this.punishment.punished = this.users.filter(user => {
-        return user.username === this.report.placeholder.username;
-      })[0];
-    }
+  }
+
+
+  changePunishment() {
+    let selection: any = this.punishment.type;
+    this.selectionLabel = selection.label;
+    this.expires = this.selectionLabel === "Suspensión temporal";
+    // @ts-ignore
+    this.punishment.type = PunishmentType[selection.value];
+  }
+
+  clearUser() {
+    this.punishment.punished = {} as IUser;
+  }
+
+  clearPunishment() {
+    this.punishment.type = null;
   }
 
   onSubmit() {
-    this.punishment.punished = this.punishment.punished._id;
-    this.punishment.type = this.punishment.type.value;
-    if (this.punishment.expires) this.punishment.expires = this.punishment.expires.epoc;
+    if (this.expiration) this.punishment.expires = this.expiration.epoc;
+
     let has_report = null;
     if (this.report) has_report = this.report.report;
-    this._punishmentService.punishment_create(this.punishment, has_report).subscribe(
+
+    this._punishmentService.punishmentCreate(this.punishment).subscribe(
       response => {
         if (!response) {
           this._notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
         } else {
           this._notifierService.notify('success', "Se ha creado la sanción correctamente.");
-          this._router.navigate(["/sancion/" + response.punishment_stored._id]);
+          this._router.navigate(["/sancion/" + response._id]);
         }
       },
 

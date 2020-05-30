@@ -21,7 +21,6 @@ export class GroupStaffGuard implements Resolve<IStaffList[]> {
       let data: IStaffList[] = [];
       try {
         if (response) {
-
           response.forEach((group) => {
             let finalGroup: IStaffList = {details: group, users: []};
             this._groupService.groupGetStaffMembers(finalGroup.details._id).subscribe(

@@ -7,8 +7,6 @@ import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
 import {IStaffList} from '../../../models/group/IStaffList';
 import {GroupService} from '../../../services/group.service';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'group-staff',

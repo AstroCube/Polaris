@@ -1,8 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {faStar, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
-import {GLOBAL} from '../../../services/global';
 import {Meta, Title} from '@angular/platform-browser';
+import {GLOBAL} from "../../../../services/global";
+import {IPaginateResult} from "../../../../newModels/IModel";
+import {IPunishment} from "../../../../newModels/IPunishment";
+import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 
 @Component({
   selector: 'punishment-list',
@@ -10,9 +14,8 @@ import {Meta, Title} from '@angular/platform-browser';
 })
 
 export class PunishmentListComponent implements OnInit {
-  public pages: number;
-  public page: number;
-  public punishments: any;
+
+  public result: IPaginateResult<IPunishment>;
   faStar = faStar;
   faTimes = faTimes;
 
@@ -30,9 +33,13 @@ export class PunishmentListComponent implements OnInit {
       {name: 'robots', content: 'index, follow'}
     ]);
     this._route.data.subscribe((data => {
-      this.punishments = data.PunishmentListGuard.paginatedPunishments;
-      this.pages = data.PunishmentListGuard.pages;
-      this.page = data.PunishmentListGuard.page;
+      this.result = data.PunishmentListGuard;
+      console.log(this.result);
     }));
   }
+
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
+  }
+
 }

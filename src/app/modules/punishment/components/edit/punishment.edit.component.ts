@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Punishment} from '../../../models/punishment';
-import {PunishmentService} from '../../../services/punishment.service';
 import {NotifierService} from 'angular-notifier';
-import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {Punishment} from "../../../../models/punishment";
+import {PunishmentService} from "../../../../services/punishment.service";
+import {GLOBAL} from "../../../../services/global";
 
 @Component({
   selector: 'punishment-edit',
