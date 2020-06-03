@@ -3,6 +3,10 @@ import {faList, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {GLOBAL} from "../../../../services/global";
+import {IPunishment, PunishmentType} from "../../../../newModels/IPunishment";
+import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
+import {IPermissions} from "../../../../newModels/IGroup";
 
 @Component({
   selector: 'punishment-view',
@@ -11,10 +15,8 @@ import {GLOBAL} from "../../../../services/global";
 
 export class PunishmentViewComponent implements OnInit {
 
-  public punished_placeholder: any;
-  public punisher_placeholder: any;
-  public punishment_details: any;
-  public can_edit: Boolean;
+  private punishment: IPunishment;
+  private permissions: IPermissions;
   faUserEdit = faUserEdit;
   faList = faList;
 
@@ -22,18 +24,27 @@ export class PunishmentViewComponent implements OnInit {
     private _route: ActivatedRoute,
     private _titleService: Title
   ) {
-    this.punished_placeholder = {};
-    this.punisher_placeholder = {};
-    this.can_edit = false;
+    this.punishment = {
+      type: PunishmentType.Warn,
+      issuer: null,
+      punished: null,
+      server: '',
+      match: null,
+      createdAt: '',
+
+    };
   }
 
   ngOnInit() {
     this._titleService.setTitle("Sanciones - " + GLOBAL.title);
     this._route.data.subscribe((data => {
-      this.punished_placeholder = data.PunishmentViewGuard.punished_placeholder;
-      this.punisher_placeholder = data.PunishmentViewGuard.punisher_placeholder;
-      this.punishment_details = data.PunishmentViewGuard.punishment_details;
-      this.can_edit = data.PunishmentViewGuard.can_edit;
+      this.punishment = data.PunishmentViewGuard;
+      this.permissions = data.UserPermissionsGuard;
     }));
   }
+
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
+  }
+
 }

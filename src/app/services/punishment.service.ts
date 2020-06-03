@@ -20,9 +20,9 @@ export class PunishmentService {
     return this._http.post(GLOBAL.epsilon + "punishment/create", punishment, {headers: headers}) as Observable<IPunishment>;
   }
 
-  punishment_get(id: string): Promise<any> {
+  punishmentGet(id: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(GLOBAL.epsilon + "punishment/get/" + id, {headers: headers}).toPromise();
+    return this._http.get(GLOBAL.epsilon + "punishment/get/" + id, {headers: headers});
   }
 
   punishment_update(id: string, punishment: Punishment): Observable<any> {

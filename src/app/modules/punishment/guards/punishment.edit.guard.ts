@@ -43,7 +43,7 @@ export class PunishmentEditGuard {
   }
 
   resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this._punishmentService.punishment_get(route.params.id).then(punishment => {
+    return this._punishmentService.punishmentGet(route.params.id).toPromise().then(punishment => {
       if (punishment) {
         return punishment;
       } else {

@@ -4,6 +4,7 @@ import {UserService} from './user.service';
 import {GLOBAL} from './global';
 import {Group} from '../models/group';
 import {Observable} from 'rxjs';
+import {IPermissions} from "../newModels/IGroup";
 
 @Injectable()
 export class GroupService {
@@ -30,6 +31,11 @@ export class GroupService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
     let params = JSON.stringify(group);
     return this._http.put(this.url + "group/update/" + group._id,  params,{headers: headers});
+  }
+
+  permissionsManifest(): Observable<IPermissions> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
+    return this._http.get(GLOBAL.epsilon + "group/manifest",{headers: headers}) as Observable<IPermissions>;
   }
 
   groupGetStaffMembers(id : string): Observable<any> {

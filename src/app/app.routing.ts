@@ -75,6 +75,7 @@ import {PunishmentEditComponent} from "./modules/punishment/components/edit/puni
 import {PunishmentCreateComponent} from "./modules/punishment/components/create/punishment.create.component";
 import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
 import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
+import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -124,7 +125,7 @@ const app_routes: Routes = [
     children:[
       {path: "editar/:id", component: PunishmentEditComponent, canActivate: [PunishmentEditGuard], resolve: {PunishmentEditGuard}},
       {path: "crear", component: PunishmentCreateComponent, canActivate: [PunishmentCreateGuard], resolve: {PunishmentCreateGuard}},
-      {path: ":id", component: PunishmentViewComponent, resolve: {PunishmentViewGuard}},
+      {path: ":id", component: PunishmentViewComponent, resolve: {PunishmentViewGuard, UserPermissionsGuard}},
       {path: "", redirectTo: "/sanciones", pathMatch: "full"}
     ]
   },

@@ -107,6 +107,7 @@ import {PunishmentCreateComponent} from "./modules/punishment/components/create/
 import {PunishmentEditComponent} from "./modules/punishment/components/edit/punishment.edit.component";
 import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
 import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
+import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
 
 
 @NgModule({
@@ -221,6 +222,7 @@ import {PunishmentViewComponent} from "./modules/punishment/components/view/puni
     PunishmentCreateGuard,
     PunishmentEditGuard,
     PunishmentListGuard,
+    UserPermissionsGuard,
     PunishmentViewGuard,
     PunishmentService,
     ReportCreateGuard,
@@ -236,7 +238,8 @@ import {PunishmentViewComponent} from "./modules/punishment/components/view/puni
     UserViewGuard,
     UserService
   ],
-  exports: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

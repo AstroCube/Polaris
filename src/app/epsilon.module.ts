@@ -15,6 +15,7 @@ import {ProfileDropdownDirective} from './directives/profile.dropdown.directive'
 import {ScrollbarDirective} from './directives/scrollbar.directive';
 import {SliderDirective} from './directives/slider.directive';
 import {TabDirective} from './directives/tab.directive';
+import {ParseDatePipe} from "./pipes/ParseDate.pipe";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {TabDirective} from './directives/tab.directive';
     TabDirective,
     ValueOfPipe,
     TooltipDirective,
+    ParseDatePipe,
     NoSanitizePipe
   ],
   imports: [
@@ -51,7 +53,8 @@ import {TabDirective} from './directives/tab.directive';
     TabDirective,
     ValueOfPipe,
     TooltipDirective,
-    NoSanitizePipe
+    NoSanitizePipe,
+    ParseDatePipe
   ]
 })
 export class EpsilonModule { }

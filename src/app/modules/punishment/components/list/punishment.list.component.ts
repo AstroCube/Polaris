@@ -34,7 +34,6 @@ export class PunishmentListComponent implements OnInit {
     ]);
     this._route.data.subscribe((data => {
       this.result = data.PunishmentListGuard;
-      console.log(this.result);
     }));
   }
 

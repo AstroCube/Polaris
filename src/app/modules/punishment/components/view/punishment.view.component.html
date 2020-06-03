@@ -1,18 +1,17 @@
-<section>
+<section *ngIf="punishment">
   <div class="punishment">
     <div class="row">
       <div class="col-1-of-2 u-margin-bottom-small">
         <h1 class="heading">
-          <span style="color: red" *ngIf="punishment_details.type === 'temp-ban'">Temp-ban</span>
-          <span style="color: red" *ngIf="punishment_details.type === 'ban'">Perma-ban</span>
-          <span style="color: darkorange" *ngIf="punishment_details.type === 'kick'">Expulsión</span>
-          <span style="color: green" *ngIf="punishment_details.type === 'warn'">Advertencia</span>
+          <span style="color: red" *ngIf="punishment.type === 'Ban'">Perma-ban</span>
+          <span style="color: darkorange" *ngIf="punishment.type === 'Kick'">Expulsión</span>
+          <span style="color: green" *ngIf="punishment.type === 'Warn'">Advertencia</span>
           realizada por
-          <a routerLink="{{'/' + punisher_placeholder.username}}" [style.color]="punisher_placeholder.user_color">{{punisher_placeholder.username}}</a>
+          <a routerLink="{{'/' + punishment.issuer.display}}" [style.color]="getPlaceholder(punishment.issuer).mainGroup.html_color">{{punishment.issuer.display}}</a>
         </h1>
       </div>
       <div class="col-1-of-2 u-right-text">
-        <a *ngIf="can_edit" routerLink="{{ '/sancion/editar/' + punishment_details._id}}" class="btn btn--green btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserEdit"></fa-icon> Editar</a>
+        <a *ngIf="permissions.punishment.manage" routerLink="{{ '/sancion/editar/' + punishment._id}}" class="btn btn--green btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserEdit"></fa-icon> Editar</a>
         <a routerLink="/sanciones" class="btn btn--primary btn--uppercase btn--strong profile__button"><fa-icon [icon]="faList"></fa-icon> Lista</a>
       </div>
     </div>
@@ -20,25 +19,25 @@
       <div class="col-1-of-2">
         <div class="punishment__item">
           <span class="punishment__label">Razón:</span>
-          <p>{{punishment_details.reason}}</p>
+          <p>{{punishment.reason}}</p>
         </div>
         <div class="punishment__item">
           <span class="punishment__label">Fecha:</span>
-          <span>{{punishment_details.created_at | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
+          <span>{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
         </div>
       </div>
       <div class="col-1-of-2">
         <div class="punishment__item">
           <span class="punishment__label">Estado:</span>
-          <p *ngIf="punishment_details.active && !punishment_details.appealed && !punishment_details.automatic">Activo</p>
-          <p *ngIf="!punishment_details.active && !punishment_details.appealed && !punishment_details.automatic">Inactivo</p>
-          <p *ngIf="punishment_details.active && punishment_details.appealed && !punishment_details.automatic" style="color: deepskyblue">Apelándose</p>
-          <p *ngIf="!punishment_details.active && punishment_details.appealed && !punishment_details.automatic" style="color: green">Apelada</p>
-          <p *ngIf="punishment_details.automatic" style="color: yellow">Automática</p>
+          <p *ngIf="punishment.active && !punishment.appealed && !punishment.automatic">Activo</p>
+          <p *ngIf="!punishment.active && !punishment.appealed && !punishment.automatic">Inactivo</p>
+          <p *ngIf="punishment.active && punishment.appealed && !punishment.automatic" style="color: deepskyblue">Apelándose</p>
+          <p *ngIf="!punishment.active && punishment.appealed && !punishment.automatic" style="color: green">Apelada</p>
+          <p *ngIf="punishment.automatic" style="color: yellow">Automática</p>
         </div>
         <div class="punishment__item">
           <span class="punishment__label">Servidor:</span>
-          <p>{{punishment_details.server}}</p>
+          <p>{{punishment.server}}</p>
         </div>
       </div>
     </div>
