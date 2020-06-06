@@ -10,14 +10,15 @@ import {Observable, of} from "rxjs";
 export class PunishmentViewGuard implements Resolve<IPunishment>{
 
   constructor (
-    private _punishmentService: PunishmentService,
-    private _router: Router
+    private punishmentService: PunishmentService,
+    private router: Router
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IPunishment> {
-    return this._punishmentService.punishmentGet(route.params.id).pipe(
+    return this.punishmentService.punishmentGet(route.params.id).pipe(
       map((response) => (response as IPunishment)),
       catchError((err) => {
+        this.router.navigate(['/error'] , { queryParams: {type: "403"}});
         return of({} as IPunishment);
       })
     );

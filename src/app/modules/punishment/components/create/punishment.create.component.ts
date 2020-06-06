@@ -6,7 +6,7 @@ import {Title} from '@angular/platform-browser';
 import {IPunishment, IPunishmentCreateData, PunishmentType} from "../../../../newModels/IPunishment";
 import {PunishmentService} from "../../../../services/punishment.service";
 import {GLOBAL} from "../../../../services/global";
-import {IUser} from "../../../../newModels/user/IUser";
+import {UserService} from "../../../../services/user.service";
 
 @Component({
   selector: 'punishment-create',
@@ -20,17 +20,17 @@ export class PunishmentCreateComponent implements OnInit {
   public options: any[];
   public pickerOptions: IMyDpOptions;
 
-  public expiration: any;
   public selectionLabel: string;
-  public expires: boolean;
+  public expiresLabel: string;
   public report: any;
 
   constructor(
-    private _titleService: Title,
-    private _notifierService: NotifierService,
-    private _punishmentService: PunishmentService,
-    private _router: Router,
-    private _route: ActivatedRoute
+    private titleService: Title,
+    private notifierService: NotifierService,
+    private userService: UserService,
+    private punishmentService: PunishmentService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.pickerOptions = {
       dayLabels: {su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab'},
@@ -42,20 +42,17 @@ export class PunishmentCreateComponent implements OnInit {
       openSelectorTopOfInput: true,
       openSelectorOnInputClick: true,
       editableDateField: false,
-      minYear: 2019,
-      maxYear: 2020
+      minYear: new Date().getFullYear(),
+      maxYear: new Date().getFullYear() + 1
     };
     this.options = [];
-    this._titleService.setTitle("Crear sanción - " + GLOBAL.title);
-    this.punishment = {} as IPunishment;
-    this.punishment.punished = {} as IUser;
-    this.punishment.punished.username = '';
-    this.punishment.punished.skin = 'steve';
+    this.titleService.setTitle("Crear sanción - " + GLOBAL.title);
+    this.punishment = {expires: -1} as IPunishment;
+    this.punishment.punished = null;
   }
 
   ngOnInit() {
-    this._route.data.subscribe((data => {
-      // TODO: Add report again this.report = data.PunishmentCreateGuard.report;
+    this.route.data.subscribe((data => {
       this.createData = data.PunishmentCreateGuard;
       if (this.createData.warn) this.options.push({value: "Warn", label: "Advertencia"});
       if (this.createData.kick) this.options.push({value: "Kick", label: "Expulsión"});
@@ -64,43 +61,65 @@ export class PunishmentCreateComponent implements OnInit {
     }));
   }
 
-
   changePunishment() {
     let selection: any = this.punishment.type;
+
+    if (selection === null) {
+      this.selectionLabel = "Ninguno";
+      return;
+    }
+
     this.selectionLabel = selection.label;
-    this.expires = this.selectionLabel === "Suspensión temporal";
+    this.punishment.expires = -1;
     // @ts-ignore
     this.punishment.type = PunishmentType[selection.value];
   }
 
   clearUser() {
-    this.punishment.punished = {} as IUser;
+    this.punishment.punished = null;
+    this.createData.users = [];
   }
 
   clearPunishment() {
+    this.punishment.expires = -1;
     this.punishment.type = null;
   }
 
+  updateQuery(event: any) {
+    if (event.term.length > 2) {
+      this.userService.userListAutocompleteObservable(false, event.term).subscribe(
+        user => {
+          this.createData.users = user;
+        }
+      );
+    }
+  }
+
+  changeDate(event: any) {
+    this.expiresLabel = event.formatted;
+  }
+
   onSubmit() {
-    if (this.expiration) this.punishment.expires = this.expiration.epoc;
 
-    let has_report = null;
-    if (this.report) has_report = this.report.report;
+    if (this.punishment.expires !== -1) {
+      const epoc: any = this.punishment.expires;
+      this.punishment.expires = epoc.epoc;
+    }
 
-    this._punishmentService.punishmentCreate(this.punishment).subscribe(
+    this.punishmentService.punishmentCreate(this.punishment).subscribe(
       response => {
         if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
+          this.notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
         } else {
-          this._notifierService.notify('success', "Se ha creado la sanción correctamente.");
-          this._router.navigate(["/sancion/" + response._id]);
+          this.notifierService.notify('success', "Se ha creado la sanción correctamente.");
+          this.router.navigate(["/sancion/" + response._id]);
         }
       },
 
       error => {
         let error_message = <any> error;
         if (error_message != null) {
-          this._notifierService.notify('error', error.error.message);
+          this.notifierService.notify('error', error.error.message);
         }
       }
     );

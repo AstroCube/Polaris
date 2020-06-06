@@ -21,7 +21,6 @@ export class ApplicationErrorComponent implements OnInit {
   ngOnInit() {
     this.error = this._activatedRoute.snapshot.queryParams.type;
     this._titleService.setTitle("Error " + this.error + " - " + GLOBAL.title);
-
   }
 
 }

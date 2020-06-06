@@ -10,6 +10,7 @@ import {forkJoin, from} from 'rxjs';
 import {map, mergeMap} from 'rxjs/operators';
 import {IHeaderUser} from '../../../newModels/user/IUserProfile';
 import {IUser} from "../../../newModels/user/IUser";
+import {GroupService} from "../../../services/group.service";
 
 @Component({
   selector: 'application-header',
@@ -41,15 +42,16 @@ export class ApplicationHeaderComponent implements OnInit {
   faYoutube = faYoutube;
 
   constructor(
-    private _notifierService: NotifierService,
-    private _router: Router,
-    private _userService: UserService,
-    private _renderer: Renderer2
+    private notifierService: NotifierService,
+    private groupService: GroupService,
+    private router: Router,
+    private userService: UserService,
+    private renderer: Renderer2
   ) {
     this.header = {} as IHeaderUser;
     this.header.user = {} as IUser;
     this.header.user.username = '';
-    this._router.events.subscribe(() => {
+    this.router.events.subscribe(() => {
       this.changeEvent();
     });
   }
@@ -57,25 +59,21 @@ export class ApplicationHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (
-      this._userService.getToken() && this._userService.getToken() != "none" &&
-      this._userService.getEpsilonToken() && this._userService.getEpsilonToken() != "none"
+      this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== ''
     ) {
       this.logged = true;
-      this._userService.getUserObservable().pipe(
+      this.userService.getUserObservable().pipe(
         mergeMap((user) =>
           forkJoin(
-            from(this._userService.permission_checker_promise("web_permissions.group.manage")),
-            from(this._userService.permission_checker_promise("web_permissions.category.manage")),
-            from(this._userService.permission_checker_promise("web_permissions.user.manage")),
-            from(this._userService.permission_checker_promise("web_permissions.forum.manage"))
+            from(this.groupService.permissionsManifest())
           ).pipe(
             map((response) => ({
               user: user,
-              group: response[0].has_permission,
-              category: response[1].has_permission,
-              userEdit: response[2].has_permission,
-              forum: response[3].has_permission,
-              generalAccess: response[0] || response[1] || response[2] || response[3]
+              group: response[0].group.manage,
+              category: response[0].category.manage,
+              userEdit: response[0].user.manage,
+              forum: response[0].forum.manage,
+              generalAccess: response[0].group.manage || response[0].category.manage || response[0].user.manage || response[0].forum.manage
             } as IHeaderUser))
           )
         )
@@ -86,7 +84,7 @@ export class ApplicationHeaderComponent implements OnInit {
 
         (error) => {
           this.logout();
-          this._notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
+          this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
         }
       );
     }
@@ -109,16 +107,16 @@ export class ApplicationHeaderComponent implements OnInit {
   }
 
   changeEvent(): void {
-    if (this._userService.getToken()  && this._userService.getToken() != "none") {
+    if (this.userService.getToken()  && this.userService.getToken() != "none") {
       this.logged = true;
-      this._userService.getUserObservable().subscribe(
+      this.userService.getUserObservable().subscribe(
         (user) => {
           this.header.user = user;
         },
 
         (error) => {
           this.logout();
-          this._notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
+          this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
         }
       )
     }
@@ -129,12 +127,12 @@ export class ApplicationHeaderComponent implements OnInit {
     request.email = this.requested_email;
     request.password = this.requested_password;
     //request.persistence = this.requested_persistence;
-    this._router.navigate(['']);
+    this.router.navigate(['']);
 
-    this._userService.login(request).subscribe(
+    this.userService.login(request).subscribe(
       response => {
         if (response.token.length == 0) {
-          this._notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
+          this.notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
         } else {
           localStorage.setItem("token", response.token);
         }
@@ -143,28 +141,28 @@ export class ApplicationHeaderComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', error.error.message);
+          this.notifierService.notify('error', error.error.message);
         }
       }
     );
 
-    this._userService.loginEpsilon(request).subscribe(
+    this.userService.loginEpsilon(request).subscribe(
       response => {
         if (response.token.length == 0) {
-          this._notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
+          this.notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
           localStorage.clear();
         } else {
           localStorage.setItem("epsilonToken", response.token);
-          if (this._router.url == "/registrarse" || this._router.url == "/login") this._router.navigate(['']);
+          if (this.router.url == "/registrarse" || this.router.url == "/login") this.router.navigate(['']);
           this.changeEvent();
-          this._renderer.selectRootElement(this.login_element.nativeElement).click();
+          this.renderer.selectRootElement(this.login_element.nativeElement).click();
         }
       },
 
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', error.error.message);
+          this.notifierService.notify('error', error.error.message);
         }
       }
     );
@@ -174,11 +172,11 @@ export class ApplicationHeaderComponent implements OnInit {
     this.logged = false;
     this.header = undefined;
     localStorage.clear();
-    this._router.navigate(['/']);
+    this.router.navigate(['/']);
   }
 
   comingSoon(): void {
-    this._router.navigate(['/error'], {queryParams: {type: 308}});
+    this.router.navigate(['/error'], {queryParams: {type: 308}});
   }
 
 }

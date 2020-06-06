@@ -1,13 +1,13 @@
 import {IUser} from './IUser';
 import {Map} from '../../models/minecraft/map';
-import {Punishment} from '../../models/punishment';
 import {IMatchProfile} from '../match/IMatchProfile';
 import {IFriendProfile} from '../friend/IFriendProfile';
+import {IPunishment} from "../IPunishment";
 
 export interface IUserProfile {
   user: IUser;
   maps: Map[];
-  punishments: Punishment[];
+  punishments: IPunishment[];
   friends: IFriendProfile;
   lastMatches: IMatchProfile;
 }

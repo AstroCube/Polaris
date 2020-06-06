@@ -108,6 +108,7 @@ import {PunishmentEditComponent} from "./modules/punishment/components/edit/puni
 import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
 import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
 import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
+import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
 
 
 @NgModule({
@@ -223,6 +224,7 @@ import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard
     PunishmentEditGuard,
     PunishmentListGuard,
     UserPermissionsGuard,
+    UserLoggedGuard,
     PunishmentViewGuard,
     PunishmentService,
     ReportCreateGuard,

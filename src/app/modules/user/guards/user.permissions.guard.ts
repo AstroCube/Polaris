@@ -17,8 +17,7 @@ export class UserPermissionsGuard implements Resolve<IPermissions>{
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IPermissions> {
-    const token = this.userService.getToken();
-    if (token && token !== "none") {
+    if (this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '') {
       return this.groupService.permissionsManifest().pipe(map(permissionsManifest => permissionsManifest));
     } else {
       return of({} as IPermissions);

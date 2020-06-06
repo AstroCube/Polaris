@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { GLOBAL } from "./global";
 import {User} from '../models/user';
@@ -106,11 +106,13 @@ export class UserService {
     return this._http.get(this.url + "user/list-names" + route, {headers: headers}).toPromise();
   }
 
-  userListAutocompleteObservable(own?: boolean): Observable<any> {
+  userListAutocompleteObservable(own?: boolean, search?: string): Observable<IUser[]> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
     let route = "";
+    let searchQuery = "";
     if (own) route = "/true";
-    return this._http.get(GLOBAL.epsilon + "users/list-all" + route, {headers: headers});
+    if (search) searchQuery = "?search=" + search;
+    return this._http.get(GLOBAL.epsilon + "users/list-all" + route + searchQuery, {headers: headers}) as Observable<IUser[]>;
   }
 
   user_ip(): Promise<any> {
@@ -121,23 +123,13 @@ export class UserService {
 
   getToken() {
     let token = localStorage.getItem("token");
-    if(token != "undefined") {
-      this.identity = token;
-    } else {
-      this.identity = "none";
-    }
-    if (token === null) this.identity = "none";
-    return this.identity;
+    if (!token) return '';
+    return token;
   }
 
   getEpsilonToken() {
     let token = localStorage.getItem("epsilonToken");
-    if(token != "undefined") {
-      this.epsilon = token;
-    } else {
-      this.epsilon = "none";
-    }
-    if (token === null) this.epsilon = "none";
+    if (!token) return '';
     return "Bearer " + token;
   }
 

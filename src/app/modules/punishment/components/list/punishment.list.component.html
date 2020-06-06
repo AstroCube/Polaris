@@ -32,17 +32,17 @@
         <p>{{punishment.reason}}</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban'">Temp-ban</span>
-        <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban'">Perma-ban</span>
+        <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires !== -1">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires === -1">Perma-ban</span>
         <span style="color: darkorange" *ngIf="punishment.type.toLowerCase() === 'kick'">Expulsión</span>
         <span style="color: green" *ngIf="punishment.type.toLowerCase() === 'warn'">Advertencia</span>
       </div>
       <div class="table__cell punishment__table-small">
-        <p *ngIf="punishment.expires && punishment.expires !== 'never'">{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
-        <p *ngIf="!punishment.expires || punishment.expires == 'never'">Nunca</p>
+        <p *ngIf="punishment.expires !== -1">{{punishment.expires | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
+        <p *ngIf="punishment.expires === -1">Nunca</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <a routerLink="{{'/sancion/' + punishment._id}}">{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</a>
+        <a class="paragraph--white" routerLink="{{'/sancion/' + punishment._id}}">{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</a>
       </div>
     </div>
   </div>

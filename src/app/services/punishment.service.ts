@@ -17,24 +17,25 @@ export class PunishmentService {
 
   punishmentCreate(punishment: IPunishment): Observable<IPunishment> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
-    return this._http.post(GLOBAL.epsilon + "punishment/create", punishment, {headers: headers}) as Observable<IPunishment>;
+    return this._http.post(GLOBAL.epsilon + "punishment/create-website", punishment, {headers: headers}) as Observable<IPunishment>;
   }
 
-  punishmentGet(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(GLOBAL.epsilon + "punishment/get/" + id, {headers: headers});
+  punishmentGet(id: string): Observable<IPunishment> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(GLOBAL.epsilon + "punishment/get/" + id, {headers: headers}) as Observable<IPunishment>;
   }
 
-  punishment_update(id: string, punishment: Punishment): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.put(GLOBAL.epsilon + "punishment/update/" + id, punishment, {headers: headers});
+  punishmentUpdate(punishment: IPunishment): Observable<IPunishment> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
+    return this._http.put(GLOBAL.epsilon + "punishment/update", punishment, {headers: headers}) as Observable<IPunishment>;
   }
 
-  punishmentList(page?: number, size?: number): Observable<IPaginateResult<IPunishment>> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
+  punishmentList(page?: number, size?: number, query?: any): Observable<IPaginateResult<IPunishment>> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
     const params = new HttpParams().set('page', String(page)).set('size', String(size));
-    return this._http.get(
+    return this._http.post(
       GLOBAL.epsilon + "punishment/list",
+      query,
       {
         headers: headers,
         params: params

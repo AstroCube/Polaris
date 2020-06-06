@@ -76,6 +76,7 @@ import {PunishmentCreateComponent} from "./modules/punishment/components/create/
 import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
 import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
 import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
+import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
 
 const app_routes: Routes = [
   {path: "login", component: ApplicationLoginComponent},
@@ -123,8 +124,8 @@ const app_routes: Routes = [
   },
   {path: "sancion",
     children:[
-      {path: "editar/:id", component: PunishmentEditComponent, canActivate: [PunishmentEditGuard], resolve: {PunishmentEditGuard}},
-      {path: "crear", component: PunishmentCreateComponent, canActivate: [PunishmentCreateGuard], resolve: {PunishmentCreateGuard}},
+      {path: "editar/:id", component: PunishmentEditComponent, canActivate: [PunishmentEditGuard], resolve: {PunishmentViewGuard}},
+      {path: "crear", component: PunishmentCreateComponent, canActivate: [UserLoggedGuard, PunishmentCreateGuard], resolve: {PunishmentCreateGuard}},
       {path: ":id", component: PunishmentViewComponent, resolve: {PunishmentViewGuard, UserPermissionsGuard}},
       {path: "", redirectTo: "/sanciones", pathMatch: "full"}
     ]
@@ -151,7 +152,7 @@ const app_routes: Routes = [
   {path: "reportes", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
   {path: "sanciones/:page", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "sanciones", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
-  {path: "cuenta", component: UserEditComponent, canActivate: [UserEditGuard], resolve: {UserEditGuard}},
+  {path: "cuenta", component: UserEditComponent, canActivate: [UserLoggedGuard], resolve: {UserEditGuard}},
   {path: "mapas",
     children: [
       {path: ":id", component: MapViewComponent, resolve: {MapViewGuard}},

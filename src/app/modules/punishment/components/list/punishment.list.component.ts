@@ -32,9 +32,9 @@ export class PunishmentListComponent implements OnInit {
       {name: 'description', content: 'Lista pública con las últimas sanciones de Seocraft Network.'},
       {name: 'robots', content: 'index, follow'}
     ]);
-    this._route.data.subscribe((data => {
+    this._route.data.subscribe(data => {
       this.result = data.PunishmentListGuard;
-    }));
+    });
   }
 
   public getPlaceholder(user: IUser): IUserPlaceholder {

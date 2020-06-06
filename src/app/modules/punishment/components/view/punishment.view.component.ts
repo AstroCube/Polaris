@@ -7,6 +7,7 @@ import {IPunishment, PunishmentType} from "../../../../newModels/IPunishment";
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 import {IPermissions} from "../../../../newModels/IGroup";
+import {Group} from "../../../../models/group";
 
 @Component({
   selector: 'punishment-view',
@@ -23,17 +24,7 @@ export class PunishmentViewComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _titleService: Title
-  ) {
-    this.punishment = {
-      type: PunishmentType.Warn,
-      issuer: null,
-      punished: null,
-      server: '',
-      match: null,
-      createdAt: '',
-
-    };
-  }
+  ) {}
 
   ngOnInit() {
     this._titleService.setTitle("Sanciones - " + GLOBAL.title);

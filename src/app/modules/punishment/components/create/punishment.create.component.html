@@ -1,10 +1,22 @@
 <section>
   <h1 class="heading u-margin-bottom-small">Sancionar usuario</h1>
-  <form #punishment_create="ngForm" (ngSubmit)="onSubmit()" class="row">
+  <form #punishmentCreate="ngForm" (ngSubmit)="onSubmit()" class="row">
     <div class="col-1-of-2">
       <div *ngIf="!report" class="u-margin-bottom-medium">
         <label class="form__label">Usuario</label>
-        <ng-select id="punished" name="punished" #punished="ngModel" [(ngModel)]="punishment.punished" [searchable]="true" [items]="createData.users" (clear)="clearUser()" bindLabel="username" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
+        <ng-select
+          id="punished"
+          name="punished"
+          #punished="ngModel"
+          [(ngModel)]="punishment.punished"
+          [searchable]="true"
+          [items]="createData.users"
+          (clear)="clearUser()"
+          (search)="updateQuery($event)"
+          bindLabel="username"
+          placeholder="Selecciona un jugador. Ej: TakeMyTomato"
+          required
+        >
           <ng-template ng-option-tmp let-item="item">
             <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
             <span class="paragraph--white">{{item.username}}</span>
@@ -27,9 +39,9 @@
         <label class="form__label">Evidencia</label>
         <textarea id="evidence" name="evidence" #evidence="ngModel" [class.form__textarea--invalid]="!evidence.valid && evidence.touched" [(ngModel)]="punishment.evidence" cols="30" rows="10" class="form__textarea" placeholder="Ej. https://imgur.com/image" required></textarea>
       </div>
-      <div *ngIf="expires" class="u-margin-bottom-medium">
+      <div *ngIf="selectionLabel === 'Suspensión temporal'" class="u-margin-bottom-medium">
         <label class="form__label">Expira</label>
-        <my-date-picker id="expires" name="expires" [options]="pickerOptions" [(ngModel)]="punishment.expires" required></my-date-picker>
+        <my-date-picker id="expires" name="expires" [options]="pickerOptions" [(ngModel)]="punishment.expires" (dateChanged)="changeDate($event)" required></my-date-picker>
         <span class="punishment__advice">* Por razones administrativas las sanciones temporales son mínimo de un día.</span>
       </div>
     </div>
@@ -38,7 +50,7 @@
         <h3 class="heading heading--primary u-margin-bottom-small">Resúmen de la sanción</h3>
         <p class="punishment__checkout-indicator">
           <span>Usuario a sancionar:</span>
-          <img *ngIf="punishment.punished && punishment.punished.username" src="{{'https://minotar.net/avatar/' + punishment.punished.skin}}" alt="Punishment user"> {{punishment.punished.username}}
+          <span *ngIf="punishment.punished !== null"><img src="{{'https://minotar.net/avatar/' + punishment.punished.skin}}" alt="Punishment user"> {{punishment.punished.username}}</span>
         </p>
         <p class="punishment__checkout-indicator">
           <span>Tipo de sanción:</span>
@@ -47,10 +59,16 @@
         </p>
         <p class="punishment__checkout-indicator">
           <span>Fecha en que expira:</span>
-          <span *ngIf="!punishment.expires">Nunca</span>
-          <span *ngIf="expiration && expiration.formatted">{{expiration.formatted}}</span>
+          <span *ngIf="punishment.expires === -1">Nunca</span>
+          <span *ngIf="punishment.expires !== -1">{{expiresLabel}}</span>
         </p>
-        <div class="u-right-text"><button class="btn btn--secondary" [disabled]="!punishment_create.valid">¡Sancionar usuario!</button></div>
+        <div class="u-right-text">
+          <button
+            class="btn btn--secondary"
+            [disabled]="!punishmentCreate.valid || (selectionLabel === 'Suspensión temporal' && punishment.expires === -1)"
+          >¡Sancionar usuario!
+          </button>
+        </div>
       </div>
       <span class="punishment__advice">* La sanción tendrá efecto inmediatamente en el servidor.</span>
     </div>

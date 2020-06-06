@@ -22,7 +22,8 @@ export class PunishmentListGuard implements Resolve<IPaginateResult<IPunishment>
     return this._punishmentService.punishmentList(page, 15).pipe(
       map((response) => (response as IPaginateResult<IPunishment>)),
       catchError((err) => {
-        return of({} as IPaginateResult<IPunishment>);
+        console.log(err);
+        return of({data: [], pagination: {page: 1}} as IPaginateResult<IPunishment>);
       })
     );
   }

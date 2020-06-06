@@ -1,6 +1,6 @@
 <section>
-  <h1 class="heading u-margin-bottom-small">Sanción de XXX</h1>
-  <form #punishment_edit="ngForm" (ngSubmit)="onSubmit()" class="row">
+  <h1 class="heading u-margin-bottom-small">Sanción de <span class="heading--primary">{{punishment.punished.display}}</span></h1>
+  <form #punishmentEdit="ngForm" (ngSubmit)="onSubmit()" class="row">
     <div class="col-1-of-2">
       <div class="u-margin-bottom-medium">
         <label class="form__label" for="reason">Razón</label>
@@ -12,21 +12,32 @@
       </div>
       <div class="u-margin-bottom-medium">
         <label class="form__label">Expira</label>
-        <my-date-picker id="expires" name="expires" [options]="punishment_options" [(ngModel)]="punishment.expires" required></my-date-picker>
+        <my-date-picker
+          id="expires"
+          name="expires"
+          [options]="pickerOptions"
+          [(ngModel)]="punishment.expires"
+          (dateChanged)="dateChange($event)"
+          required
+        >
+        </my-date-picker>
         <span class="punishment__advice">* Por razones administrativas las sanciones temporales son mínimo de un día.</span>
       </div>
     </div>
     <div class="col-1-of-2">
       <div class="punishment__checkout">
-        <h3 class="heading heading--primary u-margin-bottom-small">Resúmen de la sanción</h3>
+        <h3 class="heading heading--primary u-margin-bottom-small">Resumen de la sanción</h3>
         <p class="punishment__checkout-indicator">
-          <span>Usuario a sancionar:</span> <img src="https://minotar.net/avatar/2f3665cc5e29439bbd14cb6d3a6313a7" alt="Est"> ElTomate
+          <span>Usuario a sancionar:</span>
+          <img *ngIf="punishment.punished && punishment.punished.username" src="{{'https://minotar.net/avatar/' + punishment.punished.skin}}" alt="Punishment user"> {{punishment.punished.display}}
         </p>
         <p class="punishment__checkout-indicator">
-          <span>Tipo de sanción:</span> Warn
+          <span>Tipo de sanción:</span> {{punishment.type}}
         </p>
         <p class="punishment__checkout-indicator">
-          <span>Fecha en que expira:</span> 24/05/2001 a las 2:14
+          <span>Fecha en que expira:</span>
+          <span *ngIf="punishment.expires === -1">Nunca</span>
+          <span *ngIf="expiration">{{expiration}}</span>
         </p>
         <p class="punishment__checkout-indicator">
           <label for="active" class="form__checkbox">
