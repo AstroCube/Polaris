@@ -42,9 +42,4 @@ export class PunishmentService {
       }) as Observable<IPaginateResult<IPunishment>>;
   }
 
-  punishmentUserList(user: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(GLOBAL.epsilon + "punishment/user/" + user,{headers: headers});
-  }
-
 }

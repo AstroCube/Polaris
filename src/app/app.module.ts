@@ -23,9 +23,7 @@ import {ShopMainComponent} from './components/shop/main/shop.main.component';
 import {ShopCategoryComponent} from './components/shop/category/shop.category.component';
 import {ShopCartComponent} from './components/shop/cart/shop.cart.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
-import {AppealMainComponent} from './components/appeal/main/appeal.main.component';
 import {AppealViewComponent} from './components/appeal/view/appeal.view.component';
-import {AppealListComponent} from './components/appeal/list/appeal.list.component';
 import {ReportMainComponent} from './components/report/main/report.main.component';
 import {ReportListComponent} from './components/report/list/report.list.component';
 import {ReportCreateComponent} from './components/report/create/report.create.component';
@@ -75,11 +73,9 @@ import {PunishmentViewGuard} from './modules/punishment/guards/punishment.view.g
 import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.guard';
 import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealService} from './services/appeal.service';
-import {AppealListGuard} from './guards/appeal/appeal.list.guard';
 import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
 import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
 import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
-import {AppealMainGuard} from './guards/appeal/appeal.main.guard';
 import {ReportService} from './services/report.service';
 import {ReportMainGuard} from './guards/report/report.main.guard';
 import {ReportCreateGuard} from './guards/report/report.create.guard';
@@ -109,6 +105,7 @@ import {PunishmentListComponent} from "./modules/punishment/components/list/puni
 import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
 import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
 import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
+import {AppealModule} from "./modules/appeal/appeal.module";
 
 
 @NgModule({
@@ -117,8 +114,6 @@ import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
     // --- Components --- //
 
     AppealGlobalComponent,
-    AppealListComponent,
-    AppealMainComponent,
     AppealViewComponent,
     ApplicationAlertComponent,
     ApplicationDevelopementComponent,
@@ -169,6 +164,7 @@ import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
     // --- Directives --- //
   ],
   imports: [
+    AppealModule,
     BrowserModule,
     CKEditorModule,
     EpsilonModule,
@@ -198,8 +194,6 @@ import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
     GroupListGuard,
     GroupStaffGuard,
     AppealGlobalGuard,
-    AppealListGuard,
-    AppealMainGuard,
     AppealViewGuard,
     AppealService,
     CategoryCreateGuard,

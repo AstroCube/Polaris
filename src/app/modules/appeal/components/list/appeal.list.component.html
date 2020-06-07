@@ -1,0 +1,131 @@
+<section>
+  <h1 class="heading u-margin-bottom-small">Apelando sanciones de <a routerLink="{{'/' + info.user.username}}" [style.color]="getPlaceholder(info.user).mainGroup.html_color">{{info.user.display}}</a></h1>
+  <p class="paragraph--white u-margin-bottom-small">Ver tus otras apelaciones.</p>
+  <div class="table--black table--fixed">
+    <div class="table__header">
+      <div class="table__cell appeal__table-small">
+        <p>Estado</p>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <p>Encargado</p>
+      </div>
+      <div class="table__cell appeal__table-large">
+        <p>Última acción</p>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <p>Fecha</p>
+      </div>
+      <div class="table__cell appeal__table-buttons">
+        <p>Acciones</p>
+      </div>
+    </div>
+    <div *ngFor="let appeal of info.appeals" class="table__row">
+      <div class="table__cell appeal__table-small">
+        <span *ngIf="!appeal.appealed" style="color: aqua">Apelando</span>
+        <span *ngIf="appeal.appealed" style="color: green">Apelada</span>
+        <span *ngIf="appeal.closed && !appeal.appealed" style="color: gray">Cerrada</span>
+        <span *ngIf="appeal.locked && !appeal.appealed" style="color: red">Bloqueada</span>
+        <span *ngIf="appeal.escalated && !appeal.appealed" style="color: darkorange">Escalada</span>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <a
+          *ngIf="!appeal.supervisor"
+          [style.color]="getPlaceholder(appeal.punishment.issuer).mainGroup.html_color"
+          routerLink="{{'/' + appeal.punishment.issuer.username}}"
+        >{{appeal.punishment.issuer.display}}
+        </a>
+        <a
+          *ngIf="appeal.supervisor"
+          [style.color]="getPlaceholder(appeal.supervisor).mainGroup.html_color"
+          routerLink="{{'/' + appeal.supervisor.username}}"
+        >{{appeal.supervisor.display}}
+        </a>
+      </div>
+      <div class="table__cell appeal__table-large">
+        <p>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Create'">Creada por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Open'">Abierta por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Close'">Cerrada por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Lock'">Bloqueada por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Unlock'">Desbloqueada por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Comment'">Respuesta de </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Escalate'">Escalada por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Supervised'">Asignada a </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'Appeal'">Apelada por </span>
+          <span *ngIf="getAppealLastAction(appeal).type === 'UnAppeal'">Des-apelada por </span>
+          <a [style.color]="getPlaceholder(getAppealLastAction(appeal).user).mainGroup.html_color" routerLink="{{'/' + getAppealLastAction(appeal).user.username}}">{{getAppealLastAction(appeal).user.display}}</a>
+        </p>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <span>{{getAppealLastAction(appeal).createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+      </div>
+      <div class="table__cell appeal__table-buttons">
+        <a routerLink="{{'/apelar/' + appeal._id}}" class="btn btn--blue shop__description-slug-button shop__cart-button">Ver</a>
+      </div>
+    </div>
+    <p *ngIf="info.appeals.length <= 0" class="u-center-text u-margin-top-small paragraph--white">No se han encontrado apelaciones.</p>
+  </div>
+  <p class="paragraph--white u-margin-bottom-small">Selecciona que infracción deseas apelar. (Recuerda que puedes apelar infracciones activas y que no séan automáticas)</p>
+  <div class="table--black table--fixed">
+    <div class="table__header">
+      <div class="table__cell punishment__table-small">
+        <p>Hecha por</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Usuario</p>
+      </div>
+      <div class="table__cell punishment__table-large">
+        <p>Razón</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Tipo</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p>Expira</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+
+      </div>
+    </div>
+    <div *ngFor="let punishment of info.punishments" class="table__row">
+      <div class="table__cell punishment__table-small">
+        <a routerLink="{{'/' + punishment.issuer.username}}" [style.color]="getPlaceholder(punishment.issuer).mainGroup.html_color">{{punishment.issuer.display}}</a>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <a routerLink="{{'/' + punishment.punished.username}}" [style.color]="getPlaceholder(punishment.punished).mainGroup.html_color">{{punishment.punished.display}}</a>
+      </div>
+      <div class="table__cell punishment__table-large">
+        <p>{{punishment.reason}}</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires !== -1">Temp-ban</span>
+        <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires === -1">Perma-ban</span>
+        <span style="color: darkorange" *ngIf="punishment.type.toLowerCase() === 'kick'">Expulsión</span>
+        <span style="color: green" *ngIf="punishment.type.toLowerCase() === 'warn'">Advertencia</span>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <p *ngIf="punishment.expires !== -1">{{punishment.expires | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</p>
+        <p *ngIf="punishment.expires === -1">Nunca</p>
+      </div>
+      <div class="table__cell punishment__table-small">
+        <a popup popup_id="appeal-popup" (click)="appealInsert(punishment._id)" class="btn btn--green shop__description-slug-button shop__cart-button">Apelar</a>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="info.punishments.length <= 0" class="u-center-text u-margin-top-small paragraph--white">No se han encontrado sanciones sin apelar.</p>
+</section>
+<section class="appeal-popup" id="appeal-popup">
+  <form #appealCreate="ngForm" (ngSubmit)="appealRequest()" class="appeal-popup__content">
+    <h2 class="heading heading--primary">Abrir una apelación</h2>
+    <p class="appeal__id">(IP registrada: {{createAction.registeredAddress}})</p>
+    <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="appealReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <p class="paragraph paragraph--white u-margin-bottom-small">Recuerda que al abrir una apelación entrarás en contacto directo con el moderador que aplicó la sanción.</p>
+    <p class="paragraph paragraph--white">Escribe la razón por la cual deseas apelar esta sanción.</p>
+    <div class="appeal__form">
+      <textarea id="appeal_explanation" name="appeal_explanation" #explain="ngModel" [(ngModel)]="createAction.comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
+    </div>
+    <div class="u-right-text">
+      <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Crear apelación</button>
+    </div>
+  </form>
+</section>

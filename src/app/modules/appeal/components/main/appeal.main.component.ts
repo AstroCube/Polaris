@@ -9,17 +9,19 @@ import {ActivatedRoute} from '@angular/router';
 
 export class AppealMainComponent implements OnInit {
 
-  public can_appeal: boolean = false;
-  public gamemode : any = {};
+  public canAppeal: boolean;
   faList = faList;
 
   constructor(
-    private _route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute
+  ) {
+    this.canAppeal = true;
+  }
 
-  ngOnInit() {
-    this._route.data.subscribe((data => {
-      this.can_appeal = data.AppealMainGuard.can_appeal;
+  ngOnInit(): void {
+    this.route.data.subscribe((data => {
+      this.canAppeal = data.AppealMainGuard;
     }));
   }
+
 }

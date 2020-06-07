@@ -25,7 +25,7 @@ export class UserViewGuard implements Resolve<IUserProfile> {
       mergeMap((user) =>
         forkJoin(
           this.mapService.mapListUser(user._id),
-          this.punishmentService.punishmentList(1, 100, {punished: user._id}),
+          this.punishmentService.punishmentList(-1, 100, {punished: user._id}),
           this.matchService.matchPlayerInfo(user._id),
           this.friendService.listFriends(user._id)
         ).pipe(
