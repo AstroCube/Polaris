@@ -1,6 +1,7 @@
 import {IModel} from "./IModel";
 import {IPunishment} from "./IPunishment";
 import {IUser} from "./user/IUser";
+import {IAppealsPermissions} from "./permissions/IAppealsPermissions";
 
 export interface IAppeal extends IModel {
     punishment: IPunishment;
@@ -16,7 +17,7 @@ export interface IAppeal extends IModel {
 export interface IAppealAction {
     type: IAppealActionType;
     user: IUser;
-    createdAt: Date;
+    createdAt: any;
     content: string;
 }
 
@@ -49,4 +50,11 @@ export interface IAppealMain {
   user: IUser;
   punishments: IPunishment[];
   appeals: IAppeal[];
+  ip: string;
+}
+
+export interface IAppealResolve {
+  user: IUser;
+  appeal: IAppeal;
+  permissions: IAppealsPermissions;
 }

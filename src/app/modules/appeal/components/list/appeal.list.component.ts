@@ -34,7 +34,7 @@ export class AppealListComponent implements OnInit {
   }
 
   public appealReset(): void {
-    this.createAction = {punishment: '', comment: '', registeredAddress: '127.0.0.1'} as IAppealCreation;
+    this.createAction = {punishment: '', comment: '', registeredAddress: this.info.ip} as IAppealCreation;
   }
 
   public getPlaceholder(user: IUser): IUserPlaceholder {

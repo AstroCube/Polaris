@@ -15,7 +15,7 @@ import {MapMainComponent} from './components/map/main/map.main.component';
 import {MapViewComponent} from './components/map/view/map.view.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
 import {AppealMainComponent} from './modules/appeal/components/main/appeal.main.component';
-import {AppealViewComponent} from './components/appeal/view/appeal.view.component';
+import {AppealViewComponent} from './modules/appeal/components/view/appeal.view.component';
 import {ReportMainComponent} from './components/report/main/report.main.component';
 import {ReportListComponent} from './components/report/list/report.list.component';
 import {ReportCreateComponent} from './components/report/create/report.create.component';
@@ -48,7 +48,7 @@ import {PunishmentViewGuard} from './modules/punishment/guards/punishment.view.g
 import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.guard';
 import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealListGuard} from './modules/appeal/guards/appeal.list.guard';
-import {AppealViewGuard} from './guards/appeal/appeal.view.guard';
+import {AppealViewGuard} from './modules/appeal/guards/appeal.view.guard';
 import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
 import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
 import {AppealMainGuard} from './modules/appeal/guards/appeal.main.guard';
@@ -133,7 +133,7 @@ const app_routes: Routes = [
   {path: "apelar",
     children: [
       {path: "ver", component: AppealListComponent, canActivate: [UserLoggedGuard], resolve: {AppealListGuard}},
-      {path: ":id", component: AppealViewComponent, canActivate: [AppealViewGuard], resolve: {AppealViewGuard}},
+      {path: ":id", component: AppealViewComponent, canActivate: [UserLoggedGuard], resolve: {AppealViewGuard}},
       {path: "", component: AppealMainComponent, canActivate: [UserLoggedGuard], resolve: {AppealMainGuard}}
     ]
   },

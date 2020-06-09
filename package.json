@@ -31,6 +31,7 @@
     "angular-font-awesome": "^3.1.2",
     "angular-notifier": "^4.1.2",
     "core-js": "^2.6.10",
+    "dotty": "^0.1.0",
     "moment": "^2.23.0",
     "mydatepicker": "^2.6.6",
     "ng2-password-strength-bar": "^1.2.3",

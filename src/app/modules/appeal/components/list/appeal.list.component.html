@@ -118,7 +118,7 @@
   <form #appealCreate="ngForm" (ngSubmit)="appealRequest()" class="appeal-popup__content">
     <h2 class="heading heading--primary">Abrir una apelación</h2>
     <p class="appeal__id">(IP registrada: {{createAction.registeredAddress}})</p>
-    <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="appealReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <a popup popup_id="appeal-popup" class="appeal-popup__close" (click)="appealReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
     <p class="paragraph paragraph--white u-margin-bottom-small">Recuerda que al abrir una apelación entrarás en contacto directo con el moderador que aplicó la sanción.</p>
     <p class="paragraph paragraph--white">Escribe la razón por la cual deseas apelar esta sanción.</p>
     <div class="appeal__form">

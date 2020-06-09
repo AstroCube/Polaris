@@ -23,14 +23,15 @@ export class AppealListGuard implements Resolve<IAppealMain>{
       mergeMap(user =>
         forkJoin(
           this.punishmentService.punishmentList(-1, 1, {punished: user._id, appealed: false}),
-          this.appealService.appealList(-1, 1, {}, true)
+          this.appealService.appealList(-1, 1, {}, true),
+          this.userService.userIp()
         ).pipe(
           map(response => ({
-              user,
-              punishments: response[0].data,
-              appeals: response[1].data
-            } as IAppealMain)
-          )
+            user,
+            punishments: response[0].data,
+            appeals: response[1].data,
+            ip: response[2].ip
+          } as IAppealMain))
         )
       ),
       catchError(error => {

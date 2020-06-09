@@ -20,7 +20,9 @@ import {GroupService} from "../../../services/group.service";
 export class ApplicationHeaderComponent implements OnInit {
 
   @ViewChild("login_close") public login_element: ElementRef;
-  public header: IHeaderUser;
+  public header: IHeaderUser = {
+    user: {username: ''} as IUser
+  } as IHeaderUser;
   public requested_email: string;
   public requested_password: string;
   public requested_persistence: boolean;
@@ -48,45 +50,13 @@ export class ApplicationHeaderComponent implements OnInit {
     private userService: UserService,
     private renderer: Renderer2
   ) {
-    this.header = {} as IHeaderUser;
-    this.header.user = {} as IUser;
-    this.header.user.username = '';
-    this.router.events.subscribe(() => {
-      this.changeEvent();
-    });
   }
 
 
   ngOnInit(): void {
-    if (
-      this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== ''
-    ) {
+    if (this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '') {
       this.logged = true;
-      this.userService.getUserObservable().pipe(
-        mergeMap((user) =>
-          forkJoin(
-            from(this.groupService.permissionsManifest())
-          ).pipe(
-            map((response) => ({
-              user: user,
-              group: response[0].group.manage,
-              category: response[0].category.manage,
-              userEdit: response[0].user.manage,
-              forum: response[0].forum.manage,
-              generalAccess: response[0].group.manage || response[0].category.manage || response[0].user.manage || response[0].forum.manage
-            } as IHeaderUser))
-          )
-        )
-      ).subscribe(
-        (header) => {
-          this.header = header;
-        },
-
-        (error) => {
-          this.logout();
-          this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
-        }
-      );
+      this.retrieveData();
     }
 
     const options = {
@@ -104,22 +74,6 @@ export class ApplicationHeaderComponent implements OnInit {
     };
 
     const typed = new Typed('.header__announcements-slider', options);
-  }
-
-  changeEvent(): void {
-    if (this.userService.getToken()  && this.userService.getToken() != "none") {
-      this.logged = true;
-      this.userService.getUserObservable().subscribe(
-        (user) => {
-          this.header.user = user;
-        },
-
-        (error) => {
-          this.logout();
-          this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
-        }
-      )
-    }
   }
 
   loginRequest(): void {
@@ -154,7 +108,7 @@ export class ApplicationHeaderComponent implements OnInit {
         } else {
           localStorage.setItem("epsilonToken", response.token);
           if (this.router.url == "/registrarse" || this.router.url == "/login") this.router.navigate(['']);
-          this.changeEvent();
+          this.retrieveData();
           this.renderer.selectRootElement(this.login_element.nativeElement).click();
         }
       },
@@ -177,6 +131,38 @@ export class ApplicationHeaderComponent implements OnInit {
 
   comingSoon(): void {
     this.router.navigate(['/error'], {queryParams: {type: 308}});
+  }
+
+  public retrieveData(): void {
+    this.userService.getUserObservable().pipe(
+      mergeMap((user) =>
+        forkJoin(
+          from(this.groupService.permissionsManifest())
+        ).pipe(
+          map((response) => ({
+            user: user,
+            group: (response[0].group && response[0].group.manage),
+            category: (response[0].category && response[0].category.manage),
+            userEdit: (response[0].user && response[0].user.manage),
+            forum: (response[0].forum && response[0].forum.manage),
+            generalAccess: (response[0].group && response[0].group.manage) ||
+              (response[0].category && response[0].category.manage) ||
+              (response[0].user && response[0].user.manage) ||
+              (response[0].forum && response[0].forum.manage)
+          } as IHeaderUser))
+        )
+      )
+    ).subscribe(
+      (header) => {
+        this.header = header;
+        this.logged = true;
+      },
+
+      (error) => {
+        this.logout();
+        this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
+      }
+    );
   }
 
 }

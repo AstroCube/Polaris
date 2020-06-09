@@ -3,8 +3,9 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { GLOBAL } from "./global";
 import {UserService} from './user.service';
 import {Observable} from 'rxjs';
-import {IAppeal, IAppealCreation} from "../newModels/IAppeal";
+import {IAppeal, IAppealAction, IAppealCreation} from "../newModels/IAppeal";
 import {IPaginateResult} from "../newModels/IModel";
+import {IAppealsPermissions} from "../newModels/permissions/IAppealsPermissions";
 
 @Injectable()
 export class AppealService {
@@ -26,47 +27,27 @@ export class AppealService {
 
   appealCreate(request: IAppealCreation): Observable<IAppeal> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
-    return this._http.post(GLOBAL.epsilon + "appeal/list", request, {headers}) as Observable<IAppeal>;
+    return this._http.post(GLOBAL.epsilon + "appeal/create", request, {headers}) as Observable<IAppeal>;
   }
 
-  appeal_permissions(id: string): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "appeal/permissions/" + id, {headers: headers}).toPromise();
+  appealPermissions(): Observable<IAppealsPermissions> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
+    return this._http.get(GLOBAL.epsilon + "appeal/permissions",  {headers}) as Observable<IAppealsPermissions>;
+  }
+
+  appealGet(id: string): Observable<IAppeal> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
+    return this._http.get(GLOBAL.epsilon + "appeal/get/" + id,  {headers}) as Observable<IAppeal>;
+  }
+
+  appealAction(id: string, action: IAppealAction): Observable<IAppeal> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
+    return this._http.put(GLOBAL.epsilon + "appeal/action/" + id, action,{headers}) as Observable<IAppeal>;
   }
 
   appeal_list_permission(): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
     return this._http.get(this.url + "appeal/list-permissions/", {headers: headers}).toPromise();
-  }
-
-  appeal_get(id: string): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "appeal/get/" + id, {headers: headers}).toPromise();
-  }
-
-  appeal_comment(id: string, comment: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.post(this.url + "appeal/comment/" + id, {comment: comment}, {headers: headers});
-  }
-
-  appeal_status(id: string, comment: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.post(this.url + "appeal/status/" + id, {comment: comment}, {headers: headers});
-  }
-
-  appeal_lock(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "appeal/lock/" + id, {headers: headers});
-  }
-
-  appeal_close(id: string, comment: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.post(this.url + "appeal/close/" + id, {comment: comment},  {headers: headers});
-  }
-
-  appeal_escalate(id: string, comment: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.post(this.url + "appeal/escalate/" + id, {comment: comment},  {headers: headers});
   }
 
   appeal_list(page: number, type: string): Promise<any> {

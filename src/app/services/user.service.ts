@@ -115,6 +115,10 @@ export class UserService {
     return this._http.get(GLOBAL.epsilon + "users/list-all" + route + searchQuery, {headers: headers}) as Observable<IUser[]>;
   }
 
+  userIp(): Observable<any> {
+    return this._http.get("https://api.ipify.org?format=json") as Observable<any>;
+  }
+
   user_ip(): Promise<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this._http.get("https://api.ipify.org/?format=json", {headers: headers}).toPromise();
