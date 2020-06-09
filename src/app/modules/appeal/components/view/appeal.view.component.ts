@@ -90,10 +90,6 @@ export class AppealViewComponent implements OnInit {
     );
   }
 
-  public getNode(obj): any{
-    return obj.split('.').reduce((p,prop) => p[prop], this.info.permissions);
-  }
-
   public getPlaceholder(user: IUser): IUserPlaceholder {
     return getUserPlaceholder(user);
   }
