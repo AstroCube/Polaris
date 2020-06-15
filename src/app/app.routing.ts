@@ -16,10 +16,10 @@ import {MapViewComponent} from './components/map/view/map.view.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
 import {AppealMainComponent} from './modules/appeal/components/main/appeal.main.component';
 import {AppealViewComponent} from './modules/appeal/components/view/appeal.view.component';
-import {ReportMainComponent} from './components/report/main/report.main.component';
-import {ReportListComponent} from './components/report/list/report.list.component';
-import {ReportCreateComponent} from './components/report/create/report.create.component';
-import {ReportViewComponent} from './components/report/view/report.view.component';
+import {ReportMainComponent} from './modules/report/components/main/report.main.component';
+import {ReportListComponent} from './modules/report/components/list/report.list.component';
+import {ReportCreateComponent} from './modules/report/components/create/report.create.component';
+import {ReportViewComponent} from './modules/report/components/view/report.view.component';
 import {ApplicationPrivacyComponent} from './components/application/privacy/application.privacy.component';
 import {ApplicationRulesComponent} from './components/application/rules/application.rules.component';
 import {ApplicationRefundComponent} from './components/application/refund/application.refund.component';
@@ -49,13 +49,12 @@ import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.g
 import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealListGuard} from './modules/appeal/guards/appeal.list.guard';
 import {AppealViewGuard} from './modules/appeal/guards/appeal.view.guard';
-import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
-import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
+import {AppealGlobalComponent} from './modules/appeal/components/global/appeal.global.component';
+import {AppealGlobalGuard} from './modules/appeal/guards/appeal.global.guard';
 import {AppealMainGuard} from './modules/appeal/guards/appeal.main.guard';
-import {ReportMainGuard} from './guards/report/report.main.guard';
-import {ReportCreateGuard} from './guards/report/report.create.guard';
-import {ReportViewGuard} from './guards/report/report.view.guard';
-import {ReportListGuard} from './guards/report/report.list.guard';
+import {ReportCreateGuard} from './modules/report/guards/report.create.guard';
+import {ReportViewGuard} from './modules/report/guards/report.view.guard';
+import {ReportListGuard} from './modules/report/guards/report.list.guard';
 import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
 import {MatchViewComponent} from './components/match/view/match.view.component';
@@ -139,17 +138,15 @@ const app_routes: Routes = [
   },
   {path: "apelaciones/:page/:type", component: AppealGlobalComponent, canActivate: [AppealGlobalGuard], resolve: {AppealGlobalGuard}},
   {path: "apelaciones/:page", component: AppealGlobalComponent, canActivate: [AppealGlobalGuard], resolve: {AppealGlobalGuard}},
-  {path: "apelaciones", component: AppealGlobalComponent, canActivate: [AppealGlobalGuard], resolve: {AppealGlobalGuard}},
+  {path: "apelaciones", component: AppealGlobalComponent, canActivate: [UserLoggedGuard], resolve: {AppealGlobalGuard}},
   {path: "reportar",
     children: [
-      {path: "nuevo", component: ReportCreateComponent, canActivate: [ReportCreateGuard], resolve: {ReportCreateGuard}},
-      {path: ":id", component: ReportViewComponent, canActivate: [ReportViewGuard], resolve: {ReportViewGuard}},
-      {path: "", component: ReportMainComponent, canActivate: [ReportMainGuard], resolve: {ReportMainGuard}}
+      {path: "nuevo", component: ReportCreateComponent, canActivate: [UserLoggedGuard], resolve: {ReportCreateGuard}},
+      {path: ":id", component: ReportViewComponent, canActivate: [UserLoggedGuard], resolve: {ReportViewGuard}},
+      {path: "", component: ReportMainComponent, canActivate: [UserLoggedGuard]}
     ]
   },
-  {path: "reportes/:page/:type", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
-  {path: "reportes/:page", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
-  {path: "reportes", component: ReportListComponent, canActivate: [ReportListGuard], resolve: {ReportListGuard}},
+  {path: "reportes", component: ReportListComponent, canActivate: [UserLoggedGuard], resolve: {ReportListGuard}},
   {path: "sanciones/:page", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "sanciones", component: PunishmentListComponent, resolve: {PunishmentListGuard}},
   {path: "cuenta", component: UserEditComponent, canActivate: [UserLoggedGuard], resolve: {UserEditGuard}},

@@ -9,11 +9,18 @@ import {AppealMainComponent} from "./components/main/appeal.main.component";
 import {AppealMainGuard} from "./guards/appeal.main.guard";
 import {AppealListGuard} from "./guards/appeal.list.guard";
 import {AppealListComponent} from "./components/list/appeal.list.component";
+import {AppealGlobalGuard} from "./guards/appeal.global.guard";
+import {AppealGlobalComponent} from "./components/global/appeal.global.component";
+import {AppealViewComponent} from "./components/view/appeal.view.component";
+import {AppealViewGuard} from "./guards/appeal.view.guard";
+import {AppModule} from "../../app.module";
 
 @NgModule({
   declarations: [
     AppealMainComponent,
-    AppealListComponent
+    AppealListComponent,
+    AppealViewComponent,
+    AppealGlobalComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +32,8 @@ import {AppealListComponent} from "./components/list/appeal.list.component";
   ],
   providers: [
     AppealMainGuard,
+    AppealGlobalGuard,
+    AppealViewGuard,
     AppealListGuard
   ]
 })

@@ -23,11 +23,10 @@ import {ShopMainComponent} from './components/shop/main/shop.main.component';
 import {ShopCategoryComponent} from './components/shop/category/shop.category.component';
 import {ShopCartComponent} from './components/shop/cart/shop.cart.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
-import {AppealViewComponent} from './modules/appeal/components/view/appeal.view.component';
-import {ReportMainComponent} from './components/report/main/report.main.component';
-import {ReportListComponent} from './components/report/list/report.list.component';
-import {ReportCreateComponent} from './components/report/create/report.create.component';
-import {ReportViewComponent} from './components/report/view/report.view.component';
+import {ReportMainComponent} from './modules/report/components/main/report.main.component';
+import {ReportListComponent} from './modules/report/components/list/report.list.component';
+import {ReportCreateComponent} from './modules/report/components/create/report.create.component';
+import {ReportViewComponent} from './modules/report/components/view/report.view.component';
 import {ShopTransactionComponent} from './components/shop/transaction/shop.transaction.component';
 import {ApplicationPrivacyComponent} from './components/application/privacy/application.privacy.component';
 import {ApplicationRefundComponent} from './components/application/refund/application.refund.component';
@@ -73,14 +72,6 @@ import {PunishmentViewGuard} from './modules/punishment/guards/punishment.view.g
 import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.guard';
 import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealService} from './services/appeal.service';
-import {AppealViewGuard} from './modules/appeal/guards/appeal.view.guard';
-import {AppealGlobalComponent} from './components/appeal/global/appeal.global.component';
-import {AppealGlobalGuard} from './guards/appeal/appeal.global.guard';
-import {ReportService} from './services/report.service';
-import {ReportMainGuard} from './guards/report/report.main.guard';
-import {ReportCreateGuard} from './guards/report/report.create.guard';
-import {ReportViewGuard} from './guards/report/report.view.guard';
-import {ReportListGuard} from './guards/report/report.list.guard';
 import {MapService} from './services/map.service';
 import {MapViewGuard} from './guards/map/map.view.guard';
 import {MapMainGuard} from './guards/map/map.main.guard';
@@ -106,6 +97,7 @@ import {PunishmentViewComponent} from "./modules/punishment/components/view/puni
 import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
 import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
 import {AppealModule} from "./modules/appeal/appeal.module";
+import {ReportModule} from "./modules/report/report.module";
 
 
 @NgModule({
@@ -113,8 +105,6 @@ import {AppealModule} from "./modules/appeal/appeal.module";
 
     // --- Components --- //
 
-    AppealGlobalComponent,
-    AppealViewComponent,
     ApplicationAlertComponent,
     ApplicationDevelopementComponent,
     ApplicationDonationComponent,
@@ -123,7 +113,6 @@ import {AppealModule} from "./modules/appeal/appeal.module";
     ApplicationHeaderComponent,
     ApplicationHomepageComponent,
     ApplicationLoginComponent,
-    ApplicationPaginationComponent,
     ApplicationPrivacyComponent,
     GroupListComponent,
     GroupStaffComponent,
@@ -147,10 +136,6 @@ import {AppealModule} from "./modules/appeal/appeal.module";
     PunishmentEditComponent,
     PunishmentListComponent,
     PunishmentViewComponent,
-    ReportCreateComponent,
-    ReportListComponent,
-    ReportMainComponent,
-    ReportViewComponent,
     ShopCategoryComponent,
     ShopCartComponent,
     ShopMainComponent,
@@ -174,6 +159,7 @@ import {AppealModule} from "./modules/appeal/appeal.module";
     HttpClientModule,
     PasswordStrengthBarModule,
     MyDatePickerModule,
+    ReportModule,
     MomentModule,
     SocketIoModule.forRoot({url: 'http://149.56.40.174:7533', options: {}}),
     NgSelectModule,
@@ -193,8 +179,6 @@ import {AppealModule} from "./modules/appeal/appeal.module";
     ApplicationHomepageGuard,
     GroupListGuard,
     GroupStaffGuard,
-    AppealGlobalGuard,
-    AppealViewGuard,
     AppealService,
     CategoryCreateGuard,
     CategoryEditGuard,
@@ -221,11 +205,6 @@ import {AppealModule} from "./modules/appeal/appeal.module";
     UserLoggedGuard,
     PunishmentViewGuard,
     PunishmentService,
-    ReportCreateGuard,
-    ReportListGuard,
-    ReportMainGuard,
-    ReportViewGuard,
-    ReportService,
     TopicCreateGuard,
     TopicEditGuard,
     TopicReplyGuard,

@@ -16,9 +16,12 @@ import {ScrollbarDirective} from './directives/scrollbar.directive';
 import {SliderDirective} from './directives/slider.directive';
 import {TabDirective} from './directives/tab.directive';
 import {ParseDatePipe} from "./pipes/ParseDate.pipe";
+import {ApplicationPaginationComponent} from "./components/application/pagination/application.pagination.component";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
+    ApplicationPaginationComponent,
     BodyDirective,
     ClassifierDirective,
     CollapsibleDirective,
@@ -35,10 +38,11 @@ import {ParseDatePipe} from "./pipes/ParseDate.pipe";
     ParseDatePipe,
     NoSanitizePipe
   ],
-  imports: [
-    CommonModule,
-    MomentModule
-  ],
+    imports: [
+        CommonModule,
+        MomentModule,
+        FontAwesomeModule
+    ],
   exports: [
     BodyDirective,
     ClassifierDirective,
@@ -54,7 +58,8 @@ import {ParseDatePipe} from "./pipes/ParseDate.pipe";
     ValueOfPipe,
     TooltipDirective,
     NoSanitizePipe,
-    ParseDatePipe
+    ParseDatePipe,
+    ApplicationPaginationComponent
   ]
 })
 export class EpsilonModule { }

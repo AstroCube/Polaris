@@ -14,3 +14,7 @@ export interface IAppealsPermissions {
 export enum IAppealPermissible {
   All = 'All', Involved = 'Involved', Own = 'Own', None = 'None'
 }
+
+export enum IAppealSearchCriteria {
+  All = 'All', Open = 'Open', Closed = 'Closed', Escalated = 'Escalated', Involved = 'Involved', Waiting = 'Waiting'
+}

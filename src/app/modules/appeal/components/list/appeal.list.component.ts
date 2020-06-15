@@ -42,7 +42,7 @@ export class AppealListComponent implements OnInit {
   }
 
   public getAppealLastAction(appeal: IAppeal): IAppealAction {
-    return appeal.actions.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())[0];
+    return appeal.actions.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())[0];
   }
 
   public appealInsert(id):void {

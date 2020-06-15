@@ -1,0 +1,95 @@
+<section>
+  <div class="row u-margin-bottom-small">
+    <div class="col-3-of-4">
+      <h1 class="heading heading--primary">Lista de apelaciones</h1>
+    </div>
+    <div class="col-1-of-4">
+      <div class="appeal__classifier">
+        <div class="classifier" #classify>
+        <span class="classifier__label" classifier>
+          <span *ngIf="criteria === 'All'">Todos</span>
+          <span *ngIf="criteria === 'Open'">Abiertas</span>
+          <span *ngIf="criteria === 'Closed'">Cerradas</span>
+          <span *ngIf="criteria === 'Escalated'">Escaladas</span>
+          <span *ngIf="criteria === 'Involved'">Involucrado</span>
+          <span *ngIf="criteria === 'Waiting'">Esperando</span>
+        </span>
+          <div class="classifier__content">
+            <a (click)="refreshCriteria('All')" [class.classifier__option--active]="criteria === 'All'" class="classifier__option">Todos</a>
+            <a (click)="refreshCriteria('Open')" [class.classifier__option--active]="criteria === 'Open'" class="classifier__option">Abiertas</a>
+            <a (click)="refreshCriteria('Closed')" [class.classifier__option--active]="criteria === 'Closed'" class="classifier__option">Cerradas</a>
+            <a (click)="refreshCriteria('Escalated')" [class.classifier__option--active]="criteria === 'Escalated'" class="classifier__option">Escaladas</a>
+            <a *ngIf="permissions.view === 'Involved'" (click)="refreshCriteria('Involved')" [class.classifier__option--active]="criteria === 'Involved'" class="classifier__option">Involucrado</a>
+            <a *ngIf="permissions.assign_escalated" (click)="refreshCriteria('Waiting')" [class.classifier__option--active]="criteria === 'Waiting'" class="classifier__option">Esperando</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table--black table--fixed">
+    <div class="table__header">
+      <div class="table__cell appeal__table-small">
+        <p>Estado</p>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <p>Encargado</p>
+      </div>
+      <div class="table__cell appeal__table-large">
+        <p>Última acción</p>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <p>Fecha</p>
+      </div>
+      <div class="table__cell appeal__table-buttons">
+        <p>Acciones</p>
+      </div>
+    </div>
+    <div *ngFor="let appeal of appeals.data" class="table__row">
+      <div class="table__cell appeal__table-small">
+        <span *ngIf="!appeal.appealed && (!appeal.closed && !appeal.locked)" style="color: aqua">Apelando</span>
+        <span *ngIf="appeal.appealed" style="color: green">Apelada</span>
+        <span *ngIf="appeal.closed && !appeal.appealed" style="color: gray">Cerrada</span>
+        <span *ngIf="appeal.locked && !appeal.appealed" style="color: red">Bloqueada</span>
+        <span *ngIf="appeal.escalated && !appeal.appealed" style="color: darkorange">Escalada</span>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <a [style.color]="getPlaceholder(getSupervised(appeal)).mainGroup.html_color" routerLink="{{'/' + getSupervised(appeal).username}}">{{getSupervised(appeal).display}}</a>
+      </div>
+      <div class="table__cell appeal__table-large">
+        <p>
+          <span *ngIf="lastAction(appeal.actions).type === 'Create'">Creada por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Open'">Abierta por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Close'">Cerrada por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Lock'">Bloqueada por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Unlock'">Desbloqueada por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Comment'">Respuesta de </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Escalate'">Escalada por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Supervised'">Asignada a </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'Appeal'">Apelada por </span>
+          <span *ngIf="lastAction(appeal.actions).type === 'UnAppeal'">Des-apelada por </span>
+          <a [style.color]="getPlaceholder(lastAction(appeal.actions).user).mainGroup.html_color" routerLink="{{'/' + lastAction(appeal.actions).user.username}}">{{lastAction(appeal.actions).user.display}}</a>
+        </p>
+      </div>
+      <div class="table__cell appeal__table-small">
+        <span>{{lastAction(appeal.actions).createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+      </div>
+      <div class="table__cell appeal__table-buttons">
+        <a *ngIf="appeal.escalated && !appeal.supervisor &&
+        (appeal.punishment.issuer._id !== user._id && appeal.punishment.punished._id !== user._id)"
+           (click)="assignAppeal(appeal)" class="btn btn--blue shop__description-slug-button shop__cart-button">Asignar</a>
+        <a *ngIf="
+        (permissions.manage || permissions.view === 'All') ||
+        (appeal.punishment.issuer._id === user._id || appeal.punishment.punished._id === user._id) ||
+        (appeal.supervisor && appeal.supervisor._id === user._id)" routerLink="{{'/apelar/' + appeal._id}}" class="btn btn--blue shop__description-slug-button shop__cart-button">Ver</a>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="!appeals || (appeals && !appeals.data) || (appeals && appeals.data && appeals.data.length < 1)" class="u-center-text u-margin-top-small paragraph--white">No se han encontrado apelaciones.</p>
+  <pagination
+    *ngIf="appeals && appeals.data && appeals.data.length > 1"
+    [centered]="true"
+    [actual_page]="(appeals.pagination && appeals.pagination.page) ? appeals.pagination.page : 1"
+    [last_page]="(appeals.pagination && appeals.pagination.totalPages) ? appeals.pagination.totalPages : 1"
+    [route]="'/apelaciones/'" [queryParams]="criteria"
+  ></pagination>
+</section>

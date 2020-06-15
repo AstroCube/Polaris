@@ -1,7 +1,7 @@
-import {IModel} from "./IModel";
+import {IModel, IPaginateResult} from "./IModel";
 import {IPunishment} from "./IPunishment";
 import {IUser} from "./user/IUser";
-import {IAppealsPermissions} from "./permissions/IAppealsPermissions";
+import {IAppealSearchCriteria, IAppealsPermissions} from "./permissions/IAppealsPermissions";
 
 export interface IAppeal extends IModel {
     punishment: IPunishment;
@@ -17,7 +17,7 @@ export interface IAppeal extends IModel {
 export interface IAppealAction {
     type: IAppealActionType;
     user: IUser;
-    createdAt: any;
+    createdAt: Date;
     content: string;
 }
 
@@ -57,4 +57,16 @@ export interface IAppealResolve {
   user: IUser;
   appeal: IAppeal;
   permissions: IAppealsPermissions;
+}
+
+export interface IAppealList {
+  user: IUser;
+  appeals: IPaginateResult<IAppeal>;
+  permissions: IAppealsPermissions;
+}
+
+export interface IAppealSearch {
+  query: any;
+  own: boolean;
+  criteria: IAppealSearchCriteria;
 }

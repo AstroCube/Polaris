@@ -1,0 +1,133 @@
+<section>
+  <div class="row">
+    <div class="col-1-of-2">
+      <h1 class="heading u-margin-bottom-small">Reportando a <a routerLink="{{'/' + report.involved.username}}" [style.color]="getPlaceholder(report.involved).mainGroup.html_color">{{report.involved.display}}</a></h1>
+    </div>
+    <div class="col-1-of-2 u-right-text">
+      <a *ngIf="!report.punishment && (permissions.manage || report.assigned && report.assigned._id === user._id)" class="btn btn--secondary btn--slug shop__cart-button" (click)="punishUser()"><fa-icon [icon]="faGavel"></fa-icon> Sancionar usuario</a>
+      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id) && !report.closed" class="btn btn--red btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Close')"><fa-icon [icon]="faTimes"></fa-icon> Cerrar</a>
+      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id)  && report.closed" class="btn btn--green btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Open')"><fa-icon [icon]="faMarker"></fa-icon> Abrir</a>
+    </div>
+  </div>
+  <div class="table--black table--fixed">
+    <div class="table__header">
+      <div class="table__cell report__table-small">
+        <p>Reportador</p>
+      </div>
+      <div class="table__cell report__table-small">
+        <p>Involucrado</p>
+      </div>
+      <div class="table__cell report__table-large report__hidden">
+        <p>Encargado</p>
+      </div>
+      <div class="table__cell report__table-large report__hidden">
+        <p>Fecha</p>
+      </div>
+    </div>
+    <div class="table__row">
+      <div class="table__cell report__table-small">
+        <a routerLink="{{'/' + report.issuer.username}}" [style.color]="getPlaceholder(report.issuer).mainGroup.html_color">{{report.issuer.display}}</a>
+      </div>
+      <div class="table__cell report__table-small">
+        <a routerLink="{{'/' + report.involved.username}}" [style.color]="getPlaceholder(report.involved).mainGroup.html_color">{{report.involved.display}}</a>
+      </div>
+      <div class="table__cell report__table-large report__hidden">
+        <span *ngIf="!report.assigned">Esperando Asignación</span>
+        <a *ngIf="report.assigned" routerLink="{{'/' + report.assigned.username}}" [style.color]="getPlaceholder(report.assigned).mainGroup.html_color">{{report.assigned.display}}</a>
+      </div>
+      <div class="table__cell report__table-large report__hidden">
+        <span>{{report.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+      </div>
+    </div>
+  </div>
+  <p class="report__details">
+    <span>Reglas rotas:</span> {{report.rule}}
+  </p>
+  <div class="row">
+    <div class="col-1-of-2">
+      <p class="report__details">
+        <span>Evidencia:</span> {{report.evidence}}
+      </p>
+    </div>
+    <div class="col-1-of-2">
+      <p *ngIf="report.miscellaneous" class="report__details">
+        <span>Información adicional:</span> {{report.miscellaneous}}
+      </p>
+      <p *ngIf="!report.miscellaneous" class="report__details">
+        <span>Información adicional:</span> Ninguna.
+      </p>
+    </div>
+  </div>
+  <div class="report">
+    <div class="report__action">
+      <div class="report__action--left">
+        <img src="{{'https://minotar.net/avatar/' + initialAction.user.skin}}" alt="{{initialAction.user.username}}">
+        <p class="report__action-info">
+          <a [style.color]="getPlaceholder(initialAction.user).mainGroup.html_color" href="{{'/' + initialAction.user.username}}">{{initialAction.user.display}} </a> creó el reporte
+        </p>
+      </div>
+      <div class="report__action--right">
+        <span class="report__date">{{initialAction.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
+      </div>
+    </div>
+    <div *ngFor="let action of report.actions; let i = index;">
+      <div *ngIf="!action.content && i !== 0" class="report__action">
+        <div class="report__action--left">
+          <img src="{{'https://minotar.net/avatar/' + action.user.skin}}" alt="{{action.user.username}}">
+          <p class="report__action-info">
+            <a [style.color]="getPlaceholder(action.user).mainGroup.html_color" href="{{'/' + action.user.username}}">{{action.user.display}} </a>
+            <span *ngIf="action.type === 'Open'">abrió el reporte</span>
+            <span *ngIf="action.type === 'Close'">cerró el reporte</span>
+            <span *ngIf="action.type === 'Comment'">comentó el reporte</span>
+            <span *ngIf="action.type === 'Punish'">ha sancionado al usuario</span>
+          </p>
+        </div>
+        <div class="report__action--right">
+          <span class="report__date">{{action.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
+        </div>
+      </div>
+      <div *ngIf="action.content && i !== 0" class="report__comment">
+        <div class="report__comment-image">
+          <img src="{{'https://minotar.net/avatar/' + action.user.skin}}" alt="{{action.user.username}}" class="report__comment-image">
+        </div>
+        <div class="report__comment-action">
+          <div class="u-margin-bottom__small">
+            <div class="report__action--left">
+              <p class="report__action-info">
+                <a [style.color]="getPlaceholder(action.user).mainGroup.html_color" href="{{'/' + action.user.username}}">{{action.user.display}} </a>
+                <span *ngIf="action.type === 'Open'">abrió el reporte</span>
+                <span *ngIf="action.type === 'Close'">cerró el reporte</span>
+                <span *ngIf="action.type === 'Comment'">comentó el reporte</span>
+                <span *ngIf="action.type === 'Punish'">ha sancionado al usuario</span>
+              </p>
+            </div>
+            <div class="report__action--right">
+              <span class="report__date">{{action.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</span>
+            </div>
+          </div>
+          <p class="report__comment-text">{{action.content}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="u-right-text">
+    <button class="btn btn--primary" popup popup_id="report-popup" (click)="createAction('Comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</button>
+  </div>
+</section>
+<section class="report-popup" id="report-popup">
+  <form #report_request="ngForm" (ngSubmit)="submitAction()" class="report-popup__content">
+    <h2 class="heading heading--primary">
+      <span *ngIf="newAction.type === 'Open' || newAction.type === 'Close'">Abrir/Cerrar</span>
+      <span *ngIf="newAction.type === 'Comment'">Comentar</span>
+      reporte
+    </h2>
+    <p *ngIf="newAction.type === 'Open' || newAction.type === 'Close'" class="paragraph paragraph--white">El comentario en esta acción es opcional.</p>
+    <a popup popup_id="report-popup" #reportClose class="report-popup__close" (click)="actionReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <div class="report__form">
+      <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="newAction.content" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explícito posible, nos ayudarás mucho."></textarea>
+    </div>
+    <div class="u-right-text">
+      <button [disabled]="newAction.content === '' && (newAction.type === 'Comment')" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar reporte</button>
+    </div>
+  </form>
+</section>

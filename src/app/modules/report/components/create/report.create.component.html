@@ -1,0 +1,32 @@
+<section>
+  <h1 class="heading u-margin-bottom-small">Reportando a <a [style.color]="getPlaceholder(user).mainGroup.html_color" routerLink="{{'/' + user.username}}">{{user.display}}</a></h1>
+  <form #reportCreate="ngForm" (ngSubmit)="createReport()">
+    <div class="row u-margin-bottom-small">
+      <div class="col-1-of-4">
+        <p class="report__new-question">¿Que regla ha roto <span [style.color]="getPlaceholder(user).mainGroup.html_color">{{user.display}}</span>?</p>
+      </div>
+      <div class="col-3-of-4">
+        <textarea id="rule" name="rule" #rule="ngModel" [(ngModel)]="report.rule" cols="30" rows="10" class="form__textarea" required></textarea>
+      </div>
+    </div>
+    <div class="row u-margin-bottom-small">
+      <div class="col-1-of-4">
+        <p class="report__new-question">¿Que evidencia tienes? Escríbe una pieza por linea.</p>
+      </div>
+      <div class="col-3-of-4">
+        <textarea id="evidence" name="evidence" #evidence="ngModel" [(ngModel)]="report.evidence" cols="30" rows="10" class="form__textarea" required></textarea>
+      </div>
+    </div>
+    <div class="row u-margin-bottom-small">
+      <div class="col-1-of-4">
+        <p class="report__new-question">¿Algúna otra información adicional?.</p>
+      </div>
+      <div class="col-3-of-4">
+        <textarea id="miscellaneous" name="miscellaneous" #miscellaneous="ngModel" [(ngModel)]="report.miscellaneous" cols="30" rows="10" class="form__textarea" placeholder="Hora, juego, etc..."></textarea>
+      </div>
+    </div>
+    <div class="u-right-text">
+      <button [disabled]="!report.evidence || !report.rule" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faPlus"></fa-icon>Nuevo reporte</button>
+    </div>
+  </form>
+</section>

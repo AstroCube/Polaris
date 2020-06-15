@@ -52,7 +52,6 @@ export class AppealViewComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.info = data.AppealViewGuard;
       this.initialAction = this.info.appeal.actions.filter(action => action.type === IAppealActionType.Create)[0];
-      console.log(this.info.permissions);
       this.appealReset();
     });
   }

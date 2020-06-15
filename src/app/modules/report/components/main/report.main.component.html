@@ -27,7 +27,19 @@
   <div class="u-center-text u-margin-top-medium">
     <label for="reported" class="heading heading--primary">Escribe al nombre del usuario que reportarás</label>
     <form #reportMain="ngForm" (ngSubmit)="beginReport()" class="report__search u-margin-top-small">
-      <ng-select id="reported" name="reported" #reported="ngModel" [(ngModel)]="reported_user" [searchable]="true" [items]="users" bindLabel="username" placeholder="Selecciona un jugador. Ej: TakeMyTomato">
+      <ng-select
+        id="reported"
+        name="reported"
+        #reported="ngModel"
+        [(ngModel)]="selectedUser"
+        [searchable]="true"
+        [items]="users"
+        (clear)="clearUser()"
+        (search)="updateQuery($event)"
+        bindLabel="username"
+        placeholder="Selecciona un jugador. Ej: TakeMyTomato"
+        required
+      >
         <ng-template ng-option-tmp let-item="item">
           <img class="selector__avatar" src="{{'https://minotar.net/avatar/' + item.skin}}"/>
           <span class="paragraph--white">{{item.username}}</span>
@@ -37,7 +49,7 @@
           <span class="paragraph--white">{{item.username}}</span>
         </ng-template>
       </ng-select>
-      <button [disabled]="!reported_user" class="btn btn--primary u-margin-top-small">¡Iniciar reporte!</button>
+      <button [disabled]="!selectedUser" class="btn btn--primary u-margin-top-small">¡Iniciar reporte!</button>
     </form>
   </div>
 </section>
