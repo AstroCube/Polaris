@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faStar, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Meta, Title} from '@angular/platform-browser';
 import {GLOBAL} from "../../../../services/global";
@@ -16,8 +15,6 @@ import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 export class PunishmentListComponent implements OnInit {
 
   public result: IPaginateResult<IPunishment>;
-  faStar = faStar;
-  faTimes = faTimes;
 
   constructor(
     private _route: ActivatedRoute,

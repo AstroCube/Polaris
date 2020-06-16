@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faPencilAlt, faPlus, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Category} from '../../../models/forum/category';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryService} from '../../../services/category.service';
@@ -16,9 +15,6 @@ export class CategoryListComponent implements OnInit {
 
   public categories: Category[];
   public empty_record: boolean;
-  faPlus = faPlus;
-  faPencilAlt = faPencilAlt;
-  faTimes = faTimes;
 
   constructor(
     private _titleService: Title,

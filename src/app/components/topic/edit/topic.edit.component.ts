@@ -3,7 +3,6 @@ import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TopicService} from '../../../services/topic.service';
 import * as ClassicEditor from "../../../../../text_editor";
-import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
 
@@ -20,7 +19,6 @@ export class TopicEditComponent implements OnInit {
   public topic_data: any;
   public post_id: string;
   public post: any;
-  faEdit = faEdit;
 
   constructor(
     private _titleService: Title,

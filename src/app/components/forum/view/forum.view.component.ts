@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faBookmark, faEllipsisV, faListUl, faLock, faPlus, faThumbtack} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ForumService} from '../../../services/forum.service';
 import {NotifierService} from 'angular-notifier';
@@ -15,12 +14,6 @@ export class ForumViewComponent implements OnInit{
 
   public forum_data: any;
   public forum_info: any;
-  faBookmark = faBookmark;
-  faEllipsisV = faEllipsisV;
-  faListUl = faListUl;
-  faLock = faLock;
-  faPlus = faPlus;
-  faThumbtack = faThumbtack;
 
   constructor(
     private _titleService: Title,

@@ -3,7 +3,6 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import {app_routing_providers, routing} from './app.routing';
 import {ApplicationHeaderComponent} from './components/application/header/application.header.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {ApplicationHomepageComponent} from './components/application/homepage/application.homepage.component';
 import {ApplicationFooterComponent} from './components/application/footer/application.footer.component';
 import {ApplicationLoginComponent} from './components/application/login/application.login.component';
@@ -29,15 +28,13 @@ import {ApplicationRulesComponent} from './components/application/rules/applicat
 import {ApplicationTermsComponent} from './components/application/terms/application.terms.component';
 import {ApplicationDevelopementComponent} from './components/application/developement/application.developement.component';
 import {UserService} from './services/user.service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ApplicationLoginGuard} from './guards/application/application.login.guard';
-import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NotifierModule} from 'angular-notifier';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {UserViewGuard} from './modules/user/guards/user.view.guard';
-import {MomentModule} from 'ngx-moment';
 import {CategoryService} from './services/category.service';
 import {CategoryListGuard} from './guards/category/category.list.guard';
 import {CategoryEditGuard} from './guards/category/category.edit.guard';
@@ -58,10 +55,8 @@ import {TopicEditComponent} from './components/topic/edit/topic.edit.component';
 import {TopicEditGuard} from './guards/topic/topic.edit.guard';
 import {ForumViewGuard} from './guards/forum/forum.view.guard';
 import {ForumMainGuard} from './guards/forum/forum.main.guard';
-import {SocketIoModule} from 'ngx-socket-io';
 import {ForumFeedComponent} from './components/forum/feed/forum.feed.component';
 import {PunishmentService} from './services/punishment.service';
-import { MyDatePickerModule } from 'mydatepicker';
 import {AppealService} from './services/appeal.service';
 import {MapService} from './services/map.service';
 import {MapViewGuard} from './guards/map/map.view.guard';
@@ -87,6 +82,9 @@ import {AppealModule} from "./modules/appeal/appeal.module";
 import {ReportModule} from "./modules/report/report.module";
 import {PunishmentModule} from "./modules/punishment/punishment.module";
 import {NgxSpinnerModule} from "ngx-spinner";
+import {SocketIoModule} from "ngx-socket-io";
+import {MomentModule} from "ngx-moment";
+import {Ng9PasswordStrengthBarModule} from "ng9-password-strength-bar";
 
 
 @NgModule({
@@ -141,11 +139,10 @@ import {NgxSpinnerModule} from "ngx-spinner";
     UserModule,
     PunishmentModule,
     NgxSpinnerModule,
-    FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    PasswordStrengthBarModule,
-    MyDatePickerModule,
+    Ng9PasswordStrengthBarModule,
     ReportModule,
     MomentModule,
     SocketIoModule.forRoot({url: 'http://149.56.40.174:7533', options: {}}),

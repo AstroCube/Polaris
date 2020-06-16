@@ -12,8 +12,8 @@
         </h1>
       </div>
       <div class="col-1-of-2 u-right-text">
-        <a *ngIf="permissions.punishments && permissions.punishments.manage" routerLink="{{ '/sancion/editar/' + punishment._id}}" class="btn btn--green btn--uppercase btn--strong profile__button"><fa-icon [icon]="faUserEdit"></fa-icon> Editar</a>
-        <a routerLink="/sanciones" class="btn btn--primary btn--uppercase btn--strong profile__button"><fa-icon [icon]="faList"></fa-icon> Lista</a>
+        <a *ngIf="permissions.punishments && permissions.punishments.manage" routerLink="{{ '/sancion/editar/' + punishment._id}}" class="btn btn--green btn--uppercase btn--strong profile__button"><i class="fas fa-user-edit"></i> Editar</a>
+        <a routerLink="/sanciones" class="btn btn--primary btn--uppercase btn--strong profile__button"><i class="fas fa-list"></i> Lista</a>
       </div>
     </div>
     <div class="row">

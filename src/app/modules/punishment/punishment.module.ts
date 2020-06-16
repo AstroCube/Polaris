@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EpsilonModule} from '../../epsilon.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {MomentModule} from 'ngx-moment';
@@ -14,7 +13,7 @@ import {PunishmentCreateGuard} from "./guards/punishment.create.guard";
 import {PunishmentEditGuard} from "./guards/punishment.edit.guard";
 import {PunishmentListGuard} from "./guards/punishment.list.guard";
 import {PunishmentViewGuard} from "./guards/punishment.view.guard";
-import {MyDatePickerModule} from "mydatepicker";
+import {AngularMyDatePickerModule} from "angular-mydatepicker";
 
 @NgModule({
   declarations: [
@@ -24,14 +23,13 @@ import {MyDatePickerModule} from "mydatepicker";
     PunishmentViewComponent
   ],
     imports: [
-        CommonModule,
-        EpsilonModule,
-        FontAwesomeModule,
-        FormsModule,
-        NgSelectModule,
-        MomentModule,
-        RouterModule,
-        MyDatePickerModule
+      CommonModule,
+      EpsilonModule,
+      FormsModule,
+      NgSelectModule,
+      MomentModule,
+      RouterModule,
+      AngularMyDatePickerModule
     ],
   providers: [
     PunishmentCreateGuard,

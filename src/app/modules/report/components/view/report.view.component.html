@@ -4,9 +4,9 @@
       <h1 class="heading u-margin-bottom-small">Reportando a <a routerLink="{{'/' + report.involved.username}}" [style.color]="getPlaceholder(report.involved).mainGroup.html_color">{{report.involved.display}}</a></h1>
     </div>
     <div class="col-1-of-2 u-right-text">
-      <a *ngIf="!report.punishment && (permissions.manage || report.assigned && report.assigned._id === user._id)" class="btn btn--secondary btn--slug shop__cart-button" (click)="punishUser()"><fa-icon [icon]="faGavel"></fa-icon> Sancionar usuario</a>
-      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id) && !report.closed" class="btn btn--red btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Close')"><fa-icon [icon]="faTimes"></fa-icon> Cerrar</a>
-      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id)  && report.closed" class="btn btn--green btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Open')"><fa-icon [icon]="faMarker"></fa-icon> Abrir</a>
+      <a *ngIf="!report.punishment && (permissions.manage || report.assigned && report.assigned._id === user._id)" class="btn btn--secondary btn--slug shop__cart-button" (click)="punishUser()"><i class="fas fa-gavel"></i> Sancionar usuario</a>
+      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id) && !report.closed" class="btn btn--red btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Close')"><i class="fas fa-times"></i></a>
+      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id)  && report.closed" class="btn btn--green btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Open')"><i class="fas fa-marker"></i> Abrir</a>
     </div>
   </div>
   <div class="table--black table--fixed">
@@ -111,7 +111,7 @@
     </div>
   </div>
   <div class="u-right-text">
-    <button *ngIf="!report.closed" class="btn btn--primary" popup popup_id="report-popup" (click)="createAction('Comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</button>
+    <button *ngIf="!report.closed" class="btn btn--primary" popup popup_id="report-popup" (click)="createAction('Comment')"><i class="btn__icon--left fas fa-comment"></i> Escribir comentario</button>
   </div>
 </section>
 <section class="report-popup" id="report-popup">
@@ -122,12 +122,12 @@
       reporte
     </h2>
     <p *ngIf="newAction.type === 'Open' || newAction.type === 'Close'" class="paragraph paragraph--white">El comentario en esta acción es opcional.</p>
-    <a popup popup_id="report-popup" #reportClose class="report-popup__close" (click)="actionReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <a popup popup_id="report-popup" #reportClose class="report-popup__close" (click)="actionReset()"><i class="fas fa-times"></i></a>
     <div class="report__form">
       <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="newAction.content" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explícito posible, nos ayudarás mucho."></textarea>
     </div>
     <div class="u-right-text">
-      <button [disabled]="newAction.content === '' && (newAction.type === 'Comment')" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar reporte</button>
+      <button [disabled]="newAction.content === '' && (newAction.type === 'Comment')" class="btn btn--primary"><i class="btn__icon--left fas fa-list"></i>Actualizar reporte</button>
     </div>
   </form>
 </section>

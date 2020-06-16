@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {GLOBAL} from '../../../../services/global';
@@ -16,7 +15,6 @@ export class ReportMainComponent implements OnInit {
   public users: IUser[];
   public selectedUser: IUser;
   public reportingStaff: boolean;
-  faList = faList;
 
   constructor(
     private titleService: Title,

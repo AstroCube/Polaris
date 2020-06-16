@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-1-of-4">
       <div class="account__menu u-margin-top-big">
-        <button class="tab__link tab__link--vertical tab__link--active" tab tab_id="personal_info"><fa-icon [icon]="faUser"></fa-icon> Información Personal</button>
-        <button class="tab__link tab__link--vertical" tab tab_id="account_settings"><fa-icon [icon]="faFingerprint"></fa-icon> Ajústes de cuenta</button>
-        <button class="tab__link tab__link--vertical" tab tab_id="social_networks"><fa-icon [icon]="faShareSquare"></fa-icon> Redes sociales</button>
-        <button class="tab__link tab__link--vertical" tab tab_id="profile_customization"><fa-icon [icon]="faColumns"></fa-icon> Personalizar perfil</button>
-        <button class="tab__link tab__link--vertical" tab tab_id="rank_privileges"><fa-icon [icon]="faStar"></fa-icon> Privilégios de rango</button>
-        <button class="tab__link tab__link--vertical" tab tab_id="website_configuration"><fa-icon [icon]="faKeyboard"></fa-icon> Configuración web</button>
+        <button class="tab__link tab__link--vertical tab__link--active" tab tab_id="personal_info"><i class="fas fa-user"></i> Información Personal</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="account_settings"><i class="fas fa-fingerprint"></i> Ajústes de cuenta</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="social_networks"><i class="fas fa-share-square"></i> Redes sociales</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="profile_customization"><i class="fas fa-columns"></i> Personalizar perfil</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="rank_privileges"><i class="fas fa-star"></i> Privilégios de rango</button>
+        <button class="tab__link tab__link--vertical" tab tab_id="website_configuration"><i class="fas fa-keyboard"></i> Configuración web</button>
       </div>
     </div>
     <div class="col-3-of-4">
@@ -49,7 +49,7 @@
               <input id="email_locked" name="email_locked" #email="ngModel" [(ngModel)]="user.email" type="text" class="form__input form__input--full-gutter" disabled>
             </div>
             <div class="col-1-of-2">
-              <a class="btn btn--secondary" popup popup_id="account-popup" (click)="openPopup()"><fa-icon [icon]="faMarker"></fa-icon> Actualiza tu correo electrónico</a>
+              <a class="btn btn--secondary" popup popup_id="account-popup" (click)="openPopup()"><i class="fas fa-marker"></i> Actualiza tu correo electrónico</a>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@
           <div class="row u-margin-top-small">
             <div class="col-1-of-2 account__security">
               <span>Seguridad de contraseña: </span>
-              <ng2-password-strength-bar [passwordToCheck]="passwordUpdateReq.password" [strengthLabels]="labels"></ng2-password-strength-bar>
+              <ng9-password-strength-bar [passwordToCheck]="passwordUpdateReq.password" [strengthLabels]="labels"></ng9-password-strength-bar>
             </div>
             <div class="col-1-of-2">
               <button class="btn btn--primary u-float-right">Actualizar</button>
@@ -84,24 +84,24 @@
         <div class="row">
           <div class="col-1-of-2">
             <div class="account__field">
-              <label class="account__label" for="public_email"><fa-icon [icon]="faEnvelope"></fa-icon> Email público</label>
+              <label class="account__label" for="public_email"><i class="fas fa-enveloper"></i> Email público</label>
               <input id="public_email" name="public_email" #public_email="ngModel" [(ngModel)]="user.publicInfo.email" type="text" class="form__input form__input--full-gutter" placeholder="Email público">
             </div>
             <div class="account__field">
-              <label class="account__label" for="twitter"><fa-icon [icon]="faTwitter"></fa-icon> Twitter</label>
+              <label class="account__label" for="twitter"><i class="fab fa-twitter"></i> Twitter</label>
               <input id="twitter" name="twitter" #twitter="ngModel" [(ngModel)]="user.publicInfo.twitter" type="text" class="form__input form__input--full-gutter" placeholder="Twitter">
             </div>
             <div class="account__field">
-              <label class="account__label" for="steam"><fa-icon [icon]="faSteam"></fa-icon> Steam</label>
+              <label class="account__label" for="steam"><<i class="fab fa-steam"></i> Steam</label>
               <input id="steam" name="steam" #steam="ngModel" [(ngModel)]="user.publicInfo.steam" type="text" class="form__input form__input--full-gutter" placeholder="Steam">
             </div>
           </div>
           <div class="col-1-of-2">
             <div class="account__field">
-              <label class="account__label"><fa-icon [icon]="faDiscord"></fa-icon> Discord</label>
+              <label class="account__label"><i class="fab fa-discord"></i> Discord</label>
               <a *ngIf="!user.discord" href="{{url + 'discord-sync?id=' + user._id}}" class="account__discord-button">
                 <span class="account__discord-button--text">¡Inicia sesión con discord!</span>
-                <span class="account__discord-button--logo"><fa-icon [icon]="faDiscord"></fa-icon></span>
+                <span class="account__discord-button--logo"><i class="fab fa-discord"></i></span>
               </a>
               <div *ngIf="user.discord" class="account__discord-placeholder">
                 <div class="account__discord-avatar">
@@ -110,15 +110,15 @@
                 <span class="account__discord-message">
                     @{{discord.username}}
                 </span>
-                <a class="account__discord-button account__discord-button--logout" (click)="discordLogout()"><fa-icon [icon]="faTimes"></fa-icon> Logout</a>
+                <a class="account__discord-button account__discord-button--logout" (click)="discordLogout()"><i class="fas fa-times"></i> Logout</a>
               </div>
             </div>
             <div class="account__field">
-              <label class="account__label" for="reddit"><fa-icon [icon]="faReddit"></fa-icon> Reddit</label>
+              <label class="account__label" for="reddit"><i class="fab fa-reddit"></i> Reddit</label>
               <input id="reddit" name="reddit" #reddit="ngModel" [(ngModel)]="user.publicInfo.reddit" type="text" class="form__input form__input--full-gutter" placeholder="Reddit">
             </div>
             <div class="account__field">
-              <label class="account__label" for="twitch"><fa-icon [icon]="faTwitch"></fa-icon> Twitch</label>
+              <label class="account__label" for="twitch"><i class="fab fa-twitch"></i> Twitch</label>
               <input id="twitch" name="twitch" #twitch="ngModel" [(ngModel)]="user.publicInfo.twitch" type="text" class="form__input form__input--full-gutter" placeholder="Twitch">
             </div>
             <button class="btn btn--primary u-float-right u-margin-top-small">Actualizar</button>
@@ -192,7 +192,7 @@
   <form id="email_update" #email_update="ngForm" (ngSubmit)="emailUpdate()" class="account-popup__content">
     <h2 class="heading heading--primary u-margin-bottom-small">Actualiza tu correo electrónico</h2>
     <p class="paragraph paragraph--white">Para Socraft Network es muy importante la seguridad de tu cuenta, por lo que preferimos confirmar antes de que realmente quieras hacer este cambio. Al momento de actualizar tu correo electrónico tu cuenta migrará con ella, así que te hemos enviado un correo de seguridad con un código para verificar que eres tú. Simplemente ingresa el código recibido junto al nuevo correo electrónico para actualizarlo.</p>
-    <a popup popup_id="account-popup" #popup_close class="account-popup__close"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <a popup popup_id="account-popup" #popup_close class="account-popup__close"><i class="fas fa-times"></i></a>
     <div class="row u-margin-bottom-small">
       <div class="col-1-of-2">
         <label class="account__label" for="new_email">Nuevo correo electrónico</label>

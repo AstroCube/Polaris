@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faList, faPlus} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../../services/user.service';
 import {ReportService} from '../../../../services/report.service';
@@ -19,8 +18,6 @@ export class ReportCreateComponent implements OnInit{
 
   public user: IUser;
   public report: IReportCreation;
-  faList = faList;
-  faPlus = faPlus;
 
   constructor(
     private titleService: Title,

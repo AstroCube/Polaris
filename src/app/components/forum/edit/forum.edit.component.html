@@ -9,15 +9,15 @@
     <div class="row">
       <div class="col-1-of-2">
         <div class="forum-admin__form">
-          <label for="name" class="form__icon"><fa-icon [icon]="faPencilAlt"></fa-icon></label>
+          <label for="name" class="form__icon"><i class="fas fa-pencil-alt"></i> </label>
           <input id="name" name="name" #name="ngModel" [(ngModel)]="forum.name" type="text" class="form__input" [class.form__input--invalid]="!name.valid && name.touched" placeholder="Nombre" required>
         </div>
         <div class="forum-admin__form">
-          <label for="order" class="form__icon"><fa-icon [icon]="faSort"></fa-icon>&nbsp;</label>
+          <label for="order" class="form__icon"><i class="fas fa-sort"></i>&nbsp;</label>
           <input id="order" name="order" #order="ngModel" [(ngModel)]="forum.order" type="number" class="form__input" [class.form__input--invalid]="!order.valid && order.touched" placeholder="Órden" required>
         </div>
         <div class="forum-admin__form">
-          <label class="form__icon"><fa-icon [icon]="faIndent"></fa-icon>&nbsp;</label>
+          <label class="form__icon"><i class="fas fa-indent"></i>&nbsp;</label>
           <div class="forum__tree-form">
             <ng-select
               *ngIf="!only_categories"
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="u-right-text">
-      <button class="btn btn--primary" [disabled]="!update_forum.valid"><fa-icon class="btn__icon--left" [icon]="faPencilAlt"></fa-icon>Actualizar foro</button>
+      <button class="btn btn--primary" [disabled]="!update_forum.valid"><i class="btn__icon--left fas fa-plus"></i>Actualizar foro</button>
     </div>
   </form>
 </section>

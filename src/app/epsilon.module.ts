@@ -17,7 +17,6 @@ import {SliderDirective} from './directives/slider.directive';
 import {TabDirective} from './directives/tab.directive';
 import {ParseDatePipe} from "./pipes/ParseDate.pipe";
 import {ApplicationPaginationComponent} from "./components/application/pagination/application.pagination.component";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
@@ -39,9 +38,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     NoSanitizePipe
   ],
     imports: [
-        CommonModule,
-        MomentModule,
-        FontAwesomeModule
+      CommonModule,
+      MomentModule
     ],
   exports: [
     BodyDirective,

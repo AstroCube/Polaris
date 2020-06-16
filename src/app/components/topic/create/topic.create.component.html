@@ -23,21 +23,21 @@
                   <input id="pin" name="pin" #pin="ngModel" [(ngModel)]="topic.pinned" class="form__checkbox-input" type="checkbox">
                   <span class="form__checkbox-checkmark"></span>
                 </label>
-                <label for="pin" class="link link--small link--white"><fa-icon [icon]="faThumbtack"></fa-icon> Anclar</label>
+                <label for="pin" class="link link--small link--white"><i class="fas fa-thumbtack"></i> Anclar</label>
               </div>
               <div *ngIf="pre_fetch.permissions.lock" class="u-margin-bottom-small">
                 <label for="lock" class="form__checkbox" tooltip content="Con esta opción las personas no podrán responder a tu tema" placement="top">
                   <input id="lock" name="lock" #lock="ngModel" [(ngModel)]="topic.locked" class="form__checkbox-input" type="checkbox">
                   <span class="form__checkbox-checkmark"></span>
                 </label>
-                <label for="lock" class="link link--small link--white"><fa-icon [icon]="faLock"></fa-icon> Cerrar</label>
+                <label for="lock" class="link link--small link--white"><i class="fas fa-lock"></i> Cerrar</label>
               </div>
               <div *ngIf="pre_fetch.permissions.official" class="u-margin-bottom-small">
                 <label for="official" class="form__checkbox" tooltip content="Esta opción marcará el tema como mensaje oficial del staff" placement="top">
                   <input id="official" name="official" #official="ngModel" [(ngModel)]="topic.official" class="form__checkbox-input" type="checkbox">
                   <span class="form__checkbox-checkmark"></span>
                 </label>
-                <label for="official" class="link link--small link--white"><fa-icon [icon]="faBookmark"></fa-icon> Oficial</label>
+                <label for="official" class="link link--small link--white"><i class="fas fa-bookmark"></i> Oficial</label>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
             <ckeditor id="content" name="content" #content="ngModel" [(ngModel)]="topic.content" tagName="editor" [editor]="editor"></ckeditor>
           </div>
           <div class="u-right-text u-margin-bottom-small">
-            <button class="btn btn--secondary"><fa-icon [icon]="faPlus" class="btn__icon--left"></fa-icon>Crear tema</button>
+            <button class="btn btn--secondary"><i class="btn__icon--left fas fa-plus"></i>Crear tema</button>
           </div>
         </div>
       </form>

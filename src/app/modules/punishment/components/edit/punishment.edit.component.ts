@@ -5,6 +5,7 @@ import {Title} from '@angular/platform-browser';
 import {PunishmentService} from "../../../../services/punishment.service";
 import {GLOBAL} from "../../../../services/global";
 import {IPunishment} from "../../../../newModels/IPunishment";
+import {IAngularMyDpOptions} from "angular-mydatepicker";
 
 @Component({
   selector: 'punishment-edit',
@@ -14,7 +15,7 @@ import {IPunishment} from "../../../../newModels/IPunishment";
 export class PunishmentEditComponent implements OnInit{
 
   public punishment: IPunishment;
-  public pickerOptions: any;
+  public pickerOptions: IAngularMyDpOptions;
   public initialEpoc: number;
   public expiration: string;
 
@@ -29,12 +30,9 @@ export class PunishmentEditComponent implements OnInit{
       dayLabels: {su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab'},
       monthLabels: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
       dateFormat: 'dd-mm-yyyy',
-      todayBtnTxt: 'Hoy',
+      todayTxt: 'Hoy',
       sunHighlight: false,
-      allowDeselectDate: false,
       openSelectorTopOfInput: true,
-      openSelectorOnInputClick: true,
-      editableDateField: false,
       minYear: new Date().getFullYear(),
       maxYear: new Date().getFullYear() + 1
     };

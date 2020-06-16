@@ -5,13 +5,12 @@ import {UserViewGuard} from './guards/user.view.guard';
 import {EpsilonModule} from '../../epsilon.module';
 import {UserEditComponent} from './components/edit/user.edit.component';
 import {UserEditGuard} from './guards/user.edit.guard';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
+import {Ng9PasswordStrengthBarModule} from "ng9-password-strength-bar";
 
 @NgModule({
   declarations: [
@@ -21,11 +20,10 @@ import {RouterModule} from '@angular/router';
   imports: [
     CommonModule,
     EpsilonModule,
-    FontAwesomeModule,
     FormsModule,
     NgSelectModule,
     CKEditorModule,
-    PasswordStrengthBarModule,
+    Ng9PasswordStrengthBarModule,
     MomentModule,
     RouterModule
   ],

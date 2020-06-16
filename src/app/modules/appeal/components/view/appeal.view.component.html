@@ -4,13 +4,13 @@
       <h1 class="heading u-margin-bottom-small">Apelando infracción <span class="appeal__id-small">(ID: {{info.appeal._id}})</span></h1>
     </div>
     <div class="col-1-of-2 u-right-text">
-      <a *ngIf="permissionsChecker('transactional.escalate', false) && !info.appeal.locked && !info.appeal.escalated" class="btn btn--primary shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('Escalate')"><fa-icon [icon]="faUserTie"></fa-icon> Escalar</a>
-      <a *ngIf="permissionsChecker('transactional.appeal', true) && (!info.appeal.appealed && !info.appeal.locked)" (click)="createAction('Appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Apelar</a>
-      <a *ngIf="permissionsChecker('transactional.appeal', true) && (info.appeal.appealed && !info.appeal.locked)" (click)="createAction('UnAppeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faGavel"></fa-icon> Retractar</a>
-      <a *ngIf="permissionsChecker('lock', false) && !info.appeal.locked" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><fa-icon [icon]="faLock"></fa-icon> Bloquear</a>
-      <a *ngIf="permissionsChecker('lock', false) && info.appeal.locked" class="btn btn--green shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><fa-icon [icon]="faUnlock"></fa-icon> Desbloquear</a>
-      <a *ngIf="permissionsChecker('transactional.close', true) && (!info.appeal.closed && !info.appeal.locked)" class="btn btn--red shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('Close')"><fa-icon [icon]="faTimes"></fa-icon> Cerrar</a>
-      <a *ngIf="permissionsChecker('transactional.close', true) && (info.appeal.closed && !info.appeal.locked)" class="btn btn--green shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('Open')"><fa-icon [icon]="faMarker"></fa-icon> Abrir</a>
+      <a *ngIf="permissionsChecker('transactional.escalate', false) && !info.appeal.locked && !info.appeal.escalated" class="btn btn--primary shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('Escalate')"><i class="fas fa-user-tie"></i> Escalar</a>
+      <a *ngIf="permissionsChecker('transactional.appeal', true) && (!info.appeal.appealed && !info.appeal.locked)" (click)="createAction('Appeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><i class="fas fa-gavel"></i> Apelar</a>
+      <a *ngIf="permissionsChecker('transactional.appeal', true) && (info.appeal.appealed && !info.appeal.locked)" (click)="createAction('UnAppeal')" popup popup_id="appeal-popup" class="btn btn--secondary shop__description-slug-button shop__cart-button"><i class="fas fa-gavel"></i> Retractar</a>
+      <a *ngIf="permissionsChecker('lock', false) && !info.appeal.locked" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><i class="fas fa-lock"></i> Bloquear</a>
+      <a *ngIf="permissionsChecker('lock', false) && info.appeal.locked" class="btn btn--green shop__description-slug-button shop__cart-button" (click)="lockAppeal()"><i class="fas fa-unlock"></i> Desbloquear</a>
+      <a *ngIf="permissionsChecker('transactional.close', true) && (!info.appeal.closed && !info.appeal.locked)" class="btn btn--red shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('Close')"><i class="fas fa-times"></i> Cerrar</a>
+      <a *ngIf="permissionsChecker('transactional.close', true) && (info.appeal.closed && !info.appeal.locked)" class="btn btn--green shop__description-slug-button shop__cart-button" popup popup_id="appeal-popup" (click)="createAction('Open')"><i class="fas fa-marker"></i> Abrir</a>
     </div>
   </div>
   <div class="table--black table--fixed">
@@ -128,7 +128,7 @@
     </div>
   </div>
   <div class="u-right-text">
-    <a *ngIf="!info.appeal.closed && !info.appeal.locked" class="btn btn--primary" popup popup_id="appeal-popup" (click)="createAction('Comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</a>
+    <a *ngIf="!info.appeal.closed && !info.appeal.locked" class="btn btn--primary" popup popup_id="appeal-popup" (click)="createAction('Comment')"><i class="btn__icon--left fas fa-comment"></i> Escribir comentario</a>
   </div>
 </section>
 <section class="appeal-popup" id="appeal-popup">
@@ -141,12 +141,12 @@
        apelación
     </h2>
     <p *ngIf="createdAction.type === 'Open' || createdAction.type === 'Close' || createdAction.type === 'Appeal' || createdAction.type === 'UnAppeal'" class="paragraph paragraph--white">El comentario en esta acción es opcional.</p>
-    <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="appealReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <a popup popup_id="appeal-popup" #appeal_close class="appeal-popup__close" (click)="appealReset()"><i class="fas fa-times"></i></a>
     <div class="appeal__form">
       <textarea id="new_comment" name="new_comment" #comment="ngModel" [(ngModel)]="createdAction.content" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explícito posible, nos ayudarás mucho."></textarea>
     </div>
     <div class="u-right-text">
-      <button [disabled]="!createdAction.content && createdAction.type === 'Comment'" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Actualizar apelación</button>
+      <button [disabled]="!createdAction.content && createdAction.type === 'Comment'" class="btn btn--primary"><i class="btn__icon--left fas fa-list"></i>Actualizar apelación</button>
     </div>
   </form>
 </section>

@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {faAngleDoubleLeft, faAngleDoubleRight} from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 
 @Component({
@@ -18,8 +17,6 @@ export class ApplicationPaginationComponent implements OnInit {
   public paginator_type;
   public first_page;
   public pages: number[];
-  faAngleDoubleLeft = faAngleDoubleLeft;
-  faAngleDoubleRight = faAngleDoubleRight;
 
   constructor(
     private _router: Router

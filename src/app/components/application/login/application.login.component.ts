@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faLock, faUser} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service';
 import {NotifierService} from 'angular-notifier';
@@ -16,8 +15,6 @@ export class ApplicationLoginComponent implements OnInit {
   public requested_email: string;
   public requested_password: string;
   public requested_persistence: boolean;
-  faUser = faUser;
-  faLock = faLock;
 
   constructor(
     private _metaService: Meta,

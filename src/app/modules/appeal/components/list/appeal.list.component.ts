@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IAppeal, IAppealAction, IAppealCreation, IAppealMain} from "../../../../newModels/IAppeal";
-import {faList, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 import {AppealService} from "../../../../services/appeal.service";
@@ -15,8 +14,6 @@ export class AppealListComponent implements OnInit {
 
   public info: IAppealMain;
   public createAction: IAppealCreation;
-  faTimes = faTimes;
-  faList = faList;
 
   constructor(
     private route: ActivatedRoute,

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faStar} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Map} from '../../../models/minecraft/map';
 import {GLOBAL} from '../../../services/global';
@@ -19,7 +18,6 @@ export class MapMainComponent {
   public query : any = {};
   public pages : number;
   public url : string;
-  faStar = faStar;
 
   constructor(
     private _titleService: Title,

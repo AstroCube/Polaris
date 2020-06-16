@@ -8,7 +8,7 @@
       <h1 class="heading">Foros</h1>
     </div>
     <div class="col-1-of-2 u-right-text">
-      <a routerLink="crear" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faPlus"></fa-icon>Crear foro</a>
+      <a routerLink="crear" class="btn btn--primary"><i class="btn__icon--left fas fa-plus"></i>Crear foro</a>
     </div>
   </div>
   <div class="u-margin-bottom-small" *ngFor="let node of tree">
@@ -41,8 +41,8 @@
           <p>{{forum.parent}}</p>
         </div>
         <div class="table__cell">
-          <a routerLink="{{'editar/' + forum._id }}" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faPencilAlt"></fa-icon></a>
-          <a (click)="deleteForum" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faTimes"></fa-icon></a>
+          <a routerLink="{{'editar/' + forum._id }}" class="btn btn--transparent"><i class="btn__icon--left fas fa-pencil-alt"></i></a>
+          <a (click)="deleteForum" class="btn btn--transparent"><i class="btn__icon--left fas fa-times"></i>></a>
         </div>
       </div>
     </div>

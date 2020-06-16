@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EpsilonModule} from '../../epsilon.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
@@ -13,7 +12,6 @@ import {AppealGlobalGuard} from "./guards/appeal.global.guard";
 import {AppealGlobalComponent} from "./components/global/appeal.global.component";
 import {AppealViewComponent} from "./components/view/appeal.view.component";
 import {AppealViewGuard} from "./guards/appeal.view.guard";
-import {AppModule} from "../../app.module";
 
 @NgModule({
   declarations: [
@@ -25,7 +23,6 @@ import {AppModule} from "../../app.module";
   imports: [
     CommonModule,
     EpsilonModule,
-    FontAwesomeModule,
     FormsModule,
     MomentModule,
     RouterModule

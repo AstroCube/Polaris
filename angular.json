@@ -30,8 +30,7 @@
             "styles": [
               "src/assets/scss/main.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -143,5 +142,8 @@
       }
     }
   },
-  "defaultProject": "SeocraftWebsite"
+  "defaultProject": "SeocraftWebsite",
+  "cli": {
+    "analytics": "83045b25-3f4b-4046-9182-9d1fafdf477d"
+  }
 }

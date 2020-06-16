@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faPencilAlt, faUserPlus, faUserMinus, faList, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Group} from '../../../models/group';
 import {GroupService} from '../../../services/group.service';
@@ -20,11 +19,6 @@ export class GroupListComponent implements OnInit {
   public updatableComment: string;
   public users: any;
   public type : string;
-  faList = faList;
-  faTimes = faTimes;
-  faPencilAlt = faPencilAlt;
-  faUserPlus = faUserPlus;
-  faUserMinus = faUserMinus;
 
   constructor(
     private _titleService: Title,

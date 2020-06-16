@@ -8,7 +8,7 @@
       <h1 class="heading">Categorías</h1>
     </div>
     <div class="col-1-of-2 u-right-text">
-      <a routerLink="crear" class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faPlus"></fa-icon>Crear categoría</a>
+      <a routerLink="crear" class="btn btn--primary"><i class="fas btn__icon--left fa-plus"></i>Crear categoría</a>
     </div>
   </div>
   <div class="table--black">
@@ -31,8 +31,8 @@
         <p>{{category.name}}</p>
       </div>
       <div class="table__cell">
-        <a routerLink="{{'editar/' + category._id}}" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faPencilAlt"></fa-icon></a>
-        <a (click)="deleteCategory(category._id)" class="btn btn--transparent"><fa-icon class="btn__icon--left" [icon]="faTimes"></fa-icon></a>
+        <a routerLink="{{'editar/' + category._id}}" class="btn btn--transparent"><i class="btn__icon--left fas fa-pencil-alt"></i></a>
+        <a (click)="deleteCategory(category._id)" class="btn btn--transparent"><i class="btn__icon--left fas fa-times"></i></a>
       </div>
     </div>
   </div>

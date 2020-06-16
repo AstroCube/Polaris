@@ -16,7 +16,7 @@
         <div class="forum__subforums">
           <div *ngFor="let sub_forum of forum_info.sub_forums" class="subforum">
             <div class="subforum__title">
-              <fa-icon class="subforum__title-image" [icon]="faEllipsisV"></fa-icon>
+              <i class="subforum__title-image fas fa-ellipsis-v"></i>
               <a class="subforum__title-link" routerLink="{{'/foro/' + sub_forum.id}}">{{sub_forum.name}}</a>
             </div>
             <div class="subforum__indicator">
@@ -38,8 +38,8 @@
           </div>
         </div>
         <div class="u-margin-bottom-small u-margin-top-small u-right-text">
-          <a (click)="readAll()" class="btn btn--secondary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faListUl"></fa-icon> Leer todo</a>
-          <a *ngIf="this.forum_data.permissions.create" (click)="newTopic()" class="btn btn--primary shop__description-slug-button shop__cart-button"><fa-icon [icon]="faPlus"></fa-icon> Crear tema</a>
+          <a (click)="readAll()" class="btn btn--secondary shop__description-slug-button shop__cart-button"><i class="fas fa-list-ul"></i> Leer todo</a>
+          <a *ngIf="this.forum_data.permissions.create" (click)="newTopic()" class="btn btn--primary shop__description-slug-button shop__cart-button"><i class="fas fa-plus"></i> Crear tema</a>
         </div>
         <div class="forum__topics">
           <div class="forum__topics-header">
@@ -68,9 +68,9 @@
                 <span tooltip content="Creado en {{topic.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="top" class="forum__node-date">{{topic.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
               </div>
               <div class="forum__node-icons">
-                <fa-icon *ngIf="topic.pinned" class="forum__node-icon" [icon]="faThumbtack" tooltip content="Anclado" placement="top"></fa-icon>
-                <fa-icon *ngIf="topic.lock" class="forum__node-icon" [icon]="faLock" tooltip content="Bloqueado" placement="top"></fa-icon>
-                <fa-icon *ngIf="topic.official" class="forum__node-icon" [icon]="faBookmark" tooltip content="Respuesta Oficial" placement="top"></fa-icon>
+                <i *ngIf="topic.pinned" class="forum__node-icon fas fa-bookmark" tooltip content="Anclado" placement="top"></i>
+                <i *ngIf="topic.lock" class="forum__node-icon fas fa-bookmark" tooltip content="Bloqueado" placement="top"></i>
+                <i *ngIf="topic.official" class="forum__node-icon fas fa-bookmark" tooltip content="Respuesta Oficial" placement="top"></i>
               </div>
             </div>
             <div class="forum__node-indicator">
@@ -101,9 +101,9 @@
                 <span tooltip content="Creado en {{topic.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="top" class="forum__node-date">{{topic.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
               </div>
               <div class="forum__node-icons">
-                <fa-icon *ngIf="topic.pinned" class="forum__node-icon" [icon]="faThumbtack" tooltip content="Anclado" placement="top"></fa-icon>
-                <fa-icon *ngIf="topic.lock" class="forum__node-icon" [icon]="faLock" tooltip content="Bloqueado" placement="top"></fa-icon>
-                <fa-icon *ngIf="topic.official" class="forum__node-icon" [icon]="faBookmark" tooltip content="Respuesta Oficial" placement="top"></fa-icon>
+                <i *ngIf="topic.pinned" class="forum__node-icon fas fa-thumbtack" tooltip content="Anclado" placement="top"></i>
+                <i *ngIf="topic.lock" class="forum__node-icon fas fa-lock" tooltip content="Bloqueado" placement="top"></i>
+                <i *ngIf="topic.official" class="forum__node-icon fas fa-bookmark" tooltip content="Respuesta Oficial" placement="top"></i>
               </div>
             </div>
             <div class="forum__node-indicator">

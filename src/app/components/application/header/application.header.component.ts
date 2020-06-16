@@ -1,10 +1,7 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {faFacebookF, faTwitter, faYoutube} from '@fortawesome/free-brands-svg-icons';
-import {faBars, faComments, faCompass, faGamepad, faLock, faSearch, faShoppingBag, faSignInAlt, faTimes, faUser, faUsers} from '@fortawesome/free-solid-svg-icons';
 import {UserService} from '../../../services/user.service';
 import {Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
-import {faGithub} from '@fortawesome/free-brands-svg-icons/faGithub';
 import Typed from 'typed.js';
 import {forkJoin, from} from 'rxjs';
 import {map, mergeMap} from 'rxjs/operators';
@@ -27,21 +24,6 @@ export class ApplicationHeaderComponent implements OnInit {
   public requested_password: string;
   public requested_persistence: boolean;
   public logged: boolean;
-  faBars = faBars;
-  faCompass = faCompass;
-  faComments = faComments;
-  faFacebookF = faFacebookF;
-  faGamepad = faGamepad;
-  faGithub = faGithub;
-  faLock = faLock;
-  faSearch = faSearch;
-  faShoppingBag = faShoppingBag;
-  faSignInAlt = faSignInAlt;
-  faTimes = faTimes;
-  faTwitter = faTwitter;
-  faUser = faUser;
-  faUsers = faUsers;
-  faYoutube = faYoutube;
 
   constructor(
     private notifierService: NotifierService,

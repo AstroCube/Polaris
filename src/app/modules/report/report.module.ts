@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EpsilonModule} from '../../epsilon.module';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
@@ -25,7 +24,6 @@ import {NgSelectModule} from "@ng-select/ng-select";
   imports: [
     CommonModule,
     EpsilonModule,
-    FontAwesomeModule,
     FormsModule,
     MomentModule,
     RouterModule,

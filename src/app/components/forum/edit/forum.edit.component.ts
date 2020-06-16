@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faIndent, faPencilAlt, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
 import {Forum} from '../../../models/forum/forum';
 import {ForumService} from '../../../services/forum.service';
 import {NotifierService} from 'angular-notifier';
@@ -17,10 +16,6 @@ export class ForumEditComponent implements OnInit{
   public forum: Forum;
   public forum_tree: any[];
   public only_categories: boolean;
-  faPencilAlt = faPencilAlt;
-  faPlus = faPlus;
-  faSort = faSort;
-  faIndent = faIndent;
 
   constructor(
     private _titleService: Title,

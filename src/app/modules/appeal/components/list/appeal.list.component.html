@@ -118,14 +118,14 @@
   <form #appealCreate="ngForm" (ngSubmit)="appealRequest()" class="appeal-popup__content">
     <h2 class="heading heading--primary">Abrir una apelación</h2>
     <p class="appeal__id">(IP registrada: {{createAction.registeredAddress}})</p>
-    <a popup popup_id="appeal-popup" class="appeal-popup__close" (click)="appealReset()"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <a popup popup_id="appeal-popup" class="appeal-popup__close" (click)="appealReset()"><i class="fas fa-times"></i></a>
     <p class="paragraph paragraph--white u-margin-bottom-small">Recuerda que al abrir una apelación entrarás en contacto directo con el moderador que aplicó la sanción.</p>
     <p class="paragraph paragraph--white">Escribe la razón por la cual deseas apelar esta sanción.</p>
     <div class="appeal__form">
       <textarea id="appeal_explanation" name="appeal_explanation" #explain="ngModel" [(ngModel)]="createAction.comment" cols="30" rows="10" class="form__textarea" placeholder="Recuerda ser lo más explicito posible, nos ayudarás mucho."></textarea>
     </div>
     <div class="u-right-text">
-      <button class="btn btn--primary"><fa-icon class="btn__icon--left" [icon]="faList"></fa-icon>Crear apelación</button>
+      <button class="btn btn--primary"><i class="btn__icon--left fas fa-list"></i>Crear apelación</button>
     </div>
   </form>
 </section>

@@ -4,7 +4,6 @@ import {TopicService} from '../../../services/topic.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Post} from '../../../models/forum/post';
-import {faComment} from '@fortawesome/free-solid-svg-icons';
 import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
 
@@ -22,7 +21,6 @@ export class TopicReplyComponent implements OnInit {
   public topic_id: string;
   public quote_post: any;
   public post: Post;
-  faComment = faComment;
 
   constructor(
     private _titleService: Title,

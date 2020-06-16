@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -10,7 +9,6 @@ import {ActivatedRoute} from '@angular/router';
 export class AppealMainComponent implements OnInit {
 
   public canAppeal: boolean;
-  faList = faList;
 
   constructor(
     private route: ActivatedRoute

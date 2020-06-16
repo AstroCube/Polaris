@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faBookmark, faEdit, faFlag, faLock, faReply, faStar, faThumbsUp, faThumbtack, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TopicService} from '../../../services/topic.service';
 import {NotifierService} from 'angular-notifier';
@@ -13,7 +12,7 @@ import {Title} from '@angular/platform-browser';
 })
 
 export class TopicViewComponent implements OnInit {
-  
+
   public forum_data: any;
   public can_reply: boolean;
   public can_edit: boolean;
@@ -22,15 +21,6 @@ export class TopicViewComponent implements OnInit {
   public guest: boolean;
   public topic_data: any;
   public topic_id: string;
-  faBookmark = faBookmark;
-  faEdit = faEdit;
-  faFlag = faFlag;
-  faLock = faLock;
-  faThumbsUp = faThumbsUp;
-  faThumbtack = faThumbtack;
-  faTrash = faTrash;
-  faReply = faReply;
-  faStar = faStar;
 
   constructor(
     private _titleService: Title,

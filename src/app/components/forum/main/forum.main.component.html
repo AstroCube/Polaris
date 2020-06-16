@@ -18,7 +18,7 @@
               </div>
               <div *ngFor="let forum of category.forums" class="category__node">
                 <div class="category__node-title">
-                  <fa-icon class="category__node-image" [icon]="faEllipsisV"></fa-icon>
+                  <i class="category__node-image fas fa-ellipsis-v"></i>
                   <a routerLink="{{'/foro/' + forum.id}}" class="category__node-title-link">{{forum.name}}</a>
                 </div>
                 <div class="category__node-indicator">

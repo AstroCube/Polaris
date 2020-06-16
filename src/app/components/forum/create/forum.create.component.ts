@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faIndent, faPencilAlt, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
 import {Forum} from '../../../models/forum/forum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ForumService} from '../../../services/forum.service';
@@ -17,10 +16,6 @@ export class ForumCreateComponent implements OnInit {
   public forum: Forum;
   public forum_tree: any[];
   public only_categories: boolean;
-  faIndent = faIndent;
-  faPencilAlt = faPencilAlt;
-  faPlus = faPlus;
-  faSort = faSort;
 
   constructor(
     private _titleService: Title,

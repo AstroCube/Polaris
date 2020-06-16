@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faUserPlus, faUsers, faUserTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'friendship',
@@ -7,7 +6,4 @@ import {faUserPlus, faUsers, faUserTimes} from '@fortawesome/free-solid-svg-icon
 })
 
 export class FriendshipComponent {
-  faUsers = faUsers;
-  faUserPlus = faUserPlus;
-  faUserTimes = faUserTimes;
 }

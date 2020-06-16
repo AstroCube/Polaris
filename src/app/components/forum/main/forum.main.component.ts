@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {faEllipsisV} from '@fortawesome/free-solid-svg-icons';
 import {GLOBAL} from '../../../services/global';
 import {Meta, Title} from '@angular/platform-browser';
 
@@ -12,7 +11,6 @@ import {Meta, Title} from '@angular/platform-browser';
 export class ForumMainComponent implements OnInit {
 
   public categories: any[];
-  faEllipsisV = faEllipsisV;
 
   constructor(
     private _titleService: Title,

@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faCode, faMapSigns} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Map} from '../../../models/minecraft/map';
 import { GLOBAL } from '../../../services/global';
@@ -19,8 +18,6 @@ export class MapViewComponent {
   public placeholder : any;
   public canDownload : boolean;
   public url : string;
-  faCode = faCode;
-  faMapSigns = faMapSigns;
 
   constructor(
     private _titleService: Title,

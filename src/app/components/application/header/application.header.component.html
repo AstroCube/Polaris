@@ -2,21 +2,22 @@
   <div class="header__top">
     <span class="header__top-background"></span>
     <div class="header__social-media">
-      <a href="https://www.facebook.com/SeocraftNetwork" class="header__social-icons"><fa-icon [icon]="faFacebookF"></fa-icon></a>
-      <a href="https://twitter.com/SeocraftNetwork" class="header__social-icons"><fa-icon [icon]="faTwitter"></fa-icon></a>
-      <a href="#" class="header__social-icons"><fa-icon [icon]="faYoutube"></fa-icon></a>
-      <a href="https://github.com/SeocraftNetwork" class="header__social-icons"><fa-icon [icon]="faGithub"></fa-icon></a>
+      <a href="https://www.facebook.com/SeocraftNetwork" class="header__social-icons"><i class="fab fa-facebook-square"></i></a>
+      <a href="https://twitter.com/SeocraftNetwork" class="header__social-icons"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="header__social-icons"><i class="fab fa-youtube"></i></a>
+      <a href="https://github.com/SeocraftNetwork" class="header__social-icons"><i class="fab fa-github"></i></a>
     </div>
     <div class="header__announcements">
       <span class="header__announcements-slider"></span>
     </div>
     <div class="header__buttons" *ngIf="!logged">
       <a popup popup_id="login-popup" class="btn btn--transparent">
-        <fa-icon class="btn__icon--left" [icon]="faUser"></fa-icon>
+        <i class="btn__icon--left fas fa-user"></i>
         Iniciar sesión
       </a>
       <a [routerLink]="['/registrarse']" class="btn btn--transparent">
-        <fa-icon class="btn__icon--left" [icon]="faSignInAlt"></fa-icon>
+
+        <i class="btn__icon--left fas fa-sign-in-alt"></i>
         Registrarse
       </a>
     </div>
@@ -64,31 +65,31 @@
     <a [routerLink]="['/']" class="header__logo">
       <img src="../../../../assets/images/logo.png" alt="Seocraft Logo" class="header__image">
     </a>
-    <span class="header__navigator-responsive" navbar-responsive><fa-icon [icon]="faBars"></fa-icon></span>
+    <span class="header__navigator-responsive" navbar-responsive><i class="fas fa-bars"></i></span>
     <nav id="navigator" class="header__navigator">
-      <span class="header__navigator-close u-pointer" navbar-responsive><fa-icon [icon]="faTimes"></fa-icon></span>
+      <span class="header__navigator-close u-pointer" navbar-responsive><i class="fas fa-times"></i></span>
       <ul>
         <li>
           <a (click)="comingSoon()" class="u-pointer">
-            <fa-icon [icon]="faGamepad"></fa-icon>
+            <i class="fas fa-gamepad"></i>
             Jugar
           </a>
         </li>
         <li>
           <a routerLink="/mapas">
-            <fa-icon [icon]="faCompass"></fa-icon>
+            <i class="fas fa-compass"></i>
             Mapas
           </a>
         </li>
         <li class="dropdown">
           <span class="dropdown__label" navbar-dropdown>
-            <fa-icon [icon]="faUsers"></fa-icon>
+            <i class="fas fa-users"></i>
             Usuarios
           </span>
           <div class="dropdown__content">
             <input type="text" class="search__navbar" placeholder="Buscar jugador...">
             <button class="search__navbar-button">
-              <fa-icon [icon]="faSearch"></fa-icon>
+              <i class="fas fa-search"></i>
             </button>
             <a (click)="comingSoon()" class="dropdown__link u-pointer">Estadísticas</a>
             <a routerLink="/staff" class="dropdown__link">Conóce al staff</a>
@@ -96,13 +97,13 @@
         </li>
         <li>
           <a routerLink="/foro">
-            <fa-icon [icon]="faComments"></fa-icon>
+            <i class="fas fa-comments"></i>
             Foros
           </a>
         </li>
         <li>
           <a routerLink="/donaciones">
-            <fa-icon [icon]="faShoppingBag"></fa-icon>
+            <i class="fas fa-shopping-bag"></i>
             Tienda
           </a>
         </li>
@@ -114,13 +115,13 @@
   <form #login_request="ngForm" (ngSubmit)="loginRequest()" class="login-popup__content">
     <h2 class="heading heading--primary u-margin-bottom-small">Iniciar sesión</h2>
     <p class="paragraph paragraph--white">¡Ingresa tu mail y contraseña para ingresar a Seocraft Network!</p>
-    <a popup popup_id="login-popup" #login_close class="login-popup__close"><fa-icon [icon]="faTimes"></fa-icon></a>
+    <a popup popup_id="login-popup" #login_close class="login-popup__close"><i class="fas fa-times"></i></a>
     <div class="login-popup__input-box">
-      <label for="email" class="form__icon"><fa-icon [icon]="faUser"></fa-icon></label>
+      <label for="email" class="form__icon"><i class="fas fa-user"></i></label>
       <input class="form__input" [class.form__input--invalid]="!email.valid && email.touched" id="email" name="email" type="email" #email="ngModel" [(ngModel)]="requested_email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="Correo electrónico" required>
     </div>
     <div class="login-popup__input-box">
-      <label for="password" class="form__icon"><fa-icon [icon]="faLock"></fa-icon></label>
+      <label for="password" class="form__icon"><i class="fas fa-lock"></i></label>
       <input class="form__input" [class.form__input--invalid]="!password.valid && password.touched" id="password" name="password" type="password" #password="ngModel" [(ngModel)]="requested_password" placeholder="Contraseña" required>
     </div>
     <div class="login__link">

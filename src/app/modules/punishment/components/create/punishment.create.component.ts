@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IMyDpOptions} from 'mydatepicker';
 import {NotifierService} from 'angular-notifier';
 import {Title} from '@angular/platform-browser';
 import {IPunishment, IPunishmentCreateData, PunishmentType} from "../../../../newModels/IPunishment";
 import {PunishmentService} from "../../../../services/punishment.service";
 import {GLOBAL} from "../../../../services/global";
 import {UserService} from "../../../../services/user.service";
+import {IAngularMyDpOptions} from "angular-mydatepicker";
 
 @Component({
   selector: 'punishment-create',
@@ -18,7 +18,7 @@ export class PunishmentCreateComponent implements OnInit {
   public createData: IPunishmentCreateData;
   public punishment: IPunishment;
   public options: any[];
-  public pickerOptions: IMyDpOptions;
+  public pickerOptions: IAngularMyDpOptions;
 
   public selectionLabel: string;
   public expiresLabel: string;
@@ -35,12 +35,10 @@ export class PunishmentCreateComponent implements OnInit {
       dayLabels: {su: 'Dom', mo: 'Lun', tu: 'Mar', we: 'Mie', th: 'Jue', fr: 'Vie', sa: 'Sab'},
       monthLabels: { 1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Ago', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dic' },
       dateFormat: 'dd-mm-yyyy',
-      todayBtnTxt: 'Hoy',
+      todayTxt: 'Hoy',
       sunHighlight: false,
-      allowDeselectDate: false,
+      focusInputOnDateSelect: true,
       openSelectorTopOfInput: true,
-      openSelectorOnInputClick: true,
-      editableDateField: false,
       minYear: new Date().getFullYear(),
       maxYear: new Date().getFullYear() + 1
     };

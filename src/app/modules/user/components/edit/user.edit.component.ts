@@ -1,16 +1,4 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {
-  faColumns,
-  faEnvelope,
-  faFingerprint,
-  faKeyboard,
-  faMarker,
-  faShareSquare,
-  faStar,
-  faTimes,
-  faUser
-} from '@fortawesome/free-solid-svg-icons';
-import {faDiscord, faReddit, faSteam, faTwitch, faTwitter} from '@fortawesome/free-brands-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
 import {Title} from '@angular/platform-browser';
@@ -36,20 +24,6 @@ export class UserEditComponent implements OnInit {
   public gender_options: any[];
   public labels;
   public url: string;
-  faColumns = faColumns;
-  faDiscord = faDiscord;
-  faEnvelope = faEnvelope;
-  faFingerprint = faFingerprint;
-  faKeyboard = faKeyboard;
-  faMarker = faMarker;
-  faReddit = faReddit;
-  faShareSquare = faShareSquare;
-  faStar = faStar;
-  faSteam = faSteam;
-  faTimes = faTimes;
-  faTwitch = faTwitch;
-  faTwitter = faTwitter;
-  faUser = faUser;
 
   constructor(
     private titleService: Title,

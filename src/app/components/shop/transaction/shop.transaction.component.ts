@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faReceipt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'shop-transaction',
@@ -7,5 +6,4 @@ import {faReceipt} from '@fortawesome/free-solid-svg-icons';
 })
 
 export class ShopTransactionComponent {
-  faRecipt = faReceipt;
 }

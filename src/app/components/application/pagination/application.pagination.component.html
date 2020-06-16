@@ -1,6 +1,6 @@
 <div class="pagination" [class.pagination--centered]="centered">
   <a (click)="navigate(actual_page-1)" class="pagination__arrow" *ngIf="actual_page != 1">
-    <fa-icon [icon]="faAngleDoubleLeft"></fa-icon>
+    <i class="fas fa-angle-double-left"></i>
   </a>
   <nav *ngIf="paginator_type == 'less_five'">
     <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" (click)="navigate(page)">{{page}}</a>
@@ -23,6 +23,6 @@
     <a class="pagination__link" *ngFor="let page of pages" [class.pagination__link--active]="actual_page == page" (click)="navigate(page)">{{page}}</a>
   </nav>
   <a (click)="navigate(actual_page+1)" class="pagination__arrow" *ngIf="actual_page != last_page && actual_page != 1">
-    <fa-icon [icon]="faAngleDoubleRight"></fa-icon>
+    <i class="fas fa-angle-double-right"></i>
   </a>
 </div>

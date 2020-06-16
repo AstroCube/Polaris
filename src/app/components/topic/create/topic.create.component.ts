@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import * as ClassicEditor from "../../../../../text_editor";
-import {faBookmark, faLock, faPlus, faThumbtack} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Topic} from '../../../models/forum/topic';
 import {TopicService} from '../../../services/topic.service';
@@ -20,10 +19,6 @@ export class TopicCreateComponent implements OnInit{
   public editor = ClassicEditor;
   public pre_fetch: any = {};
   public topic: Topic;
-  faPlus = faPlus;
-  faLock = faLock;
-  faThumbtack = faThumbtack;
-  faBookmark = faBookmark;
 
   constructor(
     private _titleService: Title,

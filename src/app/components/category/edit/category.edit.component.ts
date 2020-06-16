@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faPencilAlt, faSort} from '@fortawesome/free-solid-svg-icons';
 import {Category} from '../../../models/forum/category';
 import {CategoryService} from '../../../services/category.service';
 import {NotifierService} from 'angular-notifier';
@@ -15,8 +14,6 @@ import {GLOBAL} from '../../../services/global';
 export class CategoryEditComponent implements OnInit{
 
   public category: Category;
-  faPencilAlt = faPencilAlt;
-  faSort = faSort;
 
   constructor(
     private _titleService: Title,

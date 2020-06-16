@@ -1,16 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {IAppealAction, IAppealActionType, IAppealResolve} from "../../../../newModels/IAppeal";
-import {
-  faComment,
-  faGavel,
-  faList,
-  faLock,
-  faMarker,
-  faTimes,
-  faUnlock,
-  faUserTie
-} from '@fortawesome/free-solid-svg-icons';
 import {Title} from "@angular/platform-browser";
 import {GLOBAL} from "../../../../services/global";
 import {IAppealPermissible} from "../../../../newModels/permissions/IAppealsPermissions";
@@ -30,14 +20,6 @@ export class AppealViewComponent implements OnInit {
   public info: IAppealResolve;
   public createdAction: IAppealAction;
   public initialAction: IAppealAction;
-  faComment = faComment;
-  faGavel = faGavel;
-  faList = faList;
-  faLock = faLock;
-  faTimes = faTimes;
-  faMarker = faMarker;
-  faUnlock = faUnlock;
-  faUserTie = faUserTie;
 
   constructor(
     private route: ActivatedRoute,

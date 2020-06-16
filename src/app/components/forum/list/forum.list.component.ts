@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faPencilAlt, faPlus, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {GLOBAL} from '../../../services/global';
 import {Title} from '@angular/platform-browser';
@@ -12,9 +11,6 @@ import {Title} from '@angular/platform-browser';
 export class ForumListComponent implements OnInit {
 
   public tree: any[];
-  faPencilAlt = faPencilAlt;
-  faPlus = faPlus;
-  faTimes = faTimes;
 
   constructor(
     private _titleService: Title,

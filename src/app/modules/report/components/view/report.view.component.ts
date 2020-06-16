@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faComment, faGavel, faList, faMarker, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReportService} from '../../../../services/report.service';
 import {NotifierService} from 'angular-notifier';
@@ -23,11 +22,6 @@ export class ReportViewComponent implements OnInit {
   public initialAction: IReportAction;
   public newAction: IReportAction;
   public permissions: IReportsPermissions;
-  faComment = faComment;
-  faGavel = faGavel;
-  faTimes = faTimes;
-  faMarker = faMarker;
-  faList = faList;
 
   constructor(
     private titleService: Title,

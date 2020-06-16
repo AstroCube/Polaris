@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {faList, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {GLOBAL} from "../../../../services/global";
@@ -15,10 +14,8 @@ import {IPermissions} from "../../../../newModels/IGroup";
 
 export class PunishmentViewComponent implements OnInit {
 
-  private punishment: IPunishment;
-  private permissions: IPermissions;
-  faUserEdit = faUserEdit;
-  faList = faList;
+  public punishment: IPunishment;
+  public permissions: IPermissions;
 
   constructor(
     private _route: ActivatedRoute,

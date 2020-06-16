@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faList} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReportService} from '../../../../services/report.service';
 import {NotifierService} from 'angular-notifier';
@@ -18,7 +17,6 @@ export class ReportListComponent {
 
   public data: IReportList;
   public criteria: ReportSearchCriteria;
-  faList = faList;
 
   constructor(
     private titleService: Title,

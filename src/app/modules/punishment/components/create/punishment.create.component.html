@@ -41,7 +41,8 @@
       </div>
       <div *ngIf="selectionLabel === 'Suspensión temporal'" class="u-margin-bottom-medium">
         <label class="form__label">Expira</label>
-        <my-date-picker id="expires" name="expires" [options]="pickerOptions" [(ngModel)]="punishment.expires" (dateChanged)="changeDate($event)" required></my-date-picker>
+        <input angular-mydatepicker id="expires" name="expires" [options]="pickerOptions"
+               [(ngModel)]="punishment.expires" (dateChanged)="changeDate($event)" required/>
         <span class="punishment__advice">* Por razones administrativas las sanciones temporales son mínimo de un día.</span>
       </div>
     </div>
