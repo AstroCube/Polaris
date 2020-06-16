@@ -9,7 +9,6 @@ import {ApplicationFooterComponent} from './components/application/footer/applic
 import {ApplicationLoginComponent} from './components/application/login/application.login.component';
 import {ForumMainComponent} from './components/forum/main/forum.main.component';
 import {ForumViewComponent} from './components/forum/view/forum.view.component';
-import {ApplicationPaginationComponent} from './components/application/pagination/application.pagination.component';
 import {TopicViewComponent} from './components/topic/view/topic.view.component';
 import {CategoryListComponent} from './components/category/list/category.list.component';
 import {CategoryCreateComponent} from './components/category/create/category.create.component';
@@ -23,10 +22,6 @@ import {ShopMainComponent} from './components/shop/main/shop.main.component';
 import {ShopCategoryComponent} from './components/shop/category/shop.category.component';
 import {ShopCartComponent} from './components/shop/cart/shop.cart.component';
 import {FriendshipComponent} from './components/friendship/friendship.component';
-import {ReportMainComponent} from './modules/report/components/main/report.main.component';
-import {ReportListComponent} from './modules/report/components/list/report.list.component';
-import {ReportCreateComponent} from './modules/report/components/create/report.create.component';
-import {ReportViewComponent} from './modules/report/components/view/report.view.component';
 import {ShopTransactionComponent} from './components/shop/transaction/shop.transaction.component';
 import {ApplicationPrivacyComponent} from './components/application/privacy/application.privacy.component';
 import {ApplicationRefundComponent} from './components/application/refund/application.refund.component';
@@ -66,11 +61,7 @@ import {ForumMainGuard} from './guards/forum/forum.main.guard';
 import {SocketIoModule} from 'ngx-socket-io';
 import {ForumFeedComponent} from './components/forum/feed/forum.feed.component';
 import {PunishmentService} from './services/punishment.service';
-import {PunishmentCreateGuard} from './modules/punishment/guards/punishment.create.guard';
 import { MyDatePickerModule } from 'mydatepicker';
-import {PunishmentViewGuard} from './modules/punishment/guards/punishment.view.guard';
-import {PunishmentEditGuard} from './modules/punishment/guards/punishment.edit.guard';
-import {PunishmentListGuard} from './modules/punishment/guards/punishment.list.guard';
 import {AppealService} from './services/appeal.service';
 import {MapService} from './services/map.service';
 import {MapViewGuard} from './guards/map/map.view.guard';
@@ -90,14 +81,11 @@ import {GroupListGuard} from './guards/group/group.list.guard';
 import {FriendService} from './services/friend.service';
 import {UserModule} from './modules/user/user.module';
 import {EpsilonModule} from './epsilon.module';
-import {PunishmentCreateComponent} from "./modules/punishment/components/create/punishment.create.component";
-import {PunishmentEditComponent} from "./modules/punishment/components/edit/punishment.edit.component";
-import {PunishmentListComponent} from "./modules/punishment/components/list/punishment.list.component";
-import {PunishmentViewComponent} from "./modules/punishment/components/view/punishment.view.component";
 import {UserPermissionsGuard} from "./modules/user/guards/user.permissions.guard";
 import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
 import {AppealModule} from "./modules/appeal/appeal.module";
 import {ReportModule} from "./modules/report/report.module";
+import {PunishmentModule} from "./modules/punishment/punishment.module";
 
 
 @NgModule({
@@ -132,10 +120,6 @@ import {ReportModule} from "./modules/report/report.module";
     MapMainComponent,
     MapViewComponent,
     MatchViewComponent,
-    PunishmentCreateComponent,
-    PunishmentEditComponent,
-    PunishmentListComponent,
-    PunishmentViewComponent,
     ShopCategoryComponent,
     ShopCartComponent,
     ShopMainComponent,
@@ -154,6 +138,7 @@ import {ReportModule} from "./modules/report/report.module";
     CKEditorModule,
     EpsilonModule,
     UserModule,
+    PunishmentModule,
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
@@ -198,12 +183,8 @@ import {ReportModule} from "./modules/report/report.module";
     MapService,
     MatchViewGuard,
     MatchService,
-    PunishmentCreateGuard,
-    PunishmentEditGuard,
-    PunishmentListGuard,
     UserPermissionsGuard,
     UserLoggedGuard,
-    PunishmentViewGuard,
     PunishmentService,
     TopicCreateGuard,
     TopicEditGuard,

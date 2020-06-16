@@ -49,14 +49,14 @@
       </div>
       <div class="table__cell report__table-large report__hidden">
         <span *ngIf="!report.assigned">Esperando Asignación</span>
-        <a *ngIf="report.assigned" routerLink="{{'/' + report.assigned.username}}" [style.color]="getPlaceholder(report.assigned).mainGroup.html_color">{{report.assigned.username}}</a>
+        <a *ngIf="report.assigned" routerLink="{{'/' + report.assigned.username}}" [style.color]="getPlaceholder(report.assigned).mainGroup.html_color">{{report.assigned.display}}</a>
       </div>
       <div class="table__cell report__table-small report__hidden">
         <span>{{report.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
       </div>
       <div class="table__cell report__table-buttons">
         <a *ngIf="!report.assigned && (data.permissions.assign || data.permissions.manage)" (click)="assignReport(report._id)" class="btn btn--blue shop__description-slug-button shop__cart-button">Asignar</a>
-        <a *ngIf="report.assigned._id === data.user._id || report.issuer._id === data.user._id" routerLink="{{'/reportar/' + report._id}}" class="btn btn--blue shop__description-slug-button shop__cart-button">Ver</a>
+        <a *ngIf="report.assigned && report.assigned._id === data.user._id || report.issuer._id === data.user._id" routerLink="{{'/reportar/' + report._id}}" class="btn btn--blue shop__description-slug-button shop__cart-button">Ver</a>
       </div>
     </div>
   </div>

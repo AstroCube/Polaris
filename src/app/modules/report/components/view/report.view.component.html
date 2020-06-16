@@ -111,7 +111,7 @@
     </div>
   </div>
   <div class="u-right-text">
-    <button class="btn btn--primary" popup popup_id="report-popup" (click)="createAction('Comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</button>
+    <button *ngIf="!report.closed" class="btn btn--primary" popup popup_id="report-popup" (click)="createAction('Comment')"><fa-icon [icon]="faComment" class="btn__icon--left"></fa-icon> Escribir comentario</button>
   </div>
 </section>
 <section class="report-popup" id="report-popup">

@@ -15,6 +15,7 @@ export class ReportMainComponent implements OnInit {
 
   public users: IUser[];
   public selectedUser: IUser;
+  public reportingStaff: boolean;
   faList = faList;
 
   constructor(
@@ -25,6 +26,7 @@ export class ReportMainComponent implements OnInit {
   ) {
     this.users = [];
     this.selectedUser = null;
+    this.reportingStaff = false;
   }
 
   ngOnInit() {
@@ -44,6 +46,10 @@ export class ReportMainComponent implements OnInit {
   clearUser() {
     this.selectedUser = null;
     this.users = [];
+  }
+
+  checkStaff() {
+    this.reportingStaff = this.selectedUser.groups.some(g => g.group.staff);
   }
 
   beginReport() {

@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { GLOBAL } from "./global";
 import {UserService} from './user.service';
-import {Punishment} from '../models/punishment';
 import {Observable} from 'rxjs';
 import {IPunishment} from "../newModels/IPunishment";
 import {IPaginateResult} from "../newModels/IModel";
@@ -15,9 +14,10 @@ export class PunishmentService {
     private _userService: UserService
   ){}
 
-  punishmentCreate(punishment: IPunishment): Observable<IPunishment> {
+  punishmentCreate(punishment: IPunishment, report?: string): Observable<IPunishment> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getEpsilonToken());
-    return this._http.post(GLOBAL.epsilon + "punishment/create-website", punishment, {headers: headers}) as Observable<IPunishment>;
+    const params = new HttpParams().set('report', report ? report : undefined);
+    return this._http.post(GLOBAL.epsilon + "punishment/create-website", punishment, {headers: headers, params: params}) as Observable<IPunishment>;
   }
 
   punishmentGet(id: string): Observable<IPunishment> {

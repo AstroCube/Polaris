@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
 import {PunishmentService} from '../../../services/punishment.service';
-import {IPunishment, IPunishmentCreateData} from "../../../newModels/IPunishment";
+import {IPunishment} from "../../../newModels/IPunishment";
 import {Observable, of} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {IPaginateResult} from "../../../newModels/IModel";
-import {logger} from "codelyzer/util/logger";
-import {IUser, IUserPlaceholder} from "../../../newModels/user/IUser";
-import {getUserPlaceholder} from "../../../utilities/group-placeholder";
 @Injectable()
 export class PunishmentListGuard implements Resolve<IPaginateResult<IPunishment>> {
 

@@ -1,6 +1,7 @@
 import {IModel} from "./IModel";
 import {IUser} from "./user/IUser";
 import {IMatch} from "./match/IMatch";
+import {IReport} from "./IReport";
 
 export interface IPunishment extends IModel {
     type: PunishmentType;
@@ -24,6 +25,7 @@ export enum PunishmentType {
 
 export interface IPunishmentCreateData {
   users: IUser[];
+  report: IReport;
   ban: boolean;
   tempBan: boolean;
   kick: boolean;

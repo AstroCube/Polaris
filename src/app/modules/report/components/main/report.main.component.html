@@ -36,6 +36,7 @@
         [items]="users"
         (clear)="clearUser()"
         (search)="updateQuery($event)"
+        (change)="checkStaff()"
         bindLabel="username"
         placeholder="Selecciona un jugador. Ej: TakeMyTomato"
         required
@@ -49,7 +50,8 @@
           <span class="paragraph--white">{{item.username}}</span>
         </ng-template>
       </ng-select>
-      <button [disabled]="!selectedUser" class="btn btn--primary u-margin-top-small">¡Iniciar reporte!</button>
+      <button [disabled]="!selectedUser || reportingStaff" class="btn btn--primary u-margin-top-small">¡Iniciar reporte!</button>
     </form>
+    <p *ngIf="reportingStaff" class="heading--secondary u-margin-top-small">No puedes reportar un miembro del equipo. Para reportar un comportamiento inadecuado escríbenos a <strong>contacto@seocraft.net</strong> con las pruebas pertinentes.</p>
   </div>
 </section>

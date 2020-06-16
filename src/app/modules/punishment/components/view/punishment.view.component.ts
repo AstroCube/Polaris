@@ -3,11 +3,10 @@ import {faList, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {GLOBAL} from "../../../../services/global";
-import {IPunishment, PunishmentType} from "../../../../newModels/IPunishment";
+import {IPunishment} from "../../../../newModels/IPunishment";
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 import {IPermissions} from "../../../../newModels/IGroup";
-import {Group} from "../../../../models/group";
 
 @Component({
   selector: 'punishment-view',

@@ -22,7 +22,6 @@ export class PunishmentCreateComponent implements OnInit {
 
   public selectionLabel: string;
   public expiresLabel: string;
-  public report: any;
 
   constructor(
     private titleService: Title,
@@ -59,6 +58,13 @@ export class PunishmentCreateComponent implements OnInit {
       if (this.createData.tempBan) this.options.push({value: "Ban", label: "Suspensión temporal"});
       if (this.createData.ban) this.options.push({value: "Ban", label: "Suspensión permanente"});
     }));
+
+    if (this.createData.report) {
+      this.punishment.punished = this.createData.report.involved;
+      this.punishment.reason = this.createData.report.rule;
+      this.punishment.evidence = this.createData.report.evidence;
+    }
+
   }
 
   changePunishment() {
@@ -106,13 +112,17 @@ export class PunishmentCreateComponent implements OnInit {
       this.punishment.expires = epoc.epoc;
     }
 
-    this.punishmentService.punishmentCreate(this.punishment).subscribe(
+    this.punishmentService.punishmentCreate(this.punishment, this.createData.report._id).subscribe(
       response => {
         if (!response) {
           this.notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
         } else {
           this.notifierService.notify('success', "Se ha creado la sanción correctamente.");
-          this.router.navigate(["/sancion/" + response._id]);
+          if (!this.createData.report) {
+            this.router.navigate(["/reportar/" + this.createData.report._id]);
+          } else {
+            this.router.navigate(["/sancion/" + response._id]);
+          }
         }
       },
 
