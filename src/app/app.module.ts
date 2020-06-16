@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
 import {app_routing_providers, routing} from './app.routing';
 import {ApplicationHeaderComponent} from './components/application/header/application.header.component';
@@ -86,6 +86,7 @@ import {UserLoggedGuard} from "./modules/user/guards/user.logged.guard";
 import {AppealModule} from "./modules/appeal/appeal.module";
 import {ReportModule} from "./modules/report/report.module";
 import {PunishmentModule} from "./modules/punishment/punishment.module";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 
 @NgModule({
@@ -139,6 +140,7 @@ import {PunishmentModule} from "./modules/punishment/punishment.module";
     EpsilonModule,
     UserModule,
     PunishmentModule,
+    NgxSpinnerModule,
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
@@ -193,6 +195,9 @@ import {PunishmentModule} from "./modules/punishment/punishment.module";
     TopicService,
     UserViewGuard,
     UserService
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [
   ],

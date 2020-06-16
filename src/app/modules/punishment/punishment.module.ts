@@ -14,6 +14,7 @@ import {PunishmentCreateGuard} from "./guards/punishment.create.guard";
 import {PunishmentEditGuard} from "./guards/punishment.edit.guard";
 import {PunishmentListGuard} from "./guards/punishment.list.guard";
 import {PunishmentViewGuard} from "./guards/punishment.view.guard";
+import {MyDatePickerModule} from "mydatepicker";
 
 @NgModule({
   declarations: [
@@ -22,15 +23,16 @@ import {PunishmentViewGuard} from "./guards/punishment.view.guard";
     PunishmentListComponent,
     PunishmentViewComponent
   ],
-  imports: [
-    CommonModule,
-    EpsilonModule,
-    FontAwesomeModule,
-    FormsModule,
-    NgSelectModule,
-    MomentModule,
-    RouterModule
-  ],
+    imports: [
+        CommonModule,
+        EpsilonModule,
+        FontAwesomeModule,
+        FormsModule,
+        NgSelectModule,
+        MomentModule,
+        RouterModule,
+        MyDatePickerModule
+    ],
   providers: [
     PunishmentCreateGuard,
     PunishmentEditGuard,
