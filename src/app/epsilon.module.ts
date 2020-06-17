@@ -16,9 +16,9 @@ import {ScrollbarDirective} from './directives/scrollbar.directive';
 import {SliderDirective} from './directives/slider.directive';
 import {TabDirective} from './directives/tab.directive';
 import {ParseDatePipe} from "./pipes/ParseDate.pipe";
-import {ApplicationPaginationComponent} from "./components/application/pagination/application.pagination.component";
+import {ApplicationPaginationComponent} from "./modules/application/components/pagination/application.pagination.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ApplicationSpinner} from "./components/application/spinner/application.spinner.component";
+import {ApplicationSpinner} from "./modules/application/components/spinner/application.spinner.component";
 
 @NgModule({
   declarations: [

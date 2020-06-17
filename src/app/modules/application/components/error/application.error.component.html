@@ -1,0 +1,17 @@
+<div class="error">
+  <img src="../../../../../assets/images/error.jpeg" alt="">
+  <div class="error__description">
+    <h1 *ngIf="error == 404" class="heading heading--primary">404 - Página no encontrada</h1>
+    <h3 *ngIf="error == 404" class="heading u-margin-bottom-small">Parece que te has salido de los caminos del señor.</h3>
+    <h1 *ngIf="error == 500" class="heading heading--primary">500 - Error interno</h1>
+    <h3 *ngIf="error == 500" class="heading u-margin-bottom-small">No somos perfectos pero hacemos lo que podemos...</h3>
+    <h1 *ngIf="error == 403" class="heading heading--primary">403 - Acceso prohibido</h1>
+    <h3 *ngIf="error == 403" class="heading u-margin-bottom-small">¿Quien le dijo que se metiera por acá?</h3>
+    <h1 *ngIf="error == 308" class="heading heading--primary">¡Muy pronto!</h1>
+    <h3 *ngIf="error == 308" class="heading u-margin-bottom-small">Esta ruta será parte de algo nuevo :)</h3>
+    <h1 *ngIf="!error" class="heading heading--primary">Error desconocido</h1>
+    <h3 *ngIf="!error" class="heading u-margin-bottom-small">Ha ocurrido un error que no conocemos, o simplemente entraste a la página de eror, ¿Eh? Pillín</h3>
+    <a routerLink="/" class="heading heading--secondary">¡Haz click aquí para volver a la página principal!</a>
+    <p class="paragraph paragraph--white">(Thrown error: {{message}})</p>
+  </div>
+</div>
