@@ -11,15 +11,17 @@ import {GLOBAL} from '../../../services/global';
 export class ApplicationErrorComponent implements OnInit {
 
   public error: number;
+  public message: string;
 
   constructor(
     private _titleService: Title,
     private _activatedRoute: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
+    let m = this._activatedRoute.snapshot.queryParams.message;
     this.error = this._activatedRoute.snapshot.queryParams.type;
+    this.message = m ? m : 'Unknown error';
     this._titleService.setTitle("Error " + this.error + " - " + GLOBAL.title);
   }
 

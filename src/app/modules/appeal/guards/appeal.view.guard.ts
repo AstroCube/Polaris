@@ -20,8 +20,8 @@ export class AppealViewGuard implements Resolve<IAppealResolve> {
     return this.userService.getUserObservable().pipe(
       mergeMap(user =>
         forkJoin(
-          this.appealService.appealPermissions(),
-          this.appealService.appealGet(route.params.id)
+          [this.appealService.appealPermissions(),
+          this.appealService.appealGet(route.params.id)]
         ).pipe(
           map(response => ({
             user: user,
@@ -30,8 +30,8 @@ export class AppealViewGuard implements Resolve<IAppealResolve> {
           }))
         )
       ),
-      catchError(err => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+      catchError(error => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as IAppealResolve);
       })
     );

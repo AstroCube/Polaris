@@ -7,6 +7,7 @@ import {Title} from '@angular/platform-browser';
 import {IReportList, IReportSearch, ReportSearchCriteria} from "../../../../newModels/IReport";
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'report-list',
@@ -16,9 +17,11 @@ import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 export class ReportListComponent {
 
   public data: IReportList;
+  public showSpinner: boolean;
   public criteria: ReportSearchCriteria;
 
   constructor(
+    private spinnerService: NgxSpinnerService,
     private titleService: Title,
     private notifierService: NotifierService,
     private reportService: ReportService,
@@ -27,6 +30,7 @@ export class ReportListComponent {
   ) {
     this.data = {} as IReportList;
     this.criteria = ReportSearchCriteria.All;
+    this.showSpinner = false;
   }
 
   ngOnInit() {
@@ -69,10 +73,16 @@ export class ReportListComponent {
   }
 
   public update(search: IReportSearch):void {
-    this.reportService.reportList(1, 15, search.query).subscribe(
+    this.showSpinner = true;
+    this.data.reports.data = [];
+    this.reportService.reportList(1, 15, search.query)
+      .subscribe(
       (response) => {
-        this.data.reports = response;
         this.criteria = search.criteria;
+        setTimeout(() => {
+          this.data.reports = response;
+          this.showSpinner = false;
+        }, 3000);
       },
 
       (error) => {

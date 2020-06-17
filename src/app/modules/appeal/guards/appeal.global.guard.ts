@@ -24,8 +24,8 @@ export class AppealGlobalGuard implements Resolve<IAppealList> {
     return this.appealService.appealPermissions().pipe(
       mergeMap(permissions =>
         forkJoin(
-          this.userService.getUserObservable(),
-          this.appealService.appealList(page, 15, search.query, search.own)
+          [this.userService.getUserObservable(),
+          this.appealService.appealList(page, 15, search.query, search.own)]
         ).pipe(
           map(response => ({
             user: response[0],
@@ -35,7 +35,7 @@ export class AppealGlobalGuard implements Resolve<IAppealList> {
         )
       ),
       catchError((error) => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as IAppealList);
       })
     );

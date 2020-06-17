@@ -21,8 +21,8 @@ export class ReportViewGuard implements Resolve<IReportView> {
     return this.reportService.reportPermissions().pipe(
       mergeMap(permissions =>
         forkJoin(
-          this.userService.getUserObservable(),
-          this.reportService.reportGet(route.params.id)
+          [this.userService.getUserObservable(),
+          this.reportService.reportGet(route.params.id)]
         ).pipe(
           map(response => ({
             user: response[0],
@@ -32,7 +32,7 @@ export class ReportViewGuard implements Resolve<IReportView> {
         )
       ),
       catchError(error => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as IReportView);
       })
     );

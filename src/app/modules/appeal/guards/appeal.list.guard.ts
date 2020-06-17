@@ -35,7 +35,7 @@ export class AppealListGuard implements Resolve<IAppealMain>{
         )
       ),
       catchError(error => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as IAppealMain);
       })
     );

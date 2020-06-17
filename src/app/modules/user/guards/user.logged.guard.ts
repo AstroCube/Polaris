@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {map, mergeMap} from 'rxjs/operators';
-import {IUser} from '../../../newModels/user/IUser';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from '../../../services/user.service';
-import {forkJoin, Observable, of} from 'rxjs';
-import {IUserProfileDiscord} from '../../../newModels/user/IUserProfile';
-import {IPermissions} from "../../../newModels/IGroup";
-import {GroupService} from "../../../services/group.service";
 
 @Injectable()
 export class UserLoggedGuard implements CanActivate {

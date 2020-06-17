@@ -18,6 +18,7 @@ import {NotifierService} from "angular-notifier";
 export class AppealGlobalComponent implements OnInit {
 
   public appeals: IPaginateResult<IAppeal>;
+  public showSpinner: boolean;
   public criteria: IAppealSearchCriteria;
   public permissions: IAppealsPermissions;
   public user: IUser;
@@ -31,6 +32,7 @@ export class AppealGlobalComponent implements OnInit {
     private notifierService: NotifierService
   ) {
     this.criteria = IAppealSearchCriteria.All;
+    this.showSpinner = false;
   }
 
   ngOnInit() {
@@ -81,10 +83,15 @@ export class AppealGlobalComponent implements OnInit {
   }
 
   public update(search: IAppealSearch):void {
+    this.showSpinner = true;
+    this.appeals.data = [];
     this.appealService.appealList(1, 15, search.query, search.own).subscribe(
       (response) => {
-        this.appeals = response;
         this.criteria = search.criteria;
+        setTimeout(() => {
+          this.appeals = response;
+          this.showSpinner = false;
+        }, 3000);
       },
 
       (error) => {

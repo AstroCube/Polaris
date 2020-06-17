@@ -13,6 +13,7 @@ import {ReportListGuard} from "./guards/report.list.guard";
 import {ReportViewGuard} from "./guards/report.view.guard";
 import {ReportService} from "../../services/report.service";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {NgSelectModule} from "@ng-select/ng-select";
     FormsModule,
     MomentModule,
     RouterModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxSpinnerModule
   ],
   providers: [
     ReportCreateGuard,

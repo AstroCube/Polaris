@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {GroupService} from "../../../services/group.service";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Observable, of} from "rxjs";
+import {catchError, map} from "rxjs/operators";
 @Injectable()
 export class PunishmentEditGuard implements CanActivate {
 
@@ -16,6 +16,10 @@ export class PunishmentEditGuard implements CanActivate {
       map((permissions) => {
         if (!permissions.punishments.manage) this.router.navigate(['/error'] , { queryParams: {type: "403"}});
         return permissions.punishments.manage;
+      }),
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of(false);
       })
     );
   }

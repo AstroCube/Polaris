@@ -44,7 +44,7 @@ export class PunishmentCreateGuard implements CanActivate, Resolve<IPunishmentCr
 
     return this.groupService.permissionsManifest().pipe(
       mergeMap((permissions) =>
-        forkJoin(report).pipe(
+        forkJoin([report]).pipe(
           map(response => ({
             users: [],
             report: response[0],
@@ -55,8 +55,8 @@ export class PunishmentCreateGuard implements CanActivate, Resolve<IPunishmentCr
           } as IPunishmentCreateData))
         )
       ),
-      catchError((err) => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as IPunishmentCreateData);
       })
     );

@@ -9,16 +9,17 @@ import {IPaginateResult} from "../../../newModels/IModel";
 export class PunishmentListGuard implements Resolve<IPaginateResult<IPunishment>> {
 
   constructor (
-    private _punishmentService: PunishmentService,
-    private _router: Router
+    private punishmentService: PunishmentService,
+    private router: Router
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IPaginateResult<IPunishment>> {
     let page = 1;
     if (route.params.page) page = route.params.page;
-    return this._punishmentService.punishmentList(page, 15).pipe(
+    return this.punishmentService.punishmentList(page, 15).pipe(
       map((response) => (response as IPaginateResult<IPunishment>)),
-      catchError((err) => {
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({data: [], pagination: {page: 1}} as IPaginateResult<IPunishment>);
       })
     );

@@ -1,7 +1,16 @@
 <div body>
   <application-header></application-header>
+  <ngx-spinner
+    [fullScreen]="true"
+    bdColor = "rgba(0, 0, 0, 0.8)"
+    color = "#ffd800"
+    type="ball-climbing-dot"
+    size="small"
+    template="<img src='../assets/images/spinner.gif'/>"
+  >
+    <p style="color: white" > Cargando... </p>
+  </ngx-spinner>
   <main>
-    <ngx-spinner></ngx-spinner>
     <router-outlet></router-outlet>
   </main>
   <application-footer></application-footer>

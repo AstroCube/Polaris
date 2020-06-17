@@ -24,7 +24,7 @@ export class ReportCreateGuard implements Resolve<{user: IUser, ip: string}> {
         )
       ),
       catchError(error => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as {user, ip});
       })
     );

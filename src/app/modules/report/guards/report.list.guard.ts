@@ -23,8 +23,8 @@ export class ReportListGuard implements Resolve<IReportList> {
     return this.userService.getUserObservable().pipe(
       mergeMap(user =>
         forkJoin(
-          this.reportService.reportList(page, 15, search),
-          this.reportService.reportPermissions()
+          [this.reportService.reportList(page, 15, search),
+          this.reportService.reportPermissions()]
         ).pipe(
           map(response => ({
             user,
@@ -34,7 +34,7 @@ export class ReportListGuard implements Resolve<IReportList> {
         )
       ),
       catchError(error => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as IReportList);
       })
     );

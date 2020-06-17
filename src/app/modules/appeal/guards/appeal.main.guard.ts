@@ -20,13 +20,13 @@ export class AppealMainGuard implements Resolve<boolean>{
     return this.userService.getUserObservable().pipe(
       mergeMap(user =>
         forkJoin(
-          this.punishmentService.punishmentList(1, 100, {punished: user._id})
+          [this.punishmentService.punishmentList(1, 100, {punished: user._id})]
         ).pipe(
           map(response => response[0].data.length > 0)
         )
       ),
       catchError(error => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of(false);
       })
     );

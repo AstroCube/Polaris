@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {UserService} from '../../../services/user.service';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
 import Typed from 'typed.js';
 import {forkJoin, from} from 'rxjs';
@@ -32,14 +32,14 @@ export class ApplicationHeaderComponent implements OnInit {
     private userService: UserService,
     private renderer: Renderer2
   ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) this.retrieveData();
+    });
   }
 
 
   ngOnInit(): void {
-    if (this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '') {
-      this.logged = true;
-      this.retrieveData();
-    }
+    this.retrieveData();
 
     const options = {
       strings: [
@@ -115,36 +115,43 @@ export class ApplicationHeaderComponent implements OnInit {
     this.router.navigate(['/error'], {queryParams: {type: 308}});
   }
 
-  public retrieveData(): void {
-    this.userService.getUserObservable().pipe(
-      mergeMap((user) =>
-        forkJoin(
-          from(this.groupService.permissionsManifest())
-        ).pipe(
-          map((response) => ({
-            user: user,
-            group: (response[0].group && response[0].group.manage),
-            category: (response[0].category && response[0].category.manage),
-            userEdit: (response[0].user && response[0].user.manage),
-            forum: (response[0].forum && response[0].forum.manage),
-            generalAccess: (response[0].group && response[0].group.manage) ||
-              (response[0].category && response[0].category.manage) ||
-              (response[0].user && response[0].user.manage) ||
-              (response[0].forum && response[0].forum.manage)
-          } as IHeaderUser))
-        )
-      )
-    ).subscribe(
-      (header) => {
-        this.header = header;
-        this.logged = true;
-      },
+  private checkLogin(): void {
+    this.logged = this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '';
+  }
 
-      (error) => {
-        this.logout();
-        this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
-      }
-    );
+  public retrieveData(): void {
+    this.checkLogin();
+    if (this.logged) {
+      this.userService.getUserObservable().pipe(
+        mergeMap((user) =>
+          forkJoin(
+            [from(this.groupService.permissionsManifest())]
+          ).pipe(
+            map((response) => ({
+              user: user,
+              group: (response[0].group && response[0].group.manage),
+              category: (response[0].category && response[0].category.manage),
+              userEdit: (response[0].user && response[0].user.manage),
+              forum: (response[0].forum && response[0].forum.manage),
+              generalAccess: (response[0].group && response[0].group.manage) ||
+                (response[0].category && response[0].category.manage) ||
+                (response[0].user && response[0].user.manage) ||
+                (response[0].forum && response[0].forum.manage)
+            } as IHeaderUser))
+          )
+        )
+      ).subscribe(
+        (header) => {
+          this.header = header;
+          this.logged = true;
+        },
+
+        (error) => {
+          this.logout();
+          this.notifierService.notify('error', 'Ha ocurrido un error con tu sesión y se ha cerrado por seguridad.');
+        }
+      );
+    }
   }
 
 }

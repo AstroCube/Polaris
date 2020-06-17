@@ -26,9 +26,8 @@ export class UserEditGuard implements Resolve<{user: IUser, discord: IUserProfil
           }))
         )
       ),
-      catchError((err) => {
-        this.router.navigate(['/error'] , { queryParams: {type: "500"}});
-        console.log(err);
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as {user: IUser, discord: IUserProfileDiscord});
       })
     );
