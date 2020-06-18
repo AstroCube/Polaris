@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EpsilonModule} from '../../epsilon.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
 import {NgSelectModule} from "@ng-select/ng-select";
@@ -21,6 +21,7 @@ import {ShopTransactionComponent} from "./components/transaction/shop.transactio
   imports: [
     CommonModule,
     EpsilonModule,
+    ReactiveFormsModule,
     FormsModule,
     MomentModule,
     RouterModule,

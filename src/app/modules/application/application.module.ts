@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EpsilonModule} from '../../epsilon.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule} from "@angular/forms";
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
 import {ApplicationPrivacyComponent} from "./components/privacy/application.privacy.component";
-import {ApplicationLoginComponent} from "./components/login/application.login.component";
-import {ApplicationHomepageComponent} from "./components/homepage/application.homepage.component";
 import {ApplicationHeaderComponent} from "./components/header/application.header.component";
 import {ApplicationFooterComponent} from "./components/footer/application.footer.component";
 import {ApplicationErrorComponent} from "./components/error/application.error.component";
@@ -19,6 +17,8 @@ import {ApplicationHomepageGuard} from "./guards/application.homepage.guard";
 import {ApplicationRefundComponent} from "./components/refund/application.refund.component";
 import {ApplicationRulesComponent} from "./components/rules/application.rules.component";
 import {ApplicationTermsComponent} from "./components/terms/application.terms.component";
+import {ApplicationRouting} from "./application.routing";
+import {ApplicationLoginComponent} from "./components/login/application.login.component";
 
 @NgModule({
   declarations: [
@@ -28,11 +28,10 @@ import {ApplicationTermsComponent} from "./components/terms/application.terms.co
     ApplicationRulesComponent,
     ApplicationTermsComponent,
     ApplicationDonationComponent,
+    ApplicationLoginComponent,
     ApplicationErrorComponent,
     ApplicationFooterComponent,
     ApplicationHeaderComponent,
-    ApplicationHomepageComponent,
-    ApplicationLoginComponent,
     ApplicationPrivacyComponent
   ],
   imports: [
@@ -40,7 +39,8 @@ import {ApplicationTermsComponent} from "./components/terms/application.terms.co
     EpsilonModule,
     FormsModule,
     MomentModule,
-    RouterModule
+    RouterModule,
+    ApplicationRouting
   ],
   exports: [
     ApplicationHeaderComponent,

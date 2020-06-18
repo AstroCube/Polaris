@@ -224,7 +224,7 @@
       </div>
       <div class="table__row punishment__row table--fixed" *ngFor="let punishment of userProfile.punishments">
         <div class="table__cell punishment__profile-others">
-          <a color [id]="punishment.punisher"></a>
+          <a color [id]="punishment.issuer"></a>
         </div>
         <div class="table__cell punishment__profile-others">
           <a color [id]="punishment.punished"></a>
@@ -244,7 +244,7 @@
           <span *ngIf="!punishment.active" style="color: green">Inactivo/Apelado</span>
         </div>
         <div class="table__cell">
-          <a routerLink="{{ '/sancion/' + punishment._id}}">{{punishment.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</a>
+          <a routerLink="{{ '/sancion/' + punishment._id}}">{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</a>
         </div>
       </div>
     </div>

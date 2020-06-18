@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {EpsilonModule} from '../../epsilon.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MomentModule} from 'ngx-moment';
 import {RouterModule} from '@angular/router';
 import {ReportCreateComponent} from "./components/create/report.create.component";
@@ -14,6 +14,7 @@ import {ReportViewGuard} from "./guards/report.view.guard";
 import {ReportService} from "../../services/report.service";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {NgxSpinnerModule} from "ngx-spinner";
+import {ReportRouting} from "./report.routing";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import {NgxSpinnerModule} from "ngx-spinner";
     CommonModule,
     EpsilonModule,
     FormsModule,
+    ReactiveFormsModule,
+    ReportRouting,
     MomentModule,
     RouterModule,
     NgSelectModule,
