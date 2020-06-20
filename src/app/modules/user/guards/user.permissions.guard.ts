@@ -7,7 +7,7 @@ import {IPermissions} from "../../../newModels/IGroup";
 import {GroupService} from "../../../services/group.service";
 
 @Injectable()
-export class UserPermissionsGuard implements Resolve<IPermissions>{
+export class UserPermissionsGuard implements Resolve<IPermissions> {
 
   constructor (
     private groupService: GroupService,

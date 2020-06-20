@@ -13,6 +13,8 @@ import {ApplicationErrorComponent} from "./components/error/application.error.co
 import {ApplicationAlertComponent} from "./components/alert/application.alert.component";
 import {ApplicationDevelopementComponent} from "./components/developement/application.developement.component";
 import {ApplicationDevelopementGuard} from "./guards/application.developement.guard";
+import {UserViewComponent} from "../user/components/view/user.view.component";
+import {UserViewGuard} from "../user/guards/user.view.guard";
 
 
 const routes: Routes = [
@@ -26,6 +28,7 @@ const routes: Routes = [
   {path: 'alertas', component: ApplicationAlertComponent},
   {path: 'terminos', component: ApplicationTermsComponent},
   {path: 'error', component: ApplicationErrorComponent},
+  {path: ":username", component: UserViewComponent, resolve: {UserViewGuard}},
   {path: '', component: ApplicationHomepageComponent, resolve: {ApplicationHomepageGuard}}
 ];
 

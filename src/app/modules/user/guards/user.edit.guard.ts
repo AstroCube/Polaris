@@ -18,7 +18,7 @@ export class UserEditGuard implements Resolve<{user: IUser, discord: IUserProfil
     return this.userService.getUserObservable().pipe(
       mergeMap((user) =>
         forkJoin(
-          this.userService.discordPlaceholder(user._id)
+          [this.userService.discordPlaceholder(user._id)]
         ).pipe(
           map((response) => ({
             user: user,

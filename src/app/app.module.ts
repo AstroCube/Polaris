@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { AppComponent } from './app.component';
-import {app_routing_providers, routing} from './app.routing';
+import {AppRouting} from './app.routing';
 import {UserService} from './services/user.service';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -26,6 +26,9 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {SocketIoModule} from "ngx-socket-io";
 import {MomentModule} from "ngx-moment";
 import {Ng9PasswordStrengthBarModule} from "ng9-password-strength-bar";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ApplicationModule} from "./modules/application/application.module";
+import {UserModule} from "./modules/user/user.module";
 
 
 @NgModule({
@@ -33,7 +36,9 @@ import {Ng9PasswordStrengthBarModule} from "ng9-password-strength-bar";
     AppComponent
   ],
   imports: [
+    AppRouting,
     BrowserModule,
+    BrowserAnimationsModule,
     CKEditorModule,
     EpsilonModule,
     NgxSpinnerModule,
@@ -49,11 +54,9 @@ import {Ng9PasswordStrengthBarModule} from "ng9-password-strength-bar";
           position: 'right'
         }
       }
-    }),
-    routing
+    })
   ],
   providers: [
-    app_routing_providers,
     AppealService,
     CategoryService,
     ForumService,

@@ -119,7 +119,7 @@ export class PunishmentCreateComponent implements OnInit {
           if (!this.createData.report) {
             this.router.navigate(["/reportar/" + this.createData.report._id]);
           } else {
-            this.router.navigate(["/sancion/" + response._id]);
+            this.router.navigate(["/sanciones/ver/" + response._id]);
           }
         }
       },

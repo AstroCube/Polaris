@@ -45,7 +45,7 @@ export class ReportViewComponent implements OnInit {
   }
 
   punishUser(): void {
-    this.router.navigate(['sancion/crear'], {queryParams: {report: this.report._id}});
+    this.router.navigate(['sanciones/crear'], {queryParams: {report: this.report._id}});
   }
 
   public getPlaceholder(user: IUser): IUserPlaceholder {

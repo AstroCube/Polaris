@@ -7,6 +7,7 @@ import {ForumMainGuard} from "./guards/forum.main.guard";
 import {ForumViewGuard} from "./guards/forum.view.guard";
 import {EpsilonModule} from "../../../../epsilon.module";
 import {MomentModule} from "ngx-moment";
+import {ForumBaseRouting} from "./forum.base.routing";
 @NgModule({
   declarations: [
     ForumFeedComponent,
@@ -16,6 +17,7 @@ import {MomentModule} from "ngx-moment";
   imports: [
     RouterModule,
     EpsilonModule,
+    ForumBaseRouting,
     MomentModule
   ],
   exports: [

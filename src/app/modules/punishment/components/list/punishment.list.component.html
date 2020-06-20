@@ -42,7 +42,7 @@
         <p *ngIf="punishment.expires === -1">Nunca</p>
       </div>
       <div class="table__cell punishment__table-small">
-        <a class="paragraph--white" routerLink="{{'/sancion/' + punishment._id}}">{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</a>
+        <a class="paragraph--white" routerLink="{{'/sancion/ver/' + punishment._id}}">{{punishment.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo | titlecase}}</a>
       </div>
     </div>
   </div>

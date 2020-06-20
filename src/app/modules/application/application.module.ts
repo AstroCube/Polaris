@@ -19,6 +19,8 @@ import {ApplicationRulesComponent} from "./components/rules/application.rules.co
 import {ApplicationTermsComponent} from "./components/terms/application.terms.component";
 import {ApplicationRouting} from "./application.routing";
 import {ApplicationLoginComponent} from "./components/login/application.login.component";
+import {UserModule} from "../user/user.module";
+import {UserEditGuard} from "../user/guards/user.edit.guard";
 
 @NgModule({
   declarations: [

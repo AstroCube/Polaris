@@ -8,7 +8,6 @@ import {MatchService} from '../../../services/match.service';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {forkJoin, Observable, of} from 'rxjs';
 import {IUserProfile} from '../../../newModels/user/IUserProfile';
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable()
 export class UserViewGuard implements Resolve<IUserProfile> {

@@ -4,7 +4,7 @@ import {MatchViewGuard} from "./guards/match.view.guard";
 import {MatchViewComponent} from "./components/view/match.view.component";
 
 const routes: Routes = [
-  {path: "partida/:id", component: MatchViewComponent, resolve: {MatchViewGuard}}
+  {path: ":id", component: MatchViewComponent, resolve: {MatchViewGuard}}
 ];
 
 @NgModule({

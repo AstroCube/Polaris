@@ -13,7 +13,6 @@ import {AppealGlobalGuard} from "./guards/appeal.global.guard";
 const routes: Routes = [
   {path: "dashboard", component: AppealListComponent, canActivate: [UserLoggedGuard], resolve: {AppealListGuard}},
   {path: "lista", component: AppealGlobalComponent, canActivate: [UserLoggedGuard], resolve: {AppealGlobalGuard}},
-  {path: "lista/:page/:type", component: AppealGlobalComponent, canActivate: [AppealGlobalGuard], resolve: {AppealGlobalGuard}},
   {path: "lista/:page", component: AppealGlobalComponent, canActivate: [AppealGlobalGuard], resolve: {AppealGlobalGuard}},
   {path: ":id", component: AppealViewComponent, canActivate: [UserLoggedGuard], resolve: {AppealViewGuard}},
   {path: "", component: AppealMainComponent, canActivate: [UserLoggedGuard], resolve: {AppealMainGuard}}

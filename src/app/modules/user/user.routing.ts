@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {UserViewComponent} from "./components/view/user.view.component";
-import {UserViewGuard} from "./guards/user.view.guard";
+import {UserEditComponent} from "./components/edit/user.edit.component";
+import {UserEditGuard} from "./guards/user.edit.guard";
 
 const routes: Routes = [
-  {path: ":username", component: UserViewComponent, resolve: {UserViewGuard: UserViewGuard}},
+  {path: 'cuenta', component: UserEditComponent, resolve: {UserEditGuard}}
 ];
 
 @NgModule({

@@ -68,12 +68,11 @@ export class PunishmentEditComponent implements OnInit{
           this._notifierService.notify('error', "Ha ocurrido un error al crear la sanción.");
         } else {
           this._notifierService.notify('success', "Se ha creado la sanción correctamente.");
-          this._router.navigate(["/sancion/" + response._id]);
+          this._router.navigate(["/sanciones/ver/" + response._id]);
         }
       },
       error => {
         let error_message = <any> error;
-        console.log(error);
         if (error_message != null) {
           this._notifierService.notify('error', error.error.message);
         }

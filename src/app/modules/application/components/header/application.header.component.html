@@ -51,9 +51,9 @@
           <section class="header__menu-nav">
             <a routerLink="{{'/' + header.user.username}}" class="header__menu-link">Perfil</a>
             <a (click)="comingSoon()" class="header__menu-link u-pointer">Amigos</a>
-            <a routerLink="/reportes" class="header__menu-link">Reportes</a>
-            <a routerLink="/apelaciones" class="header__menu-link">Apelaciones</a>
-            <a [routerLink]="['/cuenta']" class="header__menu-link">Mi cuenta</a>
+            <a routerLink="/reportar/lista" class="header__menu-link">Reportes</a>
+            <a routerLink="/apelar/lista" class="header__menu-link">Apelaciones</a>
+            <a [routerLink]="['/usuario/cuenta']" class="header__menu-link">Mi cuenta</a>
             <a [routerLink]="'/'" (click)="logout()" class="header__menu-link">Cerrar sesión</a>
           </section>
         </nav>
