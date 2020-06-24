@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { GLOBAL } from "./global";
-import {User} from '../models/user';
 import {IMailUpdateVerification, IPasswordUpdate, IUser} from '../newModels/user/IUser';
 import {IUserProfileDiscord} from '../newModels/user/IUserProfile';
 

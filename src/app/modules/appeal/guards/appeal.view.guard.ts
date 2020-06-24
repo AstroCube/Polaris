@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Resolve, Router} from '@angular/router';
 import {UserService} from '../../../services/user.service';
-import {AppealService} from '../../../services/appeal.service';
+import {AppealService} from '../../../services/moderation/appeal.service';
 import {IAppeal, IAppealResolve} from "../../../newModels/IAppeal";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {forkJoin, Observable, of} from "rxjs";

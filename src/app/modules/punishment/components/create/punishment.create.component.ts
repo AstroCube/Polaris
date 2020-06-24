@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
 import {Title} from '@angular/platform-browser';
 import {IPunishment, IPunishmentCreateData, PunishmentType} from "../../../../newModels/IPunishment";
-import {PunishmentService} from "../../../../services/punishment.service";
+import {PunishmentService} from "../../../../services/moderation/punishment.service";
 import {GLOBAL} from "../../../../services/global";
 import {UserService} from "../../../../services/user.service";
 import {IAngularMyDpOptions} from "angular-mydatepicker";

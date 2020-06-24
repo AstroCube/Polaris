@@ -5,22 +5,22 @@
   </div>
   <div class="row u-margin-bottom-small">
     <div class="col-2-of-3">
-      <h2 class="heading">{{map.name}}</h2>
+      <h2 class="heading">{{data.map.name}}</h2>
       <p class="map__author-info">
-        por <a routerLink="{{'/' + map.author.username}}" [style.color]="placeholder.userColor">{{map.author.username}}</a>
+        por <a routerLink="{{'/' + data.map.author.username}}" [style.color]="getPlaceholder(data.map.author).mainGroup.html_color">{{data.map.author.display}}</a>
       </p>
       <div class="map__info">
         <div class="map__objective">
           <span class="map__info-placeholder">Objetivo:</span>
-          <p>{{map.description}}</p>
+          <p>{{data.map.description}}</p>
         </div>
       </div>
     </div>
     <div class="col-1-of-3">
       <div class="map__info-slug u-center-text">
-        <img src="{{url + 'map/get-image/' + map.image}}" class="map__image">
-        <a *ngIf="canDownload" class="btn btn--green map__info-button" (click)="downloadFile()"><i class="btn__icon--left fas fa-map-signs"></i>Descargar Mapa</a>
-        <a *ngIf="canDownload" class="btn btn--blue map__info-button" (click)="downloadJSON()"><i class="btn__icon--left fas fa-code"></i>Descargar Config</a>
+        <img src="{{url + 'map/get-image/' + data.map._id}}" class="map__image">
+        <a *ngIf="related" class="btn btn--green map__info-button" (click)="downloadFile()"><i class="btn__icon--left fas fa-map-signs"></i>Descargar Mapa</a>
+        <a *ngIf="related" class="btn btn--blue map__info-button" (click)="downloadJSON()"><i class="btn__icon--left fas fa-code"></i>Descargar Config</a>
       </div>
     </div>
   </div>

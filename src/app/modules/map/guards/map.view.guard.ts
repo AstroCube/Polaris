@@ -1,107 +1,53 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Router} from '@angular/router';
-import {UserService} from '../../../services/user.service';
-import {MapService} from '../../../services/map.service';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {MapService} from '../../../services/minecraft/map.service';
+import {IMapView} from "../../../newModels/IMap";
+import {forkJoin, Observable, of} from "rxjs";
+import {IUserPermissionsPair} from "../../../newModels/user/IUser";
+import {UserService} from "../../../services/user.service";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import {GroupService} from "../../../services/group.service";
 
 @Injectable()
-export class MapViewGuard {
+export class MapViewGuard implements Resolve<IMapView> {
 
   constructor (
-    private _mapService: MapService,
-    private _userService: UserService,
-    private _router: Router
+    private mapService: MapService,
+    private userService: UserService,
+    private groupService: GroupService,
+    private router: Router
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.dataPromise(route).then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMapView> {
+    return this.mapService.get(route.params.id).pipe(
+      mergeMap(gameMap =>
+        forkJoin([this.userRequest()]).pipe(
+          map(response => ({
+            map: gameMap,
+            permissions: response[0]
+          }) as IMapView)
+        )
+      ),
+      catchError(error => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as IMapView);
+      })
+    );
   }
 
-  async dataPromise(route: ActivatedRouteSnapshot): Promise<any> {
-    let data : any = {};
-
-    data.map = await this._mapService.mapGet(route.params.id).then((map) => {
-      return map;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-    data.user = this._userService.getUser(null).then((user) => {
-      return user;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-    data.placeholder = await this._userService.getPrefix(data.map.author._id).then((placeholder) => {
-      return placeholder;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-    data.canDownload = await this._userService.permission_checker_promise("web_permissions.maps.manage").then((response) => {
-      return response.has_permission;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-
-    return data;
+  userRequest(): Observable<IUserPermissionsPair> {
+    return this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '' ?
+        this.userService.getUserObservable().pipe(
+          mergeMap(user =>
+            forkJoin([this.groupService.permissionsManifest()]).pipe(
+              map(response => ({
+                user,
+                permissions: response[0]
+              }))
+            )
+          )
+        ) : of(null);
   }
+
+
 }

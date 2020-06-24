@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
-import { GLOBAL } from "./global";
-import {UserService} from './user.service';
-import {IReport, IReportAction} from "../newModels/IReport";
-import {IReportsPermissions} from "../newModels/permissions/IReportsPermissions";
-import {IPaginateResult} from "../newModels/IModel";
-import {IAppeal} from "../newModels/IAppeal";
+import { GLOBAL } from "../global";
+import {UserService} from '../user.service';
+import {IReport, IReportAction} from "../../newModels/IReport";
+import {IReportsPermissions} from "../../newModels/permissions/IReportsPermissions";
+import {IPaginateResult} from "../../newModels/IModel";
+import {IAppeal} from "../../newModels/IAppeal";
 
 @Injectable()
 export class ReportService {

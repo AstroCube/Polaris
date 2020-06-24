@@ -3,6 +3,7 @@ import { IPublicInfo } from "./partial/IPublicInfo";
 import { IGameSettings } from "./partial/IGameSettings";
 import {IModel} from '../IModel';
 import {Group} from '../../models/group';
+import {IPermissions} from "../IGroup";
 
 export interface IUser extends IModel {
   username: string;
@@ -21,6 +22,11 @@ export interface IUser extends IModel {
   language: Languages;
   publicInfo: IPublicInfo;
   settings: IGameSettings;
+}
+
+export interface IUserPermissionsPair {
+  user: IUser;
+  permissions: IPermissions;
 }
 
 export interface IUserGroup {

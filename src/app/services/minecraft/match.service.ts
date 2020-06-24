@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {UserService} from './user.service';
-import {GLOBAL} from './global';
+import {UserService} from '../user.service';
+import {GLOBAL} from '../global';
 import {Observable} from 'rxjs';
-import {Match} from '../models/minecraft/match';
-import {IMatchProfile} from '../newModels/match/IMatchProfile';
+import {Match} from '../../models/minecraft/match';
+import {IMatchProfile} from '../../newModels/match/IMatchProfile';
 
 @Injectable()
 export class MatchService {

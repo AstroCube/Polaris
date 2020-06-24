@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IAppeal, IAppealAction, IAppealCreation, IAppealMain} from "../../../../newModels/IAppeal";
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
-import {AppealService} from "../../../../services/appeal.service";
+import {AppealService} from "../../../../services/moderation/appeal.service";
 import {NotifierService} from "angular-notifier";
 
 @Component({

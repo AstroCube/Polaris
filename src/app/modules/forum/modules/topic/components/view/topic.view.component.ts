@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TopicService} from '../../../../../../services/topic.service';
+import {TopicService} from '../../../../../../services/forum/topic.service';
 import {NotifierService} from 'angular-notifier';
 import * as moment from 'moment';
 import {GLOBAL} from '../../../../../../services/global';

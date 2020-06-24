@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AppealService} from '../../../../services/appeal.service';
+import {AppealService} from '../../../../services/moderation/appeal.service';
 import {Meta, Title} from '@angular/platform-browser';
 import {GLOBAL} from '../../../../services/global';
 import {IPaginateResult} from "../../../../newModels/IModel";
@@ -9,6 +9,7 @@ import {IAppealSearchCriteria, IAppealsPermissions} from "../../../../newModels/
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 import {NotifierService} from "angular-notifier";
+import {IGamemode} from "../../../../newModels/IGamemode";
 
 @Component({
   selector: 'appeal-global',

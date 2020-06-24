@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
-import { GLOBAL } from "./global";
-import {UserService} from './user.service';
-import {Category} from '../models/forum/category';
+import { GLOBAL } from "../global";
+import {UserService} from '../user.service';
+import {Category} from '../../models/forum/category';
 
 @Injectable()
 export class CategoryService {

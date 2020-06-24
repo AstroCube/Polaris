@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from '../../../services/user.service';
-import {ReportService} from '../../../services/report.service';
+import {ReportService} from '../../../services/moderation/report.service';
 import {IReport, IReportView} from "../../../newModels/IReport";
 import {forkJoin, Observable, of} from "rxjs";
 import {catchError, map, mergeMap} from "rxjs/operators";

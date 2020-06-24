@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
-import {TopicService} from '../../../services/topic.service';
+import {TopicService} from '../../../services/forum/topic.service';
 import {Topic} from '../../../models/forum/topic';
 import {Post} from '../../../models/forum/post';
 

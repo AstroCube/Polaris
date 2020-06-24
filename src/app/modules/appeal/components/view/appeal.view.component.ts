@@ -6,7 +6,7 @@ import {GLOBAL} from "../../../../services/global";
 import {IAppealPermissible} from "../../../../newModels/permissions/IAppealsPermissions";
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
-import {AppealService} from "../../../../services/appeal.service";
+import {AppealService} from "../../../../services/moderation/appeal.service";
 import {NotifierService} from "angular-notifier";
 import * as dotty from 'dotty';
 

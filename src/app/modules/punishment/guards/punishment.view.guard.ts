@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, Router} from '@angular/router';
-import {PunishmentService} from '../../../services/punishment.service';
+import {PunishmentService} from '../../../services/moderation/punishment.service';
 import {catchError, map} from "rxjs/operators";
 import {IPunishment} from "../../../newModels/IPunishment";
 import {Observable, of} from "rxjs";

@@ -11,7 +11,7 @@ import {ReportViewComponent} from "./components/view/report.view.component";
 import {ReportCreateGuard} from "./guards/report.create.guard";
 import {ReportListGuard} from "./guards/report.list.guard";
 import {ReportViewGuard} from "./guards/report.view.guard";
-import {ReportService} from "../../services/report.service";
+import {ReportService} from "../../services/moderation/report.service";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ReportRouting} from "./report.routing";

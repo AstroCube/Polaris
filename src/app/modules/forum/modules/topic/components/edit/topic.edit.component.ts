@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TopicService} from '../../../../../../services/topic.service';
+import {TopicService} from '../../../../../../services/forum/topic.service';
 import * as ClassicEditor from "../../../../../../../../text_editor";
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';

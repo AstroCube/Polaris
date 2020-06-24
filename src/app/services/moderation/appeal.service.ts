@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import { GLOBAL } from "./global";
-import {UserService} from './user.service';
+import { GLOBAL } from "../global";
+import {UserService} from '../user.service';
 import {Observable} from 'rxjs';
-import {IAppeal, IAppealAction, IAppealCreation} from "../newModels/IAppeal";
-import {IPaginateResult} from "../newModels/IModel";
-import {IAppealsPermissions} from "../newModels/permissions/IAppealsPermissions";
+import {IAppeal, IAppealAction, IAppealCreation} from "../../newModels/IAppeal";
+import {IPaginateResult} from "../../newModels/IModel";
+import {IAppealsPermissions} from "../../newModels/permissions/IAppealsPermissions";
 
 @Injectable()
 export class AppealService {

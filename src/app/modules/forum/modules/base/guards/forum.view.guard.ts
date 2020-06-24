@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Router} from '@angular/router';
 import {UserService} from '../../../../../services/user.service';
-import {ForumService} from '../../../../../services/forum.service';
-import {TopicService} from '../../../../../services/topic.service';
+import {ForumService} from '../../../../../services/forum/forum.service';
+import {TopicService} from '../../../../../services/forum/topic.service';
 
 @Injectable()
 export class ForumViewGuard {

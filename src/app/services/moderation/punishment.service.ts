@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import { GLOBAL } from "./global";
-import {UserService} from './user.service';
+import { GLOBAL } from "../global";
+import {UserService} from '../user.service';
 import {Observable} from 'rxjs';
-import {IPunishment} from "../newModels/IPunishment";
-import {IPaginateResult} from "../newModels/IModel";
+import {IPunishment} from "../../newModels/IPunishment";
+import {IPaginateResult} from "../../newModels/IModel";
 
 @Injectable()
 export class PunishmentService {

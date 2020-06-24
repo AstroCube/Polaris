@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {UserService} from './user.service';
-import {GLOBAL} from './global';
+import {UserService} from '../user.service';
+import {GLOBAL} from '../global';
 import {Observable} from 'rxjs';
-import {IFriendProfile} from '../newModels/friend/IFriendProfile';
+import {IFriendProfile} from '../../newModels/friend/IFriendProfile';
 
 @Injectable()
 export class FriendService {

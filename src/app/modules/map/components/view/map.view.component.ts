@@ -1,46 +1,57 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Map} from '../../../../models/minecraft/map';
 import { GLOBAL } from '../../../../services/global';
 import {User} from '../../../../models/user';
-import {MapService} from '../../../../services/map.service';
+import {MapService} from '../../../../services/minecraft/map.service';
 import {Title} from '@angular/platform-browser';
+import {IMapView} from "../../../../newModels/IMap";
+import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 
 @Component({
   selector: 'map-view',
   templateUrl: './map.view.component.html'
 })
 
-export class MapViewComponent {
+export class MapViewComponent implements OnInit {
 
-  public map : Map;
-  public user : User;
-  public placeholder : any;
-  public canDownload : boolean;
-  public url : string;
+  public data: IMapView;
+  public related: boolean;
+  public url: string;
 
   constructor(
-    private _titleService: Title,
-    private _route: ActivatedRoute,
-    private _mapService: MapService
+    private titleService: Title,
+    private route: ActivatedRoute,
+    private mapService: MapService
   ) {
-    this.url = GLOBAL.url;
+    this.url = GLOBAL.epsilon;
+    this.related = false;
   }
 
-  ngOnInit() {
-    this._route.data.subscribe((data) => {
-      this.map = data.MapViewGuard.map;
-      this.canDownload = data.MapViewGuard.canDownload;
-      this.placeholder = data.MapViewGuard.placeholder;
-      this.user = data.MapViewGuard.map;
+  ngOnInit(): void {
+    this.route.data.subscribe((data) => {
+      this.data = data.MapViewGuard;
+      console.log(this.data);
+      this.related = this.isRelated();
     });
+  }
 
-    this._titleService.setTitle(this.map.name + " - " + GLOBAL.title);
-    if (!this.canDownload) this.canDownload = this.user._id === this.map.author._id;
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
+  }
+
+  private isRelated(): boolean {
+    return this.data.permissions && (
+      this.data.permissions.permissions.maps.manage ||
+      this.data.permissions.user._id.toString() === (this.data.map.author as IUser)._id.toString() ||
+      this.data.map.contributors.some(c => (c.contributor as IUser)._id.toString() === this.data.permissions.user._id.toString())
+    );
   }
 
   downloadFile() {
-    this._mapService.mapDownloadFile(this.map.file).subscribe((file) => {
+    /*
+      this.mapService.mapDownloadFile(this.map.file).subscribe((file) => {
       let fileBlob = new Blob([file], {type: "application/zip"});
 
       // IE doesn't allow using a blob object directly as link href
@@ -67,9 +78,11 @@ export class MapViewComponent {
       }, 100);
 
     });
+     */
   }
 
   downloadJSON() {
+    /*
     this._mapService.mapDownloadJSON(this.map.configuration).subscribe((file) => {
       let fileBlob = new Blob([file], {type: "application/json"});
 
@@ -97,6 +110,7 @@ export class MapViewComponent {
       }, 100);
 
     });
+     */
   }
 
 }

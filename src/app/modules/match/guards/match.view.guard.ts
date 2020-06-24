@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Router} from '@angular/router';
-import {MatchService} from '../../../services/match.service';
+import {MatchService} from '../../../services/minecraft/match.service';
 
 @Injectable()
 export class MatchViewGuard {

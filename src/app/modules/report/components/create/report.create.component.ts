@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../../services/user.service';
-import {ReportService} from '../../../../services/report.service';
+import {ReportService} from '../../../../services/moderation/report.service';
 import {NotifierService} from 'angular-notifier';
 import {Title} from '@angular/platform-browser';
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";

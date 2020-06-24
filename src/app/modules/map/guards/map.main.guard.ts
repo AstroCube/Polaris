@@ -1,73 +1,48 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Router} from '@angular/router';
-import {MapService} from '../../../services/map.service';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {MapService} from '../../../services/minecraft/map.service';
+import {IMapMain} from "../../../newModels/IMap";
+import {forkJoin, Observable, of} from "rxjs";
+import {GamemodeService} from "../../../services/minecraft/gamemode.service";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import {IGamemode} from "../../../newModels/IGamemode";
 
 @Injectable()
-export class MapMainGuard {
+export class MapMainGuard implements Resolve<IMapMain> {
 
   constructor (
-    private _mapService: MapService,
-    private _router: Router
+    private mapService: MapService,
+    private gamemodeService: GamemodeService,
+    private router: Router
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    let gamemode = null;
-    let page = 1;
-    if (route.queryParams.gamemode) gamemode = route.queryParams.gamemode;
-    if (route.queryParams.page) page = route.queryParams.page;
-    return this.dataPromise(page, gamemode).then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMapMain> {
+    const selectedGamemode: Observable<IGamemode> =
+      route.queryParams.gamemode ? this.gamemodeService.get(route.queryParams.gamemode) : of(null);
+
+    return this.gamemodeService.list(-1, 10).pipe(
+      mergeMap(gamemodes =>
+        forkJoin([
+          this.mapService.list(route.queryParams.page || 1, 15),
+          selectedGamemode
+        ]).pipe(
+          map(response => ({
+            gamemodes: gamemodes.data.filter(g => g.subTypes.length > 1),
+            selected: response[1],
+            maps: response[0]
+          }) as IMapMain)
+        )
+      ),
+      catchError(error => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as IMapMain);
+      })
+    );
   }
 
-  async dataPromise(page, gamemode): Promise<any> {
-    let data : any = {};
 
-    data.map = await this._mapService.mapGetQuery(page, gamemode).then((maps) => {
-      return maps;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-    data.gamemode = await this._mapService.mapGamemodeList().then((gamemode) => {
-      return gamemode;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
+  public selectGamemode(gamemode: IGamemode): void {
 
-    return data;
   }
+
 }

@@ -3,10 +3,11 @@ import {Map} from '../../models/minecraft/map';
 import {IMatchProfile} from '../match/IMatchProfile';
 import {IFriendProfile} from '../friend/IFriendProfile';
 import {IPunishment} from "../IPunishment";
+import {IMap} from "../IMap";
 
 export interface IUserProfile {
   user: IUser;
-  maps: Map[];
+  maps: IMap[];
   punishments: IPunishment[];
   friends: IFriendProfile;
   lastMatches: IMatchProfile;

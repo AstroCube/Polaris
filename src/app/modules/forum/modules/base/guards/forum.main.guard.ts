@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../../../../../services/user.service';
-import {ForumService} from '../../../../../services/forum.service';
+import {ForumService} from '../../../../../services/forum/forum.service';
 
 @Injectable()
 export class ForumMainGuard {

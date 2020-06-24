@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as ClassicEditor from "../../../../../../../../text_editor";
-import {TopicService} from '../../../../../../services/topic.service';
+import {TopicService} from '../../../../../../services/forum/topic.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Post} from '../../../../../../models/forum/post';

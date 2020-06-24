@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as ClassicEditor from "../../../../../../../../text_editor";
 import {ActivatedRoute, Router} from '@angular/router';
 import {Topic} from '../../../../../../models/forum/topic';
-import {TopicService} from '../../../../../../services/topic.service';
+import {TopicService} from '../../../../../../services/forum/topic.service';
 import {NotifierService} from 'angular-notifier';
 import {UserService} from '../../../../../../services/user.service';
 import {Socket} from 'ngx-socket-io';

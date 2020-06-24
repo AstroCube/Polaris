@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ForumService} from '../../../../../../services/forum.service';
+import {ForumService} from '../../../../../../services/forum/forum.service';
 import {NotifierService} from 'angular-notifier';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';

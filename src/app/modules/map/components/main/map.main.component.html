@@ -8,15 +8,12 @@
       Seleccionar mapas:
     </span>
     <div class="dropdown map__navigator-dropdown map__navigator-dropdown--1">
-        <span *ngIf="!selectedMode" class="dropdown__label dropdown map__navigator-dropdown-label" navbar-dropdown>
-          Modos de juego
-        </span>
-        <span *ngIf="selectedMode" class="dropdown__label dropdown map__navigator-dropdown-label" navbar-dropdown>
-            {{selectedMode.scoreboard}}
+        <span class="dropdown__label dropdown map__navigator-dropdown-label" navbar-dropdown>
+            {{mapMain.selected ? mapMain.selected.name : 'Elegir juegos'}}
         </span>
       <div class="dropdown__content">
-        <a href="{{'/mapas'}}" class="dropdown__link map__navigator-dropdown-link">Todos los mapas</a>
-        <a *ngFor="let game of gamemode" href="{{'/mapas?gamemode=' + game._id}}" class="dropdown__link map__navigator-dropdown-link">{{game.scoreboard}}</a>
+        <a (click)="selectGamemode(null)" class="dropdown__link map__navigator-dropdown-link">Todos los mapas</a>
+        <a *ngFor="let game of mapMain.gamemodes" (click)="selectGamemode(game)"  class="dropdown__link map__navigator-dropdown-link">{{game.name}}</a>
       </div>
     </div>
     <!--
@@ -34,15 +31,15 @@
     </div>
     -->
   </div>
-  <div *ngFor="let map of mapList" class="map map--profile">
+  <div *ngFor="let map of mapMain.maps.data" class="map map--profile">
     <a routerLink="{{'/mapas/' + map._id}}">
-      <img src="{{url + 'map/get-image/' + map.image}}" class="map__image">
+      <img src="{{url + 'map/get-image/' + map._id}}" class="map__image">
     </a>
     <a routerLink="{{'/mapas/' + map._id}}" class="map__title">
       {{map.name}}
     </a>
     <p class="map__author">
-      por <a routerLink="{{'/' + map.author.username}}">{{map.author.username}}</a>
+      por <a routerLink="{{'/' + map.author.username}}">{{map.author.display}}</a>
     </p>
     <!--
     <div class="map__stars">
@@ -54,6 +51,14 @@
     </div>
     -->
   </div>
-  <p *ngIf="mapList.length === 0" class="u-center-text paragraph--white">No hay mapas actualmente</p>
-  <pagination [queryParams]="query" [actual_page]="page" [last_page]="pages" route="/mapas/" [pageAsQuery]="true" [centered]="true"></pagination>
+  <p *ngIf="!showSpinner && mapMain.maps.data.length === 0" class="u-center-text paragraph--white">No hay mapas actualmente</p>
+  <spinner [active]="showSpinner" loading="Buscando mapas... <br> Obras divinas de gente divina ;)"></spinner>
+  <pagination
+    *ngIf="!showSpinner"
+    [actual_page]="mapMain.maps.pagination.page"
+    [last_page]="mapMain.maps.pagination.totalPages"
+    [eventOriented]="true"
+    (onNavigate)="updateQuery($event)"
+    [centered]="true"
+  ></pagination>
 </section>

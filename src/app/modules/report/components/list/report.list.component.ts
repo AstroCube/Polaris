@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ReportService} from '../../../../services/report.service';
+import {ReportService} from '../../../../services/moderation/report.service';
 import {NotifierService} from 'angular-notifier';
 import {GLOBAL} from '../../../../services/global';
 import {Title} from '@angular/platform-browser';

@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
-import { GLOBAL } from "./global";
-import {UserService} from './user.service';
-import {Topic} from '../models/forum/topic';
-import {Post} from '../models/forum/post';
+import { GLOBAL } from "../global";
+import {UserService} from '../user.service';
+import {Topic} from '../../models/forum/topic';
+import {Post} from '../../models/forum/post';
 
 @Injectable()
 export class TopicService {

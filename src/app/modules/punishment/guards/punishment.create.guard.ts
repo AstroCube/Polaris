@@ -6,7 +6,7 @@ import {forkJoin, Observable, of} from "rxjs";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {GroupService} from "../../../services/group.service";
 import {IReport} from "../../../newModels/IReport";
-import {ReportService} from "../../../services/report.service";
+import {ReportService} from "../../../services/moderation/report.service";
 import {IPaginateResult} from "../../../newModels/IModel";
 
 @Injectable()

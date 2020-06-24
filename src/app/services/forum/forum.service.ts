@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { GLOBAL } from "./global";
-import {UserService} from './user.service';
-import {Forum} from '../models/forum/forum';
+import { GLOBAL } from "../global";
+import {UserService} from '../user.service';
+import {Forum} from '../../models/forum/forum';
 import {Observable} from 'rxjs';
 
 @Injectable()

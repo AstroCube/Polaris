@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,13 +14,17 @@ export class ApplicationPaginationComponent implements OnInit {
   @Input() last_page;
   @Input() centered;
   @Input() pageAsQuery = false;
+  @Input() eventOriented = false;
+  @Output() onNavigate: EventEmitter<number>;
   public paginator_type;
   public first_page;
   public pages: number[];
 
   constructor(
     private _router: Router
-  ) {}
+  ) {
+    this.onNavigate = new EventEmitter<number>();
+  }
 
   ngOnInit() {
     this.paginator(this.last_page, this.actual_page);
@@ -56,13 +60,17 @@ export class ApplicationPaginationComponent implements OnInit {
   }
 
   navigate(page: number) {
-    let params = {};
-    if (this.queryParams) params = this.queryParams;
-    if (this.pageAsQuery) params["page"] = page;
-    if (!this.pageAsQuery) {
-      this._router.navigate([this.route + page], {queryParams: params});
+    if (this.eventOriented) {
+      this.onNavigate.emit(page);
     } else {
-      this._router.navigate([this.route], {queryParams: params});
+      let params = {};
+      if (this.queryParams) params = this.queryParams;
+      if (this.pageAsQuery) params["page"] = page;
+      if (!this.pageAsQuery) {
+        this._router.navigate([this.route + page], {queryParams: params});
+      } else {
+        this._router.navigate([this.route], {queryParams: params});
+      }
     }
   }
 

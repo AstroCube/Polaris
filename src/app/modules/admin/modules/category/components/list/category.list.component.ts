@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Category} from '../../../../../../models/forum/category';
 import {ActivatedRoute} from '@angular/router';
-import {CategoryService} from '../../../../../../services/category.service';
+import {CategoryService} from '../../../../../../services/forum/category.service';
 import {NotifierService} from 'angular-notifier';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
