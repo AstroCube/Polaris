@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {ICategoryTree} from "../../../../../../newModels/forum/IForumCategory";
 
 @Component({
   selector: 'forum-list',
@@ -10,21 +11,22 @@ import {Title} from '@angular/platform-browser';
 
 export class ForumListComponent implements OnInit {
 
-  public tree: any[];
+  public tree: ICategoryTree[];
 
   constructor(
-    private _titleService: Title,
-    private _route: ActivatedRoute
+    private titleService: Title,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this._titleService.setTitle("Foros - " + GLOBAL.title);
-    this._route.data.subscribe((data => {
-      this.tree = data.ForumListGuard.forum_list;
+    this.titleService.setTitle("Foros - " + GLOBAL.title);
+    this.route.data.subscribe((data => {
+      this.tree = data.ForumListGuard;
     }));
   }
 
   deleteForum() {
 
   }
+
 }

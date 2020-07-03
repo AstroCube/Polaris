@@ -2,6 +2,7 @@ import { IModel } from "./IModel";
 import {IPunishmentPermissions} from "./permissions/IPunishmentPermissions";
 import {IAppealsPermissions} from "./permissions/IAppealsPermissions";
 import {IReportsPermissions} from "./permissions/IReportsPermissions";
+import {IForumPermissions} from "./permissions/IForumPermissions";
 
 export interface IGroup extends IModel {
   name: string;
@@ -39,5 +40,5 @@ export interface IPermissions {
     manage: boolean;
   };
   reports: IReportsPermissions;
-  forum: any;
+  forum: IForumPermissions;
 }

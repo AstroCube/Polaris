@@ -1,48 +1,35 @@
 import { Injectable } from '@angular/core';
-import {Router} from '@angular/router';
-import {map} from 'rxjs/operators';
-import {UserService} from '../../../../../services/user.service';
+import {ActivatedRouteSnapshot, CanActivate, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {ForumService} from '../../../../../services/forum/forum.service';
+import {forkJoin, Observable} from "rxjs";
+import {GroupService} from "../../../../../services/group.service";
+import {map, mergeMap} from "rxjs/operators";
+import {CategoryService} from "../../../../../services/forum/category.service";
+import {ICategoryTree} from "../../../../../newModels/forum/IForumCategory";
 
 @Injectable()
-export class ForumListGuard {
+export class ForumListGuard implements CanActivate, Resolve<ICategoryTree[]> {
 
   constructor (
-    private _forumService: ForumService,
-    private _userService: UserService,
-    private _router: Router
+    private forumService: ForumService,
+    private categoryService: CategoryService,
+    private groupService: GroupService
   ) {}
 
-  canActivate() {
-    const token = this._userService.getToken();
-    if (token && token !== "none") {
-      return this._userService.permission_checker("web_permissions.forum.manage").pipe(map(
-        response => {
-          if (response.has_permission) {
-            return true;
-          } else {
-            this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-            return false;
-          }
-        }
-      ));
-    } else {
-      this._router.navigate(['/login']);
-      return false;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.groupService.permissionsManifest().pipe(map(permissions => permissions.forum.manage));
   }
 
-  resolve(): Promise<any> {
-    return this._forumService.forum_admin_list().then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICategoryTree[]> {
+    return this.categoryService.list().pipe(
+      mergeMap(categories =>
+        forkJoin(
+          categories.data.map(category => this.forumService.list(-1, 10, {category: category._id}).pipe(
+            map(forums => ({category, tree: forums.data}))
+          ))
+        )
+      )
+    );
   }
+
 }

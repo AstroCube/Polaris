@@ -20,28 +20,14 @@
           <label class="form__icon"><i class="fas fa-indent"></i>&nbsp;</label>
           <div class="forum__tree-form">
             <ng-select
-              *ngIf="!only_categories"
               id="parent"
               name="parent"
               #parent="ngModel"
-              [items]="forum_tree"
-              bindLabel="name"
+              [items]="tree"
+              bindLabel="forum"
               groupBy="category"
               [selectableGroup]="true"
               [(ngModel)]="forum.parent"
-              class="form__select"
-              [searchable]="false"
-              required
-            ></ng-select>
-            <ng-select
-              *ngIf="only_categories"
-              id="parent_categories"
-              name="parent_categories"
-              #parent_categories="ngModel"
-              [items]="forum_tree"
-              bindLabel="name"
-              bindValue="_id"
-              [(ngModel)]="forum.category"
               class="form__select"
               [searchable]="false"
               required

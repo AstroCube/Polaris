@@ -30,7 +30,7 @@
           <p>Acciones</p>
         </div>
       </div>
-      <div class="table__row" *ngFor="let forum of node.forums">
+      <div class="table__row" *ngFor="let forum of node.tree">
         <div class="table__cell">
           <p>{{forum.order}}</p>
         </div>
@@ -46,5 +46,11 @@
         </div>
       </div>
     </div>
+    <div *ngIf="node.tree.length <= 0" class="u-center-text category__no-record">
+      No hay categorías creadas
+    </div>
+  </div>
+  <div *ngIf="tree.length <= 0" class="u-center-text category__no-record">
+    No hay categorías creadas
   </div>
 </section>

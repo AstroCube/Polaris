@@ -50,6 +50,7 @@ export class MapViewComponent implements OnInit {
   }
 
   downloadFile() {
+    //TODO: Fix  downloadable
     /*
       this.mapService.mapDownloadFile(this.map.file).subscribe((file) => {
       let fileBlob = new Blob([file], {type: "application/zip"});

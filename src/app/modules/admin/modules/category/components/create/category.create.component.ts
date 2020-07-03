@@ -5,6 +5,7 @@ import {NotifierService} from 'angular-notifier';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {GLOBAL} from '../../../../../../services/global';
+import {IForumCategory} from "../../../../../../newModels/forum/IForumCategory";
 
 @Component({
   selector: 'category-create',
@@ -13,36 +14,36 @@ import {GLOBAL} from '../../../../../../services/global';
 
 export class CategoryCreateComponent implements OnInit {
 
-  public category: Category;
+  public category: IForumCategory;
 
   constructor(
-    private _titleService: Title,
-    private _categoryService: CategoryService,
-    private _notifierService: NotifierService,
-    private _router: Router
+    private titleService: Title,
+    private categoryService: CategoryService,
+    private notifierService: NotifierService,
+    private router: Router
   ) {
-    this.category = new Category("","",0);
+    this.category = {} as IForumCategory;
   }
 
   ngOnInit(): void {
-    this._titleService.setTitle("Crear categoría - " + GLOBAL.title);
+    this.titleService.setTitle("Crear categoría - " + GLOBAL.title);
   }
 
   onSubmit(): void {
-    this._categoryService.category_create(this.category).subscribe(
+    this.categoryService.create(this.category).subscribe(
       response => {
         if(!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al crear la categoría.");
+          this.notifierService.notify('error', "Ha ocurrido un error al crear la categoría.");
         } else {
-          this._notifierService.notify('success', "Se ha creado la categoría correctamente.");
-          this._router.navigate(["/admin/categorias"]);
+          this.notifierService.notify('success', "Se ha creado la categoría correctamente.");
+          this.router.navigate(["/admin/categorias"]);
         }
       },
 
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', error.error.message);
+          this.notifierService.notify('error', error.error.message);
         }
       }
     );

@@ -5,12 +5,12 @@ import {CategoryEditComponent} from "./components/edit/category.edit.component";
 import {CategoryCreateComponent} from "./components/create/category.create.component";
 import {CategoryListGuard} from "./guards/category.list.guard";
 import {CategoryEditGuard} from "./guards/category.edit.guard";
-import {CategoryCreateGuard} from "./guards/category.create.guard";
+import {CategoryPermissionsGuard} from "./guards/category.permissions.guard";
 
 const routes: Routes = [
-  {path: "", component: CategoryListComponent, canActivate: [CategoryListGuard], resolve: {CategoryListGuard}},
-  {path: "editar/:id", component: CategoryEditComponent, canActivate: [CategoryEditGuard], resolve: {CategoryEditGuard}},
-  {path: "crear", component: CategoryCreateComponent, canActivate: [CategoryCreateGuard]}
+  {path: "", component: CategoryListComponent, canActivate: [CategoryPermissionsGuard], resolve: {CategoryListGuard}},
+  {path: "editar/:id", component: CategoryEditComponent, canActivate: [CategoryPermissionsGuard], resolve: {CategoryEditGuard}},
+  {path: "crear", component: CategoryCreateComponent, canActivate: [CategoryPermissionsGuard]}
 ];
 
 @NgModule({

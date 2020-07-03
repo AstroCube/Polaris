@@ -23,7 +23,7 @@
         <p>Acciones</p>
       </div>
     </div>
-    <div *ngFor="let category of categories" class="table__row">
+    <div *ngFor="let category of categories.data" class="table__row">
       <div class="table__cell">
         <p>{{category.order}}</p>
       </div>
@@ -36,8 +36,8 @@
       </div>
     </div>
   </div>
-  <div *ngIf="categories.length <= 0" class="u-center-text category__no-record">
-    No hay categorías creadas
+  <div *ngIf="categories.data.length <= 0" class="u-center-text category__no-record">
+    No hay foros creados
   </div>
   <div class="category__advice">
     <span>* Al eliminar una categoría los foros hijos pasarán a la primera en el órden o se creará una nueva categoría.</span>
