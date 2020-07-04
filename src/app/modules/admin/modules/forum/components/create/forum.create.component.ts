@@ -47,10 +47,16 @@ export class ForumCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    this.forum.category = this.forum.parent.categoryId;
-    if (this.forum.parent.forumId) this.forum.parent = this.forum.parent.forumId;
+    console.log(this.forum.parent);
+    this.forum.category = (this.forum.parent as IForumCreationTree).categoryId;
+    if ((this.forum.parent as IForumCreationTree).forumId) {
+      this.forum.parent = (this.forum.parent as IForumCreationTree).forumId;
+    } else {
+      this.forum.parent = undefined;
+    }
 
-    this.forumService.forumCreate(this.forum).subscribe(
+
+    this.forumService.create(this.forum).subscribe(
       response => {
         if (!response) {
           this.notifierService.notify('error', "Ha ocurrido un error al crear el foro.");
@@ -63,10 +69,17 @@ export class ForumCreateComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if (error_message != null) {
+          console.log(error);
           this.notifierService.notify('error', error.error.message);
         }
       }
     );
+  }
+
+  selectGroup(key: string | object, children: any[]): any {
+    console.log(key);
+    console.log(children);
+    return children[0];
   }
 
 }

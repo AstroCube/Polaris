@@ -59,7 +59,7 @@ export class ForumService {
     return this.http.get(this.url + "forum/main", {headers: headers}).toPromise();
   }
 
-  forumCreate(forum: IForum): Observable<IForum> {
+  create(forum: IForum): Observable<IForum> {
     let params = JSON.stringify(forum);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.post(GLOBAL.epsilon + "forum", params, {headers: headers}) as Observable<IForum>;

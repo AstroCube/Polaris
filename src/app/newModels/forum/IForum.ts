@@ -5,8 +5,8 @@ export interface IForum extends IModel {
     name: string;
     order: number;
     description: string;
-    category: IForumCategory;
-    parent?: IForum;
+    category: IForumCategory | string;
+    parent?: IForum | IForumCreationTree | string;
     guest: boolean;
 }
 
