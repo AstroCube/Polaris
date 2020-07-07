@@ -5,43 +5,41 @@ import { GLOBAL } from "../global";
 import {UserService} from '../user.service';
 import {IPaginateResult} from "../../newModels/IModel";
 import {IForumCategory} from "../../newModels/forum/IForumCategory";
+import {IPost} from "../../newModels/forum/IPost";
 
 @Injectable()
-export class CategoryService {
-  public url: String;
+export class PostService {
 
   constructor(
     private http: HttpClient,
     private userService: UserService
-  ){
-    this.url = GLOBAL.url;
-  }
+  ){}
 
-  create(category: IForumCategory): Observable<IForumCategory> {
+  create(category: IPost): Observable<IPost> {
     let params = JSON.stringify(category);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.post(GLOBAL.epsilon + "forum/category", params, {headers: headers}) as Observable<IForumCategory>;
+    return this.http.post(GLOBAL.epsilon + "forum/post", params, {headers: headers}) as Observable<IPost>;
   }
 
-  get(id: string): Observable<IForumCategory> {
+  get(id: string): Observable<IPost> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.get(GLOBAL.epsilon + "forum/category/" + id, {headers: headers}) as Observable<IForumCategory>;
+    return this.http.get(GLOBAL.epsilon + "forum/post/" + id, {headers: headers}) as Observable<IPost>;
   }
 
-  list(page?: number, size?: number, query?: any): Observable<IPaginateResult<IForumCategory>> {
+  list(page?: number, size?: number, query?: any, sort?: string): Observable<IPaginateResult<IPost>> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    const params = new HttpParams().set('page', String(page)).set('size', String(size));
-    return this.http.post(GLOBAL.epsilon + "forum/category/list", query,{headers: headers, params}) as Observable<IPaginateResult<IForumCategory>>;
+    const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('sort', sort);
+    return this.http.post(GLOBAL.epsilon + "forum/post/list", query,{headers: headers, params}) as Observable<IPaginateResult<IPost>>;
   }
 
-  update(category: IForumCategory): Observable<IForumCategory> {
+  update(category: IForumCategory): Observable<IPost> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.put(GLOBAL.epsilon + "forum/category", category, {headers: headers}) as Observable<IForumCategory>;
+    return this.http.put(GLOBAL.epsilon + "forum/post", category, {headers: headers}) as Observable<IPost>;
   }
 
   delete(id: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.delete(GLOBAL.epsilon + "forum/category/" + id, {headers: headers}) as Observable<any>;
+    return this.http.delete(GLOBAL.epsilon + "forum/post/" + id, {headers: headers}) as Observable<any>;
   }
 
 }

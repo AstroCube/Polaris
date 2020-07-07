@@ -30,6 +30,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ApplicationModule} from "./modules/application/application.module";
 import {UserModule} from "./modules/user/user.module";
 import {GamemodeService} from "./services/minecraft/gamemode.service";
+import {ForumUtilities} from "./utilities/forum-utilities";
+import {PostService} from "./services/forum/post.service";
 
 
 @NgModule({
@@ -63,6 +65,8 @@ import {GamemodeService} from "./services/minecraft/gamemode.service";
     CategoryService,
     ForumService,
     FriendService,
+    ForumUtilities,
+    PostService,
     GithubService,
     GroupService,
     GamemodeService,

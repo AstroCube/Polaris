@@ -8,7 +8,7 @@ import {ForumCreateComponent} from "./components/create/forum.create.component";
 
 const routes: Routes = [
   {path: "", component: ForumListComponent, canActivate: [ForumListGuard], resolve: {ForumListGuard}},
-  {path: "editar/:id", component: ForumEditComponent, canActivate: [ForumEditGuard], resolve: {ForumEditGuard}},
+  {path: "editar/:id", component: ForumEditComponent, canActivate: [ForumListGuard], resolve: {ForumListGuard, ForumEditGuard}},
   {path: "crear", component: ForumCreateComponent, canActivate: [ForumListGuard], resolve: {ForumListGuard}}
 ];
 

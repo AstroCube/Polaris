@@ -6,6 +6,7 @@ import {Forum} from '../../models/forum/forum';
 import {Observable} from 'rxjs';
 import {IPaginateResult} from "../../newModels/IModel";
 import {IForum} from "../../newModels/forum/IForum";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class ForumService {
@@ -66,9 +67,20 @@ export class ForumService {
   }
 
   list(page?: number, size?: number, query?: any): Observable<IPaginateResult<IForum>> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     const params = new HttpParams().set('page', String(page)).set('size', String(size));
     return this.http.post(GLOBAL.epsilon + "forum/list", query,{headers: headers, params}) as Observable<IPaginateResult<IForum>>;
+  }
+
+  get(id: string): Observable<IForum> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "forum/" + id, {headers: headers})
+      .pipe(map(a => ({...a, _id: id}))) as Observable<IForum>;
+  }
+
+  update(forum: IForum): Observable<IForum> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.put(GLOBAL.epsilon + "forum", forum,{headers: headers}) as Observable<IForum>;
   }
 
 }

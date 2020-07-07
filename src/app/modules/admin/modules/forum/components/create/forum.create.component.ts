@@ -47,14 +47,12 @@ export class ForumCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.forum.parent);
     this.forum.category = (this.forum.parent as IForumCreationTree).categoryId;
     if ((this.forum.parent as IForumCreationTree).forumId) {
       this.forum.parent = (this.forum.parent as IForumCreationTree).forumId;
     } else {
       this.forum.parent = undefined;
     }
-
 
     this.forumService.create(this.forum).subscribe(
       response => {
@@ -69,7 +67,6 @@ export class ForumCreateComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if (error_message != null) {
-          console.log(error);
           this.notifierService.notify('error', error.error.message);
         }
       }
@@ -77,8 +74,6 @@ export class ForumCreateComponent implements OnInit {
   }
 
   selectGroup(key: string | object, children: any[]): any {
-    console.log(key);
-    console.log(children);
     return children[0];
   }
 

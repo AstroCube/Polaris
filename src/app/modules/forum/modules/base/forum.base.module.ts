@@ -8,18 +8,20 @@ import {ForumViewGuard} from "./guards/forum.view.guard";
 import {EpsilonModule} from "../../../../epsilon.module";
 import {MomentModule} from "ngx-moment";
 import {ForumBaseRouting} from "./forum.base.routing";
+import {CommonModule} from "@angular/common";
 @NgModule({
   declarations: [
     ForumFeedComponent,
     ForumMainComponent,
     ForumViewComponent
   ],
-  imports: [
-    RouterModule,
-    EpsilonModule,
-    ForumBaseRouting,
-    MomentModule
-  ],
+    imports: [
+        RouterModule,
+        EpsilonModule,
+        ForumBaseRouting,
+        MomentModule,
+        CommonModule
+    ],
   exports: [
     ForumFeedComponent
   ],

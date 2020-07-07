@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GLOBAL} from '../../../../../../services/global';
 import {Meta, Title} from '@angular/platform-browser';
+import {IForumMain} from "../../../../../../newModels/forum/IForum";
+import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
 
 @Component({
   selector: 'forum-main',
@@ -10,32 +13,30 @@ import {Meta, Title} from '@angular/platform-browser';
 
 export class ForumMainComponent implements OnInit {
 
-  public categories: any[];
+  public main: IForumMain[];
 
   constructor(
-    private _titleService: Title,
-    private _metaService: Meta,
-    private _route: ActivatedRoute
+    private titleService: Title,
+    private metaService: Meta,
+    private route: ActivatedRoute
   ) {
+    this.main = [];
   }
 
   async ngOnInit() {
-    this._titleService.setTitle("Foros - " + GLOBAL.title);
-    this._metaService.addTags([
+    this.titleService.setTitle("Foros - " + GLOBAL.title);
+    this.metaService.addTags([
       {name: 'keywords', content: GLOBAL.tags},
       {name: 'description', content: 'Date a conocer, haz amigos y relacionate con la comunidad.'},
       {name: 'robots', content: 'index, follow'}
     ]);
-    this._route.data.subscribe((data) => {
-      this.categories = data.ForumMainGuard.categories;
-      this.categories = this.categories.filter(e => e !== null);
-      this.categories = this.categories.map(cat => {
-        let fixedCategory = cat;
-        fixedCategory.forums = fixedCategory.forums.filter(e => e !== null);
-        return cat;
-      });
-      this.categories = this.categories.filter(e => e.forums && e.forums.length >= 1);
+    this.route.data.subscribe((data) => {
+      this.main = data.ForumMainGuard;
     });
+  }
+
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
   }
 
 }

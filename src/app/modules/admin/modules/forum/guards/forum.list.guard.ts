@@ -25,8 +25,9 @@ export class ForumListGuard implements CanActivate, Resolve<ICategoryTree[]> {
       mergeMap(categories =>
         forkJoin(
           categories.data.map(category => this.forumService.list(-1, 10, {category: category._id}).pipe(
-            map(forums => ({category, tree: forums.data}))
-          ))
+              map(forums => ({category, tree: forums.data}))
+            )
+          )
         )
       )
     );
