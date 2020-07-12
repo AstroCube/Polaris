@@ -15,13 +15,13 @@ import {CommonModule} from "@angular/common";
     ForumMainComponent,
     ForumViewComponent
   ],
-    imports: [
-        RouterModule,
-        EpsilonModule,
-        ForumBaseRouting,
-        MomentModule,
-        CommonModule
-    ],
+  imports: [
+    RouterModule,
+    EpsilonModule,
+    ForumBaseRouting,
+    MomentModule,
+    CommonModule
+  ],
   exports: [
     ForumFeedComponent
   ],

@@ -4,16 +4,18 @@ import {ForumService} from '../../../../../../services/forum/forum.service';
 import {NotifierService} from 'angular-notifier';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {IForumView} from "../../../../../../newModels/forum/IForum";
+import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
 
 @Component({
   selector: 'forum-view',
   templateUrl: './forum.view.component.html'
 })
 
-export class ForumViewComponent implements OnInit{
+export class ForumViewComponent implements OnInit {
 
-  public forum_data: any;
-  public forum_info: any;
+  public data: IForumView;
 
   constructor(
     private _titleService: Title,
@@ -25,45 +27,36 @@ export class ForumViewComponent implements OnInit{
 
   ngOnInit() {
     this._route.data.subscribe((data => {
-      this.forum_data = data.ForumViewGuard.forum_data;
-      this.forum_info = data.ForumViewGuard.forum_info;
+      this.data = data.ForumViewGuard;
     }));
-    if (this.forum_data.permissions.view === "own") {
-      if (this.forum_info.pinned_topics && this.forum_info.pinned_topics.length >= 1) {
-        let pinned_own: any = this.forum_info.pinned_topics;
-        pinned_own = pinned_own.filter((topic) => { return topic.writer.id.toString() === this.forum_info.info.observer.toString(); });
-        this.forum_info.pinned_topics = pinned_own;
-      }
-      if (this.forum_info.topics && this.forum_info.topics.length >= 1) {
-        let topics_own: any = this.forum_info.topics;
-        topics_own = topics_own.filter((topic) => { return topic.writer.id.toString() === this.forum_info.info.observer.toString(); });
-        this.forum_info.topics = topics_own;
-      }
-    }
-    this._titleService.setTitle(this.forum_data.breadcrumb.actual.name + " - " + GLOBAL.title);
+    this._titleService.setTitle(this.data.forum.name + " - " + GLOBAL.title);
+  }
+
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
   }
 
   newTopic() {
-    this._router.navigate(['/foro/tema/crear'], {queryParams: {forum: this.forum_info.info.id}});
+    //
   }
 
   readAll() {
-    this._forumService.forum_clear(this.forum_info.info.id).subscribe(
-      response => {
-        if (response.cleared) {
-          this._notifierService.notify('success', "Has marcado todos los mensajes como leídos.");
-        } else {
-          this._notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
-        }
-
-      },
-      error => {
-        let error_message = <any> error;
-        if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
-        }
-      }
-    );
+    //this._forumService.forum_clear(this.forum_info.info.id).subscribe(
+    //       response => {
+    //         if (response.cleared) {
+    //           this._notifierService.notify('success', "Has marcado todos los mensajes como leídos.");
+    //         } else {
+    //           this._notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
+    //         }
+    //
+    //       },
+    //       error => {
+    //         let error_message = <any> error;
+    //         if(error_message != null) {
+    //           this._notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
+    //         }
+    //       }
+    //     );
   }
 
 }

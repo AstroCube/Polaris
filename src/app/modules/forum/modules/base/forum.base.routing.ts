@@ -6,7 +6,7 @@ import {ForumViewGuard} from "./guards/forum.view.guard";
 import {ForumMainGuard} from "./guards/forum.main.guard";
 
 const routes: Routes = [
-  {path: ":id", component: ForumViewComponent, canActivate: [ForumViewGuard], resolve: {ForumViewGuard}},
+  {path: ":id", component: ForumViewComponent, resolve: {ForumViewGuard}},
   {path: "", component: ForumMainComponent, resolve: {ForumMainGuard}}
 ];
 

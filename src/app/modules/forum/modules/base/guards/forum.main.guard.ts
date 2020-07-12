@@ -7,6 +7,7 @@ import {forkJoin, Observable, of} from "rxjs";
 import {CategoryService} from "../../../../../services/forum/category.service";
 import {catchError, mergeMap} from "rxjs/operators";
 import {ForumUtilities} from "../../../../../utilities/forum-utilities";
+import {IUser} from "../../../../../newModels/user/IUser";
 
 @Injectable()
 export class ForumMainGuard implements Resolve<IForumMain[]> {
@@ -23,8 +24,14 @@ export class ForumMainGuard implements Resolve<IForumMain[]> {
     return this.categoryService.list().pipe(
       mergeMap(categories =>
         forkJoin(
-          categories.data.map(
-            category => this.forumUtilities.getCategoryHolders(category))
+          [this.userService.getEpsilonToken() !== "" ? this.userService.getUserObservable() : of({} as IUser)]
+        ).pipe(
+          mergeMap(user =>
+            forkJoin(
+              categories.data.map(
+              category => this.forumUtilities.getCategoryHolders(category, user[0]))
+            )
+          )
         )
       ),
       catchError((error) => {

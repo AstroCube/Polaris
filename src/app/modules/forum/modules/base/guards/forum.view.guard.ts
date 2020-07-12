@@ -1,90 +1,56 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from '../../../../../services/user.service';
 import {ForumService} from '../../../../../services/forum/forum.service';
 import {TopicService} from '../../../../../services/forum/topic.service';
+import {IForumView} from "../../../../../newModels/forum/IForum";
+import {forkJoin, Observable, of} from "rxjs";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import {ForumUtilities} from "../../../../../utilities/forum-utilities";
+import {IUser} from "../../../../../newModels/user/IUser";
 
 @Injectable()
-export class ForumViewGuard {
+export class ForumViewGuard implements Resolve<IForumView> {
 
   constructor (
-    private _forumService: ForumService,
-    private _topicService: TopicService,
-    private _userService: UserService,
-    private _router: Router
+    private forumService: ForumService,
+    private forumUtilities: ForumUtilities,
+    private topicService: TopicService,
+    private userService: UserService,
+    private router: Router
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot) {
-    const token = this._userService.getToken();
-    if (token) {
-      return this.dataPromise(route).then((response) => {
-        let fetch: any = response;
-        if (fetch.forum_data.permissions.view === "all" || fetch.forum_data.permissions.view === "own") {
-          return true;
-        } else {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-      }).catch(() => {
-      });
-    } else {
-      this._router.navigate(['/login']);
-      return false;
-    }
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IForumView> {
+    return this.forumService.get(route.params.id).pipe(
+      mergeMap(forum =>
+        forkJoin([
+          this.userService.getEpsilonToken() ? this.userService.getUserObservable() : of({} as IUser),
+          this.topicService.list(route.queryParams.page || 1, 15, {forum: route.params.id}),
+          this.topicService.list(-1, 10, {forum: route.params.id, pinned: true}, 'createdAt'),
+          this.forumService.list(-1, 10, {parent: forum._id})
+        ]).pipe(
+          mergeMap(concat =>
+            forkJoin([
+              this.forumUtilities.getTopicHolders(concat[1].data, concat[0]),
+              this.forumUtilities.getTopicHolders(concat[2].data, concat[0]),
+              this.forumUtilities.getChildHolders(concat[3].data, concat[0])
+            ]).pipe(
+              map(topics => ({
+                child: topics[2],
+                forum,
+                topic: topics[0],
+                pinned: topics[1],
+                pagination: concat[3].pagination
+              }))
+            )
+          )
+        )
+      ),
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as IForumView);
+      })
+    );
   }
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.dataPromise(route).then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    });
-  }
-
-  async dataPromise(route: ActivatedRouteSnapshot): Promise<any> {
-    let data: any =  {};
-
-    data.forum_data = await this._forumService.forum_pre_fetch(route.params.id, true).then((forum) => {
-      return forum.pre_fetch;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-
-    data.forum_info = await this._forumService.forum_get(route.params.id).then((forum) => {
-      return forum;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-
-    return data;
-  }
 }

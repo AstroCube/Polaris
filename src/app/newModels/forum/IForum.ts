@@ -1,6 +1,7 @@
-import {IModel} from "../IModel";
-import {IForumCategory} from "./IForumCategory";
+import {IModel, IPagination} from "../IModel";
+import {IForumCategory, ITopicHolder} from "./IForumCategory";
 import {ITopic} from "./ITopic";
+import {IPost} from "./IPost";
 
 export interface IForum extends IModel {
     name: string;
@@ -29,4 +30,12 @@ export interface IForumHolder {
   topics: number;
   messages: number;
   lastTopic: ITopic;
+}
+
+export interface IForumView {
+  child: IForumHolder[];
+  forum: IForum;
+  topic: ITopicHolder[];
+  pinned: ITopicHolder[];
+  pagination: IPagination;
 }

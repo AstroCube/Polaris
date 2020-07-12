@@ -92,7 +92,7 @@ export class TopicService {
   list(page?: number, size?: number, query?: any, sort?: string): Observable<IPaginateResult<ITopic>> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('sort', sort);
-    return this.http.post(GLOBAL.epsilon + "forum/topic", query,{headers: headers, params}) as Observable<IPaginateResult<ITopic>>;
+    return this.http.post(GLOBAL.epsilon + "forum/topic/list", query,{headers: headers, params}) as Observable<IPaginateResult<ITopic>>;
   }
 
 }
