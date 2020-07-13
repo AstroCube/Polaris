@@ -7,6 +7,7 @@ import {Topic} from '../../models/forum/topic';
 import {Post} from '../../models/forum/post';
 import {IPaginateResult} from "../../newModels/IModel";
 import {ITopic} from "../../newModels/forum/ITopic";
+import {IForum} from "../../newModels/forum/IForum";
 
 @Injectable()
 export class TopicService {
@@ -87,6 +88,12 @@ export class TopicService {
   topicHomepagePosts(id: string): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
     return this.http.get(this.url + "topic/mainPosts/" + id, {headers: headers}).toPromise();
+  }
+
+  create(topic: ITopic): Observable<ITopic> {
+    let params = JSON.stringify(topic);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.post(GLOBAL.epsilon + "forum/topic", params, {headers: headers}) as Observable<ITopic>;
   }
 
   list(page?: number, size?: number, query?: any, sort?: string): Observable<IPaginateResult<ITopic>> {

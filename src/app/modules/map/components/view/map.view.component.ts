@@ -32,7 +32,6 @@ export class MapViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
       this.data = data.MapViewGuard;
-      console.log(this.data);
       this.related = this.isRelated();
     });
   }

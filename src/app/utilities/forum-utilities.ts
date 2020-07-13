@@ -1,5 +1,5 @@
 import {forkJoin, Observable, of} from "rxjs";
-import {IForum, IForumHolder, IForumMain} from "../newModels/forum/IForum";
+import {IForum, IForumHolder, IForumMain, IForumView} from "../newModels/forum/IForum";
 import {Injectable} from "@angular/core";
 import {ForumService} from "../services/forum/forum.service";
 import {TopicService} from "../services/forum/topic.service";
@@ -9,6 +9,7 @@ import {UserService} from "../services/user.service";
 import {ITopic} from "../newModels/forum/ITopic";
 import {IUser} from "../newModels/user/IUser";
 import {IForumCategory, ITopicHolder} from "../newModels/forum/IForumCategory";
+import {IPaginateResult} from "../newModels/IModel";
 
 @Injectable()
 export class ForumUtilities {
@@ -42,19 +43,27 @@ export class ForumUtilities {
   }
 
   public getTopicHolders(t: ITopic[], user: IUser): Observable<ITopicHolder[]> {
-    return of(t).pipe(
-      mergeMap(topics =>
-        forkJoin(topics.map(topic => this.getTopicHolder(topic, user)))
-      )
+    return t.length > 0 ? forkJoin(t.map(topic => this.getTopicHolder(topic, user))) : of([]);
+  }
+
+  public getForumView(user: IUser, paginatedTopics: IPaginateResult<ITopic>, pinned: ITopic[], child: IForum[], forum: IForum): Observable<IForumView> {
+    return forkJoin([
+      this.getTopicHolders(paginatedTopics.data, user),
+      this.getTopicHolders(pinned, user),
+      this.getChildHolders(child, user)
+    ]).pipe(
+      map(topics => ({
+        child: topics[2],
+        forum,
+        topic: topics[0],
+        pinned: topics[1],
+        pagination: paginatedTopics.pagination
+      }))
     );
   }
 
   public getChildHolders(f: IForum[], user: IUser): Observable<IForumHolder[]> {
-    return of(f).pipe(
-      mergeMap(forums =>
-        forkJoin(forums.map(forum => this.getHolder(forum, user)))
-      )
-    );
+    return f.length > 0 ? forkJoin(f.map(forum => this.getHolder(forum, user))) : of([]);
   }
 
   public getTopicHolder(topic: ITopic, user?: IUser): Observable<ITopicHolder> {

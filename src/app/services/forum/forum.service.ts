@@ -18,46 +18,10 @@ export class ForumService {
   ){
     this.url = GLOBAL.url;
   }
-
-  forum_get(id: string): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "forum/get/" + id, {headers: headers}).toPromise();
-  }
-
   forum_pre_fetch(id: string, promise: boolean): any {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
     if (!promise) return this.http.get(this.url + "forum/pre-fetch/" + id, {headers: headers});
     return this.http.get(this.url + "forum/pre-fetch/" + id, {headers: headers}).toPromise();
-  }
-
-  forum_admin_list(): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "forum/admin-list", {headers: headers}).toPromise();
-  }
-
-  forum_admin_get(id: string): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "forum/admin-get/" + id, {headers: headers}).toPromise();
-  }
-
-  forum_tree(): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "forum/tree", {headers: headers}).toPromise();
-  }
-
-  forum_update(id: string, forum: Forum): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.put(this.url + "forum/update/" + id, forum, {headers: headers});
-  }
-
-  forum_clear(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "forum/read-all/" + id, {headers: headers});
-  }
-
-  forum_main(): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "forum/main", {headers: headers}).toPromise();
   }
 
   create(forum: IForum): Observable<IForum> {

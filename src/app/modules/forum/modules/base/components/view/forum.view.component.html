@@ -39,7 +39,7 @@
         </div>
         <div class="u-margin-bottom-small u-margin-top-small u-right-text">
           <a (click)="readAll()" class="btn btn--secondary shop__description-slug-button shop__cart-button"><i class="fas fa-list-ul"></i> Leer todo</a>
-          <a *ngIf="false" (click)="newTopic()" class="btn btn--primary shop__description-slug-button shop__cart-button"><i class="fas fa-plus"></i> Crear tema</a>
+          <a *ngIf="true" (click)="newTopic()" class="btn btn--primary shop__description-slug-button shop__cart-button"><i class="fas fa-plus"></i> Crear tema</a>
         </div>
         <div class="forum__topics">
           <div class="forum__topics-header">
@@ -124,7 +124,7 @@
             </div>
           </div>
         </div>
-        <pagination *ngIf="data.pagination.page" [centered]="true" [actual_page]="data.pagination.page" [last_page]="data.pagination.totalPages" [route]="'/forum/'"></pagination>
+        <pagination *ngIf="data.pagination.page && data.pagination.page !== 1" [centered]="true" [actual_page]="data.pagination.page" [last_page]="data.pagination.totalPages" [route]="'/forum/'"></pagination>
       </div>
     </div>
     <div class="col-1-of-4">

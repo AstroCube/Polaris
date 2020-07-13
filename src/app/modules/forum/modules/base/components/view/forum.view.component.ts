@@ -18,18 +18,16 @@ export class ForumViewComponent implements OnInit {
   public data: IForumView;
 
   constructor(
-    private _titleService: Title,
-    private _forumService: ForumService,
-    private _notifierService: NotifierService,
-    private _route: ActivatedRoute,
-    private _router: Router
+    private titleService: Title,
+    private forumService: ForumService,
+    private notifierService: NotifierService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this._route.data.subscribe((data => {
-      this.data = data.ForumViewGuard;
-    }));
-    this._titleService.setTitle(this.data.forum.name + " - " + GLOBAL.title);
+    this.route.data.subscribe((data => this.data = data.ForumViewGuard));
+    this.titleService.setTitle(this.data.forum.name + " - " + GLOBAL.title);
   }
 
   public getPlaceholder(user: IUser): IUserPlaceholder {
@@ -37,7 +35,7 @@ export class ForumViewComponent implements OnInit {
   }
 
   newTopic() {
-    //
+    this.router.navigate([''], {queryParams: {forum: this.data.forum._id}})
   }
 
   readAll() {

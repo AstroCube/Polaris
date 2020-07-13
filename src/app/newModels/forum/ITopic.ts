@@ -5,7 +5,7 @@ import {IUser} from "../user/IUser";
 export interface ITopic extends IModel {
     subject: string;
     author: IUser;
-    forum: IForum;
+    forum: IForum | string;
     subscribers: IUser[] | string[];
     pinned: boolean;
     official: boolean;

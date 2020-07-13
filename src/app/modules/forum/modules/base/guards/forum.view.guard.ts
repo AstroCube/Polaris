@@ -30,19 +30,7 @@ export class ForumViewGuard implements Resolve<IForumView> {
           this.forumService.list(-1, 10, {parent: forum._id})
         ]).pipe(
           mergeMap(concat =>
-            forkJoin([
-              this.forumUtilities.getTopicHolders(concat[1].data, concat[0]),
-              this.forumUtilities.getTopicHolders(concat[2].data, concat[0]),
-              this.forumUtilities.getChildHolders(concat[3].data, concat[0])
-            ]).pipe(
-              map(topics => ({
-                child: topics[2],
-                forum,
-                topic: topics[0],
-                pinned: topics[1],
-                pagination: concat[3].pagination
-              }))
-            )
+            this.forumUtilities.getForumView(concat[0], concat[1], concat[2].data, concat[3].data, forum)
           )
         )
       ),
