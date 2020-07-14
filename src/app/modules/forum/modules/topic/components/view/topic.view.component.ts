@@ -3,8 +3,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TopicService} from '../../../../../../services/forum/topic.service';
 import {NotifierService} from 'angular-notifier';
 import * as moment from 'moment';
-import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {ITopic, ITopicView} from "../../../../../../newModels/forum/ITopic";
+import {IForum} from "../../../../../../newModels/forum/IForum";
+import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
 
 @Component({
   selector: 'topic-view',
@@ -13,90 +16,51 @@ import {Title} from '@angular/platform-browser';
 
 export class TopicViewComponent implements OnInit {
 
-  public forum_data: any;
-  public can_reply: boolean;
-  public can_edit: boolean;
-  public can_delete: boolean;
-  public posts: any;
-  public guest: boolean;
-  public topic_data: any;
-  public topic_id: string;
+  public view: ITopicView;
 
   constructor(
-    private _titleService: Title,
-    private _topicService: TopicService,
-    private _notifierService: NotifierService,
-    private _route: ActivatedRoute,
-    private _router: Router
-  ) {
-    this.forum_data = {};
-    this.topic_data = {};
-    this.can_reply = false;
-    this.can_delete = false;
-    this.guest = false;
-  }
+    private titleService: Title,
+    private topicService: TopicService,
+    private notifierService: NotifierService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this._route.data.subscribe((data => {
-      this.forum_data = data.TopicViewGuard.forum_data;
-      this.posts = data.TopicViewGuard.topic_data.posts;
-      this.topic_data = data.TopicViewGuard.topic_data;
+    this.route.data.subscribe((data => {
+      this.view = data.TopicViewGuard;
     }));
-    if (!this.topic_data.topic_info.locked) {
-      if (this.forum_data.permissions.comment === "all") this.can_reply = true;
-      if (this.forum_data.permissions.comment === "own" && this.topic_data.topic_info.own) this.can_reply = true;
-    }
-    this.topic_id = this._route.snapshot.params.id;
-    let time = parseInt(this.topic_data.topic_info.created_at, 10)*1000;
-    if (this.forum_data.permissions.delete === "all") this.can_delete = true;
-    if (this.forum_data.permissions.delete === "own" && this.topic_data.topic_info.own && moment(time).add('1', 'hours').unix() > moment().unix()) this.can_delete = true;
-    if (this.forum_data.permissions.edit === "all") this.can_edit = true;
-    if (this.forum_data.permissions.edit === "own" && this.topic_data.topic_info.own && moment(time).add('1', 'hours').unix() > moment().unix()) this.can_edit = true;
-    this._titleService.setTitle(this.topic_data.topic_info.subject + " - " + GLOBAL.title);
-
-    if (this.forum_data.permissions.guest) {
-      this.can_reply = false;
-      this.can_edit = false;
-      this.can_delete = false;
-      this.guest = true;
-    }
-
   }
 
   quoteLink(id) {
-    this._router.navigate(['/foro/tema/responder/' + this.topic_id], {queryParams: {quote: id}});
+    this.router.navigate(['/foro/tema/responder/' + id], {queryParams: {quote: id}});
   }
 
   deleteValid(id, created_at): boolean {
-    if (this.forum_data.permissions.delete === "all" || (this.forum_data.permissions.delete === "own" && this.topic_data.topic_info.own)) {
-      return true;
-    } else if (id == this.topic_data.topic_info.watcher) {
-      let time = parseInt(created_at, 10)*1000;
-      return moment(time).add('1', 'hours').unix() > moment().unix();
-    }
+    //TODO: Validate delete
+    let time = parseInt(created_at, 10)*1000;
+    return moment(time).add('1', 'hours').unix() > moment().unix();
   }
 
   editValid(id, created_at): boolean {
-    if (this.forum_data.permissions.edit === "all") {
-      return true;
-    } else if (id == this.topic_data.topic_info.watcher) {
-      let time = parseInt(created_at, 10)*1000;
-      return moment(time).add('1', 'hours').unix() > moment().unix();
-    }
+    //TODO: Validate edit
+    let time = parseInt(created_at, 10)*1000;
+    return moment(time).add('1', 'hours').unix() > moment().unix();
   }
 
   topicSubscribe() {
-    this._topicService.topic_subscribe(this.topic_id).subscribe(
+    //TODO: Fix at backend
+    this.topicService.update({_id: this.view.topic._id, subscribers: [this.view.user._id]} as ITopic).subscribe(
       response => {
         if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
         } else {
-          if (response.subscribed) {
-            this._notifierService.notify('success', "Te has subscrito a este tema.");
-            this.topic_data.topic_info.subscribed = true;
+          if ((response.subscribers as string[]).includes(this.view.user._id)) {
+            this.notifierService.notify('success', "Te has subscrito a este tema.");
+            (this.view.topic.subscribers as string[]).push(this.view.user._id);
           } else {
-            this._notifierService.notify('info', "Ya no estás subscrito a este tema.");
-            this.topic_data.topic_info.subscribed = false;
+            this.notifierService.notify('info', "Ya no estás subscrito a este tema.");
+            this.view.topic.subscribers = (this.view.topic.subscribers as string[]).filter(f => f !== this.view.user._id);
           }
         }
       },
@@ -104,24 +68,23 @@ export class TopicViewComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
         }
       }
     );
   }
 
   topicPin() {
-    this._topicService.topic_pin(this.topic_id).subscribe(
+    this.view.topic.pinned = !this.view.topic.pinned;
+    this.topicService.update(this.view.topic).subscribe(
       response => {
         if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el anclaje del tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el anclaje del tema.");
         } else {
           if (response.pinned) {
-            this._notifierService.notify('success', "Haz anclado el tema.");
-            this.topic_data.topic_info.pinned = true;
+            this.notifierService.notify('success', "Haz anclado el tema.");
           } else {
-            this._notifierService.notify('info', "Haz desanclado el tema.");
-            this.topic_data.topic_info.pinned = false;
+            this.notifierService.notify('info', "Haz desanclado el tema.");
           }
         }
       },
@@ -129,27 +92,23 @@ export class TopicViewComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el anclaje del tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el anclaje del tema.");
         }
       }
     );
   }
 
   topicLock() {
-    this._topicService.topic_lock(this.topic_id).subscribe(
+    this.view.topic.locked = !this.view.topic.locked;
+    this.topicService.update(this.view.topic).subscribe(
       response => {
         if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el bloqueo del tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el bloqueo del tema.");
         } else {
           if (response.locked) {
-            this._notifierService.notify('success', "Haz bloqueado el tema.");
-            this.topic_data.topic_info.locked = true;
-            this.can_reply = false;
+            this.notifierService.notify('success', "Haz bloqueado el tema.");
           } else {
-            this._notifierService.notify('info', "Haz desbloqueado el tema.");
-            this.topic_data.topic_info.locked = false;
-            if (this.forum_data.permissions.comment === "all") this.can_reply = true;
-            if (this.forum_data.permissions.comment === "own" && this.topic_data.topic_info.own) this.can_reply = true;
+            this.notifierService.notify('info', "Haz desbloqueado el tema.");
           }
         }
       },
@@ -157,24 +116,23 @@ export class TopicViewComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el bloqueo del tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el bloqueo del tema.");
         }
       }
     );
   }
 
   topicOfficial() {
-    this._topicService.topic_official(this.topic_id).subscribe(
+    this.view.topic.official = !this.view.topic.official;
+    this.topicService.update(this.view.topic).subscribe(
       response => {
         if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el tema.");
         } else {
           if (response.official) {
-            this._notifierService.notify('success', "Haz marcado el tema como oficial.");
-            this.topic_data.topic_info.official = true;
+            this.notifierService.notify('success', "Haz marcado el tema como oficial.");
           } else {
-            this._notifierService.notify('info', "Haz desmarcado el tema como oficial.");
-            this.topic_data.topic_info.official = false;
+            this.notifierService.notify('info', "Haz desmarcado el tema como oficial.");
           }
         }
       },
@@ -182,7 +140,7 @@ export class TopicViewComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el tema.");
         }
       }
     );
@@ -190,19 +148,19 @@ export class TopicViewComponent implements OnInit {
 
   topicDelete() {
     if (confirm("¿Estás seguro de que quieres eliminar este tema?")) {
-      this._topicService.topic_delete(this.topic_id).subscribe(
+      this.topicService.delete(this.view.topic._id).subscribe(
         response => {
           if (response.deleted) {
-            this._notifierService.notify('success', "El tema se ha eliminado correctamente.");
-            this._router.navigate(['/foro/' + this.forum_data.breadcrumb.actual._id]);
+            this.notifierService.notify('success', "El tema se ha eliminado correctamente.");
+            this.router.navigate(['/foro/' + (this.view.topic.forum as IForum)._id]);
           } else {
-            this._notifierService.notify('error', "Ha ocurrido un error al eliminar el tema.");
+            this.notifierService.notify('error', "Ha ocurrido un error al eliminar el tema.");
           }
         },
         error => {
           let error_message = <any> error;
           if(error_message != null) {
-            this._notifierService.notify('error', "Ha ocurrido un error al eliminar el tema.");
+            this.notifierService.notify('error', "Ha ocurrido un error al eliminar el tema.");
           }
         }
       );
@@ -210,17 +168,17 @@ export class TopicViewComponent implements OnInit {
   }
 
   likePost(id: string, index: number) {
-    this._topicService.post_like(id).subscribe(
+    this.topicService.post_like(id).subscribe(
       response => {
         if (!response) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
         } else {
           if (response.liked) {
-            this._notifierService.notify('success', "Has marcado un like para este mensaje.");
-            this.posts[index].likes = this.posts[index].likes + 1;
+            this.notifierService.notify('success', "Has marcado un like para este mensaje.");
+            (this.view.posts.data[index].liked as string[]).push(this.view.user._id);
           } else {
-            this._notifierService.notify('info', "Has eliminado tu like para este mensaje.");
-            this.posts[index].likes = this.posts[index].likes - 1;
+            this.notifierService.notify('info', "Has eliminado tu like para este mensaje.");
+            (this.view.posts.data[index].liked as string[]).filter(f => f !== this.view.user._id);
           }
         }
       },
@@ -228,7 +186,7 @@ export class TopicViewComponent implements OnInit {
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
+          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
         }
       }
     );
@@ -236,22 +194,27 @@ export class TopicViewComponent implements OnInit {
 
   deletePost(id: string, index: any) {
     if (confirm("¿Estás seguro de que quieres eliminar este mensaje?")) {
-      this._topicService.post_delete(id).subscribe(
+      this.topicService.delete(id).subscribe(
         response => {
           if (!response.deleted) {
-            this._notifierService.notify('error', "Ha ocurrido un error eliminando el mensaje.");
+            this.notifierService.notify('error', "Ha ocurrido un error eliminando el mensaje.");
           } else {
-            this._notifierService.notify('success', "Se ha eliminado el mensaje y todos aquellos que lo citaron.");
+            this.notifierService.notify('success', "Se ha eliminado el mensaje y todos aquellos que lo citaron.");
           }
         },
 
         error => {
           let error_message = <any> error;
           if(error_message != null) {
-            this._notifierService.notify('error', "Ha ocurrido un error al eliminar el mensaje.");
+            this.notifierService.notify('error', "Ha ocurrido un error al eliminar el mensaje.");
           }
         }
       );
     }
   }
+
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
+  }
+
 }

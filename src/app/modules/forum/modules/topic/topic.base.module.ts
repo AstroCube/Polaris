@@ -13,6 +13,7 @@ import {TopicViewGuard} from "./guards/topic.view.guard";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {ForumBaseModule} from "../base/forum.base.module";
 import {EpsilonModule} from "../../../../epsilon.module";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -21,14 +22,15 @@ import {EpsilonModule} from "../../../../epsilon.module";
     TopicReplyComponent,
     TopicViewComponent
   ],
-  imports: [
-    FormsModule,
-    MomentModule,
-    CKEditorModule,
-    RouterModule,
-    ForumBaseModule,
-    EpsilonModule
-  ],
+    imports: [
+        FormsModule,
+        MomentModule,
+        CKEditorModule,
+        RouterModule,
+        ForumBaseModule,
+        EpsilonModule,
+        CommonModule
+    ],
   providers: [
     TopicCreateGuard,
     TopicEditGuard,

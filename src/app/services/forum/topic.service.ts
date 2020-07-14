@@ -40,44 +40,14 @@ export class TopicService {
     return this.http.delete(this.url + "topic/delete-post/" + id,  {headers: headers});
   }
 
-  topic_create(topic: Topic): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.post(this.url + "topic/create", topic, {headers: headers});
-  }
-
-  topic_pin(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "topic/pin/" + id,  {headers: headers});
-  }
-
   topic_reply(post: Post): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
     return this.http.post(this.url + "topic/reply", post,{headers: headers});
   }
 
-  topic_lock(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "topic/lock/" + id,  {headers: headers});
-  }
-
-  topic_official(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "topic/official/" + id,  {headers: headers});
-  }
-
-  topic_subscribe(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "topic/subscription-status/" + id,  {headers: headers});
-  }
-
   topic_view(id: string, page: number, info: boolean): Promise<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
     return this.http.get(this.url + "topic/get/" + id + "?page=" + page + "&onlytopic=" + info,  {headers: headers}).toPromise();
-  }
-
-  topic_delete(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.delete(this.url + "topic/delete/" + id, {headers: headers});
   }
 
   topicHomepage(id: string): Promise<any> {
@@ -100,6 +70,16 @@ export class TopicService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('sort', sort);
     return this.http.post(GLOBAL.epsilon + "forum/topic/list", query,{headers: headers, params}) as Observable<IPaginateResult<ITopic>>;
+  }
+
+  update(topic: ITopic): Observable<ITopic> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.put(GLOBAL.epsilon + "forum/topic", topic,{headers: headers}) as Observable<ITopic>;
+  }
+
+  delete(id: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.delete(GLOBAL.epsilon + "forum/topic/" + id, {headers: headers}) as Observable<any>;
   }
 
 }

@@ -4,8 +4,8 @@
       <div class="breadcrumb">
         <div class="breadcrumb__section">
           <a class="breadcrumb__link" routerLink="/foro">Foro</a>
-          <a *ngIf="forum_data.breadcrumb.parent" class="breadcrumb__link" routerLink="{{'/foro/' + forum_data.breadcrumb.parent._id}}">{{forum_data.breadcrumb.parent.name}}</a>
-          <a class="breadcrumb__link" routerLink="{{'/foro/' + forum_data.breadcrumb.actual._id}}">{{forum_data.breadcrumb.actual.name}}</a>
+          <a *ngIf="view.topic.forum.parent" class="breadcrumb__link" routerLink="{{'/foro/' + view.topic.forum.parent._id}}">{{view.topic.forum.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + view.topic.forum._id}}">{{view.topic.forum.name}}</a>
         </div>
       </div>
       <div class="topic">
@@ -13,74 +13,78 @@
           <div class="col-2-of-3">
             <div class="topic__header">
               <a class="topic__title">
-                <h1 class="heading"><a routerLink="{{'/foro/tema/' + topic_id}}">{{topic_data.topic_info.subject}}</a></h1>
+                <h1 class="heading"><a routerLink="{{'/foro/tema/' + view.topic._id}}">{{view.topic.subject}}</a></h1>
               </a>
-              <i *ngIf="topic_data.topic_info.pinned" class="topic__icon fas fa-thumbtack" tooltip content="Anclado" placement="top"></i>
-              <i *ngIf="topic_data.topic_info.locked" class="topic__icon fas fa-lock" tooltip content="Bloqueado" placement="top"></i>
-              <i *ngIf="topic_data.topic_info.official" class="topic__icon fas fa-bookmark" tooltip content="Respuesta oficial" placement="top"></i>
+              <i *ngIf="view.topic.pinned" class="topic__icon fas fa-thumbtack" tooltip content="Anclado" placement="top"></i>
+              <i *ngIf="view.topic.locked" class="topic__icon fas fa-lock" tooltip content="Bloqueado" placement="top"></i>
+              <i *ngIf="view.topic.official" class="topic__icon fas fa-bookmark" tooltip content="Respuesta oficial" placement="top"></i>
             </div>
           </div>
           <div class="col-1-of-3 u-right-text">
             <div class="topic__header-buttons">
-              <a *ngIf="!topic_data.topic_info.subscribed && !topic_data.topic_info.own && !guest" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
-              <a *ngIf="topic_data.topic_info.subscribed && !topic_data.topic_info.own && !guest" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
-              <a *ngIf="forum_data.permissions.pin && !topic_data.topic_info.pinned" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Ancla el tema (Aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
-              <a *ngIf="forum_data.permissions.pin && topic_data.topic_info.pinned" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Desancla el tema (No aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
-              <a *ngIf="forum_data.permissions.lock && !topic_data.topic_info.locked" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Bloquea el tema (Los usuarios no podrán responder el tema)" placement="bottom"><i class="topic__icon fas fa-lock"></i></a>
-              <a *ngIf="forum_data.permissions.lock && topic_data.topic_info.locked" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Desbloquea el tema (Los usuarios podrán responder el tema)" placement="bottom"><i class="topic__icon fas fa-lock"></i></a>
-              <a *ngIf="forum_data.permissions.official && !topic_data.topic_info.official" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicOfficial()" tooltip content="Marca el tema como oficial (Será un tema oficial del staff)" placement="bottom"><i class="topic__icon fas fa-bookmark"></i></a>
-              <a *ngIf="forum_data.permissions.official && topic_data.topic_info.official" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicOfficial()" tooltip content="Desmarca el tema como oficial (No será un tema oficial del staff)" placement="bottom"><i class="topic__icon fas fa-bookmark"></i></a>
-              <a *ngIf="can_reply" class="btn btn--primary shop__description-slug-button shop__cart-button" routerLink="{{'/foro/tema/responder/' + topic_id}}" tooltip content="Aquí escribirás un comentario en el foro" placement="top"><i class="fas fa-reply"></i></a>
+              <a *ngIf="!view.topic.subscribers.includes(view.user._id) && (view.topic.author._id === view.user._id) && !view.user" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
+              <a *ngIf="view.topic.subscribers.includes(view.user._id) && (view.topic.author._id === view.user._id) && !view.user" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
+              <a *ngIf="view.permissions.pin && !view.topic.pinned" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Ancla el tema (Aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
+              <a *ngIf="view.permissions.pin && view.topic.pinned" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Desancla el tema (No aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
+              <a *ngIf="view.permissions.lock && !view.topic.locked" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Bloquea el tema (Los usuarios no podrán responder el tema)" placement="bottom"><i class="topic__icon fas fa-lock"></i></a>
+              <a *ngIf="view.permissions.lock && view.topic.locked" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Desbloquea el tema (Los usuarios podrán responder el tema)" placement="bottom"><i class="topic__icon fas fa-lock"></i></a>
+              <a *ngIf="view.permissions.manage && !view.topic.official" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicOfficial()" tooltip content="Marca el tema como oficial (Será un tema oficial del staff)" placement="bottom"><i class="topic__icon fas fa-bookmark"></i></a>
+              <a *ngIf="view.permissions.manage && view.topic.official" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicOfficial()" tooltip content="Desmarca el tema como oficial (No será un tema oficial del staff)" placement="bottom"><i class="topic__icon fas fa-bookmark"></i></a>
+              <a *ngIf="view.permissions.comment" class="btn btn--primary shop__description-slug-button shop__cart-button" routerLink="{{'/foro/tema/responder/' + view.topic._id}}" tooltip content="Aquí escribirás un comentario en el foro" placement="top"><i class="fas fa-reply"></i></a>
             </div>
           </div>
         </div>
-        <div *ngFor="let post of posts; let i = index;" class="topic__posts">
-          <div id="{{post.id}}" class="post">
+        <div *ngFor="let post of view.posts.data; let i = index;" class="topic__posts">
+          <div id="{{post._id}}" class="post">
             <div class="post__header">
-              <a routerLink="{{'/' + post.writer.username}}"><img alt="Test" class="post__user-avatar" [class.post__user-avatar--online]="post.writer.last_seen === 'conectado'" src="{{'https://mc-heads.net/avatar/' + post.writer.skin}}"></a>
+              <a routerLink="{{'/' + post.author.username}}"><img alt="Test" class="post__user-avatar" [class.post__user-avatar--online]="post.author.session.lastSeen === -1" src="{{'https://mc-heads.net/avatar/' + post.author.skin}}"></a>
               <div class="post__placeholder">
                 <div class="post__top">
-                  <a class="post__username" [style.color]="post.writer.user_color" routerLink="{{'/' + post.writer.username}}">{{post.writer.username}}</a>
+                  <a class="post__username" [style.color]="getPlaceholder(post.author).mainGroup.html_color" routerLink="{{'/' + post.author.username}}">{{post.author.display}}</a>
                   <div class="post__badges">
-                    <a *ngFor="let badge of post.writer.badges" class="profile__badge" [routerLink]="badge.badge_link" [style.background-color]="badge.html_color">{{badge.name}}</a>
+                    <a *ngFor="let badge of getPlaceholder(post.author).groups" class="profile__badge" [routerLink]="badge.badge_link" [style.background-color]="badge.html_color">{{badge.name}}</a>
                   </div>
                 </div>
-                <span class="post__date" tooltip content="Creado en {{post.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span><span *ngIf="post.last_update && post.last_updater" class="post__date">Última edición: <a class="post__username" [style.color]="post.last_updater.user_color" routerLink="{{'/' + post.last_updater.username}}">{{post.last_updater.username}} </a><span tooltip content="Editado en {{post.last_update | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.last_update | valueOf | amLocale: 'es' | amTimeAgo}}</span></span>
+                <span class="post__date" tooltip content="Creado en {{post.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.createdAt | unixDate| valueOf | amLocale: 'es' | amTimeAgo}}</span>
+                <span *ngIf="post.updatedAt && post.lastAction" class="post__date">
+                  Última edición: <a class="post__username" [style.color]="getPlaceholder(post.lastAction).mainGroup.html_color" routerLink="{{'/' + post.lastAction.username}}">{{post.lastAction.display}} </a>
+                  <span tooltip content="Editado en {{post.lastAction | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.lastAction | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+                </span>
               </div>
             </div>
             <div class="post__content">
               <div *ngIf="post.quote" class="post__quote">
                 <a class="post__quote-text" [innerHTML]="post.quote.content | noSanitize"></a>
-                <p class="post__quote-placeholder"><a routerLink="{{'/' + post.quote.writer.username}}" class="post__quote-name" [style.color]="post.quote.writer.user_color">{{post.quote.writer.username}}</a> <span tooltip content="Creado en {{post.quote.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.quote.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span></p>
+                <p class="post__quote-placeholder"><a routerLink="{{'/' + post.quote.author.username}}" class="post__quote-name" [style.color]="getPlaceholder(post.quote.author).mainGroup.html_color">{{post.quote.author.display}}</a> <span tooltip content="Creado en {{post.quote.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span></p>
               </div>
               <p class="post__content-container" [innerHTML]="post.content | noSanitize"></p>
             </div>
             <div class="post__footer">
-              <a *ngIf="deleteValid(post.writer.id, post.created_at) && ((topic_data.topic_info.page == 1 && i != 0) || topic_data.topic_info.page != 1)" class="btn btn--red" (click)="deletePost(post.id, i)" tooltip content="Eliminarás el mensaje y todos los demás mensajes que lo citaron. Recuerda que solo tienes una hora para hacerlo." placement="bottom">
+              <a *ngIf="deleteValid(post.author._id, post.createdAt) && ((view.posts.pagination.page === 1 && i != 0) || view.posts.pagination.page !== 1)" class="btn btn--red" (click)="deletePost(post._id, i)" tooltip content="Eliminarás el mensaje y todos los demás mensajes que lo citaron. Recuerda que solo tienes una hora para hacerlo." placement="bottom">
                 <i class="fas fa-trash"></i>
               </a>
-              <a *ngIf="editValid(post.writer.id, post.created_at)" class="btn btn--transparent" routerLink="{{'/foro/tema/editar/' + post.id}}">
+              <a *ngIf="editValid(post.author._id, post.createdAt)" class="btn btn--transparent" routerLink="{{'/foro/tema/editar/' + post._id}}">
                 <i class="btn__icon--left fas fa-edit"></i>
                 Editar
               </a>
-              <a class="btn btn--transparent" (click)="likePost(post.id, i)" *ngIf="!guest">
+              <a class="btn btn--transparent" (click)="likePost(post._id, i)" *ngIf="!view.user">
                 <i class="btn__icon--left fas fa-thumbs-up"></i>
-                {{post.likes}}
+                {{post.liked.length}}
               </a>
-              <a class="btn btn--transparent" *ngIf="!guest">
+              <a class="btn btn--transparent" *ngIf="!view.user">
                 <i class="btn__icon--left fas fa-flag"></i>Reportar
               </a>
-              <a *ngIf="can_reply" class="btn btn--transparent" (click)="quoteLink(post.id)" tooltip content="Aquí escribirás un comentario en el foro" placement="top">
+              <a *ngIf="view.permissions.comment" class="btn btn--transparent" (click)="quoteLink(post._id)" tooltip content="Aquí escribirás un comentario en el foro" placement="top">
                 <i class="btn__icon--left fas fa-reply" ></i>Responder
               </a>
             </div>
           </div>
         </div>
         <div class="u-right-text">
-          <a *ngIf="can_delete" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicDelete()" tooltip content="Al eliminar el tema también borrarás todos los mensajes. Recuerda que solo tienes una hora para hacerlo." placement="bottom"><i class="btn__icon--left fas fa-trash"></i> Eliminar tema</a>
+          <a *ngIf="view.permissions.delete" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicDelete()" tooltip content="Al eliminar el tema también borrarás todos los mensajes. Recuerda que solo tienes una hora para hacerlo." placement="bottom"><i class="btn__icon--left fas fa-trash"></i> Eliminar tema</a>
         </div>
         <div class="u-margin-bottom-small">
-          <pagination [centered]="true" [actual_page]="topic_data.topic_info.page" [last_page]="topic_data.topic_info.total_pages" route="{{'foro/tema/' + topic_id + '/'}}"></pagination>
+          <pagination [centered]="true" [actual_page]="view.posts.pagination.page" [last_page]="view.posts.pagination.totalPages" route="{{'foro/tema/' + view.topic._id + '/'}}"></pagination>
         </div>
       </div>
     </div>
