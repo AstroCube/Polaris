@@ -5,12 +5,12 @@ import {TopicService} from '../../../../../../services/forum/topic.service';
 import {NotifierService} from 'angular-notifier';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
-import {IForum} from "../../../../../../newModels/forum/IForum";
-import {ITopic} from "../../../../../../newModels/forum/ITopic";
+import {ITopic, ITopicCreate} from "../../../../../../newModels/forum/ITopic";
 import {IForumPermissions} from "../../../../../../newModels/permissions/IForumPermissions";
 import {IPost} from "../../../../../../newModels/forum/IPost";
-import {mergeMap} from "rxjs/operators";
+import {map, mergeMap} from "rxjs/operators";
 import {PostService} from "../../../../../../services/forum/post.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'topic-create',
@@ -20,7 +20,7 @@ import {PostService} from "../../../../../../services/forum/post.service";
 export class TopicCreateComponent implements OnInit{
 
   public editor = ClassicEditor;
-  public forum: IForum;
+  public data: ITopicCreate;
   public topic: ITopic;
   public post: IPost;
   public permissions: IForumPermissions;
@@ -35,32 +35,43 @@ export class TopicCreateComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    //TODO: Check topic permissions (And check officialize)
     this.titleService.setTitle("Crear tema - " + GLOBAL.title);
     this.route.data.subscribe((data => {
-      this.forum = data.TopicCreateGuard;
+      this.data = data.TopicCreateGuard;
       this.topic = {} as ITopic;
+      this.post = {content: ''} as IPost;
     }));
   }
 
   onSubmit() {
-    this.topic.forum = this.forum._id;
+    this.topic.forum = this.data.forum._id;
+    //@ts-ignore
+    this.topic.author = this.data.user._id;
     this.topicService.create(this.topic).pipe(
-      mergeMap(topic => this.postService.create({...this.post, topic: (topic as ITopic)._id}))
+      mergeMap(topic =>
+        //@ts-ignore
+        forkJoin([this.postService.create({...this.post, topic: (topic as ITopic)._id, author: this.data.user._id})]).pipe(
+          map(response => ({
+            topic,
+            forum: response
+          }))
+        )
+      )
     ).subscribe(
       response => {
         if (response) {
           this.notifierService.notify('success', "Haz creado el tema exitosamente.");
-          this.router.navigate(['/foro/tema/' + (response.topic as ITopic)._id]);
+          this.router.navigate(['/foro/tema/' + response.topic._id]);
         } else {
           this.notifierService.notify('error', "Ha ocurrido un error al crear el tema.");
         }
       },
 
       error => {
+        console.log(error);
         let error_message = <any> error;
         if(error_message != null) {
-          this.notifierService.notify('error', error.error.message);
+          this.notifierService.notify('error', error.message);
         }
       }
     );

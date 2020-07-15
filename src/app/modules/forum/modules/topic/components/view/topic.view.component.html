@@ -4,8 +4,8 @@
       <div class="breadcrumb">
         <div class="breadcrumb__section">
           <a class="breadcrumb__link" routerLink="/foro">Foro</a>
-          <a *ngIf="view.topic.forum.parent" class="breadcrumb__link" routerLink="{{'/foro/' + view.topic.forum.parent._id}}">{{view.topic.forum.parent.name}}</a>
-          <a class="breadcrumb__link" routerLink="{{'/foro/' + view.topic.forum._id}}">{{view.topic.forum.name}}</a>
+          <a *ngIf="cast(view.topic.forum).parent" class="breadcrumb__link" routerLink="{{'/foro/' + cast(view.topic.forum).parent._id}}">{{view.topic.forum.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + cast(view.topic.forum)._id}}">{{cast(view.topic.forum).name}}</a>
         </div>
       </div>
       <div class="topic">
@@ -22,8 +22,8 @@
           </div>
           <div class="col-1-of-3 u-right-text">
             <div class="topic__header-buttons">
-              <a *ngIf="!view.topic.subscribers.includes(view.user._id) && (view.topic.author._id === view.user._id) && !view.user" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
-              <a *ngIf="view.topic.subscribers.includes(view.user._id) && (view.topic.author._id === view.user._id) && !view.user" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
+              <a *ngIf="!cast(view.topic.subscribers).includes(view.user._id) && (view.topic.author._id === view.user._id) && !view.user" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
+              <a *ngIf="cast(view.topic.subscribers).includes(view.user._id) && (view.topic.author._id === view.user._id) && !view.user" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
               <a *ngIf="view.permissions.pin && !view.topic.pinned" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Ancla el tema (Aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
               <a *ngIf="view.permissions.pin && view.topic.pinned" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Desancla el tema (No aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
               <a *ngIf="view.permissions.lock && !view.topic.locked" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Bloquea el tema (Los usuarios no podrán responder el tema)" placement="bottom"><i class="topic__icon fas fa-lock"></i></a>

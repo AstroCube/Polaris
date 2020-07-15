@@ -35,7 +35,7 @@ export class ForumViewComponent implements OnInit {
   }
 
   newTopic() {
-    this.router.navigate([''], {queryParams: {forum: this.data.forum._id}})
+    this.router.navigate(['foro/tema/crear'], {queryParams: {forum: this.data.forum._id}})
   }
 
   readAll() {

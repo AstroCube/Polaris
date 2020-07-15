@@ -8,6 +8,7 @@ import {Post} from '../../models/forum/post';
 import {IPaginateResult} from "../../newModels/IModel";
 import {ITopic} from "../../newModels/forum/ITopic";
 import {IForum} from "../../newModels/forum/IForum";
+import {map} from "rxjs/operators";
 
 @Injectable()
 export class TopicService {
@@ -64,6 +65,11 @@ export class TopicService {
     let params = JSON.stringify(topic);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.post(GLOBAL.epsilon + "forum/topic", params, {headers: headers}) as Observable<ITopic>;
+  }
+
+  get(id: string): Observable<ITopic> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "forum/topic/" + id, {headers: headers}) as Observable<ITopic>;
   }
 
   list(page?: number, size?: number, query?: any, sort?: string): Observable<IPaginateResult<ITopic>> {

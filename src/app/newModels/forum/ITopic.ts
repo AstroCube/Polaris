@@ -20,3 +20,9 @@ export interface ITopicView {
   posts: IPaginateResult<IPost>;
   permissions: IForumPermissions;
 }
+
+export interface ITopicCreate {
+  forum: IForum;
+  user: IUser;
+  permissions: IForumPermissions;
+}

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Router} from '@angular/router';
-import {map} from 'rxjs/operators';
 import {UserService} from '../../../../../services/user.service';
 import {ForumService} from '../../../../../services/forum/forum.service';
 import {TopicService} from '../../../../../services/forum/topic.service';

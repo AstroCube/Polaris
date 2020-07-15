@@ -14,6 +14,7 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {ForumBaseModule} from "../base/forum.base.module";
 import {EpsilonModule} from "../../../../epsilon.module";
 import {CommonModule} from "@angular/common";
+import {ForumTopicRouting} from "./forum.topic.routing";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {CommonModule} from "@angular/common";
         MomentModule,
         CKEditorModule,
         RouterModule,
+        ForumTopicRouting,
         ForumBaseModule,
         EpsilonModule,
         CommonModule

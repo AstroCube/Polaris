@@ -8,6 +8,7 @@ import {ITopic, ITopicView} from "../../../../../../newModels/forum/ITopic";
 import {IForum} from "../../../../../../newModels/forum/IForum";
 import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
+import {ForumPermissible} from "../../../../../../newModels/permissions/IForumPermissions";
 
 @Component({
   selector: 'topic-view',
@@ -42,10 +43,12 @@ export class TopicViewComponent implements OnInit {
     return moment(time).add('1', 'hours').unix() > moment().unix();
   }
 
-  editValid(id, created_at): boolean {
-    //TODO: Validate edit
-    let time = parseInt(created_at, 10)*1000;
-    return moment(time).add('1', 'hours').unix() > moment().unix();
+  editValid(createdAt): boolean {
+    const date: Date = new Date(new Date(createdAt).getTime() + (15 * 60000));
+    return (
+      this.view.permissions.edit === ForumPermissible.All ||
+      date.getTime() > new Date().getTime() && this.view.permissions.edit !== ForumPermissible.None
+    );
   }
 
   topicSubscribe() {
@@ -215,6 +218,10 @@ export class TopicViewComponent implements OnInit {
 
   public getPlaceholder(user: IUser): IUserPlaceholder {
     return getUserPlaceholder(user);
+  }
+
+  public cast(any: any): any {
+    return any;
   }
 
 }

@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {IPaginateResult} from "../../newModels/IModel";
 import {IForum} from "../../newModels/forum/IForum";
 import {map} from "rxjs/operators";
+import {IForumPermissions} from "../../newModels/permissions/IForumPermissions";
 
 @Injectable()
 export class ForumService {
@@ -45,6 +46,11 @@ export class ForumService {
   update(forum: IForum): Observable<IForum> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.put(GLOBAL.epsilon + "forum", forum,{headers: headers}) as Observable<IForum>;
+  }
+
+  permissions(id: string): Observable<IForumPermissions> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "forum/permissions/" + id, {headers: headers}) as Observable<IForumPermissions>;
   }
 
 }

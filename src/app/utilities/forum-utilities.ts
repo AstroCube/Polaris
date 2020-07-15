@@ -10,6 +10,7 @@ import {ITopic} from "../newModels/forum/ITopic";
 import {IUser} from "../newModels/user/IUser";
 import {IForumCategory, ITopicHolder} from "../newModels/forum/IForumCategory";
 import {IPaginateResult} from "../newModels/IModel";
+import {ForumPermissible, IForumPermissions} from "../newModels/permissions/IForumPermissions";
 
 @Injectable()
 export class ForumUtilities {
@@ -134,6 +135,22 @@ export class ForumUtilities {
       ),
       catchError(error => of(0))
     ) : of(0);
+  }
+
+  public getGuestPermissions(id: string): Observable<IForumPermissions> {
+    return of({
+      id,
+      manage: false,
+      create: false,
+      view: ForumPermissible.All,
+      edit: ForumPermissible.None,
+      comment: ForumPermissible.None,
+      delete: false,
+      pin: false,
+      lock: false,
+      globalAdmin: false,
+      official: false
+    });
   }
 
 }

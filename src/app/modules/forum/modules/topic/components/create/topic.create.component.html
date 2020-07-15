@@ -4,35 +4,35 @@
       <div class="breadcrumb">
         <div class="breadcrumb__section">
           <a class="breadcrumb__link" routerLink="/foro">Foro</a>
-          <a *ngIf="forum.parent" class="breadcrumb__link" routerLink="{{'/foro/' + forum.parent._id}}">{{forum.parent.name}}</a>
-          <a class="breadcrumb__link" routerLink="{{'/foro/' + forum._id}}">{{forum.name}}</a>
+          <a *ngIf="data.forum.parent" class="breadcrumb__link" routerLink="{{'/foro/' + data.forum.parent._id}}">{{data.forum.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + data.forum._id}}">{{data.forum.name}}</a>
           <a class="breadcrumb__link">Nuevo tema</a>
         </div>
       </div>
       <form class="topic" #topic_new="ngForm" (submit)="onSubmit()">
         <div class="topic__replier">
-          <h1 class="heading u-margin-bottom-small">Nuevo tema en <span class="heading--secondary">{{forum.name}}</span></h1>
+          <h1 class="heading u-margin-bottom-small">Nuevo tema en <span class="heading--secondary">{{data.forum.name}}</span></h1>
           <div class="row u-margin-bottom-medium">
             <div class="col-1-of-2">
               <label class="account__label" for="subject">Asunto del tema</label>
               <input id="subject" name="subject" #subject="ngModel" [(ngModel)]="topic.subject" [class.form__input--invalid]="subject.touched && !subject.valid" type="text" class="form__input form__input--full" maxlength="60" required>
             </div>
             <div class="col-1-of-2">
-              <div *ngIf="permissions.pin" class="u-margin-bottom-small tooltip--top">
+              <div *ngIf="data.permissions.pin" class="u-margin-bottom-small tooltip--top">
                 <label for="pin" class="form__checkbox" tooltip content="Con esta opción tu tema se mostrará al inicio del foro" placement="top">
                   <input id="pin" name="pin" #pin="ngModel" [(ngModel)]="topic.pinned" class="form__checkbox-input" type="checkbox">
                   <span class="form__checkbox-checkmark"></span>
                 </label>
                 <label for="pin" class="link link--small link--white"><i class="fas fa-thumbtack"></i> Anclar</label>
               </div>
-              <div *ngIf="permissions.lock" class="u-margin-bottom-small">
+              <div *ngIf="data.permissions.lock" class="u-margin-bottom-small">
                 <label for="lock" class="form__checkbox" tooltip content="Con esta opción las personas no podrán responder a tu tema" placement="top">
                   <input id="lock" name="lock" #lock="ngModel" [(ngModel)]="topic.locked" class="form__checkbox-input" type="checkbox">
                   <span class="form__checkbox-checkmark"></span>
                 </label>
                 <label for="lock" class="link link--small link--white"><i class="fas fa-lock"></i> Cerrar</label>
               </div>
-              <div *ngIf="true" class="u-margin-bottom-small">
+              <div *ngIf="data.permissions.official" class="u-margin-bottom-small">
                 <label for="official" class="form__checkbox" tooltip content="Esta opción marcará el tema como mensaje oficial del staff" placement="top">
                   <input id="official" name="official" #official="ngModel" [(ngModel)]="topic.official" class="form__checkbox-input" type="checkbox">
                   <span class="form__checkbox-checkmark"></span>
