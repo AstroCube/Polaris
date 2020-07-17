@@ -15,8 +15,8 @@ export class PostService {
     private userService: UserService
   ){}
 
-  create(category: IPost): Observable<IPost> {
-    let params = JSON.stringify(category);
+  create(post: IPost): Observable<IPost> {
+    let params = JSON.stringify(post);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.post(GLOBAL.epsilon + "forum/post", params, {headers: headers}) as Observable<IPost>;
   }
@@ -32,7 +32,7 @@ export class PostService {
     return this.http.post(GLOBAL.epsilon + "forum/post/list", query,{headers: headers, params}) as Observable<IPaginateResult<IPost>>;
   }
 
-  update(category: IForumCategory): Observable<IPost> {
+  update(category: IPost): Observable<IPost> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.put(GLOBAL.epsilon + "forum/post", category, {headers: headers}) as Observable<IPost>;
   }

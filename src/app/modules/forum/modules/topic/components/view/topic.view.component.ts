@@ -33,8 +33,8 @@ export class TopicViewComponent implements OnInit {
     }));
   }
 
-  quoteLink(id) {
-    this.router.navigate(['/foro/tema/responder/' + id], {queryParams: {quote: id}});
+  quoteLink(id: string) {
+    this.router.navigate(['/foro/tema/responder/' + this.view.topic._id], {queryParams: {quote: id}});
   }
 
   deleteValid(id, created_at): boolean {
@@ -43,11 +43,11 @@ export class TopicViewComponent implements OnInit {
     return moment(time).add('1', 'hours').unix() > moment().unix();
   }
 
-  editValid(createdAt): boolean {
+  editValid(author: IUser, createdAt): boolean {
     const date: Date = new Date(new Date(createdAt).getTime() + (15 * 60000));
     return (
       this.view.permissions.edit === ForumPermissible.All ||
-      date.getTime() > new Date().getTime() && this.view.permissions.edit !== ForumPermissible.None
+      ((date.getTime() > new Date().getTime() && this.view.permissions.edit !== ForumPermissible.None) && author._id === this.view.user._id)
     );
   }
 

@@ -5,6 +5,8 @@ import {TopicService} from '../../../../../../services/forum/topic.service';
 import * as ClassicEditor from "../../../../../../../../text_editor";
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {ITopic, ITopicEdit} from "../../../../../../newModels/forum/ITopic";
+import {PostService} from "../../../../../../services/forum/post.service";
 
 @Component({
   selector: 'topic-edit',
@@ -14,49 +16,56 @@ import {Title} from '@angular/platform-browser';
 export class TopicEditComponent implements OnInit {
 
   public editor = ClassicEditor;
-  public forum_data: any;
-  public original_post: any;
-  public topic_data: any;
-  public post_id: string;
-  public post: any;
+  public data: ITopicEdit;
 
   constructor(
-    private _titleService: Title,
-    private _notifierService: NotifierService,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _topicService: TopicService
+    private titleService: Title,
+    private notifierService: NotifierService,
+    private postService: PostService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private topicService: TopicService
   ) {}
 
   ngOnInit() {
-    this._titleService.setTitle("Editar tema - " + GLOBAL.title);
-    this._route.data.subscribe((data => {
-      this.forum_data = data.TopicEditGuard.forum_data;
-      this.original_post = data.TopicEditGuard.topic_data.posts;
-      this.topic_data = data.TopicEditGuard.topic_data;
-      this.post = data.TopicEditGuard.post_data;
+    this.titleService.setTitle("Editar tema - " + GLOBAL.title);
+    this.route.data.subscribe((data => {
+      this.data = data.TopicEditGuard;
     }));
-    this.post_id = this._route.snapshot.params.id;
-    this.post.subject = this.topic_data.topic_info.subject;
   }
 
   onSubmit() {
-    this._topicService.post_update(this.post_id, this.post).subscribe(
-      response => {
-        if (response.updated) {
-          this._notifierService.notify('success', "Haz editado el mensaje.");
-          this._router.navigate(['/foro/tema/' + this.topic_data.topic_info.id]);
-        } else {
-          this._notifierService.notify('error', "Ha ocurrido un error al editar el mensaje.");
+    if (this.data.original._id === this.data.post._id) {
+      this.topicService.update(this.data.post.topic as ITopic).subscribe(
+        response => {
+          this.router.navigate(['/foro/tema/' + response._id]);
+        },
+
+        error => {
+          let error_message = <any> error;
+          if(error_message != null) {
+            this.notifierService.notify('error', "Ha ocurrido un error al editar el mensaje.");
+          }
         }
+      );
+    }
+
+    this.postService.update(this.data.post).subscribe(
+      response => {
+        this.notifierService.notify('success', "Haz editado el mensaje.");
+        this.router.navigate(['/foro/tema/' + (this.data.post.topic as ITopic)._id]);
       },
 
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al editar el mensaje.");
+          this.notifierService.notify('error', "Ha ocurrido un error al editar el mensaje.");
         }
       }
     );
+  }
+
+  public cast(any: any): any {
+    return any;
   }
 }

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import {Router} from '@angular/router';
+import {Resolve, Router} from '@angular/router';
 import {TopicService} from '../../../services/forum/topic.service';
 import {Topic} from '../../../models/forum/topic';
 import {Post} from '../../../models/forum/post';
+import {IPost} from "../../../newModels/forum/IPost";
+import {Observable, of} from "rxjs";
 
 @Injectable()
-export class ApplicationHomepageGuard {
+export class ApplicationHomepageGuard implements Resolve<IPost[]> {
 
   private forum : string = "5e1145c5485a5f328baa709d";
 
@@ -15,46 +17,7 @@ export class ApplicationHomepageGuard {
   )
   {}
 
-  resolve(): Promise<any> {
-    return this.getData().then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    }).catch(() => {
-      return false;
-    });
-  }
-
-  async getData() {
-    let data : Post[] = [];
-    await this._topicService.topicHomepage(this.forum).then(async (response) => {
-      await response.forEach(async (topic) => {
-        return await this._topicService.topicHomepagePosts(topic._id).then((post) => {
-          post.topic_title = topic.subject;
-          post.topic_id = topic._id;
-          data.push(post);
-        }).catch((err) => {
-          switch (err.status) {
-            case 404: {
-              this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-              return false;
-            }
-            case 403: {
-              this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-              return false;
-            }
-            default: {
-              this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-              return false;
-            }
-          }
-        });
-      });
-    }).catch(() => {
-    });
-    return data;
+  resolve(): Observable<IPost[]> {
+    return of([]);
   }
 }

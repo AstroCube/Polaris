@@ -4,57 +4,57 @@
       <div class="breadcrumb">
         <div class="breadcrumb__section">
           <a class="breadcrumb__link" routerLink="/foro">Foro</a>
-          <a *ngIf="forum_data.breadcrumb.parent" class="breadcrumb__link" routerLink="{{'/foro/' + forum_data.breadcrumb.parent._id}}">{{forum_data.breadcrumb.parent.name}}</a>
-          <a class="breadcrumb__link" routerLink="{{'/foro/' + forum_data.breadcrumb.actual._id}}">{{forum_data.breadcrumb.actual.name}}</a>
+          <a *ngIf="cast(data.topic.forum).parent" class="breadcrumb__link" routerLink="{{'/foro/' + data.topic.forum.parent._id}}">{{data.topic.forum.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + cast(data.topic.forum)._id}}">{{cast(data.topic.forum).name}}</a>
           <a class="breadcrumb__link">Responder tema</a>
         </div>
       </div>
       <form class="topic" #topic_new="ngForm" (submit)="onSubmit()">
         <div class="topic__replier">
-          <h1 class="heading u-margin-bottom-small">Comentar el tema <span class="heading--secondary"><a routerLink="{{'/foro/tema/' + topic_id}}">{{topic_data.topic_info.subject}}</a></span></h1>
+          <h1 class="heading u-margin-bottom-small">Comentar el tema <span class="heading--secondary"><a routerLink="{{'/foro/tema/' + data.topic._id}}">{{data.topic.subject}}</a></span></h1>
           <div class="u-margin-bottom-medium">
             <a class="tab__link tab__link--horizontal tab__link--active" tab tab_id="new">Tu mensaje</a>
             <a class="tab__link tab__link--horizontal" tab tab_id="original">Mensaje original</a>
-            <a *ngIf="quote_post" class="tab__link tab__link--horizontal" tab tab_id="quoted">Mensaje que citarás</a>
+            <a *ngIf="data.quote" class="tab__link tab__link--horizontal" tab tab_id="quoted">Mensaje que citarás</a>
           </div>
           <div id="new" class="tab tab--active u-margin-bottom-medium paragraph--white">
             <ckeditor id="content" name="content" #content="ngModel" [(ngModel)]="post.content" tagName="editor" [editor]="editor"></ckeditor>
           </div>
           <div id="original" class="tab u-margin-bottom-medium">
-            <div id="{{original_post.id}}" class="post">
+            <div id="{{data.original._id}}" class="post">
               <div class="post__header">
-                <a routerLink="{{'/' + original_post.writer.username}}"><img alt="Test" class="post__user-avatar" [class.post__user-avatar--online]="original_post.writer.last_seen === 'conectado'" src="{{'https://mc-heads.net/avatar/' + original_post.writer.skin}}"></a>
+                <a routerLink="{{'/' + data.original.author.username}}"><img alt="{{data.original.author.display}}" class="post__user-avatar" [class.post__user-avatar--online]="data.original.author.session.lastSeen === -1" src="{{'https://mc-heads.net/avatar/' + data.original.author.skin}}"></a>
                 <div class="post__placeholder">
                   <div class="post__top">
-                    <a class="post__username" [style.color]="original_post.writer.user_color" routerLink="{{'/' + original_post.writer.username}}">{{original_post.writer.username}}</a>
+                    <a class="post__username" [style.color]="getPlaceholder(data.original.author).mainGroup.html_color" routerLink="{{'/' + data.original.author.username}}">{{data.original.author.display}}</a>
                     <div class="post__badges">
-                      <a *ngFor="let badge of original_post.writer.badges" class="profile__badge" [routerLink]="badge.badge_link" [style.background-color]="badge.html_color">{{badge.name}}</a>
+                      <a *ngFor="let badge of getPlaceholder(data.original.author).groups" class="profile__badge" [routerLink]="badge.badge_link" [style.background-color]="badge.html_color">{{badge.name}}</a>
                     </div>
                   </div>
-                  <span class="post__date" tooltip content="Creado en {{original_post.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{original_post.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+                  <span class="post__date" tooltip content="Creado en {{data.original.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{data.original.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
                 </div>
               </div>
               <div class="post__content">
-                <p class="post__content-container" [innerHTML]="original_post.content | noSanitize"></p>
+                <p class="post__content-container" [innerHTML]="data.original.content | noSanitize"></p>
               </div>
             </div>
           </div>
-          <div *ngIf="quote_post" id="quoted" class="tab u-margin-bottom-medium">
-            <div id="{{quote_post.id}}" class="post">
+          <div *ngIf="data.quote" id="quoted" class="tab u-margin-bottom-medium">
+            <div id="{{data.quote._id}}" class="post">
               <div class="post__header">
-                <a routerLink="{{'/' + quote_post.writer.username}}"><img alt="Test" class="post__user-avatar" [class.post__user-avatar--online]="quote_post.writer.last_seen === 'conectado'" src="{{'https://mc-heads.net/avatar/' + quote_post.writer.skin}}"></a>
+                <a routerLink="{{'/' + data.quote.author.username}}"><img alt="{{data.quote.author.display}}" class="post__user-avatar" [class.post__user-avatar--online]="data.quote.author.session.lastSeen === -1" src="{{'https://mc-heads.net/avatar/' + data.quote.author.skin}}"></a>
                 <div class="post__placeholder">
                   <div class="post__top">
-                    <a class="post__username" [style.color]="quote_post.writer.user_color" routerLink="{{'/' + quote_post.writer.username}}">{{quote_post.writer.username}}</a>
+                    <a class="post__username" [style.color]="getPlaceholder(data.quote.author).mainGroup.html_color" routerLink="{{'/' + data.quote.author.username}}">{{data.quote.author.skin}}</a>
                     <div class="post__badges">
-                      <a *ngFor="let badge of quote_post.writer.badges" class="profile__badge" [routerLink]="badge.badge_link" [style.background-color]="badge.html_color">{{badge.name}}</a>
+                      <a *ngFor="let badge of getPlaceholder(data.quote.author).groups" class="profile__badge" [routerLink]="badge.badge_link" [style.background-color]="badge.html_color">{{badge.name}}</a>
                     </div>
                   </div>
-                  <span class="post__date" tooltip content="Creado en {{quote_post.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{quote_post.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+                  <span class="post__date" tooltip content="Creado en {{data.quote.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{data.quote.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
                 </div>
               </div>
               <div class="post__content">
-                <p class="post__content-container" [innerHTML]="quote_post.content | noSanitize"></p>
+                <p class="post__content-container" [innerHTML]="data.quote.content | noSanitize"></p>
               </div>
             </div>
           </div>

@@ -1,75 +1,74 @@
-import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from '../../../../../services/user.service';
 import {ForumService} from '../../../../../services/forum/forum.service';
 import {TopicService} from '../../../../../services/forum/topic.service';
+import {ITopicReply} from "../../../../../newModels/forum/ITopic";
+import {forkJoin, Observable, of} from "rxjs";
+import {ForumUtilities} from "../../../../../utilities/forum-utilities";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import {IForum} from "../../../../../newModels/forum/IForum";
+import {PostService} from "../../../../../services/forum/post.service";
+import {ForumPermissible} from "../../../../../newModels/permissions/IForumPermissions";
 
 @Injectable()
-export class TopicReplyGuard {
+export class TopicReplyGuard implements CanActivate, Resolve<ITopicReply> {
 
   constructor (
-    private _forumService: ForumService,
-    private _topicService: TopicService,
-    private _userService: UserService,
-    private _router: Router
+    private forumService: ForumService,
+    private topicService: TopicService,
+    private userService: UserService,
+    private forumUtilities: ForumUtilities,
+    private postService: PostService,
+    private router: Router
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot) {
-    const token = this._userService.getToken();
-    if (token && token !== "none") {
-      return this.dataPromise(route).then((response) => {
-        let fetch: any = response;
-        if (fetch.forum_data.permissions.comment === "all" || fetch.forum_data.permissions.comment === "own" && fetch.topic_data.topic_info.own) {
-          return true;
-        } else {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-      }).catch(() => {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      });
-    } else {
-      this._router.navigate(['/login']);
-      return false;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.topicService.get(route.params.id).pipe(
+      mergeMap(topic =>
+        forkJoin([
+          this.userService.getUserObservable(),
+          this.forumService.permissions((topic.forum as IForum)._id)
+        ]).pipe(
+          map(response => {
+            return (
+              (
+                response[1].globalAdmin || response[1].manage) ||
+              (
+                (!topic.locked) &&
+                (
+                  (response[1].comment === ForumPermissible.All) ||
+                  (response[0]._id && response[0]._id === topic.author._id && response[1].comment === ForumPermissible.Own)
+                )
+              )
+            );
+          })
+        )
+      )
+    );
   }
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.dataPromise(route).then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITopicReply> {
+    return this.topicService.get(route.params.id).pipe(
+      mergeMap(topic =>
+        forkJoin([
+          route.queryParams.quote ? this.postService.get(route.queryParams.quote) : of(null),
+          this.userService.getUserObservable(),
+          this.postService.list(-1, 10, {topic: topic._id}, 'createdAt')
+        ]).pipe(
+          map(response => ({
+            topic,
+            quote: response[0],
+            user: response[1],
+            original: response[2].data[0]
+          }))
+        )
+      ),
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as ITopicReply);
+      })
+    );
   }
 
-  async dataPromise(route: ActivatedRouteSnapshot): Promise<any> {
-    let data: any = {};
-
-    data.topic_data = await this._topicService.topic_view(route.params.id, 1, true).then((topic) => {
-      return topic;
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
-
-    data.forum_data = await this._forumService.forum_pre_fetch(data.topic_data.topic_info.forum, true).then((forum) => {
-      return forum.pre_fetch;
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
-
-    if (route.queryParams.quote) data.quoted_data = await this._topicService.post_get(route.queryParams.quote).then((post) => {
-      return post;
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
-
-    return data;
-  }
 }

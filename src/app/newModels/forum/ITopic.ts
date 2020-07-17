@@ -26,3 +26,16 @@ export interface ITopicCreate {
   user: IUser;
   permissions: IForumPermissions;
 }
+
+export interface ITopicReply {
+  quote?: IPost;
+  topic: ITopic;
+  original: IPost;
+  user: IUser;
+}
+
+export interface ITopicEdit {
+  original: IPost;
+  user: IUser;
+  post: IPost;
+}

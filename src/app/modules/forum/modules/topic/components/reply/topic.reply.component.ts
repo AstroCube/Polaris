@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import * as ClassicEditor from "../../../../../../../../text_editor";
-import {TopicService} from '../../../../../../services/forum/topic.service';
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Post} from '../../../../../../models/forum/post';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
+import {ITopicReply} from "../../../../../../newModels/forum/ITopic";
+import {IPost} from "../../../../../../newModels/forum/IPost";
+import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
+import {PostService} from "../../../../../../services/forum/post.service";
 
 @Component({
   selector: 'topic-reply',
@@ -15,54 +18,55 @@ import {Title} from '@angular/platform-browser';
 export class TopicReplyComponent implements OnInit {
 
   public editor = ClassicEditor;
-  public forum_data: any;
-  public original_post: any;
-  public topic_data: any;
-  public topic_id: string;
-  public quote_post: any;
-  public post: Post;
+  public data: ITopicReply;
+  public post: IPost;
 
   constructor(
-    private _titleService: Title,
-    private _notifierService: NotifierService,
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _topicService: TopicService
+    private titleService: Title,
+    private notifierService: NotifierService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private postService: PostService
   ) {
-    this.forum_data = {};
-    this.topic_data = {};
-    this.post = new Post("","","","","","","","","","","", []);
+    this.post = {content: ''} as IPost;
   }
 
   ngOnInit() {
-    this._route.data.subscribe((data => {
-      this.forum_data = data.TopicReplyGuard.forum_data;
-      this.original_post = data.TopicReplyGuard.topic_data.posts;
-      this.topic_data = data.TopicReplyGuard.topic_data;
-      if (this._route.snapshot.queryParams.quote) this.quote_post = data.TopicReplyGuard.quoted_data.fixed_post;
+    this.route.data.subscribe((data => {
+      this.data = data.TopicReplyGuard;
+      //@ts-ignore
+      this.post.author = this.data.user._id;
+      this.post.topic = this.data.topic._id;
+      if (this.data.quote) this.post.quote = this.data.quote._id;
     }));
-    this._titleService.setTitle("Respondiendo a " + this.topic_data.topic_info.subject + " - " + GLOBAL.title);
-    this.topic_id = this._route.snapshot.params.id;
+    this.titleService.setTitle("Respondiendo a " + this.data.topic.subject + " - " + GLOBAL.title);
   }
 
-  onSubmit() {
-    this.post.topic = this._route.snapshot.params.id;
-    if (this.quote_post) this.post.quote = this.quote_post.id;
-    this._topicService.topic_reply(this.post).subscribe(
+  public onSubmit() {
+    this.postService.create(this.post).subscribe(
       response => {
         if (response) {
-          this._notifierService.notify('success', "Haz escrito un comentario en el tema.");
-          this._router.navigate(['/foro/tema/' + this._route.snapshot.params.id]);
+          this.notifierService.notify('success', "Haz escrito un comentario en el tema.");
+          this.router.navigate(['/foro/tema/' + this.route.snapshot.params.id]);
         } else {
-          this._notifierService.notify('error', "Ha ocurrido un error al comentar el tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al comentar el tema.");
         }
       },
       error => {
         let error_message = <any> error;
         if(error_message != null) {
-          this._notifierService.notify('error', "Ha ocurrido un error al comentar el tema.");
+          this.notifierService.notify('error', "Ha ocurrido un error al comentar el tema.");
         }
       }
     );
   }
+
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
+  }
+
+  public cast(any: any): any {
+    return any;
+  }
+
 }

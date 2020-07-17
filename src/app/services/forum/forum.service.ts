@@ -19,11 +19,6 @@ export class ForumService {
   ){
     this.url = GLOBAL.url;
   }
-  forum_pre_fetch(id: string, promise: boolean): any {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    if (!promise) return this.http.get(this.url + "forum/pre-fetch/" + id, {headers: headers});
-    return this.http.get(this.url + "forum/pre-fetch/" + id, {headers: headers}).toPromise();
-  }
 
   create(forum: IForum): Observable<IForum> {
     let params = JSON.stringify(forum);

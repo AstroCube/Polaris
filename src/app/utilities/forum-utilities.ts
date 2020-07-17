@@ -29,7 +29,7 @@ export class ForumUtilities {
    * @param user
    */
   public getCategoryHolders(category: IForumCategory, user: IUser): Observable<IForumMain> {
-    return this.forumService.list(-1, 10, {category: category._id}).pipe(
+    return this.forumService.list(-1, 10, {category: category._id, parent: {$exists: false}}).pipe(
       mergeMap(forums =>
         forkJoin(
           forums.data.map(forums => this.getHolder(forums, user))

@@ -16,9 +16,7 @@ export class TopicCreateGuard implements CanActivate, Resolve<ITopicCreate> {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.forumService.permissions(route.queryParams.forum).pipe(map(f => {
-      return true;
-    }));
+    return this.forumService.permissions(route.queryParams.forum).pipe(map(f => f.create));
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITopicCreate> {

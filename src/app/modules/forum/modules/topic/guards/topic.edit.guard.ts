@@ -1,84 +1,76 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from '../../../../../services/user.service';
 import {ForumService} from '../../../../../services/forum/forum.service';
-import {TopicService} from '../../../../../services/forum/topic.service';
-import * as moment from 'moment';
+import {ITopic, ITopicEdit} from "../../../../../newModels/forum/ITopic";
+import {forkJoin, Observable, of} from "rxjs";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import {PostService} from "../../../../../services/forum/post.service";
+import {IForum} from "../../../../../newModels/forum/IForum";
+import {ForumPermissible} from "../../../../../newModels/permissions/IForumPermissions";
 
 @Injectable()
-export class TopicEditGuard {
+export class TopicEditGuard implements CanActivate, Resolve<ITopicEdit> {
 
   constructor (
-    private _forumService: ForumService,
-    private _topicService: TopicService,
-    private _userService: UserService,
-    private _router: Router
+    private forumService: ForumService,
+    private postService: PostService,
+    private userService: UserService,
+    private router: Router
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot) {
-    const token = this._userService.getToken();
-    if (token && token !== "none") {
-      return this.dataPromise(route).then((response) => {
-        let fetch: any = response;
-        if (fetch.forum_data.permissions.edit === "all") {
-          return true;
-        } else if (fetch.post_data.writer.id == fetch.topic_data.topic_info.watcher) {
-          let time = parseInt(fetch.post_data.created_at, 10)*1000;
-          if (moment(time).add('1', 'hours').unix() > moment().unix()) {
-            return true;
-          } else {
-            this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-            return false;
-          }
-        } else {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-      }).catch(() => {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      });
-    } else {
-      this._router.navigate(['/login']);
-      return false;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.postService.get(route.params.id).pipe(
+      mergeMap(post =>
+        forkJoin([
+          this.userService.getUserObservable(),
+          this.forumService.permissions(((post.topic as ITopic).forum as IForum)._id)
+        ]).pipe(
+          map(response => {
+            const date: Date = new Date(new Date(post.createdAt).getTime() + (15 * 60000));
+            return (
+              (response[1].globalAdmin || response[1].manage) ||
+              (
+                (
+                  (response[1].edit === ForumPermissible.All) ||
+                  (
+                    response[0]._id && response[0]._id === (post.topic as ITopic).author._id &&
+                    response[1].edit === ForumPermissible.Own &&
+                    date.getTime() > new Date().getTime()
+                  )
+                )
+              )
+            );
+          })
+        )
+      )
+    );
   }
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this.dataPromise(route).then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITopicEdit> {
+    return this.postService.get(route.params.id).pipe(
+      mergeMap(post =>
+        forkJoin([
+          this.postService.list(
+            -1,
+            15,
+            {topic: (post.topic as ITopic)._id},
+            'createdAt'
+          ),
+          this.userService.getUserObservable()
+        ]).pipe(
+          map(response => ({
+            original: response[0].data[0],
+            user: response[1],
+            post
+          }))
+        )
+      ),
+      catchError((error) => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as ITopicEdit);
+      })
+    );
   }
 
-  async dataPromise(route: ActivatedRouteSnapshot): Promise<any> {
-    let data: any = {};
-
-    data.post_data = await this._topicService.post_get(route.params.id).then((post) => {
-      return post.fixed_post;
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
-
-    data.topic_data = await this._topicService.topic_view(data.post_data.topic, 1, true).then((topic) => {
-      return topic;
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
-
-    data.forum_data = await this._forumService.forum_pre_fetch(data.topic_data.topic_info.forum, true).then((forum) => {
-      return forum.pre_fetch;
-    }).catch(() => {
-      this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-      return false;
-    });
-
-    return data;
-  }
 }
