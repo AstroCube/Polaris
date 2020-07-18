@@ -28,8 +28,9 @@ export class ForumMainGuard implements Resolve<IForumMain[]> {
         ).pipe(
           mergeMap(user =>
             forkJoin(
-              categories.data.map(
-              category => this.forumUtilities.getCategoryHolders(category, user[0]))
+              categories.data.length > 0 ? categories.data.map(
+              category => this.forumUtilities.getCategoryHolders(category, user[0])
+              ) : of([])
             )
           )
         )

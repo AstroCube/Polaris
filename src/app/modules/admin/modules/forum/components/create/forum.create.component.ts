@@ -32,27 +32,20 @@ export class ForumCreateComponent implements OnInit {
     this.route.data.subscribe((data => {
       const categories: ICategoryTree[] = data.ForumListGuard;
       categories.forEach(category => {
-        if (category.tree.length > 0) {
-          category.tree.forEach(forum => this.tree.push({
-            forumId: forum._id,
-            forum: forum.name,
-            category: category.category.name,
-            categoryId: category.category._id
-          }));
-        } else {
-          this.tree.push({category: category.category.name, categoryId: category.category._id} as IForumCreationTree);
-        }
+        this.tree.push({category: category.category.name, categoryId: category.category._id, forum: 'Categoría Root', forumId: null});
+        category.tree.forEach(forum => this.tree.push({
+          forumId: forum._id,
+          forum: forum.name,
+          category: category.category.name,
+          categoryId: category.category._id
+        }));
       });
     }));
   }
 
   onSubmit() {
     this.forum.category = (this.forum.parent as IForumCreationTree).categoryId;
-    if ((this.forum.parent as IForumCreationTree).forumId) {
-      this.forum.parent = (this.forum.parent as IForumCreationTree).forumId;
-    } else {
-      this.forum.parent = undefined;
-    }
+    this.forum.parent = (this.forum.parent as IForumCreationTree).forumId || undefined;
 
     this.forumService.create(this.forum).subscribe(
       response => {
@@ -65,10 +58,8 @@ export class ForumCreateComponent implements OnInit {
       },
 
       error => {
-        let error_message = <any> error;
-        if (error_message != null) {
-          this.notifierService.notify('error', error.error.message);
-        }
+        this.notifierService.notify('error', error.message);
+        console.log(error);
       }
     );
   }

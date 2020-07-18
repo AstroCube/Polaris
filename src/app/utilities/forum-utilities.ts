@@ -32,12 +32,15 @@ export class ForumUtilities {
     return this.forumService.list(-1, 10, {category: category._id, parent: {$exists: false}}).pipe(
       mergeMap(forums =>
         forkJoin(
-          forums.data.map(forums => this.getHolder(forums, user))
+          forums.data.length > 0 ? forums.data.map(forum => this.getHolder(forum, user)) : of([])
         ).pipe(
-          map(holders => ({
-            category,
-            holder: holders
-          } as IForumMain))
+          map(holders => {
+            console.log(holders);
+            return ({
+              category,
+              holder: holders
+            } as IForumMain);
+          })
         )
       )
     );
