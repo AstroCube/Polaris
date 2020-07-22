@@ -4,7 +4,7 @@
       <div class="forum__tree">
         <section *ngIf="main && main.length > 0"  class="forum__section">
           <div *ngFor="let forum of main" class="category">
-            <div *ngIf="forum.holder.length > 1">
+            <div *ngIf="forum.holder.length > 0">
               <div class="category__header">
                 <div class="category__header-title">
                   {{forum.category.name}}

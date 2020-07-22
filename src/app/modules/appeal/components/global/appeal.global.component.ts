@@ -9,7 +9,6 @@ import {IAppealSearchCriteria, IAppealsPermissions} from "../../../../newModels/
 import {IUser, IUserPlaceholder} from "../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../utilities/group-placeholder";
 import {NotifierService} from "angular-notifier";
-import {IGamemode} from "../../../../newModels/IGamemode";
 
 @Component({
   selector: 'appeal-global',

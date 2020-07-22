@@ -32,23 +32,15 @@ export class ForumEditComponent implements OnInit {
     this.titleService.setTitle("Editar foro - " + GLOBAL.title);
     this.route.data.subscribe((data => {
       this.forum = data.ForumEditGuard;
-      this.category = data.ForumListGuard;
-      this.category.forEach(category => {
-        if (category.tree.length > 0) {
-          category.tree.forEach(forum => {
-            const selector: IForumCreationTree = {
-              forumId: forum._id,
-              forum: forum.name,
-              category: category.category.name,
-              categoryId: category.category._id
-            };
-            this.tree.push(selector);
-            //@ts-ignore
-            if (this.forum.parent && selector.forumId === (this.forum.parent as IForum)._id) this.forum.parent = selector;
-          });
-        } else {
-          this.tree.push({category: category.category.name, categoryId: category.category._id} as IForumCreationTree);
-        }
+      const categories: ICategoryTree[] = data.ForumListGuard;
+      categories.forEach(category => {
+        this.tree.push({category: category.category.name, categoryId: category.category._id, forum: 'Categoría Root', forumId: null});
+        category.tree.forEach(forum => this.tree.push({
+          forumId: forum._id,
+          forum: forum.name,
+          category: category.category.name,
+          categoryId: category.category._id
+        }));
       });
     }));
   }

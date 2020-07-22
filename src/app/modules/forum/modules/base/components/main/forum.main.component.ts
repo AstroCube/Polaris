@@ -31,7 +31,9 @@ export class ForumMainComponent implements OnInit {
       {name: 'robots', content: 'index, follow'}
     ]);
     this.route.data.subscribe((data) => {
-      this.main = data.ForumMainGuard;
+      this.main = data.ForumMainGuard.filter((holder: IForumMain) => {
+        return holder.holder.length > 0;
+      });
     });
   }
 

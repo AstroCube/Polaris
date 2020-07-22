@@ -32,15 +32,12 @@ export class ForumUtilities {
     return this.forumService.list(-1, 10, {category: category._id, parent: {$exists: false}}).pipe(
       mergeMap(forums =>
         forkJoin(
-          forums.data.length > 0 ? forums.data.map(forum => this.getHolder(forum, user)) : of([])
+          forums.data.length > 0 ? forums.data.map(forum => this.getHolder(forum, user)) : of(undefined)
         ).pipe(
-          map(holders => {
-            console.log(holders);
-            return ({
-              category,
-              holder: holders
-            } as IForumMain);
-          })
+          map(holders => ({
+            category,
+            holder: (holders as any[]).filter(a => a !== undefined)
+          }))
         )
       )
     );
@@ -54,14 +51,17 @@ export class ForumUtilities {
     return forkJoin([
       this.getTopicHolders(paginatedTopics.data, user),
       this.getTopicHolders(pinned, user),
-      this.getChildHolders(child, user)
+      this.getChildHolders(child, user),
+      user ? this.forumService.permissions(forum._id) : this.getGuestPermissions(forum._id)
     ]).pipe(
       map(topics => ({
         child: topics[2],
         forum,
         topic: topics[0],
         pinned: topics[1],
-        pagination: paginatedTopics.pagination
+        permissions: topics[3],
+        pagination: paginatedTopics.pagination,
+        user
       }))
     );
   }

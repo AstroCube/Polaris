@@ -35,6 +35,13 @@
             ></ng-select>
           </div>
         </div>
+        <div class="forum-admin__form">
+          <label for="friend" class="form__checkbox">
+            <input type="checkbox" id="friend" name="friend" #friend="ngModel" [(ngModel)]="forum.guest" class="form__checkbox-input">
+            <span class="form__checkbox-checkmark"></span>
+          </label>
+          <label for="friend" class="link link--small link--white">Foro disponible para invitados</label>
+        </div>
       </div>
       <div class="col-1-of-2 u-margin-bottom-small">
         <textarea id="description" name="order" #description="ngModel" [(ngModel)]="forum.description" cols="30" rows="10" class="form__textarea" placeholder="Descripción del foro"></textarea>

@@ -37,9 +37,9 @@
             </div>
           </div>
         </div>
-        <div class="u-margin-bottom-small u-margin-top-small u-right-text">
+        <div *ngIf="data.user" class="u-margin-bottom-small u-margin-top-small u-right-text">
           <a (click)="readAll()" class="btn btn--secondary shop__description-slug-button shop__cart-button"><i class="fas fa-list-ul"></i> Leer todo</a>
-          <a *ngIf="true" (click)="newTopic()" class="btn btn--primary shop__description-slug-button shop__cart-button"><i class="fas fa-plus"></i> Crear tema</a>
+          <a *ngIf="data.permissions.create" (click)="newTopic()" class="btn btn--primary shop__description-slug-button shop__cart-button"><i class="fas fa-plus"></i> Crear tema</a>
         </div>
         <div class="forum__topics">
           <div class="forum__topics-header">

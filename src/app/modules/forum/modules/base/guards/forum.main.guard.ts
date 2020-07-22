@@ -37,7 +37,7 @@ export class ForumMainGuard implements Resolve<IForumMain[]> {
       ),
       catchError((error) => {
         this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
-        return of([] as IForumMain[]);
+        return of([]);
       })
     );
   }
