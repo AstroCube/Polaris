@@ -3,6 +3,7 @@ import {IPunishmentPermissions} from "./permissions/IPunishmentPermissions";
 import {IAppealsPermissions} from "./permissions/IAppealsPermissions";
 import {IReportsPermissions} from "./permissions/IReportsPermissions";
 import {IForumPermissions} from "./permissions/IForumPermissions";
+import {IUser} from "./user/IUser";
 
 export interface IGroup extends IModel {
   name: string;
@@ -21,6 +22,11 @@ export interface IMinecraftFlair {
   realm: string;
   color: string;
   symbol: string;
+}
+
+export interface IStaffGroup {
+  user: IUser[];
+  group: IGroup;
 }
 
 export interface IPermissions {

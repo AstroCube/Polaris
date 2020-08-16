@@ -24,7 +24,7 @@ export class TopicCreateGuard implements CanActivate, Resolve<ITopicCreate> {
       mergeMap(forum =>
         forkJoin([
           this.forumService.permissions(forum._id),
-          this.userService.getUserObservable()
+          this.userService.getUser()
         ]).pipe(
           map(response => ({
             forum,

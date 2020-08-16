@@ -53,8 +53,15 @@
           <h3 class="profile__head">Amigo(s) en el servidor. <span>({{userProfile.friends.commons}}) en común</span></h3>
         </div>
         <div class="profile__friends">
-          <a *ngFor="let friend of userProfile.friends.friends" routerLink="{{'/' + friend.username}}" class="tooltip">
-            <img src="{{'https://mc-heads.net/avatar/' + friend.skin}}" [alt]="friend.username" class="profile__friend" tooltip [content]="friend.username" placement="top">
+          <a *ngFor="let friend of userProfile.friends.friends"
+             routerLink="{{'/' + (friend.sender._id === userProfile.user._id ? friend.receiver.username : friend.sender.username)}}"
+             class="tooltip"
+          >
+            <img
+              src="{{'https://mc-heads.net/avatar/' + (friend.sender._id === userProfile.user._id ? friend.receiver.skin : friend.sender.skin)}}"
+              [alt]="(friend.sender._id === userProfile.user._id ? friend.receiver.username : friend.sender.username)"
+              class="profile__friend"
+              tooltip [content]="(friend.sender._id === userProfile.user._id ? friend.receiver.display : friend.sender.display)" placement="top">
           </a>
         </div>
       </div>
@@ -224,10 +231,10 @@
       </div>
       <div class="table__row punishment__row table--fixed" *ngFor="let punishment of userProfile.punishments">
         <div class="table__cell punishment__profile-others">
-          <a color [id]="punishment.issuer"></a>
+          <a [style.color]="getPlaceholder(punishment.issuer).mainGroup.html_color"></a>
         </div>
         <div class="table__cell punishment__profile-others">
-          <a color [id]="punishment.punished"></a>
+          <a  [style.color]="getPlaceholder(punishment.punished).mainGroup.html_color"></a>
         </div>
         <div class="table__cell punishment__profile-reason">
           <span>{{punishment.reason}}</span>

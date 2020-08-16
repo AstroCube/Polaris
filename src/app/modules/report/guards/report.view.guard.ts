@@ -21,7 +21,7 @@ export class ReportViewGuard implements Resolve<IReportView> {
     return this.reportService.reportPermissions().pipe(
       mergeMap(permissions =>
         forkJoin(
-          [this.userService.getUserObservable(),
+          [this.userService.getUser(),
           this.reportService.reportGet(route.params.id)]
         ).pipe(
           map(response => ({

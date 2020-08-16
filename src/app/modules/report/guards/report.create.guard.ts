@@ -14,7 +14,7 @@ export class ReportCreateGuard implements Resolve<{user: IUser, ip: string}> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{user: IUser, ip: string}> {
-    return this.userService.getUserObservable(route.queryParams.user).pipe(
+    return this.userService.getUser(route.queryParams.user).pipe(
       mergeMap(user =>
         forkJoin(this.userService.userIp()).pipe(
           map(response => ({

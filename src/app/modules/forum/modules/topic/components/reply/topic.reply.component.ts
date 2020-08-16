@@ -4,7 +4,7 @@ import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GLOBAL} from '../../../../../../services/global';
 import {Title} from '@angular/platform-browser';
-import {ITopicReply} from "../../../../../../newModels/forum/ITopic";
+import {ITopicInteraction} from "../../../../../../newModels/forum/ITopic";
 import {IPost} from "../../../../../../newModels/forum/IPost";
 import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
@@ -18,7 +18,7 @@ import {PostService} from "../../../../../../services/forum/post.service";
 export class TopicReplyComponent implements OnInit {
 
   public editor = ClassicEditor;
-  public data: ITopicReply;
+  public data: ITopicInteraction;
   public post: IPost;
 
   constructor(
@@ -33,7 +33,7 @@ export class TopicReplyComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((data => {
-      this.data = data.TopicReplyGuard;
+      this.data = data.TopicInteractGuard;
       //@ts-ignore
       this.post.author = this.data.user._id;
       this.post.topic = this.data.topic._id;

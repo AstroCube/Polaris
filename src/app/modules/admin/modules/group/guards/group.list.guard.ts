@@ -1,65 +1,35 @@
 import {Injectable} from '@angular/core';
 import {GroupService} from '../../../../../services/group.service';
 import {UserService} from '../../../../../services/user.service';
-import {Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {IGroup} from "../../../../../newModels/IGroup";
+import {Observable, of} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {IAppealResolve} from "../../../../../newModels/IAppeal";
+import {IPaginateResult} from "../../../../../newModels/IModel";
 
 @Injectable()
-export class GroupListGuard {
+export class GroupListGuard implements CanActivate, Resolve<IPaginateResult<IGroup>> {
 
   constructor (
-    private _groupService: GroupService,
-    private _userService: UserService,
-    private _router: Router
+    private groupService: GroupService,
+    private userService: UserService,
+    private router: Router
   )
   {}
 
-  async canActivate() {
-    return await this._userService.permission_checker_promise("web_permissions.group.manage").then((permission) => {
-      if (!permission.has_permission) {
-        this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-        return false;
-      } else {
-        return true;
-      }
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    return this.groupService.permissionsManifest().pipe(map(p => p.group.manage));
   }
 
-  resolve(): Promise<any> {
-    return this.dataSync().then((groups) => {
-      return groups;
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
-  }
-
-  async dataSync(): Promise<any> {
-    return {
-      group: await this._groupService.groupList().then((groups) => {
-        return groups;
-      }),
-      users: await this._userService.userListAutocompleter(true).then((users) => {
-        return users;
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPaginateResult<IGroup>> {
+    return this.groupService.groupList().pipe(
+      catchError(error => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as IPaginateResult<IGroup>);
       })
-    };
+    );
   }
+
+
 }

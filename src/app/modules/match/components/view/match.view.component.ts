@@ -11,7 +11,7 @@ import {Title} from '@angular/platform-browser';
 
 export class MatchViewComponent {
 
-  public match : Match;
+  public match: Match;
   public url : string;
 
   constructor(

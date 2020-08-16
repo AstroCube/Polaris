@@ -1,47 +1,34 @@
 import {Component, OnInit} from '@angular/core';
-import {Socket} from 'ngx-socket-io';
-import {UserService} from '../../../../../../services/user.service';
+
+import {ITopic} from "../../../../../../newModels/forum/ITopic";
+import {TopicService} from "../../../../../../services/forum/topic.service";
+import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
+import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
+import {interval, Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'forum-feed',
   templateUrl: './forum.feed.component.html'
 })
 
-export class ForumFeedComponent implements OnInit{
+export class ForumFeedComponent implements OnInit {
 
-  public feed_event = this._socket.fromEvent<any[]>("feed_topics");
-  public create_new = this._socket.fromEvent<any[]>("receive_topic");
-  public topics: any[];
-  public viewable: any[];
+  public topics: ITopic[];
 
   constructor(
-    private __userService: UserService,
-    private _socket: Socket
+    private topicService: TopicService
   ) { }
 
   ngOnInit() {
-    this.loadFeed();
-
-    this.feed_event.subscribe(
-      response => {
-        let respond: any = response;
-        this.topics = respond.topics;
-        this.viewable = respond.viewable;
-      }
-    );
-
-    this.create_new.subscribe(
-      response => {
-        let topic: any = response;
-        if (this.viewable.includes(topic.forum.toString()) && this.topics.filter(element => element.id === topic.id).length <= 0) {
-          this.topics.unshift(topic);
-        }
-      }
+    this.topicService.newTopics().pipe(
+      map(t => this.topics = t.data),
+      interval(30000)
     );
   }
 
-  loadFeed() {
-    this._socket.emit("feed_join", this.__userService.getToken());
+  public getPlaceholder(user: IUser): IUserPlaceholder {
+    return getUserPlaceholder(user);
   }
 
 }

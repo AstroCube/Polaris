@@ -27,15 +27,10 @@ export interface ITopicCreate {
   permissions: IForumPermissions;
 }
 
-export interface ITopicReply {
+export interface ITopicInteraction {
   quote?: IPost;
   topic: ITopic;
   original: IPost;
   user: IUser;
 }
 
-export interface ITopicEdit {
-  original: IPost;
-  user: IUser;
-  post: IPost;
-}

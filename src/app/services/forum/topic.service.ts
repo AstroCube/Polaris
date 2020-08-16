@@ -3,8 +3,8 @@ import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { GLOBAL } from "../global";
 import {UserService} from '../user.service';
+import {ITopic, ITopicInteraction, ITopicView} from "../../newModels/forum/ITopic";
 import {IPaginateResult} from "../../newModels/IModel";
-import {ITopic} from "../../newModels/forum/ITopic";
 
 @Injectable()
 export class TopicService {
@@ -17,36 +17,42 @@ export class TopicService {
     this.url = GLOBAL.url;
   }
 
-  post_like(id: string): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getToken());
-    return this.http.get(this.url + "topic/like-status/" + id,  {headers: headers});
-  }
-
   create(topic: ITopic): Observable<ITopic> {
     let params = JSON.stringify(topic);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.post(GLOBAL.epsilon + "forum/topic", params, {headers: headers}) as Observable<ITopic>;
   }
 
-  get(id: string): Observable<ITopic> {
+  view(id: string, page: number, perPage: number): Observable<ITopicView> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.get(GLOBAL.epsilon + "forum/topic/" + id, {headers: headers}) as Observable<ITopic>;
+    const params = new HttpParams().set('page', String(page)).set('size', String(perPage));
+    return this.http.get(GLOBAL.epsilon + "forum/topic/view/" + id, {headers, params}) as Observable<ITopicView>;
   }
 
-  list(page?: number, size?: number, query?: any, sort?: string): Observable<IPaginateResult<ITopic>> {
+  interaction(id: string, quote: string): Observable<ITopicInteraction> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('sort', sort);
-    return this.http.post(GLOBAL.epsilon + "forum/topic/list", query,{headers: headers, params}) as Observable<IPaginateResult<ITopic>>;
+    const params = new HttpParams().set('quote', quote);
+    return this.http.get(GLOBAL.epsilon + "forum/topic/interact/" + id, {headers, params}) as Observable<ITopicInteraction>;
   }
 
   update(topic: ITopic): Observable<ITopic> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.put(GLOBAL.epsilon + "forum/topic", topic,{headers: headers}) as Observable<ITopic>;
+    return this.http.put(GLOBAL.epsilon + "forum/topic", topic,{headers}) as Observable<ITopic>;
+  }
+
+  readAll(id: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "forum/topic/read-all/" + id, {headers}) as Observable<any>;
   }
 
   delete(id: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.delete(GLOBAL.epsilon + "forum/topic/" + id, {headers: headers}) as Observable<any>;
+    return this.http.delete(GLOBAL.epsilon + "forum/topic/" + id, {headers}) as Observable<any>;
+  }
+
+  newTopics(): Observable<IPaginateResult<ITopic>> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.delete(GLOBAL.epsilon + "forum/new-topics", {headers}) as Observable<IPaginateResult<ITopic>>;
   }
 
 }

@@ -21,17 +21,6 @@ export class PostService {
     return this.http.post(GLOBAL.epsilon + "forum/post", params, {headers: headers}) as Observable<IPost>;
   }
 
-  get(id: string): Observable<IPost> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.get(GLOBAL.epsilon + "forum/post/" + id, {headers: headers}) as Observable<IPost>;
-  }
-
-  list(page?: number, size?: number, query?: any, sort?: string): Observable<IPaginateResult<IPost>> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('sort', sort);
-    return this.http.post(GLOBAL.epsilon + "forum/post/list", query,{headers: headers, params}) as Observable<IPaginateResult<IPost>>;
-  }
-
   update(category: IPost): Observable<IPost> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.put(GLOBAL.epsilon + "forum/post", category, {headers: headers}) as Observable<IPost>;
@@ -40,6 +29,11 @@ export class PostService {
   delete(id: string): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.delete(GLOBAL.epsilon + "forum/post/" + id, {headers: headers}) as Observable<any>;
+  }
+
+  likeStatus(id: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "forum/post/like-status/" + id,  {headers: headers});
   }
 
 }

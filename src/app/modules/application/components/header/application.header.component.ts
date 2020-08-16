@@ -64,25 +64,7 @@ export class ApplicationHeaderComponent implements OnInit {
     request.password = this.requested_password;
     //request.persistence = this.requested_persistence;
     this.router.navigate(['']);
-
     this.userService.login(request).subscribe(
-      response => {
-        if (response.token.length == 0) {
-          this.notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
-        } else {
-          localStorage.setItem("token", response.token);
-        }
-      },
-
-      error => {
-        let error_message = <any> error;
-        if(error_message != null) {
-          this.notifierService.notify('error', error.error.message);
-        }
-      }
-    );
-
-    this.userService.loginEpsilon(request).subscribe(
       response => {
         if (response.token.length == 0) {
           this.notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
@@ -116,13 +98,13 @@ export class ApplicationHeaderComponent implements OnInit {
   }
 
   private checkLogin(): void {
-    this.logged = this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '';
+    this.logged = this.userService.getEpsilonToken() !== '';
   }
 
   public retrieveData(): void {
     this.checkLogin();
     if (this.logged) {
-      this.userService.getUserObservable().pipe(
+      this.userService.getUser().pipe(
         mergeMap((user) =>
           forkJoin(
             [from(this.groupService.permissionsManifest())]

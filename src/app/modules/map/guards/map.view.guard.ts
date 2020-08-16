@@ -36,8 +36,8 @@ export class MapViewGuard implements Resolve<IMapView> {
   }
 
   userRequest(): Observable<IUserPermissionsPair> {
-    return this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '' ?
-        this.userService.getUserObservable().pipe(
+    return this.userService.getEpsilonToken() !== '' ?
+        this.userService.getUser().pipe(
           mergeMap(user =>
             forkJoin([this.groupService.permissionsManifest()]).pipe(
               map(response => ({

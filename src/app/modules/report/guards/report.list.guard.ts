@@ -20,7 +20,7 @@ export class ReportListGuard implements Resolve<IReportList> {
     const page = route.queryParams.page ? route.queryParams.page : 1;
     const parameter = route.queryParams.criteria ? route.queryParams.criteria : 'all';
     let search: IReportSearch = ReportListComponent.searchCriteria(parameter);
-    return this.userService.getUserObservable().pipe(
+    return this.userService.getUser().pipe(
       mergeMap(user =>
         forkJoin(
           [this.reportService.reportList(page, 15, search),

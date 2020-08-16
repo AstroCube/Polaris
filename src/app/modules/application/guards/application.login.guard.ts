@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {UserService} from '../../../services/user.service';
+import {Observable} from "rxjs";
 
 @Injectable()
-export class ApplicationLoginGuard {
+export class ApplicationLoginGuard implements CanActivate {
 
   constructor (
-    private _userService: UserService,
-    private _router: Router
+    private userService: UserService,
+    private router: Router
   )
   {}
 
-  canActivate() {
-    const token = this._userService.getToken();
-    if (token == "none") {
-      this._router.navigate(['/login']);
-      return false;
-    } else {
-      return true;
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    return this.userService.getEpsilonToken() === "";
   }
+
 }

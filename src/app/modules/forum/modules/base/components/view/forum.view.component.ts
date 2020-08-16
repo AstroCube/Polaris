@@ -7,6 +7,7 @@ import {Title} from '@angular/platform-browser';
 import {IForumView} from "../../../../../../newModels/forum/IForum";
 import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
+import {TopicService} from "../../../../../../services/forum/topic.service";
 
 @Component({
   selector: 'forum-view',
@@ -20,6 +21,7 @@ export class ForumViewComponent implements OnInit {
   constructor(
     private titleService: Title,
     private forumService: ForumService,
+    private topicService: TopicService,
     private notifierService: NotifierService,
     private route: ActivatedRoute,
     private router: Router
@@ -39,22 +41,18 @@ export class ForumViewComponent implements OnInit {
   }
 
   readAll() {
-    //this._forumService.forum_clear(this.forum_info.info.id).subscribe(
-    //       response => {
-    //         if (response.cleared) {
-    //           this._notifierService.notify('success', "Has marcado todos los mensajes como leídos.");
-    //         } else {
-    //           this._notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
-    //         }
-    //
-    //       },
-    //       error => {
-    //         let error_message = <any> error;
-    //         if(error_message != null) {
-    //           this._notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
-    //         }
-    //       }
-    //     );
+    this.topicService.readAll(this.data.forum._id).subscribe(
+           response => {
+             this.notifierService.notify('success', "Has marcado todos los mensajes como leídos.");
+           },
+           error => {
+             let error_message = <any> error;
+             console.log(error);
+             if(error_message != null) {
+               this.notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
+             }
+           }
+         );
   }
 
 }

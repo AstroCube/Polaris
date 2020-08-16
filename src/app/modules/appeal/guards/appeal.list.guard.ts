@@ -19,7 +19,7 @@ export class AppealListGuard implements Resolve<IAppealMain>{
   {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IAppealMain> {
-    return this.userService.getUserObservable().pipe(
+    return this.userService.getUser().pipe(
       mergeMap(user =>
         forkJoin(
           this.punishmentService.punishmentList(-1, 1, {punished: user._id, appealed: false}),

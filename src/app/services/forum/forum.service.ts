@@ -4,8 +4,7 @@ import { GLOBAL } from "../global";
 import {UserService} from '../user.service';
 import {Observable} from 'rxjs';
 import {IPaginateResult} from "../../newModels/IModel";
-import {IForum, IForumView} from "../../newModels/forum/IForum";
-import {map} from "rxjs/operators";
+import {IForum, IForumMain, IForumView} from "../../newModels/forum/IForum";
 import {IForumPermissions} from "../../newModels/permissions/IForumPermissions";
 
 @Injectable()
@@ -33,13 +32,18 @@ export class ForumService {
 
   get(id: string): Observable<IForum> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.get(GLOBAL.epsilon + "forum/" + id, {headers: headers})
-      .pipe(map(a => ({...a, _id: id}))) as Observable<IForum>;
+    return this.http.get(GLOBAL.epsilon + "forum/" + id, {headers: headers}) as Observable<IForum>;
   }
 
-  view(id: string): Observable<IForumView> {
+  main(): Observable<IForumMain[]> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
-    return this.http.get(GLOBAL.epsilon + "forum/view/" + id, {headers: headers}) as Observable<IForumView>;
+    return this.http.get(GLOBAL.epsilon + "forum/main/view", {headers}) as Observable<IForumMain[]>;
+  }
+
+  view(id: string, page: number, size: number): Observable<IForumView> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    const params = new HttpParams().set('page', String(page)).set('size', String(size));
+    return this.http.get(GLOBAL.epsilon + "forum/view/" + id, {headers, params}) as Observable<IForumView>;
   }
 
   update(forum: IForum): Observable<IForum> {
@@ -50,6 +54,11 @@ export class ForumService {
   permissions(id: string): Observable<IForumPermissions> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
     return this.http.get(GLOBAL.epsilon + "forum/permissions/" + id, {headers: headers}) as Observable<IForumPermissions>;
+  }
+
+  delete(id: string): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.delete(GLOBAL.epsilon + "forum/" + id, {headers: headers}) as Observable<any>;
   }
 
 }

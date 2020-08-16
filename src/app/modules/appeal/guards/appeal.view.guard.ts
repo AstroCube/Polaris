@@ -17,7 +17,7 @@ export class AppealViewGuard implements Resolve<IAppealResolve> {
   {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<IAppealResolve> {
-    return this.userService.getUserObservable().pipe(
+    return this.userService.getUser().pipe(
       mergeMap(user =>
         forkJoin(
           [this.appealService.appealPermissions(),

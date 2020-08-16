@@ -46,19 +46,16 @@ export class ReportListComponent {
   }
 
   assignReport(id: string) {
-    this.reportService.report_assign(id).subscribe(
+    this.reportService.reportAssign(id).subscribe(
       response => {
-        if (response.assigned) {
-          this.notifierService.notify('success', "Has tomado el reporte correctamente.");
-          this.router.navigate(['/reportar/' + id]);
-        } else {
-          this.notifierService.notify('error', "Ha ocurrido un error al tomar el reporte.");
-        }
+        this.notifierService.notify('success', "Has tomado el reporte correctamente.");
+        this.router.navigate(['/reportar/' + id]);
       },
+
       error => {
         let error_message = <any> error;
         if (error_message != null) {
-          this.notifierService.notify('error', error.error.message);
+          this.notifierService.notify('error', error.message);
         }
       }
     );

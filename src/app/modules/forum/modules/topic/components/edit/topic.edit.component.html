@@ -4,22 +4,22 @@
       <div class="breadcrumb">
         <div class="breadcrumb__section">
           <a class="breadcrumb__link" routerLink="/foro">Foro</a>
-          <a *ngIf="cast(data.post.topic).forum.parent" class="breadcrumb__link" routerLink="{{'/foro/' + cast(data.post.topic).forum.parent._id}}">{{cast(data.post.topic).forum.parent.name}}</a>
-          <a class="breadcrumb__link" routerLink="{{'/foro/' + cast(data.post.topic).forum._id}}">{{cast(data.post.topic).forum.name}}</a>
+          <a *ngIf="cast(data.quote.topic).forum.parent" class="breadcrumb__link" routerLink="{{'/foro/' + cast(data.quote.topic).forum.parent._id}}">{{cast(data.quote.topic).forum.parent.name}}</a>
+          <a class="breadcrumb__link" routerLink="{{'/foro/' + cast(data.quote.topic).forum._id}}">{{cast(data.quote.topic).forum.name}}</a>
           <a class="breadcrumb__link">Editar</a>
         </div>
       </div>
       <form class="topic" #topic_edit="ngForm" (submit)="onSubmit()">
-        <h1 class="heading u-margin-bottom-small">Editando en <span class="heading--secondary"><a routerLink="{{'/foro/tema/' + cast(data.post.topic)._id}}">{{cast(data.post.topic).subject}}</a></span></h1>
-        <div *ngIf="data.original._id === data.post._id" class="u-margin-bottom-medium topic__edit">
+        <h1 class="heading u-margin-bottom-small">Editando en <span class="heading--secondary"><a routerLink="{{'/foro/tema/' + cast(data.quote.topic)._id}}">{{cast(data.quote.topic).subject}}</a></span></h1>
+        <div *ngIf="data.original._id === data.quote._id" class="u-margin-bottom-medium topic__edit">
           <label class="account__label" for="subject">Asunto del tema</label>
-          <input id="subject" name="subject" #subject="ngModel" [(ngModel)]="cast(data.post.topic).subject" type="text" class="form__input form__input--full" maxlength="60" required>
+          <input id="subject" name="subject" #subject="ngModel" [(ngModel)]="cast(data.quote.topic).subject" type="text" class="form__input form__input--full" maxlength="60" required>
         </div>
         <div class="u-margin-bottom-medium paragraph--white">
-          <ckeditor id="content" name="content" #content="ngModel" [(ngModel)]="data.post.content" [editor]="editor"></ckeditor>
+          <ckeditor id="content" name="content" #content="ngModel" [(ngModel)]="data.quote.content" [editor]="editor"></ckeditor>
         </div>
         <div class="u-right-text u-margin-bottom-small">
-          <button class="btn btn--secondary"><<i class="fas fa-edit btn__icon--left"></i>Actualizar</button>
+          <button class="btn btn--secondary"><i class="fas fa-edit btn__icon--left"></i>Actualizar</button>
         </div>
       </form>
     </div>

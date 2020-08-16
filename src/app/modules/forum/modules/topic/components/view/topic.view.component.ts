@@ -9,6 +9,9 @@ import {IForum} from "../../../../../../newModels/forum/IForum";
 import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
 import {ForumPermissible} from "../../../../../../newModels/permissions/IForumPermissions";
+import {PostService} from "../../../../../../services/forum/post.service";
+import {filter} from "rxjs/operators";
+import {IPost} from "../../../../../../newModels/forum/IPost";
 
 @Component({
   selector: 'topic-view',
@@ -18,14 +21,18 @@ import {ForumPermissible} from "../../../../../../newModels/permissions/IForumPe
 export class TopicViewComponent implements OnInit {
 
   public view: ITopicView;
+  public showSpinner: boolean;
 
   constructor(
     private titleService: Title,
     private topicService: TopicService,
     private notifierService: NotifierService,
+    private postService: PostService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.showSpinner = false;
+  }
 
   ngOnInit() {
     this.route.data.subscribe((data => {
@@ -34,13 +41,19 @@ export class TopicViewComponent implements OnInit {
   }
 
   quoteLink(id: string) {
-    this.router.navigate(['/foro/tema/responder/' + this.view.topic._id], {queryParams: {quote: id}});
+    this.router.navigate(['/foro/tema/responder/' + this.view.topic._id], {queryParams: {interact: id}});
   }
 
-  deleteValid(id, created_at): boolean {
-    //TODO: Validate delete
-    let time = parseInt(created_at, 10)*1000;
-    return moment(time).add('1', 'hours').unix() > moment().unix();
+  deleteValid(post: IPost, original: boolean): boolean {
+    const date: Date = new Date(new Date(post.createdAt).getTime() + (15 * 60000));
+    return (
+      !original &&
+      (this.view.permissions.delete) ||
+      (
+        date.getTime() > new Date().getTime() &&
+        post.author._id === this.view.user._id
+      )
+    );
   }
 
   editValid(author: IUser, createdAt): boolean {
@@ -49,6 +62,10 @@ export class TopicViewComponent implements OnInit {
       this.view.permissions.edit === ForumPermissible.All ||
       ((date.getTime() > new Date().getTime() && this.view.permissions.edit !== ForumPermissible.None) && author._id === this.view.user._id)
     );
+  }
+
+  edit(quote: string): void {
+    this.router.navigate(['/foro/tema/editar/' + this.view.topic._id], {queryParams: {interact: quote}});
   }
 
   topicSubscribe() {
@@ -171,18 +188,12 @@ export class TopicViewComponent implements OnInit {
   }
 
   likePost(id: string, index: number) {
-    this.topicService.post_like(id).subscribe(
+    this.postService.likeStatus(id).subscribe(
       response => {
-        if (!response) {
-          this.notifierService.notify('error', "Ha ocurrido un error al actualizar el like del post.");
+        if ((this.view.posts.data[index].liked as string[]).includes(this.view.user._id)) {
+          (this.view.posts.data[index].liked as string[]).filter(f => f !== this.view.user._id);
         } else {
-          if (response.liked) {
-            this.notifierService.notify('success', "Has marcado un like para este mensaje.");
-            (this.view.posts.data[index].liked as string[]).push(this.view.user._id);
-          } else {
-            this.notifierService.notify('info', "Has eliminado tu like para este mensaje.");
-            (this.view.posts.data[index].liked as string[]).filter(f => f !== this.view.user._id);
-          }
+          (this.view.posts.data[index].liked as string[]).push(this.view.user._id);
         }
       },
 
@@ -216,12 +227,34 @@ export class TopicViewComponent implements OnInit {
     }
   }
 
+  public update(page: number): void {
+    this.showSpinner = true;
+    this.view.posts.data = [];
+
+    this.topicService.view(this.view.topic._id, page, 15).subscribe(
+      response => {
+        setTimeout(() => {
+          this.view = response;
+          this.showSpinner = false;
+        }, 3000);
+      },
+
+      error  => {
+        this.router.navigate(['/error'] , { queryParams: {type: "500", message: error.message}});
+      }
+    );
+  }
+
   public getPlaceholder(user: IUser): IUserPlaceholder {
     return getUserPlaceholder(user);
   }
 
   public cast(any: any): any {
     return any;
+  }
+
+  public report(user: string): void {
+    this.router.navigate(['/reportar/nuevo'], {queryParams: {user}});
   }
 
 }

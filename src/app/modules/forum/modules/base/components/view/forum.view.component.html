@@ -56,20 +56,20 @@
               Último mensaje
             </div>
           </div>
-          <div *ngIf="data.pinned.length < 1 && data.topic.length < 1" class="u-margin-top-small u-center-text paragraph--white">No hay temas para mostrar en este foro.</div>
+          <div *ngIf="data.pinned.length < 1 && data.topic.length < 1 && data.pagination.page === 1" class="u-margin-top-small u-center-text paragraph--white">No hay temas para mostrar en este foro.</div>
           <div *ngFor="let pinned of data.pinned" class="forum__node">
             <div class="forum__node-title">
               <div class="forum__node-topic">
                 <a routerLink="{{'/foro/tema/' + pinned.topic._id}}" class="forum__node-title-link">{{pinned.topic.subject}}</a>
-                <a routerLink="{{'/' + pinned.topic.author.display}}" class="forum__node-author" [style.color]="getPlaceholder(pinned.topic.author)">
+                <a routerLink="{{'/' + pinned.topic.author.display}}" class="forum__node-author" [style.color]="getPlaceholder(pinned.topic.author).mainGroup.html_color">
                   <img src="{{'https://mc-heads.net/avatar/' + pinned.topic.author.skin}}" alt="Test" class="forum__node-user-avatar">
                   <span class="forum__node-username">{{pinned.topic.author.display}}</span>
                 </a>
                 <span tooltip content="Creado en {{pinned.topic.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="top" class="forum__node-date">{{pinned.topic.createdAt | unixDate | amLocale: 'es' | amTimeAgo}}</span>
               </div>
               <div class="forum__node-icons">
-                <i *ngIf="pinned.topic.pinned" class="forum__node-icon fas fa-bookmark" tooltip content="Anclado" placement="top"></i>
-                <i *ngIf="pinned.topic.locked" class="forum__node-icon fas fa-bookmark" tooltip content="Bloqueado" placement="top"></i>
+                <i *ngIf="pinned.topic.pinned" class="forum__node-icon fas fa-thumbtack" tooltip content="Anclado" placement="top"></i>
+                <i *ngIf="pinned.topic.locked" class="forum__node-icon fas fa-lock" tooltip content="Bloqueado" placement="top"></i>
                 <i *ngIf="pinned.topic.official" class="forum__node-icon fas fa-bookmark" tooltip content="Respuesta Oficial" placement="top"></i>
               </div>
             </div>

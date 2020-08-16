@@ -26,7 +26,7 @@
         <a (click)="comingSoon()" class="header__alerts u-pointer">?</a>
         <div class="header__menu-slug" profile-dropdown>
           <div class="header__profile-avatar">
-            <img src="{{'https://mc-heads.net/avatar/' + header.user.skin}}" alt="" class="header__profile-image">
+            <img src="{{'https://mc-heads.net/avatar/' + header.user.skin || header.user.username}}" alt="" class="header__profile-image">
           </div>
           <span class="header__profile-name">{{header.user.display}}</span>
         </div>

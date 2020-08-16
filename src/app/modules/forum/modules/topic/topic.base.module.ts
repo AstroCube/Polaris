@@ -7,8 +7,7 @@ import {TopicEditComponent} from "./components/edit/topic.edit.component";
 import {TopicReplyComponent} from "./components/reply/topic.reply.component";
 import {TopicViewComponent} from "./components/view/topic.view.component";
 import {TopicCreateGuard} from "./guards/topic.create.guard";
-import {TopicEditGuard} from "./guards/topic.edit.guard";
-import {TopicReplyGuard} from "./guards/topic.reply.guard";
+import {TopicInteractGuard} from "./guards/topic.interact.guard";
 import {TopicViewGuard} from "./guards/topic.view.guard";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import {ForumBaseModule} from "../base/forum.base.module";
@@ -35,8 +34,7 @@ import {ForumTopicRouting} from "./forum.topic.routing";
     ],
   providers: [
     TopicCreateGuard,
-    TopicEditGuard,
-    TopicReplyGuard,
+    TopicInteractGuard,
     TopicViewGuard
   ],
   exports: []

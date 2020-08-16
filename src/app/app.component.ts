@@ -9,7 +9,7 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
   templateUrl: './app.component.html'
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent {
   public token: string;
 
   constructor (
@@ -34,25 +34,5 @@ export class AppComponent implements OnInit {
         }
       }
     });
-  }
-
-  ngOnInit() {
-    this.spinnerService.show();
-    if (this.userService.getToken() && this.userService.getToken() !== "none") {
-      this.userService.token_validation().subscribe(
-        response => {
-          if (response.expired) {
-            localStorage.clear();
-            this.token = null;
-          } else {
-            this.token = this.userService.getToken();
-          }
-        },
-
-        () => {
-          localStorage.clear();
-        }
-      );
-    }
   }
 }

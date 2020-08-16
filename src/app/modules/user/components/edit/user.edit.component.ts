@@ -58,21 +58,6 @@ export class UserEditComponent implements OnInit {
   discordLogout(): void {
     this.user.discord = undefined;
     this.discord = undefined;
-    this.userService.discord_logout(this.user._id).subscribe(
-      response => {
-        if(!response.saved) {
-          this.notifierService.notify('error', "Ha ocurrido un error al cerrar la sesión de Discord.");
-        } else {
-          this.notifierService.notify('info', "Tu sesión de Discord se ha cerrado correctamente.");
-        }
-      },
-      error => {
-        let error_message = <any> error;
-        if(error_message != null) {
-          this.notifierService.notify('error', "Ha ocurrido un error al cerrar la sesión de Discord.");
-        }
-      }
-    )
   }
 
   openPopup(): void {

@@ -15,17 +15,11 @@ export class UserEditGuard implements Resolve<{user: IUser, discord: IUserProfil
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<{user: IUser, discord: IUserProfileDiscord}> {
-    return this.userService.getUserObservable().pipe(
-      mergeMap((user) =>
-        forkJoin(
-          [this.userService.discordPlaceholder(user._id)]
-        ).pipe(
-          map((response) => ({
-            user: user,
-            discord: response[0]
-          }))
-        )
-      ),
+    return this.userService.getUser().pipe(
+      map((response) => ({
+        user: response,
+        discord: null
+      })),
       catchError((error) => {
         this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as {user: IUser, discord: IUserProfileDiscord});

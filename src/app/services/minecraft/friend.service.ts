@@ -7,18 +7,15 @@ import {IFriendProfile} from '../../newModels/friend/IFriendProfile';
 
 @Injectable()
 export class FriendService {
-  public url: String;
 
   constructor(
-    private _http: HttpClient,
-    private _userService: UserService
-  ){
-    this.url = GLOBAL.url;
-  }
+    private http: HttpClient,
+    private userService: UserService
+  ){}
 
   listFriends(id: string): Observable<IFriendProfile> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "friend/list-website/" + id, {headers: headers}) as Observable<IFriendProfile>;
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "friend/profile/" + id, {headers: headers}) as Observable<IFriendProfile>;
   }
 
 }

@@ -6,12 +6,12 @@
   </div>
   <div *ngIf="!topics || (topics && topics.length <= 0)" class="u-center-text u-margin-top-small paragraph--white">No hay temas recientes.</div>
   <div *ngFor="let topic of topics" class="forum__recent-node">
-    <img src="{{'https://mc-heads.net/avatar/' + topic.writer.skin}}" alt="Test" class="forum__recent-avatar">
+    <img src="{{'https://mc-heads.net/avatar/' + topic.author.skin}}" alt="{{topic.author.username}}" class="forum__recent-avatar">
     <div class="forum__recent-container">
-      <a routerLink="{{'/foro/tema/' + topic.id}}" class="forum__recent-topic">{{topic.subject}}</a>
+      <a routerLink="{{'/foro/tema/' + topic._id}}" class="forum__recent-topic">{{topic.subject}}</a>
       <p class="forum__recent-username-placeholder">
-        <a [style.color]="topic.writer.user_color" routerLink="{{'/' + topic.writer.username}}" class="forum__recent-username">{{topic.writer.username}}</a>
-        <span class="forum__recent-date" tooltip content="Creado en {{topic.created_at | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{topic.created_at | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+        <a [style.color]="getPlaceholder(topic.author).mainGroup._id" routerLink="{{'/' + topic.author.username}}" class="forum__recent-username">{{topic.author.display}}</a>
+        <span class="forum__recent-date" tooltip content="Creado en {{topic.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{topic.createdAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
       </p>
     </div>
   </div>

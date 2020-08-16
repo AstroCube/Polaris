@@ -7,7 +7,6 @@ import {TooltipDirective} from './directives/tooltip.directive';
 import {BodyDirective} from './directives/body.directive';
 import {ClassifierDirective} from './directives/classifier.directive';
 import {CollapsibleDirective} from './directives/collapsible.directive';
-import {ColorDirective} from './directives/color.directive';
 import {NavbarDropdownDirective} from './directives/navbar.dropdown.directive';
 import {NavbarResponsiveDirective} from './directives/navbar.responsive.directive';
 import {PopupDirective} from './directives/popup.directive';
@@ -26,7 +25,6 @@ import {ApplicationSpinner} from "./modules/application/components/spinner/appli
     BodyDirective,
     ClassifierDirective,
     CollapsibleDirective,
-    ColorDirective,
     NavbarDropdownDirective,
     NavbarResponsiveDirective,
     PopupDirective,
@@ -47,7 +45,6 @@ import {ApplicationSpinner} from "./modules/application/components/spinner/appli
     BodyDirective,
     ClassifierDirective,
     CollapsibleDirective,
-    ColorDirective,
     NavbarDropdownDirective,
     NavbarResponsiveDirective,
     PopupDirective,

@@ -45,25 +45,7 @@ export class ApplicationLoginComponent implements OnInit {
     request.password = this.requested_password;
     //request.persistence = this.requested_persistence;
     this._router.navigate(['']);
-
     this._userService.login(request).subscribe(
-      response => {
-        if (response.token.length == 0) {
-          this._notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");
-        } else {
-          localStorage.setItem("token", response.token);
-        }
-      },
-
-      error => {
-        let error_message = <any> error;
-        if(error_message != null) {
-          this._notifierService.notify('error', error.error.message);
-        }
-      }
-    );
-
-    this._userService.loginEpsilon(request).subscribe(
       response => {
         if (response.token.length == 0) {
           this._notifierService.notify('error', "Ha ocurrido un error al iniciar sesión.");

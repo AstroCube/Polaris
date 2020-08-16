@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Group} from '../../../../../../models/group';
 import {GroupService} from '../../../../../../services/group.service';
 import {NotifierService} from 'angular-notifier';
 import {Title} from '@angular/platform-browser';
 import {GLOBAL} from '../../../../../../services/global';
+import {IGroup} from "../../../../../../newModels/IGroup";
+import {IUser} from "../../../../../../newModels/user/IUser";
+import {IPaginateResult} from "../../../../../../newModels/IModel";
+import {UserService} from "../../../../../../services/user.service";
 
 @Component({
   selector: 'group-list',
@@ -13,80 +16,104 @@ import {GLOBAL} from '../../../../../../services/global';
 
 export class GroupListComponent implements OnInit {
 
-  public groups : Group[];
-  public selectedGroup : Group;
-  public updatableUser : any;
-  public updatableComment: string;
-  public users: any;
+  @ViewChild("popupClose") public popup: ElementRef;
+  public groups: IPaginateResult<IGroup>;
+  public selectedGroup: IGroup;
+  public user: IUser;
+  public comment: string;
+  public users: IUser[];
   public type : string;
 
   constructor(
-    private _titleService: Title,
-    private _route: ActivatedRoute,
-    private _groupService: GroupService,
-    private _notifierService: NotifierService
+    private titleService: Title,
+    private route: ActivatedRoute,
+    private groupService: GroupService,
+    private userService: UserService,
+    private notifierService: NotifierService,
+    private renderer: Renderer2
   ) {
-    this.selectedGroup = new Group("","",0,"","","","",[],[],false,[]);
-    this.updatableComment = "";
+    this.comment = "";
   }
 
   ngOnInit(): void {
-    this._titleService.setTitle("Grupos - " + GLOBAL.title);
-    this._route.data.subscribe((data => {
-      this.groups = data.GroupListGuard.group;
-      this.users = data.GroupListGuard.users;
+    this.titleService.setTitle("Grupos - " + GLOBAL.title);
+    this.route.data.subscribe((data => {
+      this.groups = data.GroupListGuard;
+      this.groups.data.sort((a, b) => a.priority - b.priority);
     }));
   }
 
   editAction(): void {
-    this._groupService.groupUpdate(this.selectedGroup).subscribe(
-        () => {
-          window.open("/admin/grupos", '_self');
-      },
+    this.groupService.groupUpdate(this.selectedGroup).subscribe(
+      group => {
+        this.notifierService.notify('success', 'Actualizaste correctamente el grupo');
+        for (let i  = 0; i < this.groups.data.length; i++)
+          if (this.groups.data[i]._id === group._id) this.groups.data[i] = group;
+          },
 
       (error) => {
-        let error_message = <any> error;
-        if (error_message != null) {
-          this._notifierService.notify('error', error.error.message);
-        }
+        this.notifierService.notify('error', error.message);
       }
     );
   }
 
   addUser(): void {
-    if (this.updatableComment === "") this.updatableComment = this.selectedGroup.name.toLowerCase();
-    this._groupService.groupUserAdd(this.updatableUser._id, this.selectedGroup._id, this.updatableComment).subscribe(
+    this.groupService.groupUserAdd(this.user._id,this.selectedGroup._id, this.comment).subscribe(
       () => {
-        window.open("/admin/grupos", '_self');
+        this.notifierService.notify('success', 'Agregaste correctamente al usuario');
+        this.clearAll();
       },
 
       (error) => {
-        let error_message = <any> error;
-        if (error_message != null) {
-          this._notifierService.notify('error', error.error.message);
-        }
+        this.notifierService.notify('error', error.message);
       }
     );
   }
 
   removeUser(): void {
-    this._groupService.groupUserRemove(this.updatableUser._id, this.selectedGroup._id).subscribe(
+    this.groupService.groupUserRemove(this.user._id, this.selectedGroup._id).subscribe(
       () => {
-        window.open("/admin/grupos", '_self');
+        this.notifierService.notify('success', 'Eliminaste correctamente al usuario');
+        this.clearAll();
       },
 
       (error) => {
-        let error_message = <any> error;
-        if (error_message != null) {
-          this._notifierService.notify('error', error.error.message);
-        }
+        this.notifierService.notify('error', error.message);
       }
     );
   }
 
-  openAction(id: Group, type: string) {
-    this.selectedGroup = id;
+  openAction(group: IGroup, type: string) {
+    this.selectedGroup = group;
     this.type = type;
   }
+
+  clearAll() {
+    this.selectedGroup = null;
+    this.comment = '';
+    this.type = '';
+    this.clearUser();
+    this.renderer.selectRootElement(this.popup.nativeElement).click();
+  }
+
+  clearUser() {
+    this.user = null;
+    this.users = [];
+  }
+
+  updateQuery(event: any) {
+    if (event.term.length > 2) {
+      this.userService.userListAutocompleteObservable(false, event.term).subscribe(
+        users => {
+          this.users = users;
+          if (this.type === 'add')
+            this.users = this.users.filter(u => !u.groups.some(g => g.group._id.toString() === this.selectedGroup._id));
+          if (this.type === 'remove')
+            this.users = this.users.filter(u => u.groups.some(g => g.group._id.toString() === this.selectedGroup._id));
+        }
+      );
+    }
+  }
+
 
 }

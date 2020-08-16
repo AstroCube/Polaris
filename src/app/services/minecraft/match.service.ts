@@ -1,30 +1,32 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserService} from '../user.service';
 import {GLOBAL} from '../global';
 import {Observable} from 'rxjs';
 import {Match} from '../../models/minecraft/match';
 import {IMatchProfile} from '../../newModels/match/IMatchProfile';
+import {IMatch} from "../../newModels/match/IMatch";
+import {IPaginateResult} from "../../newModels/IModel";
 
 @Injectable()
 export class MatchService {
-  public url: String;
 
   constructor(
-    private _http: HttpClient,
-    private _userService: UserService
+    private http: HttpClient,
+    private userService: UserService
   ){
-    this.url = GLOBAL.url;
   }
 
-  matchGet(id: string): Promise<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "match/get-website/" + id, {headers: headers}).toPromise();
+  match(id: string): Observable<IMatch> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    return this.http.get(GLOBAL.epsilon + "match/" + id, {headers: headers}) as Observable<IMatch>;
   }
 
-  matchPlayerInfo(id: string): Observable<IMatchProfile> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this._userService.getToken());
-    return this._http.get(this.url + "match/get-user/" + id, {headers: headers}) as Observable<IMatchProfile>;
+  list(query?: any, page?: number, perPage?: number): Observable<IPaginateResult<IMatch>> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.userService.getEpsilonToken());
+    let params = new HttpParams().set('page', String(page)).set('perPage', String(perPage))
+      .set('populate', 'gamemode');
+    return this.http.post(GLOBAL.epsilon + "match/list", query, {headers, params}) as Observable<IPaginateResult<IMatch>>;
   }
 
 }

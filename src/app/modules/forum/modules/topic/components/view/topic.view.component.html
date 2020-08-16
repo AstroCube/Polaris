@@ -21,9 +21,9 @@
             </div>
           </div>
           <div class="col-1-of-3 u-right-text">
-            <div class="topic__header-buttons">
-              <a *ngIf="!cast(view.topic.subscribers).includes(view.user._id) && (view.topic.author._id !== view.user._id) && !view.user" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
-              <a *ngIf="cast(view.topic.subscribers).includes(view.user._id) && (view.topic.author._id !== view.user._id) && !view.user" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
+            <div *ngIf="view.user" class="topic__header-buttons">
+              <a *ngIf="!cast(view.topic.subscribers).includes(view.user._id) && (view.topic.author._id !== view.user._id)" class="btn btn--blue shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">Subscribirse</a>
+              <a *ngIf="cast(view.topic.subscribers).includes(view.user._id) && (view.topic.author._id !== view.user._id)" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicSubscribe()">De-subscribirse</a>
               <a *ngIf="view.permissions.pin && !view.topic.pinned" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Ancla el tema (Aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
               <a *ngIf="view.permissions.pin && view.topic.pinned" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicPin()" tooltip content="Desancla el tema (No aparecerá de primero en el foro)" placement="bottom"><i class="topic__icon fas fa-thumbtack"></i></a>
               <a *ngIf="view.permissions.lock && !view.topic.locked" class="btn btn--secondary shop__description-slug-button shop__cart-button" (click)="topicLock()" tooltip content="Bloquea el tema (Los usuarios no podrán responder el tema)" placement="bottom"><i class="topic__icon fas fa-lock"></i></a>
@@ -34,6 +34,7 @@
             </div>
           </div>
         </div>
+        <spinner [active]="showSpinner" loading="Buscando apelaciones... <br> Los ususarios deberían portarse bien :)"></spinner>
         <div *ngFor="let post of view.posts.data; let i = index;" class="topic__posts">
           <div id="{{post._id}}" class="post">
             <div class="post__header">
@@ -48,7 +49,7 @@
                 <span class="post__date" tooltip content="Creado en {{post.createdAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.createdAt | unixDate| valueOf | amLocale: 'es' | amTimeAgo}}</span>
                 <span *ngIf="post.updatedAt && post.lastAction" class="post__date">
                   Última edición: <a class="post__username" [style.color]="getPlaceholder(post.lastAction).mainGroup.html_color" routerLink="{{'/' + post.lastAction.username}}">{{post.lastAction.display}} </a>
-                  <span tooltip content="Editado en {{post.lastAction | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.lastAction | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
+                  <span tooltip content="Editado en {{post.updatedAt | unixDate | valueOf | amLocale: 'es' | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}" placement="bottom">{{post.updatedAt | unixDate | valueOf | amLocale: 'es' | amTimeAgo}}</span>
                 </span>
               </div>
             </div>
@@ -59,19 +60,19 @@
               </div>
               <p class="post__content-container" [innerHTML]="post.content | noSanitize"></p>
             </div>
-            <div class="post__footer">
-              <a *ngIf="deleteValid(post.author._id, post.createdAt) && ((view.posts.pagination.page === 1 && i != 0) || view.posts.pagination.page !== 1)" class="btn btn--red" (click)="deletePost(post._id, i)" tooltip content="Eliminarás el mensaje y todos los demás mensajes que lo citaron. Recuerda que solo tienes una hora para hacerlo." placement="bottom">
+            <div class="post__footer" *ngIf="view.user">
+              <a *ngIf="deleteValid(post, (i === 0 && view.posts.pagination.page === 1))" class="btn btn--red" (click)="deletePost(post._id, i)" tooltip content="Eliminarás el mensaje y todos los demás mensajes que lo citaron. Recuerda que solo tienes una hora para hacerlo." placement="bottom">
                 <i class="fas fa-trash"></i>
               </a>
-              <a *ngIf="editValid(post.author, post.createdAt)" class="btn btn--transparent" routerLink="{{'/foro/tema/editar/' + post._id}}">
+              <a *ngIf="editValid(post.author, post.createdAt)" class="btn btn--transparent" (click)="edit(post._id)">
                 <i class="btn__icon--left fas fa-edit"></i>
                 Editar
               </a>
-              <a class="btn btn--transparent" (click)="likePost(post._id, i)" *ngIf="!view.user">
+              <a class="btn btn--transparent" (click)="likePost(post._id, i)">
                 <i class="btn__icon--left fas fa-thumbs-up"></i>
                 {{post.liked.length}}
               </a>
-              <a class="btn btn--transparent" *ngIf="!view.user">
+              <a class="btn btn--transparent" (click)="report(post.author._id)">
                 <i class="btn__icon--left fas fa-flag"></i>Reportar
               </a>
               <a *ngIf="view.permissions.comment && !view.topic.locked" class="btn btn--transparent" (click)="quoteLink(post._id)" tooltip content="Aquí escribirás un comentario en el foro" placement="top">
@@ -84,7 +85,14 @@
           <a *ngIf="view.permissions.delete" class="btn btn--red shop__description-slug-button shop__cart-button" (click)="topicDelete()" tooltip content="Al eliminar el tema también borrarás todos los mensajes. Recuerda que solo tienes una hora para hacerlo." placement="bottom"><i class="btn__icon--left fas fa-trash"></i> Eliminar tema</a>
         </div>
         <div class="u-margin-bottom-small">
-          <pagination [centered]="true" [actual_page]="view.posts.pagination.page" [last_page]="view.posts.pagination.totalPages" route="{{'foro/tema/' + view.topic._id + '/'}}"></pagination>
+          <pagination
+            *ngIf="view.posts.pagination.totalPages && view.posts.pagination.totalPages !== 1"
+            [centered]="true"
+            [actual_page]="view.posts.pagination.page"
+            [last_page]="view.posts.pagination.totalPages"
+            [eventOriented]="true"
+            (onNavigate)="update($event)"
+          ></pagination>
         </div>
       </div>
     </div>

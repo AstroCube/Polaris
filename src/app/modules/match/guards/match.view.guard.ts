@@ -1,38 +1,26 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {MatchService} from '../../../services/minecraft/match.service';
+import {IMatch} from "../../../newModels/match/IMatch";
+import {Observable, of} from "rxjs";
+import {catchError} from "rxjs/operators";
+import {IReportView} from "../../../newModels/IReport";
 
 @Injectable()
-export class MatchViewGuard {
+export class MatchViewGuard implements Resolve<IMatch>{
 
   constructor (
-    private _matchService: MatchService,
-    private _router: Router
+    private matchService: MatchService,
+    private router: Router
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Promise<any> {
-    return this._matchService.matchGet(route.params.id).then(response => {
-      if (response) {
-        return response;
-      } else {
-        this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-        return false;
-      }
-    }).catch((err) => {
-      switch (err.status) {
-        case 404: {
-          this._router.navigate(['/error'] , { queryParams: {type: "404"}});
-          return false;
-        }
-        case 403: {
-          this._router.navigate(['/error'] , { queryParams: {type: "403"}});
-          return false;
-        }
-        default: {
-          this._router.navigate(['/error'] , { queryParams: {type: "500"}});
-          return false;
-        }
-      }
-    });
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMatch> {
+    return this.matchService.match(route.params.id).pipe(
+      catchError(error => {
+        this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
+        return of({} as IMatch);
+      })
+    );
   }
+
 }

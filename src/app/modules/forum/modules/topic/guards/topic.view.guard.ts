@@ -4,8 +4,8 @@ import {UserService} from '../../../../../services/user.service';
 import {ForumService} from '../../../../../services/forum/forum.service';
 import {TopicService} from '../../../../../services/forum/topic.service';
 import {ITopicView} from "../../../../../newModels/forum/ITopic";
-import {forkJoin, Observable, of} from "rxjs";
-import {catchError, map, mergeMap} from "rxjs/operators";
+import {Observable, of} from "rxjs";
+import {catchError, map} from "rxjs/operators";
 import {PostService} from "../../../../../services/forum/post.service";
 import {ForumUtilities} from "../../../../../utilities/forum-utilities";
 import {ForumPermissible, IForumPermissions} from "../../../../../newModels/permissions/IForumPermissions";
@@ -27,26 +27,7 @@ export class TopicViewGuard implements CanActivate, Resolve<ITopicView>{
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ITopicView> {
-    return this.topicService.get(route.params.id).pipe(
-      mergeMap(topic =>
-        forkJoin([
-          this.userService.getUserObservable(),
-          this.postService.list(
-            route.queryParams.page || 1,
-            15,
-            {topic: topic._id},
-            'createdAt'
-          ),
-          this.getPermissions(topic._id)
-        ]).pipe(
-          map(response => ({
-            topic,
-            user: response[0],
-            posts: response[1],
-            permissions: response[2]
-          }))
-        )
-      ),
+    return this.topicService.view(route.params.id, route.queryParams.page || 1, 15).pipe(
       catchError((error) => {
         this.router.navigate(['/error'] , { queryParams: {type: error.status, message: error.error}});
         return of({} as ITopicView);
@@ -59,6 +40,5 @@ export class TopicViewGuard implements CanActivate, Resolve<ITopicView>{
       this.forumService.permissions(topic) :
       this.forumUtilities.getGuestPermissions(topic);
   }
-
 
 }

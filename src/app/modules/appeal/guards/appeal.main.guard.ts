@@ -17,7 +17,7 @@ export class AppealMainGuard implements Resolve<boolean>{
   {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.userService.getUserObservable().pipe(
+    return this.userService.getUser().pipe(
       mergeMap(user =>
         forkJoin(
           [this.punishmentService.punishmentList(1, 100, {punished: user._id})]

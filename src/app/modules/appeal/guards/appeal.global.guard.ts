@@ -24,7 +24,7 @@ export class AppealGlobalGuard implements Resolve<IAppealList> {
     return this.appealService.appealPermissions().pipe(
       mergeMap(permissions =>
         forkJoin(
-          [this.userService.getUserObservable(),
+          [this.userService.getUser(),
           this.appealService.appealList(page, 15, search.query, search.own)]
         ).pipe(
           map(response => ({

@@ -11,7 +11,7 @@ export class UserLoggedGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const logged = this.userService.getToken() !== '' && this.userService.getEpsilonToken() !== '';
+    const logged = this.userService.getEpsilonToken() !== '';
     if (!logged) this.router.navigate(['/login']);
     return logged;
   }
