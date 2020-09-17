@@ -23,7 +23,7 @@ export class UserService {
 
   getUser(id?: string): Observable<IUser> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
-    if (!id) return this._http.get(GLOBAL.epsilon + "user/profile/me", {headers: headers}) as Observable<IUser>;
+    if (!id) return this._http.get(GLOBAL.epsilon + 'user/profile/me', {headers: headers}) as Observable<IUser>;
     return this._http.get(GLOBAL.epsilon + "user/" + id, {headers: headers}) as Observable<IUser>;
   }
 
