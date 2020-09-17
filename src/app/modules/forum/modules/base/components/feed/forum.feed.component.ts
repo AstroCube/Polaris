@@ -4,7 +4,6 @@ import {ITopic} from "../../../../../../newModels/forum/ITopic";
 import {TopicService} from "../../../../../../services/forum/topic.service";
 import {IUser, IUserPlaceholder} from "../../../../../../newModels/user/IUser";
 import {getUserPlaceholder} from "../../../../../../utilities/group-placeholder";
-import {interval, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
 @Component({
@@ -22,9 +21,9 @@ export class ForumFeedComponent implements OnInit {
 
   ngOnInit() {
     this.topicService.newTopics().pipe(
-      map(t => this.topics = t.data),
-      interval(30000)
+      map(t => this.topics = t.data)
     );
+
   }
 
   public getPlaceholder(user: IUser): IUserPlaceholder {

@@ -116,9 +116,9 @@ export class ApplicationHeaderComponent implements OnInit {
               userEdit: (response[0].user && response[0].user.manage),
               forum: (response[0].forum && response[0].forum.manage),
               generalAccess: (response[0].group && response[0].group.manage) ||
-                (response[0].category && response[0].category.manage) ||
-                (response[0].user && response[0].user.manage) ||
-                (response[0].forum && response[0].forum.manage)
+                  (response[0].category && response[0].category.manage) ||
+                  (response[0].user && response[0].user.manage) ||
+                  (response[0].forum && response[0].forum.manage)
             } as IHeaderUser))
           )
         )

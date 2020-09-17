@@ -3,12 +3,10 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { GLOBAL } from "./global";
 import {IMailUpdateVerification, IPasswordUpdate, IUser} from '../newModels/user/IUser';
-import {IUserProfileDiscord} from '../newModels/user/IUserProfile';
 
 @Injectable()
 export class UserService {
   public url: String;
-  public identity;
   public epsilon;
 
   constructor(
@@ -25,8 +23,8 @@ export class UserService {
 
   getUser(id?: string): Observable<IUser> {
     let headers = new HttpHeaders().set("Content-Type", "application/json").set("Authorization", this.getEpsilonToken());
-    if (!id) return this._http.get(GLOBAL.epsilon + "users/me", {headers: headers}) as Observable<IUser>;
-    return this._http.get(GLOBAL.epsilon + "user/view/" + id, {headers: headers}) as Observable<IUser>;
+    if (!id) return this._http.get(GLOBAL.epsilon + "user/profile/me", {headers: headers}) as Observable<IUser>;
+    return this._http.get(GLOBAL.epsilon + "user/" + id, {headers: headers}) as Observable<IUser>;
   }
 
   mailVerification(): Observable<any> {
@@ -55,7 +53,7 @@ export class UserService {
     let searchQuery = "";
     if (own) route = "/true";
     if (search) searchQuery = "?search=" + search;
-    return this._http.get(GLOBAL.epsilon + "userg/list-all" + route + searchQuery, {headers: headers}) as Observable<IUser[]>;
+    return this._http.get(GLOBAL.epsilon + "user/list-all" + route + searchQuery, {headers: headers}) as Observable<IUser[]>;
   }
 
   userIp(): Observable<any> {
