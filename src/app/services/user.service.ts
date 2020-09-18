@@ -60,12 +60,6 @@ export class UserService {
     return this._http.get("https://api.ipify.org?format=json") as Observable<any>;
   }
 
-  getToken() {
-    let token = localStorage.getItem("token");
-    if (!token) return '';
-    return token;
-  }
-
   getEpsilonToken() {
     let token = localStorage.getItem("epsilonToken");
     if (!token) return '';
