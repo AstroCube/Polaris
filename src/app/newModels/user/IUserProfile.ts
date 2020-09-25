@@ -24,5 +24,6 @@ export interface IHeaderUser {
   category: boolean;
   userEdit: boolean;
   forum: boolean;
+  maps: boolean;
   generalAccess: boolean;
 }
