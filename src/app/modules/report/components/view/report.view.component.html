@@ -5,7 +5,7 @@
     </div>
     <div class="col-1-of-2 u-right-text">
       <a *ngIf="!report.punishment && (permissions.manage || report.assigned && report.assigned._id === user._id)" class="btn btn--secondary btn--slug shop__cart-button" (click)="punishUser()"><i class="fas fa-gavel"></i> Sancionar usuario</a>
-      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id) && !report.closed" class="btn btn--red btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Close')"><i class="fas fa-times"></i></a>
+      <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id) && !report.closed" class="btn btn--red btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Close')"><i class="fas fa-times"></i> Cerrar</a>
       <a *ngIf="(permissions.manage || report.assigned && report.assigned._id === user._id)  && report.closed" class="btn btn--green btn--slug shop__cart-button" popup popup_id="report-popup" (click)="createAction('Open')"><i class="fas fa-marker"></i> Abrir</a>
     </div>
   </div>

@@ -22,7 +22,8 @@ export class PunishmentService {
 
   punishmentGet(id: string): Observable<IPunishment> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this._http.get(GLOBAL.epsilon + "punishment/get/" + id, {headers: headers}) as Observable<IPunishment>;
+    const params = new HttpParams().set('populate', 'issuer punished');
+    return this._http.get(GLOBAL.epsilon + "punishment/" + id, {headers: headers, params}) as Observable<IPunishment>;
   }
 
   punishmentUpdate(punishment: IPunishment): Observable<IPunishment> {
@@ -32,7 +33,7 @@ export class PunishmentService {
 
   punishmentList(page?: number, size?: number, query?: any): Observable<IPaginateResult<IPunishment>> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const params = new HttpParams().set('page', String(page)).set('size', String(size));
+    const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('populate', 'issuer punished');
     return this._http.post(
       GLOBAL.epsilon + "punishment/list",
       query,

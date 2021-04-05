@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Map} from '../../../../models/minecraft/map';
 import { GLOBAL } from '../../../../services/global';
-import {User} from '../../../../models/user';
 import {MapService} from '../../../../services/minecraft/map.service';
 import {Title} from '@angular/platform-browser';
 import {IMapView} from "../../../../newModels/IMap";
@@ -22,8 +20,7 @@ export class MapViewComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private route: ActivatedRoute,
-    private mapService: MapService
+    private route: ActivatedRoute
   ) {
     this.url = GLOBAL.epsilon;
     this.related = false;
@@ -37,7 +34,7 @@ export class MapViewComponent implements OnInit {
   }
 
   public getPlaceholder(user: IUser): IUserPlaceholder {
-    return getUserPlaceholder(user);
+    return getUserPlaceholder(user as IUser);
   }
 
   private isRelated(): boolean {

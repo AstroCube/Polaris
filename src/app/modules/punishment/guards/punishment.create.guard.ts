@@ -27,7 +27,6 @@ export class PunishmentCreateGuard implements CanActivate, Resolve<IPunishmentCr
           response.punishments.create.temp_ban || response.punishments.create.ban
       )),
       catchError((err) => {
-        console.log(err);
         this.router.navigate(['/error'] , { queryParams: {type: "500"}});
         return of(false);
       })

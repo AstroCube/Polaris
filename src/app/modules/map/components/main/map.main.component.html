@@ -33,7 +33,7 @@
   </div>
   <div *ngFor="let map of mapMain.maps.data" class="map map--profile">
     <a routerLink="{{'/mapas/' + map._id}}">
-      <img src="{{url + 'map/get-image/' + map._id}}" class="map__image">
+      <img src="{{url + 'map/files/image/' + map._id}}" class="map__image">
     </a>
     <a routerLink="{{'/mapas/' + map._id}}" class="map__title">
       {{map.name}}

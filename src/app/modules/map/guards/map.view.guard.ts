@@ -22,10 +22,13 @@ export class MapViewGuard implements Resolve<IMapView> {
     return this.mapService.get(route.params.id).pipe(
       mergeMap(gameMap =>
         forkJoin([this.userRequest()]).pipe(
-          map(response => ({
-            map: gameMap,
-            permissions: response[0]
-          }) as IMapView)
+          map(response => {
+            return ({
+              map: gameMap,
+              permissions: response[0]
+            }) as IMapView;
+
+          })
         )
       ),
       catchError(error => {

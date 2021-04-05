@@ -68,7 +68,6 @@ export class TopicCreateComponent implements OnInit{
       },
 
       error => {
-        console.log(error);
         let error_message = <any> error;
         if(error_message != null) {
           this.notifierService.notify('error', error.message);

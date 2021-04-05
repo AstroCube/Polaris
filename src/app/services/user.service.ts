@@ -53,7 +53,7 @@ export class UserService {
     let searchQuery = "";
     if (own) route = "/true";
     if (search) searchQuery = "?search=" + search;
-    return this._http.get(GLOBAL.epsilon + "user/list-all" + route + searchQuery, {headers: headers}) as Observable<IUser[]>;
+    return this._http.get(GLOBAL.epsilon + "user/actions/list-all" + route + searchQuery, {headers: headers}) as Observable<IUser[]>;
   }
 
   userIp(): Observable<any> {

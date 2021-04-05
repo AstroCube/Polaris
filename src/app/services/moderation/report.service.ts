@@ -6,7 +6,6 @@ import {UserService} from '../user.service';
 import {IReport, IReportAction} from "../../newModels/IReport";
 import {IReportsPermissions} from "../../newModels/permissions/IReportsPermissions";
 import {IPaginateResult} from "../../newModels/IModel";
-import {IAppeal} from "../../newModels/IAppeal";
 
 @Injectable()
 export class ReportService {

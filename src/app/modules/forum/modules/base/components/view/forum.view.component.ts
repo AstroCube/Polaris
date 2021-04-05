@@ -47,7 +47,6 @@ export class ForumViewComponent implements OnInit {
            },
            error => {
              let error_message = <any> error;
-             console.log(error);
              if(error_message != null) {
                this.notifierService.notify('error', "Ha ocurrido un error al limpiar tus mensajes.");
              }

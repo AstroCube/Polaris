@@ -59,7 +59,6 @@ export class ForumCreateComponent implements OnInit {
 
       error => {
         this.notifierService.notify('error', error.message);
-        console.log(error);
       }
     );
   }

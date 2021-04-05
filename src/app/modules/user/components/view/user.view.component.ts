@@ -27,7 +27,6 @@ export class UserViewComponent implements OnInit{
 
   ngOnInit(): void {
     this._route.data.subscribe((data => {
-      console.log(data);
       this.userProfile = data.UserViewGuard;
     }));
     this._titleService.setTitle(this.userProfile.user.username + " - " + GLOBAL.title);

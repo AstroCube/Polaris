@@ -36,8 +36,8 @@
         </p>
         <p class="punishment__checkout-indicator">
           <span>Fecha en que expira:</span>
-          <span *ngIf="punishment.expires === -1">Nunca</span>
-          <span *ngIf="expiration">{{expiration}}</span>
+          <span *ngIf="punishment.expires === null">Nunca</span>
+          <span *ngIf="punishment.expires !== null && expiration">{{expiration}}</span>
         </p>
         <p class="punishment__checkout-indicator">
           <label for="active" class="form__checkbox">

@@ -1,4 +1,3 @@
-<!--
 <section>
   <div class="u-margin-bottom-small">
     <h1 class="heading map__main-title">Mapas</h1>
@@ -12,18 +11,17 @@
       </p>
       <div class="map__info">
         <div class="map__objective">
-          <span class="map__info-placeholder">Objetivo:</span>
+          <span class="map__info-placeholder">Descripción:</span>
           <p>{{data.map.description}}</p>
         </div>
       </div>
     </div>
     <div class="col-1-of-3">
       <div class="map__info-slug u-center-text">
-        <img src="{{url + 'map/get-image/' + data.map._id}}" class="map__image">
+        <img src="{{url + 'map/files/image/' + data.map._id}}" class="map__image">
         <a *ngIf="related" class="btn btn--green map__info-button" (click)="downloadFile()"><i class="btn__icon--left fas fa-map-signs"></i>Descargar Mapa</a>
         <a *ngIf="related" class="btn btn--blue map__info-button" (click)="downloadJSON()"><i class="btn__icon--left fas fa-code"></i>Descargar Config</a>
       </div>
     </div>
   </div>
 </section>
--->

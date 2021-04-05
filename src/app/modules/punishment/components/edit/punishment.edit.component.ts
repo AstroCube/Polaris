@@ -42,7 +42,7 @@ export class PunishmentEditComponent implements OnInit{
     this._titleService.setTitle("Editar sanción - " + GLOBAL.title);
     this._route.data.subscribe((data => {
       this.punishment = data.PunishmentViewGuard;
-      if (this.punishment.expires !== -1) {
+      if (this.punishment.expires !== null) {
         const date = new Date(this.punishment.expires * 1000);
         this.initialEpoc = this.punishment.expires;
         // @ts-ignore

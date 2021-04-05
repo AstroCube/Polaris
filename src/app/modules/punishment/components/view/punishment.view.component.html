@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-1-of-2 u-margin-bottom-small">
         <h1 class="heading">
-          <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires === -1">Perma-ban</span>
-          <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires !== -1">Temp-ban</span>
+          <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires === null">Perma-ban</span>
+          <span style="color: red" *ngIf="punishment.type.toLowerCase() === 'ban' && punishment.expires !== null">Temp-ban</span>
           <span style="color: darkorange" *ngIf="punishment.type.toLowerCase() === 'kick'">Expulsión</span>
           <span style="color: green" *ngIf="punishment.type.toLowerCase() === 'warn'">Advertencia</span>
           realizada por
